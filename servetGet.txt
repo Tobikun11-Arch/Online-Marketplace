@@ -1,0 +1,79 @@
+ server.get('/api/users', async (req: Request, res: Response) => {
+    try {
+      
+      const database = client.db('Online-marketplace');
+      const users = database.collection('Accounts');
+      const userData = await users.find({}).toArray();
+      res.status(200).json(userData);
+
+    } 
+    
+    catch (error) {
+
+      console.error('Error fetching users:', error);
+      res.status(500).json({ message: 'Failed to fetch users' });
+
+    }
+
+  });
+  
+
+
+
+  
+interface Users {
+
+  username: string;
+  password: string;
+
+}
+
+type Account = Users[];
+
+  const[userData, setdata] = useState<Users[]>([])
+
+  useEffect(() => {
+
+    const fetched = async() => {
+
+      try {
+
+        const response = await fetch('http://localhost:3001/api/users');
+
+      if(!response.ok) {
+
+        throw new Error ('Error fetching getData')
+
+      }
+
+      const data = await response.json()
+      setdata(data as Account)
+
+      console.log("this is data: ", data)
+
+      }
+
+      catch(error) {
+
+        console.error(error)
+
+      }
+
+    }
+
+    fetched();
+
+  }, [])
+
+
+
+
+  
+  <div>
+  {/* Render your user data here */}
+  {userData.length > 0 ? (  
+    userData.map(user => <div key={user.username}>{user.username} {user.password}</div>)
+  ) : (
+    <p>No users found.</p>
+  )}
+</div>

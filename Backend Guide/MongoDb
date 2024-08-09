@@ -1,0 +1,82 @@
+//Mongodb atlas acc but login is joenelsevellejo831@gmail.com
+joenelsevellejo831
+mEABCYQhuMSVSLa9
+
+const uri = "mongodb+srv://joenelsevellejo831:mEABCYQhuMSVSLa9@market.rs9yhha.mongodb.net/?retryWrites=true&w=majority&appName=Market";
+
+
+
+
+MongoDB Node.js driver:
+
+================================================================
+INSERT METHODS:
+
+//insertOne: Inserts a single document into a collection.
+await users.insertOne({ username, password });
+
+//insertMany: Inserts multiple documents into a collection.
+await users.insertMany([{ username: 'user1', password: 'pass1' }, { username: 'user2', password: 'pass2' }]);
+================================================================
+
+
+================================================================
+UPDATE METHODS:
+
+//updateOne: Updates a single document that matches the filter criteria.
+await users.updateOne({ username: 'user1' }, { $set: { password: 'newpass' } });
+
+//updateMany: Updates multiple documents that match the filter criteria.
+await users.updateMany({ username: { $in: ['user1', 'user2'] } }, { $set: { password: 'newpass' } });
+
+//replaceOne: Replaces a single document that matches the filter criteria with a new document.
+await users.replaceOne({ username: 'user1' }, { username: 'user1', password: 'newpass' });
+================================================================
+
+
+================================================================
+DELETE METHODS: 
+
+//deleteOne: Deletes a single document that matches the filter criteria.
+await users.deleteOne({ username: 'user1' });
+
+//deleteMany: Deletes multiple documents that match the filter criteria.
+await users.deleteMany({ username: { $in: ['user1', 'user2'] } });
+================================================================
+
+
+================================================================
+FIND METHODS:
+
+//findOne: Finds a single document that matches the filter criteria.
+const user = await users.findOne({ username: 'user1' });
+
+//find: Finds multiple documents that match the filter criteria.
+const usersList = await users.find({ username: { $in: ['user1', 'user2'] } }).toArray();
+
+//Findall
+const documents = await users.find({}).toArray();
+================================================================
+
+
+================================================================
+OTHER METHODS:
+
+//countDocuments: Counts the number of documents that match the filter criteria.
+const count = await users.countDocuments({ username: 'user1' });
+
+//aggregate: Performs aggregation operations.
+const results = await users.aggregate([
+    { $match: { username: 'user1' } },
+    { $group: { _id: '$username', total: { $sum: 1 } } }
+]).toArray();
+================================================================
+
+
+   {Account.map((account) => (
+
+    <div key={account.username}>
+    <p>{account.username}</p>
+    </div>
+
+   ))}

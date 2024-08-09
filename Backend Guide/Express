@@ -1,0 +1,26 @@
+
+const express = require('express');
+const server = express();
+
+// Middleware to parse JSON bodies
+server.use(express.json());
+
+// GET request
+server.get('/hello', (req, res) => {
+  res.send('Hello, GET request!');
+});
+
+// POST request
+server.post('/data', (req, res) => {
+  res.send(`You sent: ${JSON.stringify(req.body)}`);
+});
+
+// PUT request
+server.put('/update', (req, res) => {
+  res.send('PUT request received');
+});
+
+// DELETE request
+server.delete('/delete', (req, res) => {
+  res.send('DELETE request received');
+});
