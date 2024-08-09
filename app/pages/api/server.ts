@@ -23,8 +23,8 @@ server.use(express.json());
 
 // CORS configuration
 const corsOptions = {
-    origin: process.env.NEXT_PUBLIC_API_URL || '*', // Allow requests from your frontend URL
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_URL : 'http://localhost:3000', // Allow requests from your frontend URL in production or localhost during development
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
 // Use CORS middleware
