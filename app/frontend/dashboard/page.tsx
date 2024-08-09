@@ -1,7 +1,8 @@
 "use client"; // Ensure this is at the top of your file
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-
+import dotenv from 'dotenv';
+dotenv.config(); // Load environment variables
 
 const DashboardPage = () => {
     const [user, setUser] = useState<{ name: string; email: string} | null>(null);

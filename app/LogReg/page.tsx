@@ -2,6 +2,8 @@
 import './LogRegs.css'
 import React, { useState } from 'react';
 import {useRouter} from 'next/navigation';
+import dotenv from 'dotenv';
+dotenv.config(); // Load environment variables
 
 interface ApiResponse {
 
