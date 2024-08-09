@@ -11,9 +11,9 @@ interface ApiResponse {
 
 export default function Page() {
 
-  
   const [formData, setFormData] = useState({ Name: '', Email: '', Password: '' });
   const [message, setMessage] = useState('');
+  const [messageLogin, setMessagelogin] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
   const router = useRouter();
@@ -93,7 +93,7 @@ export default function Page() {
 
         const errorData = await response.json();
         console.error("Error login:", errorData);
-        setMessage(errorData.error || 'Login failed');
+        setMessagelogin(errorData.error || 'Login failed');
         
     }
 
@@ -127,7 +127,7 @@ export default function Page() {
                   <input className="flip-card__input" name="password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
 
                   <button className="flip-card__btn">Let&apos;s go!</button>
-                  {message && <p>{message}</p>}
+                  {messageLogin && <p>{messageLogin}</p>}
                 </form>
 
               </div>
