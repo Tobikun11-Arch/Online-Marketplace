@@ -12,6 +12,7 @@ const app = express();
 // Connect to MongoDB
 connectToMongoDB();
 
+// CORS configuration
 const corsOptions = {
   origin: [
     'http://localhost:3000', // Allow local development
@@ -21,7 +22,7 @@ const corsOptions = {
 };
 
 // Middleware
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Ensure this is applied before your routes
 app.use(express.json());
 
 // Define your API routes
