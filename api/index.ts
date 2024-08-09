@@ -12,6 +12,9 @@ const app = express();
 // Connect to MongoDB
 connectToMongoDB();
 
+console.log('MongoDB URI:', process.env.MONGO_URI); // Add this for debugging
+
+
 // CORS configuration
 const corsOptions = {
   origin: [
