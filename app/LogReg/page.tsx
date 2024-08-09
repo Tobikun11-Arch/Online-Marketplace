@@ -19,7 +19,7 @@ export default function Page() {
   const router = useRouter();
 
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -126,7 +126,7 @@ export default function Page() {
 
                   <input className="flip-card__input" name="password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
 
-                  <button className="flip-card__btn">Let's go!</button>
+                  <button className="flip-card__btn">Let&apos;s go!</button>
 
                 </form>
 
