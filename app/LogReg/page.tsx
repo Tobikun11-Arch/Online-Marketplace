@@ -28,7 +28,7 @@ export default function Page() {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
 
-        const response = await fetch('http://localhost:3001/api/users/register', { 
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/register`, { 
             
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
 
@@ -49,7 +49,7 @@ export default function Page() {
         // Parse the JSON response, kinuha nya na ung data sa response 
 
         setMessage(data.message); // Assuming your API returns a message
-
+        setFormData({Name: '', Email: '', Password: ''});
        
 
     } 
@@ -72,7 +72,7 @@ export default function Page() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
-      const response = await fetch('http://localhost:3001/api/users/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/login`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ export default function Page() {
                   <input className="flip-card__input" name="password" placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
 
                   <button className="flip-card__btn">Let&apos;s go!</button>
-
+                  {message && <p>{message}</p>}
                 </form>
 
               </div>
