@@ -12,8 +12,6 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const login = require('../app/pages/login')
-
 const server = express();
 const port = process.env.PORT || 9001;
 
@@ -25,7 +23,7 @@ server.use(cors());
 
 
     app.prepare().then(() => { // use to prepare and start nextjs application before handling routes or request
-      server.use('/login', login);
+      server.use('/api/users', UserRoutes);
       server.use('/api', ProtectedRoutes);
       
       server.get('/', (req, res) => {
