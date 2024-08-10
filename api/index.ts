@@ -26,9 +26,9 @@ server.use(cors());
       server.use('/api/users', UserRoutes);
       server.use('/api', ProtectedRoutes);
       
-      server.get('/', (req, res) => {
-        res.send('Hello Index.ts!')
-      })
+      server.get("/", (req, res) => {
+        res.json("Hello");
+    })
 
       // Use Next.js request handler
       server.all('*', (req: Request, res: Response) => {
