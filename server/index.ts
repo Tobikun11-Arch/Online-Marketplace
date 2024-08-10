@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import UserRoutes from '../api/userRoutes'; // Adjust the import path as necessary
-import ProtectedRoutes from '../api/protectedRoutes'; // Adjust the import path as necessary
-import connectToMongoDB from '../api/db'; // Adjust the import path as necessary
+import UserRoutes from '../server/api/userRoutes'; // Adjust the import path as necessary
+import ProtectedRoutes from '../server/api/protectedRoutes'; // Adjust the import path as necessary
+import connectToMongoDB from '../server/api/db'; // Adjust the import path as necessary
 
 dotenv.config(); // Load environment variables
 const port = process.env.PORT || 9001;
