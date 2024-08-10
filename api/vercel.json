@@ -2,8 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
+      "src": "api/*.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/*.ts",
+      "use": "@vercel/node",
+      "config": {
+        "distDir": "."
+      }
     }
   ],
   "routes": [
