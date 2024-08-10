@@ -13,25 +13,19 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 const server = express();
-const port = 3001;
+const port = process.env.PORT || 9001;
 
 connectToMongoDB();
 
 // Middleware to parse JSON
 server.use(express.json());
-
-const corsOptions = {
-  origin: 'https://online-marketplace-gamma.vercel.app/', // Replace with your front-end URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
-  credentials: true, // Allow credentials if needed
-};
-
-server.use(cors(corsOptions));
+server.use(cors());
 
 
     app.prepare().then(() => { // use to prepare and start nextjs application before handling routes or request
       server.use('/api/users', UserRoutes);
       server.use('/api', ProtectedRoutes);
+      
       server.get('/', (req, res) => {
         res.send('Hello Index.ts!')
       })
