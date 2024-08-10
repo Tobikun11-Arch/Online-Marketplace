@@ -4,38 +4,42 @@ import dotenv from 'dotenv';
 import UserRoutes from '../app/pages/userRoutes'; // Adjust the import path as necessary
 import ProtectedRoutes from '../app/pages/protectedRoutes'; // Adjust the import path as necessary
 import connectToMongoDB from './db'; // Adjust the import path as necessary
+import next from 'next';
 
 dotenv.config(); // Load environment variables
 
-const app = express();
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-// Connect to MongoDB
+const server = express();
+const port = process.env.API_PORT || 3000;
+
 connectToMongoDB();
 
-console.log('MongoDB URI:', process.env.MONGO_URI); // Add this for debugging
+// Middleware to parse JSON
+server.use(express.json());
 
-
-// CORS configuration
 const corsOptions = {
-  origin: [
-    'http://localhost:3000', // Allow local development
-    'https://online-marketplace-eight.vercel.app', // Allow your Vercel app
-  ],
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: 'https://online-marketplace-eight.vercel.app', // Replace with your front-end URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
+  credentials: true, // Allow credentials if needed
 };
 
-// Middleware
-app.use(cors(corsOptions)); // Ensure this is applied before your routes
-app.use(express.json());
+server.use(cors(corsOptions));
 
-// Define your API routes
-app.use('/api/users', UserRoutes);
-app.use('/api', ProtectedRoutes);
 
-// Basic route for testing
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express on Vercel');
-});
+    app.prepare().then(() => { // use to prepare and start nextjs application before handling routes or request
+      server.use('/api/users', UserRoutes);
+      server.use('/api', ProtectedRoutes);
 
-// Export the app for Vercel
-export default app;
+
+      // Use Next.js request handler
+      server.all('*', (req: Request, res: Response) => {
+        return handle(req, res);
+      });
+
+      server.listen(port, async () => {
+        console.log(`Server is listening on port ${port}`);
+      });
+    });

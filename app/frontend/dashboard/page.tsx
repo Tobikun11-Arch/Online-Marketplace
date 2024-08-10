@@ -9,9 +9,12 @@ const DashboardPage = () => {
     const [loader, setLoader] = useState(false)
     const router = useRouter();
 
+    const apiurl = process.env.NEXT_PUBLIC_API_URL;
+    console.log(apiurl)
     useEffect(() => {
         const fetchUserData = async () => {
             const token = localStorage.getItem('token');
+            console.log("dashboard token: ", token)
             setLoader(true)
             console.log("get token:", token)
             if (!token) {
@@ -20,7 +23,7 @@ const DashboardPage = () => {
             }
 
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard`, {
+                const response = await fetch(`${apiurl}/api/dashboard`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

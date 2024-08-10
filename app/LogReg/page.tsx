@@ -20,6 +20,7 @@ export default function Page() {
   const[password, setPassword] = useState('');
   const router = useRouter();
 
+  const apiurl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,7 +31,7 @@ export default function Page() {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/register`, { 
+        const response = await fetch(`${apiurl}/api/users/register`, { 
             
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
 
@@ -49,7 +50,7 @@ export default function Page() {
 
         const data = (await response.json()) as ApiResponse;
         // Parse the JSON response, kinuha nya na ung data sa response 
-
+        console.log("register response: ", response)
         setMessage(data.message); // Assuming your API returns a message
         setFormData({Name: '', Email: '', Password: ''});
        
@@ -74,7 +75,7 @@ export default function Page() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/login`, {
+      const response = await fetch(`${apiurl}/api/users/login`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -85,6 +86,8 @@ export default function Page() {
       if (response.ok) {
 
         const { token, user } = await response.json();
+        console.log("login token: ", token)
+        console.log("login user: ", user)
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
         router.push('/frontend/dashboard');
@@ -93,6 +96,8 @@ export default function Page() {
     
     else {
 
+        console.log("login response fetch: ", response)
+        console.log("login apiurl fetch: ", apiurl)
         const errorData = await response.json();
         console.error("Error login:", errorData);
         setMessagelogin(errorData.error || 'Login failed');
