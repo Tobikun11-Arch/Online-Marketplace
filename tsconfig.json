@@ -33,6 +33,6 @@
   ],
   "exclude": [
     "node_modules",
-    "api/index.js"  // Exclude the JavaScript file
+    "api/index.ts"  // Exclude the JavaScript file
   ]
 }
