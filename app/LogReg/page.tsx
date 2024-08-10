@@ -31,9 +31,7 @@ export default function Page() {
     try {
 
         const response = await fetch('https://online-marketplace-gamma.vercel.app/api/users/register', { 
-            
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
-
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // HTtp request indeed
@@ -81,7 +79,7 @@ export default function Page() {
           },
           body: JSON.stringify({ Email: email, Password: password }), // Ensure email and password are set correctly
       });
-
+      
       if (response.ok) {
 
         const { token, user } = await response.json();
@@ -95,6 +93,7 @@ export default function Page() {
     
     else {
 
+      console.log("Email:", email, "Password:", password);
         console.log("login response fetch: ", response)
         const errorData = await response.json();
         console.error("Error login:", errorData);
