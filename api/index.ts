@@ -13,7 +13,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 const server = express();
-const port = process.env.API_PORT || 3000;
+const port = 3001;
 
 connectToMongoDB();
 

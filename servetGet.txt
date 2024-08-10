@@ -77,3 +77,13 @@ type Account = Users[];
     <p>No users found.</p>
   )}
 </div>
+
+
+
+const corsOptions = {
+  origin: 'https://online-marketplace-eight.vercel.app', // Replace with your front-end URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
+  credentials: true, // Allow credentials if needed
+};
+
+server.use(cors(corsOptions));
