@@ -6,6 +6,7 @@ import ProtectedRoutes from './protectedRoutes.ts'; // Adjust the import path as
 import connectToMongoDB from './db.ts'; // Adjust the import path as necessary
 
 dotenv.config(); // Load environment variables
+const port = process.env.PORT || 9001;
 
 const server = express();
 
@@ -21,7 +22,7 @@ server.use('/api/users', UserRoutes);
 server.use('/api', ProtectedRoutes);
 
 server.get("/", (req, res) => {
-    res.json("Hello");
+    res.json("Hello from the API!");
 });
 
 // Export the server as a handler for Vercel
