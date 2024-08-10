@@ -15,7 +15,13 @@ connectToMongoDB();
 
 // Middleware to parse JSON
 server.use(express.json());
-server.use(cors());
+server.use(cors(
+    {
+        origin: ["https://deploy-mern-frontend.vercel.app"],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+));
 
 // Define routes
 server.use('/api/users', UserRoutes);
