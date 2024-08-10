@@ -27,9 +27,6 @@ server.use(cors());
     })
 
       // Use Next.js request handler
-      server.all('*', (req: Request, res: Response) => {
-        return handle(req, res);
-      });
 
       server.listen(port, async () => {
         console.log(`Server is listening on port ${port}`);
