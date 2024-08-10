@@ -4,7 +4,7 @@ import { GenerateToken } from "./AuthenticatedJWT";
 const router = express.Router();
 
 
-router.post("/", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     const { Email, Password } = req.body;
 
   try {
