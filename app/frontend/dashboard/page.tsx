@@ -21,7 +21,7 @@ const DashboardPage = () => {
             }
 
             try {
-                const response = await fetch('https://online-marketplace-gamma.vercel.app/api/dashboard', {
+                const response = await fetch('api/dashboard', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

@@ -32,7 +32,9 @@ server.use(cors(corsOptions));
     app.prepare().then(() => { // use to prepare and start nextjs application before handling routes or request
       server.use('/api/users', UserRoutes);
       server.use('/api', ProtectedRoutes);
-
+      server.get('/', (req, res) => {
+        res.send('Hello Index.ts!')
+      })
 
       // Use Next.js request handler
       server.all('*', (req: Request, res: Response) => {

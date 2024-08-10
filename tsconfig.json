@@ -26,7 +26,7 @@
     ]
   },
   "include": [
-    "**/*.ts",
+    "./api/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
