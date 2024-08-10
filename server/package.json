@@ -9,7 +9,7 @@
     "dev:api": "ts-node server/index.ts",
     "dev:frontend": "next dev",
     "build": "next build",
-    "start": "ts-node server.ts",
+    "start": "ts-node index.ts",
     "lint": "next lint"
   },
   "dependencies": {
