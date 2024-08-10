@@ -15,9 +15,7 @@ const DashboardPage = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             const token = localStorage.getItem('token');
-            console.log("dashboard token: ", token)
-            setLoader(true)
-            console.log("get token:", token)
+                 setLoader(true)
             if (!token) {
                 router.push('/login'); // Redirect to login if token is not found
                 return;
