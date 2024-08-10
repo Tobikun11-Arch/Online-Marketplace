@@ -31,7 +31,7 @@ export default function Page() {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
 
-        const response = await fetch(`${port}/api/users/register`, { 
+        const response = await fetch(`/api/users/register`, { 
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
             method: 'POST',
             headers: {
@@ -72,7 +72,7 @@ export default function Page() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
-      const response = await fetch(`${port}/api/users/login`, {
+      const response = await fetch(`/api/users/login`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
