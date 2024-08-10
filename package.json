@@ -6,7 +6,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev:api": "ts-node api/index.ts",
+    "dev:api": "ts-node api/index.js",
     "dev:frontend": "next dev",
     "build": "next build",
     "start": "ts-node server.ts",
