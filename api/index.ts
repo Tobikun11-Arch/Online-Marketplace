@@ -21,7 +21,7 @@ connectToMongoDB();
 server.use(express.json());
 
 const corsOptions = {
-  origin: 'https://online-marketplace-eight.vercel.app', // Replace with your front-end URL
+  origin: 'https://online-marketplace-gamma.vercel.app/', // Replace with your front-end URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the methods you want to allow
   credentials: true, // Allow credentials if needed
 };
