@@ -30,7 +30,7 @@ export default function Page() {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
 
-        const response = await fetch('https://online-marketplace-gamma.vercel.app//api/users/register', { 
+        const response = await fetch('https://online-marketplace-gamma.vercel.app/api/users/register', { 
             
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
 
@@ -74,7 +74,7 @@ export default function Page() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
-      const response = await fetch('https://online-marketplace-gamma.vercel.app//api/users/login', {
+      const response = await fetch('https://online-marketplace-gamma.vercel.app/api/users/login', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
