@@ -15,13 +15,7 @@ connectToMongoDB();
 
 // Middleware to parse JSON
 server.use(express.json());
-server.use(cors(
-    {
-        origin: ["https://deploy-mern-frontend.vercel.app"],
-        methods: ["POST", "GET"],
-        credentials: true
-    }
-));
+server.use(cors());
 
 // Define routes
 server.use('/api/users', UserRoutes);
@@ -30,6 +24,10 @@ server.use('/api', ProtectedRoutes);
 server.get("/", (req, res) => {
     res.json("Hello from the API!");
 });
+
+server.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 
 // Export the server as a handler for Vercel
 export default server;
