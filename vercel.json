@@ -1,12 +1,1 @@
-{
-  "version": 2,
-  "functions": {
-    "api/index.ts": {}
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.ts"
-    }
-  ]
-}
+{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
