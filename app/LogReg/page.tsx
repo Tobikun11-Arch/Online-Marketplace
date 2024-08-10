@@ -72,7 +72,7 @@ export default function Page() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
-      const response = await fetch(`/api/users/login`, {
+      const response = await fetch(`/login`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
