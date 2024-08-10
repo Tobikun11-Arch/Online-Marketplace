@@ -28,9 +28,11 @@
   "include": [
     "./api/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
-, "api/pages/login.ts", "api/index.js"  ],
+    ".next/types/**/*.ts",
+    "api/pages/login.ts"  // Keep only TypeScript files here
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "api/index.js"  // Exclude the JavaScript file
   ]
 }
