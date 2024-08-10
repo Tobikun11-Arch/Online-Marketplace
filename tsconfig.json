@@ -26,13 +26,13 @@
     ]
   },
   "include": [
-    "./api/*.ts",
+    "server/api/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "api/pages/login.ts"  // Keep only TypeScript files here
-  ],
+    "server/api/pages/login.ts"  // Keep only TypeScript files here
+, "server/index.ts"  ],
   "exclude": [
     "node_modules",
-    "api/index.ts"  // Exclude the JavaScript file
+    "server/index.ts"  // Exclude the JavaScript file
   ]
 }
