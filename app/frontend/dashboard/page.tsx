@@ -19,7 +19,7 @@ const DashboardPage = () => {
             }
 
             try {
-                const response = await fetch('https://online-marketplace-backend-ten.vercel.app/api/dashboard', {
+                const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/dashboard', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
