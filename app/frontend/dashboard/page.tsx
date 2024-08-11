@@ -9,9 +9,6 @@ const DashboardPage = () => {
     const [loader, setLoader] = useState(false)
     const router = useRouter();
 
-    const PORT = process.env.PORT || 9001;
-  const port = `http://localhost:${PORT}`;
-
     useEffect(() => {
         const fetchUserData = async () => {
             const token = localStorage.getItem('token');
@@ -22,7 +19,7 @@ const DashboardPage = () => {
             }
 
             try {
-                const response = await fetch(`${port}/api/dashboard`, {
+                const response = await fetch('https://online-marketplace-backend-ten.vercel.app/api/Dashboard', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

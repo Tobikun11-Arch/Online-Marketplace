@@ -20,8 +20,6 @@ export default function Page() {
   const[password, setPassword] = useState('');
   const router = useRouter();
 
-  const PORT = process.env.PORT || 9001;
-  const port = `http://localhost:${PORT}`;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -31,7 +29,7 @@ export default function Page() {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
 
-        const response = await fetch(`${port}/api/users/register`, { 
+        const response = await fetch('https://online-marketplace-backend-ten.vercel.app/api/users/register', { 
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
             method: 'POST',
             headers: {
@@ -72,7 +70,7 @@ export default function Page() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
-      const response = await fetch(`${port}/api/users/login`, {
+      const response = await fetch('https://online-marketplace-backend-ten.vercel.app/api/users/login', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
