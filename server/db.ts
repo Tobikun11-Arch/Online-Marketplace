@@ -3,6 +3,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+console.log('MONGO_URI:', process.env.MONGO_URI);
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+console.log('PORT:', process.env.PORT);
+console.log('NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+
 const uri = process.env.MONGO_URI!;
 
 const connectToMongoDB = async () => {

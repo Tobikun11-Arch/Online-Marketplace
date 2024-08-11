@@ -1,8 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules/
-.env
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -37,3 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+node_modules

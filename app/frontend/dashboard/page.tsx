@@ -22,7 +22,7 @@ const DashboardPage = () => {
             }
 
             try {
-                const response = await fetch(`https://nodejs-serverless-function-express-lake-ten.vercel.app/api/dashboard`, {
+                const response = await fetch(`${port}/api/dashboard`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

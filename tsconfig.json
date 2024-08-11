@@ -29,10 +29,16 @@
     "server/api/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "server/api/pages/login.ts"  // Keep only TypeScript files here
-, "server/index.ts"  ],
+    "server/api/pages/login.ts",  
+    "server/api/index.ts",
+    "server/authMiddleware.ts",
+    "server/AuthenticatedJWT.ts",
+    "server/protectedRoutes.ts",
+    "server/config.ts",  
+    "server/userInterface.ts"  
+  ],
   "exclude": [
-    "node_modules",
-    "server/index.ts"  // Exclude the JavaScript file
+    "node_modules"
+    // "server/api/index.ts"  // Consider removing this line unless you want to exclude it
   ]
 }

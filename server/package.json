@@ -6,7 +6,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev:api": "ts-node server/api/index.ts",
+    "dev:api": "ts-node api/index.ts",
     "dev:frontend": "next dev",
     "build": "next build",
     "start": "ts-node index.ts",
@@ -21,10 +21,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.2",
-    "next": "14.2.5",
+    "next": "^14.2.5",
     "online-marketplace": "file:",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
