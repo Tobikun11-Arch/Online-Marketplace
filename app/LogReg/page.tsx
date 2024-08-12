@@ -82,6 +82,7 @@ export default function Page() {
 
         const { token, user } = await response.json();
         localStorage.setItem('token', token);
+        console.log("token: ", token)
         localStorage.setItem('user', JSON.stringify(user));
         router.push('/frontend/dashboard');
 

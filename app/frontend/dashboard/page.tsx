@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dotenv from 'dotenv';
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 const DashboardPage = () => {
     const [user, setUser] = useState<{ name: string; email: string} | null>(null);
