@@ -29,7 +29,7 @@ export default function Page() {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
 
-        const response = await fetch('http://localhost:9001/api/users/register', { 
+        const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/register', { 
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
             method: 'POST',
             headers: {
@@ -70,7 +70,7 @@ export default function Page() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
     try {
-      const response = await fetch('http://localhost:9001/api/users/login', {
+      const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/login', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -82,7 +82,6 @@ export default function Page() {
 
         const { token, user } = await response.json();
         localStorage.setItem('token', token);
-        console.log("token: ", token)
         localStorage.setItem('user', JSON.stringify(user));
         router.push('/frontend/dashboard');
 
