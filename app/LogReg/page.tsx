@@ -13,7 +13,7 @@ interface ApiResponse {
 
 export default function Page() {
 
-  const [formData, setFormData] = useState({ Name: '', Email: '', Password: '' });
+  const [formData, setFormData] = useState({ Name: '', Email: '', Password: ''});
   const [message, setMessage] = useState('');
   const [messageLogin, setMessagelogin] = useState('');
   const[email, setEmail] = useState('');
@@ -33,10 +33,10 @@ export default function Page() {
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json', // HTtp request indeed
+                'Content-Type': 'application/json', 
             },
 
-            body: JSON.stringify(formData), // Convert formData to JSON
+            body: JSON.stringify(formData),
         });
 
         // Check if the response is OK (status in the range 200-299)
@@ -83,7 +83,7 @@ export default function Page() {
         const { token, user } = await response.json();
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
-        router.push('/frontend/dashboard');
+        router.push('/dashboard');
 
     }
     
