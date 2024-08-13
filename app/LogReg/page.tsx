@@ -1,7 +1,8 @@
 "use client"
 import './LogRegs.css'
-import Mailpop from '../SendEmail.tsx/Mailpop';
+import Mailpop from '../SendEmail/Mailpop';
 import React, { useState } from 'react';
+import './load.css'
 import {useRouter} from 'next/navigation';
 import dotenv from 'dotenv';
 dotenv.config(); // Load environment variables
@@ -21,6 +22,7 @@ export default function Page() {
   const [password, setPassword] = useState('');
   const router = useRouter();
   const [open, setOpen] = useState(false)
+  const [loader, setLoader] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -71,12 +73,27 @@ export default function Page() {
   };
 
 
+  if(loader) {
 
+    return(
+        <>
+        
+        <div className="w-full h-screen bg-black flex justify-center items-center">
+
+        <div className="loader"></div>
+      
+        </div>
+
+        </>
+    )
+
+}
 
   //Login
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
+    setLoader(true)
     try {
       const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/login', {
           method: 'POST',
@@ -88,6 +105,7 @@ export default function Page() {
       
       if (response.ok) {
 
+        setLoader(false)
         const { token, user } = await response.json();
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));

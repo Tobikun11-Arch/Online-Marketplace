@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dotenv from 'dotenv';
+import '../LogReg/load.css'
 dotenv.config();
 
 const DashboardPage = () => {
@@ -58,9 +59,9 @@ const DashboardPage = () => {
         return(
             <>
             
-            <div className="w-full h-screen bg-gray-100 flex justify-center items-center">
+            <div className="w-full h-screen bg-black flex justify-center items-center">
 
-            <p>Loading...</p>
+            <div className="loader"></div>
        
             </div>
 
