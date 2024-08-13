@@ -12,13 +12,6 @@ export default function page() {
 
     </div>
 
-    <div className="w-full h-screen bg-gray-100">
-
-    <Mailpop />
-
-    </div>
-      
-
     </>
   )
 }
