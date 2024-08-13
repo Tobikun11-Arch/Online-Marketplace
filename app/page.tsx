@@ -1,5 +1,4 @@
 import LogReg from './LogReg/page'
-import Mailpop from './SendEmail.tsx/Mailpop'
 
 export default function page() {
 
