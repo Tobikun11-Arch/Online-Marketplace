@@ -89,54 +89,56 @@ const corsOptions = {
 server.use(cors(corsOptions));
 
 
-Connection error: MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
-    at _handleConnectionErrors (/var/task/node_modules/mongoose/lib/connection.js:897:11)
-    at NativeConnection.openUri (/var/task/node_modules/mongoose/lib/connection.js:848:11)
-    at runNextTicks (node:internal/process/task_queues:60:5)
-    at processTimers (node:internal/timers:511:9)
-    at connectToMongoDB (/vercel/path0/db.ts:19:9) {
-  reason: TopologyDescription {
-    type: 'ReplicaSetNoPrimary',
-    servers: Map(3) {
-      'ac-zgzfndk-shard-00-01.rs9yhha.mongodb.net:27017' => [ServerDescription],
-      'ac-zgzfndk-shard-00-02.rs9yhha.mongodb.net:27017' => [ServerDescription],
-      'ac-zgzfndk-shard-00-00.rs9yhha.mongodb.net:27017' => [ServerDescription]
-    },
-    stale: false,
-    compatible: true,
-    heartbeatFrequencyMS: 10000,
-    localThresholdMS: 15,
-    setName: 'atlas-nkol0w-shard-0',
-    maxElectionId: null,
-    maxSetVersion: null,
-    commonWireVersion: 0,
-    logicalSessionTimeoutMinutes: null
-  },
-  code: undefined
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+verified user:  {
+  _id: new ObjectId('66bb35aadfa36278202514f2'),
+  Name: 'dredger',
+  Email: 'dredgerbroker@gmail.com',
+  Password: '$2b$10$DeaF9WhkF7HcehbflJJyJ.9gL0j3zy.qm9lAed2lA7OnL7z6UeUw.',
+  Role: 'buyer',
+  isVerifiedEmail: false,
+  emailToken: 'da1c3e495b8fa11500413e308fa74532c0828c5060b7223012f9b1ea9c3298e11ef24e0b09c55a45460714845924c34e31086ae658044a89735bd28269f76296',
+  __v: 0
 }
-MongoDB connection error: MongooseServerSelectionError: Could not connect to any servers in your MongoDB Atlas cluster. One common reason is that you're trying to access the database from an IP that isn't whitelisted. Make sure your current IP address is on your Atlas cluster's IP whitelist: https://www.mongodb.com/docs/atlas/security-whitelist/
-    at _handleConnectionErrors (/var/task/node_modules/mongoose/lib/connection.js:897:11)
-    at NativeConnection.openUri (/var/task/node_modules/mongoose/lib/connection.js:848:11)
-    at runNextTicks (node:internal/process/task_queues:60:5)
-    at processTimers (node:internal/timers:511:9)
-    at connectToMongoDB (/vercel/path0/db.ts:19:9) {
-  reason: TopologyDescription {
-    type: 'ReplicaSetNoPrimary',
-    servers: Map(3) {
-      'ac-zgzfndk-shard-00-01.rs9yhha.mongodb.net:27017' => [ServerDescription],
-      'ac-zgzfndk-shard-00-02.rs9yhha.mongodb.net:27017' => [ServerDescription],
-      'ac-zgzfndk-shard-00-00.rs9yhha.mongodb.net:27017' => [ServerDescription]
-    },
-    stale: false,
-    compatible: true,
-    heartbeatFrequencyMS: 10000,
-    localThresholdMS: 15,
-    setName: 'atlas-nkol0w-shard-0',
-    maxElectionId: null,
-    maxSetVersion: null,
-    commonWireVersion: 0,
-    logicalSessionTimeoutMinutes: null
+Error verifying email: Error: User validation failed: emailToken: Path `emailToken` is required.
+    at ValidationError.inspect (/var/task/node_modules/mongoose/lib/error/validation.js:50:26)
+    at formatValue (node:internal/util/inspect:806:19)
+    at inspect (node:internal/util/inspect:365:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2304:40)
+    at format (node:internal/util/inspect:2161:10)
+    at me (/opt/rust/nodejs.js:1:13974)
+    at /opt/rust/nodejs.js:5:238
+    at AsyncLocalStorage.run (node:async_hooks:346:14)
+    at console.<anonymous> (/opt/rust/nodejs.js:5:203)
+    at /vercel/path0/verificationRoutes.ts:39:15 {
+  errors: {
+    emailToken: ValidatorError: Path `emailToken` is required.
+        at validate (/var/task/node_modules/mongoose/lib/schemaType.js:1385:13)
+        at SchemaString.SchemaType.doValidate (/var/task/node_modules/mongoose/lib/schemaType.js:1369:7)
+        at /var/task/node_modules/mongoose/lib/document.js:3071:18
+        at processTicksAndRejections (node:internal/process/task_queues:77:11) {
+      properties: [Object],
+      kind: 'required',
+      path: 'emailToken',
+      value: '',
+      reason: undefined,
+      [Symbol(mongoose#validatorError)]: true
+    }
   },
-  code: undefined
+  _message: 'User validation failed'
 }
-Node.js process exited with exit status: 1. The logs above can help with debugging the issue.

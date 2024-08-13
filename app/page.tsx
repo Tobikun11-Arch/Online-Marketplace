@@ -1,4 +1,5 @@
 import LogReg from './LogReg/page'
+import Mailpop from './SendEmail.tsx/Mailpop'
 
 export default function page() {
 
@@ -10,7 +11,14 @@ export default function page() {
     <LogReg />
 
     </div>
-    
+
+    <div className="w-full h-screen bg-gray-100">
+
+    <Mailpop />
+
+    </div>
+      
+
     </>
   )
 }

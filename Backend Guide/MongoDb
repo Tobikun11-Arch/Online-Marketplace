@@ -27,7 +27,7 @@ UPDATE METHODS:
 await users.updateOne({ username: 'user1' }, { $set: { password: 'newpass' } });
 
 //updateMany: Updates multiple documents that match the filter criteria.
-await users.updateMany({ username: { $in: ['user1', 'user2'] } }, { $set: { password: 'newpass' } });
+await users.updateMany({ username: { $in: ['user1', 'user2'] }   }, { $set: { password: 'newpass' } });
 
 //replaceOne: Replaces a single document that matches the filter criteria with a new document.
 await users.replaceOne({ username: 'user1' }, { username: 'user1', password: 'newpass' });
