@@ -29,7 +29,12 @@ export default function Page() {
 
 
   const handlePop = () => setOpen(true);
-  const handlePopClose = () => setOpen(false);
+  const handlePopClose = () => {
+
+    setOpen(false);
+    setMessage('');
+
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
@@ -115,7 +120,18 @@ export default function Page() {
 {open && (
         message ? (
          
-          ''
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-5 font-sans">
+            <div className="relative flex w-80 max-w-4xl items-center justify-center">
+             <div className="p-5 bg-blue-500 w-80 cursor-default">{message} 
+             <div className="absolute right-2 top-1" onClick={handlePopClose}>
+                     <p className='font-bold'>X</p>
+                </div>
+             </div>
+
+             
+                
+            </div>
+          </div>
             
         ) : (
 
@@ -165,7 +181,6 @@ export default function Page() {
                   <input className="flip-card__input" name="Password" placeholder="Password" type="password"  onChange={handleChange} value={formData.Password}/>
 
                   <button className="flip-card__btn" onClick={handlePop}>Confirm!</button>
-                  {message && message}
 
                 </form>
                               </div>
