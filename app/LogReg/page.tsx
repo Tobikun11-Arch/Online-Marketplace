@@ -118,6 +118,8 @@ export default function Page() {
           },
           body: JSON.stringify({ Email: email, Password: password }), // Ensure email and password are set correctly
       });
+
+      console.log("login response: ", response)
       
       if (response.ok) {
 
