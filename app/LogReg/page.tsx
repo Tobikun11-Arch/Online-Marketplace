@@ -70,7 +70,7 @@ export default function Page() {
 
         console.error('There was a problem with the fetch operation:', error);
 
-        setMessage('An error occurred while registering.'); // Set an error message
+        setMessage('Please confirm again.'); // Set an error message
 
     }
 
