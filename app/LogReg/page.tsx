@@ -93,8 +93,9 @@ export default function Page() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
-    setLoader(true)
+   
     try {
+      setLoader(true)
       const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/login', {
           method: 'POST',
           headers: {
@@ -114,7 +115,7 @@ export default function Page() {
     }
     
     else {
-
+        
         const errorData = await response.json();
         console.error("Error login:", errorData);
         setMessagelogin(errorData.error || 'Login failed');
