@@ -1,7 +1,7 @@
 "use client"
 import './LogRegs.css'
 import Mailpop from '../SendEmail/Mailpop';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './load.css'
 import {useRouter} from 'next/navigation';
 import dotenv from 'dotenv';
@@ -31,17 +31,21 @@ export default function Page() {
 
 
   const handlePop = () => setOpen(true);
-  const handlePopClose = () => {
-
-    setOpen(false);
-    setMessage('');
-
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
+
+    if(formData.Name === '' || formData.Email === '' || formData.Password === '') {
+
+      setMessage('Please fill all fields');
+
+    }
+    
+    else {
+
     try {
 
+      setMessage('')
         const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/register', { 
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
             method: 'POST',
@@ -70,6 +74,8 @@ export default function Page() {
 
     }
 
+  }
+
   };
 
 
@@ -93,7 +99,16 @@ export default function Page() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); //user details to server post in server.ts to insert in database
-   
+
+    
+    if(email === '' || password === '') {
+
+      setMessagelogin('Invalid Email or Password');
+
+    }
+
+    else {
+
     try {
       setLoader(true)
       const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/login', {
@@ -115,7 +130,8 @@ export default function Page() {
     }
     
     else {
-        
+
+      setLoader(false)
         const errorData = await response.json();
         console.error("Error login:", errorData);
         setMessagelogin(errorData.error || 'Login failed');
@@ -130,27 +146,19 @@ export default function Page() {
 
     }
 
+  }
+
   };
 
 
   return (
     <>
 
+
 {open && (
         message ? (
          
-          <div className="fixed inset-0 z-50 flex items-center justify-center px-5 font-sans">
-            <div className="relative flex w-80 max-w-4xl items-center justify-center">
-             <div className="p-5 bg-blue-500 w-80 cursor-default">{message} 
-             <div className="absolute right-2 top-1" onClick={handlePopClose}>
-                     <p className='font-bold'>X</p>
-                </div>
-             </div>
-
-             
-                
-            </div>
-          </div>
+         ''
             
         ) : (
 
@@ -200,6 +208,7 @@ export default function Page() {
                   <input className="flip-card__input" name="Password" placeholder="Password" type="password"  onChange={handleChange} value={formData.Password}/>
 
                   <button className="flip-card__btn" onClick={handlePop}>Confirm!</button>
+                  {message && <p>{message}</p>}
 
                 </form>
                               </div>
