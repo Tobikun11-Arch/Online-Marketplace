@@ -11,7 +11,7 @@ export default function Option() {
     </div>
 
     <div className="w-64 h-96 bg-white">
-        
+        <p></p>
     </div>
 
     </div>

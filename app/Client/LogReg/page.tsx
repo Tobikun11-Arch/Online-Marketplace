@@ -127,7 +127,7 @@ export default function Page() {
         const { token, user } = await response.json();
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
-        router.push('/dashboard');
+        router.push('/Client/dashboard');
 
     }
     

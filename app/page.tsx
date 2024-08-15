@@ -1,4 +1,4 @@
-import LogReg from './LogReg/page'
+import LogReg from './Client/LogReg/page'
 
 export default function page() {
 
