@@ -9,7 +9,6 @@ router.get('/verify/:token', async (req, res) => {
     try {
    
       const user = await User.findOne({ emailToken: token });
-        console.log("verified user: ", user)
     
         if (!user) {
 
@@ -26,7 +25,7 @@ router.get('/verify/:token', async (req, res) => {
       user.isVerifiedEmail = true;
       user.emailToken = undefined;
       await user.save();
-      res.redirect('https://online-marketplace-beta.vercel.app/Verification');
+      res.redirect('https://online-marketplace-beta.vercel.app/Client/Verification');
 
     } 
     

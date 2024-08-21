@@ -4,8 +4,6 @@ import Mailpop from '../SendEmail/Mailpop';
 import React, { useState, useEffect } from 'react';
 import './load.css'
 import {useRouter} from 'next/navigation';
-import dotenv from 'dotenv';
-dotenv.config(); // Load environment variables
 
 interface ApiResponse {
 

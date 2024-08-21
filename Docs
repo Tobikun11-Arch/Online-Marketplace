@@ -1,0 +1,12 @@
+<Image 
+      loading='lazy'
+      alt='Zoro picture'
+      width={300}
+      height={300}
+      src={"https://i.pinimg.com/564x/c0/51/4a/c0514ad71f49a6f94b879b863184e621.jpg"}
+      placeholder='blur'
+      blurDataURL='data:image/svg+xml;base64,...'
+    />
+
+
+    

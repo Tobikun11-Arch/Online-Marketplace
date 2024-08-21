@@ -1,0 +1,27 @@
+
+
+.animated-box {
+    animation: moveRight 2s ease-out forwards;
+  }
+
+  @keyframes moveRight {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(200px); /* Adjust this value as needed */
+    }
+}
+
+.animated-boxLeft {
+    animation: moveLeft 2s ease-out forwards;
+  }
+
+  @keyframes moveLeft {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-160px); /* Adjust this value as needed */
+    }
+}

@@ -3,7 +3,8 @@ import bcrypt from 'bcrypt';
 
 interface IUser extends Document {
     _id: Types.ObjectId;
-    Name: string;
+    FirstName: string;
+    LastName: string;
     Email: string;
     Password: string;
     Role: string;
@@ -13,7 +14,8 @@ interface IUser extends Document {
 }
 
 const userSchema = new mongoose.Schema<IUser>({
-    Name: { type: String, required: true },
+    FirstName: { type: String, required: true },
+    LastName: { type: String, required: true },
     Email: { type: String, required: true, unique: true },
     Password: { type: String, required: true },
     Role: { type: String, required: true },

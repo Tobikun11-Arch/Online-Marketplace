@@ -23,7 +23,7 @@ protectedroute.get('/dashboard', async (req: RequestWithUser, res: Response) => 
         }
 
         // Ensure user is typed correctly
-        res.json({ message: `Welcome, ${user.Name}!`, user: { Name: user.Name, Email: user.Email } });
+        res.json({ message: `Welcome, ${user.FirstName}!`, user: { FirstName: user.FirstName, LastName: user.LastName, Email: user.Email } });
     } catch (error) {
         console.error('Error fetching user data:', error);
         res.status(500).json({ error: 'Internal server error' });

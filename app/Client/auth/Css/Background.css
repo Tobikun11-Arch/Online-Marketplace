@@ -1,0 +1,49 @@
+.Background {
+
+    background-image: url("https://images8.alphacoders.com/132/1325725.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    background-image: linear-gradient(
+        to bottom right,
+        rgba(0, 0, 0, 0.953),
+        rgba(0, 0, 0, 0.479)
+      ), url("https://images8.alphacoders.com/132/1325725.png");
+
+}
+
+@media (max-width: 640px) { 
+
+  .input-width {
+
+    width: 91.666667%;
+    margin-left: 0;
+    margin-top: 12px;
+  
+  }
+
+  .BackgroundBox {
+
+    background-image: url("https://images8.alphacoders.com/132/1325725.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    background-image: linear-gradient(
+        to bottom right,
+        rgba(0, 0, 0, 0.953),
+        rgba(0, 0, 0, 0.479)
+      ), url("https://images8.alphacoders.com/132/1325725.png");
+
+}
+
+}
+
+input.placeholder-large::placeholder,
+textarea.placeholder-large::placeholder {
+  color: gray;
+  font-size: 14px;
+}
+
+

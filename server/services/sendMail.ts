@@ -12,7 +12,7 @@ const sendMail = async (lowerCaseEmail: string, emailToken: string) => {
   const mailOptions = {
     from: 'BazaarBuddy',
     to: lowerCaseEmail,
-    subject: '[Online-marketplace] Action required: Verify your identity',
+    subject: '[Bazaar Buddy] Action required: Verify your identity',
     html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; border-radius: 5px; max-width: 600px; margin: auto;">
             <h2 style="color: #333; font-size: 24px;">Email Verification</h2>

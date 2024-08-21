@@ -17,7 +17,7 @@ interface RequestWithUser extends Request {
 
 
 export const Register = async (req: Request, res: Response) => {
-  const { Name, Email, Password } = req.body;
+  const { FirstName, LastName, Email, Password } = req.body;
   const Role = "buyer";
 
 if (!Email || !Password) {
@@ -30,7 +30,7 @@ const lowerCaseEmail = Email.toLowerCase();
 
       const HashPassword = await bcrypt.hash(Password, 10);
       const emailToken = crypto.randomBytes(64).toString('hex');
-      const newUser = new User({ Name, Email: lowerCaseEmail, Password: HashPassword, Role, emailToken });
+      const newUser = new User({ FirstName, LastName, Email: lowerCaseEmail, Password: HashPassword, Role, emailToken });
       await sendMail(lowerCaseEmail, emailToken)
       await newUser.save();
       res.status(201).json();
@@ -70,7 +70,7 @@ export const Login = async (req: Request, res: Response) => {
 
         const token = GenerateToken(user._id.toString());
         console.log("login token: ", token)
-        res.json({ token, user: { Name: user.Name, Email: user.Email} });
+        res.json({ token, user: { FirstName: user.FirstName, LastName: user.LastName, Email: user.Email} });
 
       }
     

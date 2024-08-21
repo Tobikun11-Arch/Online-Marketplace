@@ -6,7 +6,7 @@ import '../LogReg/load.css'
 dotenv.config();
 
 const DashboardPage = () => {
-    const [user, setUser] = useState<{ name: string; email: string} | null>(null);
+    const [user, setUser] = useState<{ firstname: string; lastname: string; email: string} | null>(null);
     const [loader, setLoader] = useState(false)
     const router = useRouter();
 
@@ -31,7 +31,7 @@ const DashboardPage = () => {
                 if (response.ok) {
                     setLoader(false)
                     const data = await response.json();
-                    setUser({ name: data.user.Name, email: data.user.Email}); 
+                    setUser({ firstname: data.user.FirstName, lastname: data.user.LastName, email: data.user.Email}); 
 
                 }
                 
@@ -76,7 +76,7 @@ const DashboardPage = () => {
         
         <div className="w-full h-screen bg-gray-950 flex justify-center items-center">
 
-        <h1 className='w-3/4 text-white'>Welcome, {user?.name}! All of your data, as well as any data you store on this site, will be 100% secure. This site uses Json Web Token(Jwt) and password hashing, so even if an uninvited guest (hacker) breaches our database, your data will remain protected. HAHHAHA chilax kalang ha next 2 weeks tapos na to.</h1>   
+        <h1 className='w-3/4 text-white'>Welcome, {user?.firstname} {user?.lastname}! All of your data, as well as any data you store on this site, will be 100% secure. This site uses Json Web Token(Jwt) and password hashing, so even if an uninvited guest (hacker) breaches our database, your data will remain protected. HAHHAHA chilax kalang ha next 2 weeks tapos na to.</h1>   
        
         </div>
         </>

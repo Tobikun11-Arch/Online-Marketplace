@@ -1,0 +1,314 @@
+"use client"
+
+import React, { FormEvent, useState } from 'react'
+import './Css/Background.css'
+import {useRouter} from 'next/navigation';
+
+export default function LoginForm() {
+
+  const [isClick, setHide] = useState(false);
+
+  const Clicked = (e: FormEvent<HTMLElement>) => {
+
+      e.preventDefault();
+      setHide((prevState) => !prevState);
+
+  }
+
+  const [formData, setFormData] = useState({ FirstName: '', LastName: '', Email: '', Password: ''});
+  const [message, setMessage] = useState('');
+  const [messageLogin, setMessagelogin] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const [open, setOpen] = useState(false)
+  const [loader, setLoader] = useState(false)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+
+  const handlePop = () => setOpen(true);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); //user details to server post in server.ts to insert in database
+
+    if(formData.FirstName === '' || formData.LastName === '' || formData.Email === '' || formData.Password === '') {
+
+      setMessage('Please fill all fields');
+
+    }
+    
+    else {
+
+    try {
+
+      setMessage('')
+        const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/register', { 
+            //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', 
+            },
+
+            body: JSON.stringify(formData),
+        });
+
+        // Check if the response is OK (status in the range 200-299)
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+
+        setFormData({FirstName: '', LastName: '', Email: '', Password: ''});
+       
+
+    } 
+    
+    catch (error) {
+
+        console.error('There was a problem with the fetch operation:', error);
+
+        setMessage('Please confirm again.'); // Set an error message
+
+    }
+
+  }
+
+  };
+
+
+  if(loader) {
+
+    return(
+        <>
+        
+        <div className="w-full h-screen bg-black flex justify-center items-center">
+
+        <div className="loader"></div>
+      
+        </div>
+
+        </>
+    )
+
+}
+
+
+
+  //Login
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault(); //user details to server post in server.ts to insert in database
+
+    
+    if(email === '' || password === '') {
+
+      setMessagelogin('Invalid Email or Password');
+
+    }
+
+    else {
+
+    try {
+      setLoader(true)
+      const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ Email: email, Password: password }), // Ensure email and password are set correctly
+      });
+
+      console.log("login response: ", response)
+      
+      if (response.ok) {
+
+        setLoader(false)
+        const { token, user } = await response.json();
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        router.push('/Client/dashboard');
+
+    }
+    
+    else {
+
+      setLoader(false)
+        const errorData = await response.json();
+        console.error("Error login:", errorData);
+        setMessagelogin(errorData.error || 'Login failed');
+        
+    }
+
+    } 
+    
+    catch (error) {
+
+      console.error('Error logging in:', error);
+
+    }
+
+  }
+
+  };
+
+console.log("message: ", message)
+
+  return (
+   <>
+
+
+   {isClick ? (
+    <>
+
+      {/**Register area */}
+      
+
+   <div className="Main w-full min-h-screen BackgroundBox Background flex justify-center items-center">
+
+   {open && (
+  message ? (
+<div role="alert" className="alert alert-error top-0 absolute">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6 shrink-0 stroke-current"
+    fill="none"
+    viewBox="0 0 24 24">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+  <span>{message}</span>
+</div>
+  ) : (
+ <>
+ 
+ <div role="alert" className="alert alert-success top-0 absolute">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6 shrink-0 stroke-current"
+    fill="none"
+    viewBox="0 0 24 24">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+  <span>Verification link sent to your email. Please confirm it.</span>
+</div>
+    
+ </>
+  )
+)}
+
+<div className="sm:w-4/6 sm:h-4/5 sm:rounded-3xl flex justify-center items-center">
+
+
+<div className="sm:mt-20 w-full sm:ml-10 ml-5">
+<h1 className='text-gray-500 text-xs sm:text-xl'>Start for Free</h1>
+
+<h1 className='text-white font-semibold w-5/6 text-2xl'>Create new Account</h1>
+
+<p className='text-white mt-4 sm:text-base text-sm'>Already a Member? <a className='text-blue-700' href="" onClick={Clicked}>Login</a></p>   
+
+<div className="Form">
+<form action="" className='w-full flex-col sm:w-96' onSubmit={handleSubmit}>
+
+<div className="mt-6">
+<input type="text" name="FirstName" id="FirstName" placeholder='First Name' className='placeholder-large w-2/5 bg-transparent text-white border border-slate-400 outline-none pl-3 rounded-lg h-12 input-width' onChange={handleChange} value={formData.FirstName}/> 
+
+<input type="text" name="LastName" id="LastName" placeholder='Last Name' className='placeholder-large w-2/4 ml-2 bg-transparent text-white border border-slate-400 outline-none pl-3 rounded-lg h-12 input-width' onChange={handleChange} value={formData.LastName}/> <br />
+</div>
+
+<input type="email"  name="Email" placeholder='Email' className='placeholder-large mt-3 w-11/12 bg-transparent text-white border border-slate-400 outline-none pl-3 rounded-lg h-12' onChange={handleChange} value={formData.Email}/>
+<br />
+<input type="password" name="Password" placeholder='Password' className='placeholder-large mt-3  w-11/12 bg-transparent text-white border border-slate-400 outline-none pl-3 rounded-lg h-12' onChange={handleChange} value={formData.Password}/>
+
+<div className="w-11/12 flex justify-center">
+<button  className='px-10 py-3 bg-transparent text-white border text-xs font-bold border-slate-400 rounded-2xl mt-10 hover:bg-black flex justify-center' onClick={handlePop}>Create Account</button>
+
+
+</div>
+
+</form>
+
+</div>
+</div>
+</div>
+</div> 
+    
+    </>
+   ) : (
+    <>
+    
+    <div className="Main w-full min-h-screen BackgroundBox Background flex justify-center items-center">
+
+    {messageLogin ? (
+  <>
+  
+  <div role="alert" className="alert alert-warning top-0 absolute">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6 shrink-0 stroke-current"
+    fill="none"
+    viewBox="0 0 24 24">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+  </svg>
+  <span>{messageLogin}</span>
+</div>
+
+  </>
+) : (
+  ''
+)}
+
+<div className="sm:w-4/6 sm:h-4/5 sm:rounded-3xl flex justify-center items-center">
+
+<div className="sm:mt-20 w-full sm:ml-10 ml-5">
+<h1 className='text-gray-500 text-xs sm:text-xl'>Welcome Back</h1>
+
+<h1 className='text-white font-semibold w-5/6 text-2xl'>Log In to Your Account</h1> 
+
+<p className='text-white mt-4 sm:text-base text-sm'>New here? <a className='text-blue-700' href="" onClick={Clicked}>Register</a></p>   
+
+<div className="Form">
+
+<form action="" className='w-full flex-col sm:w-96' onSubmit={handleLogin}>
+
+<div className="mt-6">
+
+</div>
+<input type="email" placeholder='Email' className='placeholder-large mt-3 w-11/12 bg-transparent text-white border border-slate-400 outline-none pl-3 rounded-lg h-12'  value={email} onChange={(e) => setEmail(e.target.value)}/>
+<br />
+<input type="password" placeholder='Password' className='placeholder-large mt-3  w-11/12 bg-transparent text-white border border-slate-400 outline-none pl-3 rounded-lg h-12'  value={password} onChange={(e) => setPassword(e.target.value)}/>
+
+<div className="w-11/12 flex justify-center">
+<button className='px-10 py-3 bg-transparent text-white border text-xs font-bold border-slate-400 rounded-2xl mt-10 hover:bg-black flex justify-center'>Login</button>
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div> 
+
+    </>
+   )}
+
+
+   </>
+  )
+}
