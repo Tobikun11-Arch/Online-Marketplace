@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dotenv from 'dotenv';
-import '../LogReg/load.css'
+import './LogRegs.css'
 dotenv.config();
 
 const DashboardPage = () => {

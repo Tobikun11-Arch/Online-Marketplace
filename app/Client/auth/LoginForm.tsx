@@ -1,6 +1,6 @@
 "use client"
-
-import React, { FormEvent, useState } from 'react'
+import './Css/load.css'
+import React, { FormEvent, useEffect, useState } from 'react'
 import './Css/Background.css'
 import {useRouter} from 'next/navigation';
 
@@ -23,6 +23,7 @@ export default function LoginForm() {
   const router = useRouter();
   const [open, setOpen] = useState(false)
   const [loader, setLoader] = useState(false)
+  const [option, setOption] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,10 +33,16 @@ export default function LoginForm() {
 
   const handlePop = () => setOpen(true);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); //user details to server post in server.ts to insert in database
+  const HandleOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
 
-    if(formData.FirstName === '' || formData.LastName === '' || formData.Email === '' || formData.Password === '') {
+    setOption(event.target.value)
+
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); 
+
+    if(formData.FirstName === '' || formData.LastName === '' || formData.Email === '' || formData.Password === '' || !option) {
 
       setMessage('Please fill all fields');
 
@@ -46,6 +53,13 @@ export default function LoginForm() {
     try {
 
       setMessage('')
+        const DatawithOption = {
+
+          ...formData,
+          Role: option
+
+        };
+
         const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/register', { 
             //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
             method: 'POST',
@@ -53,7 +67,7 @@ export default function LoginForm() {
                 'Content-Type': 'application/json', 
             },
 
-            body: JSON.stringify(formData),
+            body: JSON.stringify(DatawithOption),
         });
 
         // Check if the response is OK (status in the range 200-299)
@@ -62,6 +76,7 @@ export default function LoginForm() {
         }
 
         setFormData({FirstName: '', LastName: '', Email: '', Password: ''});
+        setOption(null)
        
 
     } 
@@ -86,7 +101,9 @@ export default function LoginForm() {
         
         <div className="w-full h-screen bg-black flex justify-center items-center">
 
-        <div className="loader"></div>
+        <div className="loader">
+         
+        </div>
       
         </div>
 
@@ -119,9 +136,9 @@ export default function LoginForm() {
               'Content-Type': 'application/json',
           },
           body: JSON.stringify({ Email: email, Password: password }), // Ensure email and password are set correctly
+          
       });
 
-      console.log("login response: ", response)
       
       if (response.ok) {
 
@@ -129,9 +146,22 @@ export default function LoginForm() {
         const { token, user } = await response.json();
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
-        router.push('/Client/dashboard');
+      if(user.Role === 'Buyer') {
+
+        router.push('/Client/ClientDashboard')
+
+      }
+
+      else {
+
+        router.push('/Client/Businessdashboard')
+
+      }
+
 
     }
+
+    
     
     else {
 
@@ -154,7 +184,6 @@ export default function LoginForm() {
 
   };
 
-console.log("message: ", message)
 
   return (
    <>
@@ -228,6 +257,12 @@ console.log("message: ", message)
 <input type="email"  name="Email" placeholder='Email' className='placeholder-large mt-3 w-11/12 bg-transparent text-white border border-slate-400 outline-none pl-3 rounded-lg h-12' onChange={handleChange} value={formData.Email}/>
 <br />
 <input type="password" name="Password" placeholder='Password' className='placeholder-large mt-3  w-11/12 bg-transparent text-white border border-slate-400 outline-none pl-3 rounded-lg h-12' onChange={handleChange} value={formData.Password}/>
+
+<select className="select text-white border-slate-400 bg-transparent w-1/2 mt-3" value={option || ''} onChange={HandleOption}>
+  <option disabled selected value={''}>Buyer or Seller</option>
+  <option className='text-black'>Buyer</option>
+  <option className='text-black'>Seller</option>
+</select>
 
 <div className="w-11/12 flex justify-center">
 <button  className='px-10 py-3 bg-transparent text-white border text-xs font-bold border-slate-400 rounded-2xl mt-10 hover:bg-black flex justify-center' onClick={handlePop}>Create Account</button>

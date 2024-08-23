@@ -1,6 +1,6 @@
 .Background {
 
-    background-image: url("https://images8.alphacoders.com/132/1325725.png");
+    background-image: url("https://img.freepik.com/premium-photo/business-people-shaking-hands-finishing-up-meeting-al-generated_866663-3427.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -9,7 +9,7 @@
         to bottom right,
         rgba(0, 0, 0, 0.953),
         rgba(0, 0, 0, 0.479)
-      ), url("https://images8.alphacoders.com/132/1325725.png");
+      ), url("https://img.freepik.com/premium-photo/business-people-shaking-hands-finishing-up-meeting-al-generated_866663-3427.jpg");
 
 }
 
@@ -23,9 +23,15 @@
   
   }
 
+  .Margin {
+
+    margin-top: 12px;
+
+  }
+
   .BackgroundBox {
 
-    background-image: url("https://images8.alphacoders.com/132/1325725.png");
+    background-image: url("https://img.freepik.com/premium-photo/business-people-shaking-hands-finishing-up-meeting-al-generated_866663-3427.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -34,7 +40,7 @@
         to bottom right,
         rgba(0, 0, 0, 0.953),
         rgba(0, 0, 0, 0.479)
-      ), url("https://images8.alphacoders.com/132/1325725.png");
+      ), url("https://img.freepik.com/premium-photo/business-people-shaking-hands-finishing-up-meeting-al-generated_866663-3427.jpg");
 
 }
 
@@ -47,3 +53,16 @@ textarea.placeholder-large::placeholder {
 }
 
 
+
+.custom-color {
+
+  background-color: #ebecf4;
+
+}
+
+.customwhite {
+
+  filter: drop-shadow(-15px 4px 0px #000000);
+  background-color: #fdfcff;
+
+}

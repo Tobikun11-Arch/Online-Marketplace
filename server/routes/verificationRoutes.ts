@@ -11,7 +11,7 @@ router.get('/verify/:token', async (req, res) => {
       const user = await User.findOne({ emailToken: token });
     
         if (!user) {
-
+          
           return res.status(404).json({ message: 'Invalid token.' });
 
         }

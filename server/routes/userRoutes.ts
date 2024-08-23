@@ -5,8 +5,7 @@ import { authMiddleware } from "../middleware/authMiddleware";
 const router = Router();
 
 router.post('/register', Register);
-router.post('/login', Login); // Add the login route
+router.post('/login', Login);
 router.get('/dashboard', authMiddleware, Dashboard);
-  
 
 export default router;

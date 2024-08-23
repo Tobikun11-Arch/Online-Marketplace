@@ -17,8 +17,7 @@ interface RequestWithUser extends Request {
 
 
 export const Register = async (req: Request, res: Response) => {
-  const { FirstName, LastName, Email, Password } = req.body;
-  const Role = "buyer";
+  const { FirstName, LastName, Email, Password, Role } = req.body;
 
 if (!Email || !Password) {
     return res.status(400).json({ error: 'Email and Password are required' });
@@ -57,7 +56,6 @@ export const Login = async (req: Request, res: Response) => {
   try {
 
     const user = await User.findOne({ Email: Email.toLowerCase() });
-      console.log('Found user:', user);
 
       if (!user || !(await user.comparePassword(Password))) {
 
@@ -69,8 +67,7 @@ export const Login = async (req: Request, res: Response) => {
       if (user.isVerifiedEmail === true) {
 
         const token = GenerateToken(user._id.toString());
-        console.log("login token: ", token)
-        res.json({ token, user: { FirstName: user.FirstName, LastName: user.LastName, Email: user.Email} });
+        res.json({ token, user: { FirstName: user.FirstName, LastName: user.LastName, Email: user.Email, Role: user.Role} });
 
       }
     
@@ -100,7 +97,7 @@ export const Dashboard = async (req: RequestWithUser, res: Response) => {
         const user = req.user; 
 
         if (!user) {
-
+            
             return res.status(401).json({ error: 'Unauthorized' });
             
         }
@@ -112,3 +109,5 @@ export const Dashboard = async (req: RequestWithUser, res: Response) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+
