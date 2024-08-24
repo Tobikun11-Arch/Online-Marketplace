@@ -12,6 +12,7 @@ import Campaign from '../Svg/Campaign'
 import AccountSettings from '../Svg/AccountSettings'
 import Support from '../Svg/Support'
 import { useRouter } from 'next/navigation';
+import '../auth/Css/load.css'
 
 export default function AsideValue() {
 
@@ -75,7 +76,7 @@ export default function AsideValue() {
 
     <div>{loader ? (
         <>
-          <span className="loading loading-bars loading-xs"></span>
+              <div className="skeleton-loader"></div>
         </>
     ) : (
         <>

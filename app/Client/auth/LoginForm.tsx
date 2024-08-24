@@ -1,6 +1,6 @@
 "use client"
 import './Css/load.css'
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import './Css/Background.css'
 import {useRouter} from 'next/navigation';
 
@@ -99,11 +99,9 @@ export default function LoginForm() {
     return(
         <>
         
-        <div className="w-full h-screen bg-gray-50 flex justify-center items-center">
-
-        <span className="loading loading-ring loading-lg"></span>
-      
-        </div>
+        <div className="loader-container">
+      <div className="spinner"></div>
+    </div>
 
         </>
     )

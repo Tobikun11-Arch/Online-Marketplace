@@ -1,65 +1,39 @@
-/* From Uiverse.io by alexruix */ 
-.loader {
-    position: relative;
-    width: 120px;
-    height: 90px;
-    margin: 0 auto;
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}
+
+.spinner {
+  border: 8px solid rgba(0, 0, 0, 0.1); /* Light gray border */
+  border-radius: 50%;
+  border-top: 8px solid #3498db; /* Blue border */
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* components/SkeletonLoader.css */
+.skeleton-loader {
+  width: 100px;
+  height: 20px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px; /* Optional: add rounded corners */
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
   }
-  
-  .loader:before {
-    content: "";
-    position: absolute;
-    bottom: 30px;
-    left: 50px;
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-    background: #2a9d8f;
-    animation: loading-bounce 0.5s ease-in-out infinite alternate;
+  100% {
+    background-position: 200% 0;
   }
-  
-  .loader:after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 7px;
-    width: 45px;
-    border-radius: 4px;
-    box-shadow: 0 5px 0 #f2f2f2, -35px 50px 0 #f2f2f2, -70px 95px 0 #f2f2f2;
-    animation: loading-step 1s ease-in-out infinite;
-  }
-  
-  @keyframes loading-bounce {
-    0% {
-      transform: scale(1, 0.7);
-    }
-  
-    40% {
-      transform: scale(0.8, 1.2);
-    }
-  
-    60% {
-      transform: scale(1, 1);
-    }
-  
-    100% {
-      bottom: 140px;
-    }
-  }
-  
-  @keyframes loading-step {
-    0% {
-      box-shadow: 0 10px 0 rgba(0, 0, 0, 0),
-              0 10px 0 #f2f2f2,
-              -35px 50px 0 #f2f2f2,
-              -70px 90px 0 #f2f2f2;
-    }
-  
-    100% {
-      box-shadow: 0 10px 0 #f2f2f2,
-              -35px 50px 0 #f2f2f2,
-              -70px 90px 0 #f2f2f2,
-              -70px 90px 0 rgba(0, 0, 0, 0);
-    }
-  }
+}
