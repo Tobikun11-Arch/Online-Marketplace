@@ -99,11 +99,9 @@ export default function LoginForm() {
     return(
         <>
         
-        <div className="w-full h-screen bg-black flex justify-center items-center">
+        <div className="w-full h-screen bg-gray-50 flex justify-center items-center">
 
-        <div className="loader">
-         
-        </div>
+        <span className="loading loading-ring loading-lg"></span>
       
         </div>
 
@@ -142,7 +140,6 @@ export default function LoginForm() {
       
       if (response.ok) {
 
-        setLoader(false)
         const { token, user } = await response.json();
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));

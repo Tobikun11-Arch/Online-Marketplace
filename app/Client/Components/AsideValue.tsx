@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 export default function AsideValue() {
 
     const [user, setUser] = useState<{ firstname: string; lastname: string; email: string} | null>(null);
+    const [loader, setLoader] = useState(false)
     const router = useRouter();
 
     useEffect(() => {
@@ -27,6 +28,7 @@ export default function AsideValue() {
             }
 
             try {
+                setLoader(true)
                 const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/dashboard', {
                     method: 'GET',
                     headers: {
@@ -36,6 +38,7 @@ export default function AsideValue() {
                 });
         
                 if (response.ok) {
+                    setLoader(false)
                     const data = await response.json();
                     setUser({ firstname: data.user.FirstName, lastname: data.user.LastName, email: data.user.Email}); 
 
@@ -59,6 +62,7 @@ export default function AsideValue() {
         fetchUserData();
     }, [router]);
 
+
   return (
     <>
 
@@ -69,7 +73,15 @@ export default function AsideValue() {
         backgroundPosition: 'center' }}>
     </div>
 
-    <p>{user?.firstname} {user?.lastname}</p>
+    <div>{loader ? (
+        <>
+          <span className="loading loading-bars loading-xs"></span>
+        </>
+    ) : (
+        <>
+         <p>{user?.firstname} {user?.lastname}</p>
+         </>
+    )}</div>
     </div>
     
     <div className="flex ml-5 mt-10 flex-col gap-5">
