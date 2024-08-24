@@ -13,7 +13,7 @@ import AccountSettings from '../Svg/AccountSettings'
 import Support from '../Svg/Support'
 import { useRouter } from 'next/navigation';
 
-export default function asideValue() {
+export default function AsideValue() {
 
     const [user, setUser] = useState<{ firstname: string; lastname: string; email: string} | null>(null);
     const router = useRouter();
