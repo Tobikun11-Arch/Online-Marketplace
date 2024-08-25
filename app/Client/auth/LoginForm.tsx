@@ -194,7 +194,7 @@ export default function LoginForm() {
 
    {open && (
   message ? (
-<div role="alert" className="alert alert-error top-0 absolute">
+<div role="alert" className="alert alert-error w-4/5 top-3 absolute flex">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="h-6 w-6 shrink-0 stroke-current"
@@ -211,7 +211,7 @@ export default function LoginForm() {
   ) : (
  <>
  
- <div role="alert" className="alert alert-success top-0 absolute">
+ <div role="alert" className="alert alert-success w-4/5 top-3 absolute flex">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="h-6 w-6 shrink-0 stroke-current"
@@ -281,7 +281,7 @@ export default function LoginForm() {
     {messageLogin ? (
   <>
   
-  <div role="alert" className="alert alert-warning top-0 absolute">
+  <div role="alert" className="alert alert-warning w-4/5 top-3 absolute flex">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="h-6 w-6 shrink-0 stroke-current"

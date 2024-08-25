@@ -37,7 +37,7 @@ export const authMiddleware = async (req: RequestWithUser, res: Response, next: 
     
     catch (error) {
 
-        console.error('Error in auth middleware:', error);
+        res.redirect('https://online-marketplace-beta.vercel.app/')
         res.status(401).json({ error: 'Invalid token' });
 
     }

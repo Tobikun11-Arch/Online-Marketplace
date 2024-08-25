@@ -91,13 +91,13 @@ export default function AsideValue() {
       <AccordionItem value="item-1"> 
         <div className="ProductManagement flex items-center gap-1">
         <WareHouse />
-        <AccordionTrigger className='text-lg'>Product Management</AccordionTrigger>
+        <AccordionTrigger className='text-base lg:text-lg'>Product Management</AccordionTrigger>
         </div>
-        <AccordionContent className='text-lg ml-3 mt-2'>
+        <AccordionContent className='text-base lg:text-lg ml-3 mt-2'>
          Add products
         </AccordionContent>
 
-        <AccordionContent className='text-lg ml-3 mt-2'>
+        <AccordionContent className='text-base lg:text-lg ml-3 mt-2'>
         Inventory
         </AccordionContent>
         </AccordionItem>
@@ -105,17 +105,17 @@ export default function AsideValue() {
 
         <div className="ProductManagement flex gap-1 items-center">
         <ListAlt />
-        <p className='text-lg'>Order Management</p>
+        <p className='text-base lg:text-lg'>Order Management</p>
         </div>
 
         <div className="SalesAnalystics flex gap-1 items-center">
         <ShowChart/>
-        <p className='text-lg'>Sales Analystics</p>
+        <p className='text-base lg:text-lg'>Sales Analystics</p>
         </div>
 
         <div className="Promotions flex gap-1 items-center">
         <Campaign/>
-        <p className='text-lg'>Promotions</p>
+        <p className='text-base lg:text-lg'>Promotions</p>
         </div>
 
 
@@ -125,13 +125,13 @@ export default function AsideValue() {
 
         <div className="AccountSettings flex gap-1 items-center">
             <AccountSettings />
-        <AccordionTrigger className='text-lg'>Account settings</AccordionTrigger>
+        <AccordionTrigger className='text-base lg:text-lg'>Account settings</AccordionTrigger>
         </div>
-        <AccordionContent className='text-lg ml-3 mt-2'>
+        <AccordionContent className='text-base lg:text-lg ml-3 mt-2'>
         Profile details
         </AccordionContent>
 
-        <AccordionContent className='text-lg ml-3 mt-2'>
+        <AccordionContent className='text-base lg:text-lg ml-3 mt-2'>
         Address
         </AccordionContent>
         </AccordionItem>
@@ -139,7 +139,7 @@ export default function AsideValue() {
 
         <div className="Support flex gap-1 items-center">
         <Support />
-        <p className='text-lg'>Support</p>
+        <p className='text-base lg:text-lg'>Support</p>
         </div>
         </div>
 
