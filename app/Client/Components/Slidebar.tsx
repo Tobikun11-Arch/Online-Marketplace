@@ -35,7 +35,7 @@ export default function Slidebar() {
 
     <aside className={`border-r-2 border-r-black h-screen w-96 bg-white ${
           show ? 'block' : 'hidden'
-        } lg:block ${show ? 'fixed' : ''} ${show ? 'w-64' : 'w-96'}`}>
+        } lg:block ${show ? 'fixed' : ''} ${show ? 'w-60' : 'w-96'}`}>
           
       <AsideValue />
 
