@@ -33,7 +33,7 @@ export default function Slidebar() {
     <Menu size={44} color="#000000" onClick={() => setShow(true)} />
     </div>
 
-    <aside className={`border-r-2 border-r-black h-screen w-96 bg-white ${
+    <aside className={`border-r-2 border-r-black h-screen bg-white ${
           show ? 'block' : 'hidden'
         } lg:block ${show ? 'fixed' : ''} ${show ? 'w-60' : 'w-96'}`}>
           
