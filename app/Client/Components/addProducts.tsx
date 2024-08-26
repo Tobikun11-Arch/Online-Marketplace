@@ -32,7 +32,7 @@ export default function addProducts() {
 
      {/**Modal ======>*/}
      <dialog id="my_modal_3" className="modal">
-        <div className="modal-box px-14 pt-14 pb-8">
+        <div className="modal-box px-14 pt-14 pb-8 bg-white">
           <form method="dialog">
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
