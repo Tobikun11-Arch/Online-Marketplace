@@ -6,7 +6,6 @@ import { IUser } from '../models/userInterface'
 interface RequestWithUser extends Request {
 
     user?: any;
-    isAuthenticated: boolean;
 
   }
 
@@ -38,7 +37,6 @@ export const authMiddleware = async (req: RequestWithUser, res: Response, next: 
     
     catch (error) {
 
-        res.redirect('https://online-marketplace-beta.vercel.app/')
         res.status(401).json({ error: 'Invalid token' });
 
     }
