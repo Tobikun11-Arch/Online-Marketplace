@@ -6,6 +6,7 @@ import { IUser } from '../models/userInterface'
 interface RequestWithUser extends Request {
 
     user?: any;
+    isAuthenticated: boolean;
 
   }
 

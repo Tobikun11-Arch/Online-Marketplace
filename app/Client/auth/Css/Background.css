@@ -13,6 +13,16 @@
 
 }
 
+@media (min-width: 483px) {
+
+  .marginLeft {
+
+    margin-left: 8px;
+
+  }
+
+ }
+
 @media (max-width: 640px) { 
 
   .input-width {

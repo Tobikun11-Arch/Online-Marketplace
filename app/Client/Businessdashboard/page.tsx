@@ -9,7 +9,7 @@ export default function page() {
 
     <div className="w-full h-screen flex bg-gray-900" style={{filter: 'drop-shadow(-8px 7px 0px #008000)'}}>
     <Slidebar />
-    <div className="lg:pt-3 lg:pb-3 lg:w-full w-full lg:pr-2 lg:pl-3">
+    <div className="lg:pt-3 lg:pb-3 lg:w-full w-full lg:pr-3 lg:pl-3">
     <AddProducts />
     </div>
     </div>
@@ -17,3 +17,8 @@ export default function page() {
    </>
   )
 }
+
+
+
+
+  

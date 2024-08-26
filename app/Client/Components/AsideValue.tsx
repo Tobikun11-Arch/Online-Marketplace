@@ -91,7 +91,7 @@ export default function AsideValue() {
       <AccordionItem value="item-1"> 
         <div className="ProductManagement flex items-center gap-1">
         <WareHouse />
-        <AccordionTrigger className='text-base lg:text-lg'>Product Management</AccordionTrigger>
+        <AccordionTrigger className='text-base lg:text-lg py-0'>Product Management</AccordionTrigger>
         </div>
         <AccordionContent className='text-base lg:text-lg ml-3 mt-2'>
          Add products
@@ -125,7 +125,7 @@ export default function AsideValue() {
 
         <div className="AccountSettings flex gap-1 items-center">
             <AccountSettings />
-        <AccordionTrigger className='text-base lg:text-lg'>Account settings</AccordionTrigger>
+        <AccordionTrigger className='text-base lg:text-lg py-0'>Account settings</AccordionTrigger>
         </div>
         <AccordionContent className='text-base lg:text-lg ml-3 mt-2'>
         Profile details
