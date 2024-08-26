@@ -1,10 +1,10 @@
 "use client"
 import React, { useState } from 'react'
-import AddProducts from '../Svg/AddProducts'
+import AddProduct from '../Svg/AddProducts'
 import AddImage from '../Svg/AddImage'
 import '../auth/Css/Background.css'
 
-export default function addProducts() {
+export default function AddProducts() {
 
   const [images, setImages] = useState<string[]>([])
 
@@ -52,7 +52,7 @@ export default function addProducts() {
       <h1 className='text-white font-bold text-base mt-5'>Add Products</h1>
     
       <div className="mt-4">
-      <AddProducts onClick={openModal}/>
+      <AddProduct onClick={openModal}/>
       </div>
 
     </div>
