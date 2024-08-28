@@ -1,12 +1,20 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddProduct from '../Svg/AddProducts'
 import AddImage from '../Svg/AddImage'
 import '../auth/Css/Background.css'
+import { useRouter } from 'next/navigation'
+
 
 export default function AddProducts() {
 
+  const [userId, setuserID] = useState<{userId: string} | null>(null)
+  const [open, setOpen] = useState(false)
+  const [message, setMessage] = useState('')
+  const [description, setDescription] = useState('')
+  const [productName, setproductName] = useState('')
   const [images, setImages] = useState<string[]>([])
+  const router = useRouter();
 
   const openModal = () => {
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
@@ -43,11 +51,144 @@ export default function AddProducts() {
     window.open(urlImage, "_blank");
   };
 
+
+
+  //Fetch Api
+  useEffect(() => {
+
+    const fetchData = async () => {
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+          router.push('/');
+          return;
+      }
+      
+      try {
+        
+        const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/dashboard', {
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          },
+      });
+
+      if(response.ok) {
+
+        const data = await response.json();
+
+        setuserID({userId: data.user.userId})
+
+      }
+
+      else {
+
+        const data = await response.json();
+        
+        if(data.error === "Invalid token") {
+
+            router.push('/')
+
+        }
+
+        console.error('Error fetching protected data:', data);
+
+    }
+      
+    }//try close
+
+      catch (error) {
+        
+        console.error('Error making request:', error);
+
+      }
+
+    }
+
+    fetchData();
+
+  }, [router])
+
+
+
+
+  const HandleAdd = () => {
+
+    const timer = setTimeout(() => {
+      setOpen(false);
+    }, 3000);
+  
+    return () => clearTimeout(timer);
+  };
+
+
+  const handlePublish = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!productName || !description || images.length === 0) {
+      setMessage("Please fill in all fields and add at least one image.");
+      setOpen(true); 
+      return;
+    }
+
+    setMessage('')
+  
+    setOpen(true)
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/');
+      return;
+    }
+
+    try {
+      
+      const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/Products', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productName,
+          description,
+          images,
+        }),
+      });
+  
+      if(response.ok) {
+
+      setproductName('');
+      setDescription('');
+      setImages([]);
+
+      const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
+
+      if (modal) {
+
+        modal.close();
+
+      }
+
+    } 
+
+    } //try close
+    
+    catch (error) {
+
+      console.error('Error making request:', error);
+      setMessage("Please Try again!")
+
+    }
+
+  }
+
   return (
     <>
     
     <div className="h-full bg-white pt-7 lg:ml-0 lg:rounded-3xl">
- 
+
     <div className="flex w-36 h-40 ml-7 bg-black rounded-xl flex-col items-center">
       <h1 className='text-white font-bold text-base mt-5'>Add Products</h1>
     
@@ -73,15 +214,56 @@ export default function AddProducts() {
             </button>
 
           </form>
-          <form >
+          <form onSubmit={handlePublish}>
       <div>
+
+                <div className="w-full flex justify-center">
+              {open && (
+            message ? (
+          <div role="alert" className="alert alert-error w-3/5 top-5 absolute flex">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{message}</span>
+          </div>
+            ) : (
+          <>
+          
+          <div role="alert" className="alert alert-success w-3/5 top-5 absolute flex justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Product Published!</span>
+          </div>
+              
+          </>
+            )
+          )}
+          </div>
+        
         <label htmlFor="product-name" className='mt-10'>Product Name:</label>
-        <input type="text" id="product-name" placeholder='Shoes' className='border-b-2 bg-white marginLeft border-black outline-none' required />
+        <input type="text" id="product-name" placeholder='Shoes' className='border-b-2 bg-white marginLeft border-black outline-none' value={productName} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setproductName(e.target.value)} required />
       </div>
 
       <div className='flex flex-col'>
         <label htmlFor="product-description" className='mt-5'>Product Description:</label>
-        <textarea id="product-description" className='border-b-2 border-l-2 bg-white border-black outline-none mt-2 pl-2 resize-none' placeholder='Enter product description (200 characters max)' maxLength={200} rows={5} required />
+        <textarea id="product-description" className='border-b-2 border-l-2 bg-white border-black outline-none mt-2 pl-2 resize-none' placeholder='Enter product description (200 characters max)'value={description} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>)=> setDescription(e.target.value)} maxLength={200} rows={5} required />
       </div>
 
       <p className='cursor-default text-gray-500 mt-5'>Add Image {images.length}/3</p>
@@ -134,7 +316,7 @@ export default function AddProducts() {
       
       <div className="w-full flex justify-end">
         <p></p>
-      <button type="submit" className='mt-10 bg-blue-800 p-2 text-white rounded-md'>Publish</button></div>
+      <button className='mt-10 bg-blue-800 p-2 text-white rounded-md' onClick={HandleAdd}>Publish</button></div>
     </form>
         </div>
 

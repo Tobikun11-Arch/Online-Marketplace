@@ -6,7 +6,6 @@ import User from '../models/user';
 const crypto = require('crypto');
 const sendMail = require('../services/sendMail');
 
-
 dotenv.config();
 
 interface RequestWithUser extends Request {

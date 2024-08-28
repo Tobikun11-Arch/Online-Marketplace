@@ -1,7 +1,7 @@
 import mongoose, { Document, Model, Types } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-interface IUser extends Document {
+export interface IUser extends Document {
     _id: Types.ObjectId;
     FirstName: string;
     LastName: string;
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema<IUser>({
     emailToken: { type: String, required: false}
 }, { collection: 'Accounts'});
 
-// Method to compare passwords
+
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
     return await bcrypt.compare(candidatePassword, this.Password);
 };

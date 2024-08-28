@@ -16,7 +16,7 @@ import '../auth/Css/load.css'
 
 export default function AsideValue() {
 
-    const [user, setUser] = useState<{ firstname: string; lastname: string; email: string} | null>(null);
+    const [user, setUser] = useState<{ firstname: string; lastname: string; email: string, userId: string} | null>(null);
     const [loader, setLoader] = useState(false)
     const router = useRouter();
 
@@ -24,7 +24,7 @@ export default function AsideValue() {
         const fetchUserData = async () => {
             const token = localStorage.getItem('token');
             if (!token) {
-                router.push('/login'); // Redirect to login if token is not found
+                router.push('/');
                 return;
             }
 
@@ -37,17 +37,24 @@ export default function AsideValue() {
                         'Content-Type': 'application/json',
                     },
                 });
-        
+
                 if (response.ok) {
                     setLoader(false)
                     const data = await response.json();
-                    setUser({ firstname: data.user.FirstName, lastname: data.user.LastName, email: data.user.Email}); 
-
+                    setUser({ firstname: data.user.FirstName, lastname: data.user.LastName, email: data.user.Email, userId: data.user.userId}); 
                 }
                 
                 else {
+
+                    const data = await response.json();
                     
-                    console.error('Error fetching protected data:', await response.json());
+                    if(data.error === "Invalid token") {
+
+                        router.push('/')
+
+                    }
+
+                    console.error('Error fetching protected data:', data);
 
                 }
             } 
@@ -62,7 +69,6 @@ export default function AsideValue() {
 
         fetchUserData();
     }, [router]);
-
 
   return (
     <>
