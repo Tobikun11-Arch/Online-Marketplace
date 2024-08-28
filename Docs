@@ -11,69 +11,39 @@
 
     
 
-  // Define Product Schema
-const productSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
-  name: { type: String, required: true },
-  description: { type: String, required: true },
-  images: { type: [String], required: true },
-});
-
-const Product = mongoose.model('Product', productSchema);
-
-// API route to save product
-app.post('/api/products', async (req, res) => {
-  const { userId, name, description, images } = req.body;
-
-  try {
-    const newProduct = new Product({ userId, name, description, images });
-    await newProduct.save();
-    res.status(201).json({ message: 'Product added successfully', product: newProduct });
-  } catch (error) {
-    res.status(500).json({ message: 'Error adding product', error });
-  }
-});
+ 
 
 
 
-const handlePublish = async () => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    router.push('/');
-    return;
-  }
 
-  try {
-    const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/products', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+    Product List:  [
+      {
+        _id: new ObjectId('66ceb3debb7e7ef83eab3dd7'),
+        userId: new ObjectId('66c5e810a164c11fab03733a'),
+        productName: 'Eco-Friendly Water Bottle',
+        description: 'Stay hydrated and reduce your carbon footprint with our Eco-Friendly Water Bottle. Made from high-quality stainless steel, this reusable bottle features a sleek design and double-wall insulation.',
+        images: [
+          'blob:http://localhost:3000/0997e750-0391-4038-b3eb-d7ff351409a4',
+          'blob:http://localhost:3000/b92bc937-a2d7-48e3-b8e1-70d6e77d51b2'
+        ],
+        createdAt: 2024-08-28T05:21:34.401Z,
+        updatedAt: 2024-08-28T05:21:34.401Z,
+        __v: 0
       },
-      body: JSON.stringify({
-        userId: user?.userId,
-        productName,
-        description,
-        images,
-      }),
-    });
 
-    if (response.ok) {
-      // Product saved successfully
-      console.log('Product published');
-      // Clear form fields or perform any other necessary actions
-      setproductName('');
-      setDescription('');
-      setImages([]);
-      const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
-      if (modal) {
-        modal.close();
+      
+      {
+        _id: new ObjectId('66ceb6162aaac088cfc3371b'),
+        userId: new ObjectId('66c5e810a164c11fab03733a'),
+        productName: 'Skibidi',
+        description: 'Matel Aragon skibidi devour anyone',
+        images: [
+          'blob:https://online-marketplace-beta.vercel.app/41b9002d-42f2-43a2-b96e-87b0f975807d'
+        ],
+        createdAt: 2024-08-28T05:31:02.492Z,
+        updatedAt: 2024-08-28T05:31:02.492Z,
+        __v: 0
       }
-    } else {
-      const data = await response.json();
-      console.error('Error publishing product:', data);
-    }
-  } catch (error) {
-    console.error('Error making request:', error);
-  }
-};
+    ]
+    Error: Task timed out after 10.00 seconds
+    

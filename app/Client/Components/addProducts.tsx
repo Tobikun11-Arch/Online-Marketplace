@@ -4,6 +4,7 @@ import AddProduct from '../Svg/AddProducts'
 import AddImage from '../Svg/AddImage'
 import '../auth/Css/Background.css'
 import { useRouter } from 'next/navigation'
+import '../auth/Css/Background.css'
 
 
 export default function AddProducts() {
@@ -51,14 +52,15 @@ export default function AddProducts() {
     window.open(urlImage, "_blank");
   };
 
-
-
   //Fetch Api
   useEffect(() => {
 
     const fetchData = async () => {
 
       const token = localStorage.getItem('token');
+
+      console.log("token: ", token)
+      
       if (!token) {
           router.push('/');
           return;
@@ -189,7 +191,7 @@ export default function AddProducts() {
     
     <div className="h-full bg-white pt-7 lg:ml-0 lg:rounded-3xl">
 
-    <div className="flex w-36 h-40 ml-7 bg-black rounded-xl flex-col items-center">
+    <div className="flex w-36 mt-10 h-40 ml-7 bg-black rounded-xl flex-col items-center">
       <h1 className='text-white font-bold text-base mt-5'>Add Products</h1>
     
       <div className="mt-4">
@@ -237,7 +239,7 @@ export default function AddProducts() {
             ) : (
           <>
           
-          <div role="alert" className="alert alert-success w-3/5 top-5 absolute flex justify-center">
+          <div role="alert" className="alert alert-success w-3/5 ModalSize top-5 absolute flex justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 shrink-0 stroke-current"
@@ -268,7 +270,7 @@ export default function AddProducts() {
 
       <p className='cursor-default text-gray-500 mt-5'>Add Image {images.length}/3</p>
 
-      <div className="flex items-center gap-1 mt-3">
+      <div className="flex items-center gap-1 mt-3 h-20">
       <div className="w-12 h-12 bg-gray-300 flex justify-center items-center" onClick={() => document.getElementById('product-image')?.click()}>
         <AddImage />
       </div>

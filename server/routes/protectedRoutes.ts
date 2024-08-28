@@ -1,10 +1,12 @@
 import express, { Router } from "express";
 import { authMiddleware } from "../middleware/authMiddleware";
 import User from "../models/user"; 
+import productlist from "../models/product"; 
 import Product from "../models/product"; 
 import { Request, Response } from "express";
 
 interface RequestWithUser extends Request {
+
     user?: any;
 
   } 
@@ -24,9 +26,13 @@ protectedroute.get('/dashboard', async (req: RequestWithUser, res: Response) => 
         }
 
         res.json({ message: `Welcome, ${user.FirstName}!`, user: { FirstName: user.FirstName, LastName: user.LastName, Email: user.Email, userId: user._id } });
-    } catch (error) {
+    } 
+    
+    catch (error) {
+
         console.error('Error fetching user data:', error);
         res.status(500).json({ error: 'Internal server error' });
+
     }
 });
 
@@ -55,6 +61,38 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
     catch (error) {
         
         console.error('Error creating product:', error);
+        res.status(500).json({ error: 'Internal server error' });
+
+    }
+
+});
+
+
+
+
+protectedroute.get('/productList', async  (req: RequestWithUser, res: Response) => {
+
+    const userId = req.user?._id;
+
+    try {
+        
+        const productList = await productlist.find({ userId: userId })
+
+        if (!productList) {
+            return res.status(404).json({ error: 'product not found' });
+        }
+
+        const ProductNames = productList.map((list) => list.productName);
+
+        const ProductDescription = productList.map((list) => list.description);
+
+        res.json({ ProductLists: { productName: ProductNames, description: ProductDescription }} );
+
+    } 
+
+    catch (error) {
+        
+        console.error('Error fetching user data:', error);
         res.status(500).json({ error: 'Internal server error' });
 
     }

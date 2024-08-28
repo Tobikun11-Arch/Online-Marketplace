@@ -13,7 +13,15 @@
 
 }
 
+@media (max-width: 396px) { 
 
+  .ModalSize {
+
+    width: 80%;
+
+  }
+
+}
 
 
 @media (min-width: 483px) {
@@ -25,6 +33,8 @@
   }
 
  }
+
+
 
 @media (max-width: 640px) { 
 
