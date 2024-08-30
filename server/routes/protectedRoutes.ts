@@ -43,12 +43,15 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
 
     try {
 
-    const { description, productName, images } = req.body;
+    const { description, productName, images, productPrice,
+        quantity, } = req.body;
 
     const Products = new Product({
         userId,
-        description, 
         productName, 
+        description, 
+        productPrice,
+        quantity,
         images,
     });
 
@@ -85,6 +88,8 @@ protectedroute.get('/productList', async  (req: RequestWithUser, res: Response) 
        const ProductLists = productList.map((list) => ({
 
             productName: list.productName,
+            productPrice: list.productPrice,
+            quantity: list.quantity,
             images: list.images,
             description: list.description,
 

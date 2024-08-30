@@ -4,6 +4,8 @@ export interface IProducts extends Document {
     _id: Types.ObjectId;
     userId: Types.ObjectId;
     productName: string;
+    productPrice: number;
+    quantity: number;
     description: string;
     images: [];
     createdAt: Date;
@@ -13,6 +15,8 @@ export interface IProducts extends Document {
 const userSchema = new mongoose.Schema<IProducts>({
     userId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     productName: { type: String, required: true },
+    productPrice: { type: Number, required: true },
+    quantity: { type: Number, required: true },
     description: { type: String, required: true },
     images: { type: [], required: true },
     createdAt: {type: Date, default: Date.now},

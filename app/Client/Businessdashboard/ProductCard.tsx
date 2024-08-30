@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 export default function ProductCard() {
 
-    const [products, setProducts] = useState<{productName: string, description: string, images: string[]}[]>([])
+    const [products, setProducts] = useState<{productName: string, description: string, images: string[], productPrice: number, quantity: number}[]>([])
 
     useEffect(() => {
 
@@ -69,6 +69,8 @@ export default function ProductCard() {
               ></div>
               <div className="p-4">
                 <h1 className="text-xl font-bold">{list.productName}</h1>
+                <p className="text-gray-700">{list.productPrice}</p>
+                <p className="text-gray-700">{list.quantity}</p>
                 <p className="text-gray-700">{list.description}</p>
               </div>
             </li>

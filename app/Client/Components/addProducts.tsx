@@ -9,8 +9,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
-
 export default function AddProducts() {
 
   const [userId, setuserID] = useState<{userId: string} | null>(null)
@@ -18,6 +16,8 @@ export default function AddProducts() {
   const [message, setMessage] = useState('')
   const [description, setDescription] = useState('')
   const [productName, setproductName] = useState('')
+  const [productPrice, setPrice] = useState('')
+  const [quantity, setQuantity] = useState('')
   const [images, setImages] = useState<File[]>([])
   const router = useRouter();
   const [previewImages, setPreviewImages] = useState<string[]>([]);
@@ -45,6 +45,7 @@ export default function AddProducts() {
       setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
     }
   };
+
 
 
   
@@ -123,7 +124,6 @@ export default function AddProducts() {
 
 
 
-
   const HandleAdd = () => {
 
     const timer = setTimeout(() => {
@@ -194,6 +194,19 @@ export default function AddProducts() {
       });
   
       const cloudinaryUrls = await Promise.all(uploadPromises);
+
+      if(cloudinaryUrls) {
+
+        
+      const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
+
+      if (modal) {
+
+       modal.close();
+
+      }
+
+      }
       
       const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/Products', {
         method: 'POST',
@@ -203,6 +216,8 @@ export default function AddProducts() {
         },
         body: JSON.stringify({
           productName,
+          productPrice,
+          quantity,
           description,
           images: cloudinaryUrls,
         }),
@@ -213,14 +228,6 @@ export default function AddProducts() {
       setproductName('');
       setDescription('');
       setPreviewImages([]);
-
-      const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
-
-      if (modal) {
-
-       modal.close();
-
-      }
 
     } 
 
@@ -312,10 +319,31 @@ export default function AddProducts() {
         <input type="text" id="product-name" placeholder='Shoes' className='border-b-2 bg-white marginLeft border-black outline-none' value={productName} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setproductName(e.target.value)} required />
       </div>
 
+      <label htmlFor="product-price" className='mt-10'>Product Price:</label>
+      <input type="text" id="product-price" placeholder='₱345.00' className='border-b-2 bg-white mt-4 ProductPrice border-black outline-none' value={productPrice} pattern="[0-9]*"
+  onKeyPress={(e) => {
+    if (!e.key.match(/[0-9]/)) {
+      e.preventDefault();
+    }
+  }} onChange={(e) => setPrice(e.target.value)} required />
+
+<br />
+<label htmlFor="product-quantity" className='mt-10'>Product Qty:</label>
+      <input type="text" id="product-quantity" placeholder='105' className='border-b-2 Qty bg-white mt-4 border-black outline-none' value={quantity} pattern="[0-9]*"
+  onKeyPress={(e) => {
+    if (!e.key.match(/[0-9]/)) {
+      e.preventDefault();
+    }
+  }} onChange={(e) => setQuantity(e.target.value)} required />
+
+
+
       <div className='flex flex-col'>
         <label htmlFor="product-description" className='mt-5'>Product Description:</label>
         <textarea id="product-description" className='border-b-2 border-l-2 bg-white border-black outline-none mt-2 pl-2 resize-none' placeholder='Enter product description (200 characters max)'value={description} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>)=> setDescription(e.target.value)} maxLength={200} rows={5} required />
       </div>
+
+
 
       <p className='cursor-default text-gray-500 mt-5'>Add Image {images.length}/3</p>
 
