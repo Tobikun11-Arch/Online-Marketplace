@@ -82,11 +82,15 @@ protectedroute.get('/productList', async  (req: RequestWithUser, res: Response) 
             return res.status(404).json({ error: 'product not found' });
         }
 
-        const ProductNames = productList.map((list) => list.productName);
+       const ProductLists = productList.map((list) => ({
 
-        const ProductDescription = productList.map((list) => list.description);
+            productName: list.productName,
+            images: list.images,
+            description: list.description,
 
-        res.json({ ProductLists: { productName: ProductNames, description: ProductDescription }} );
+       }))
+
+        res.json({ ProductLists } );
 
     } 
 
@@ -98,6 +102,7 @@ protectedroute.get('/productList', async  (req: RequestWithUser, res: Response) 
     }
 
 })
+
 
 
 export default protectedroute;

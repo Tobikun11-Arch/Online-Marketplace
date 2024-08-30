@@ -5,6 +5,10 @@ import AddImage from '../Svg/AddImage'
 import '../auth/Css/Background.css'
 import { useRouter } from 'next/navigation'
 import '../auth/Css/Background.css'
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 
 
 export default function AddProducts() {
@@ -14,8 +18,10 @@ export default function AddProducts() {
   const [message, setMessage] = useState('')
   const [description, setDescription] = useState('')
   const [productName, setproductName] = useState('')
-  const [images, setImages] = useState<string[]>([])
+  const [images, setImages] = useState<File[]>([])
   const router = useRouter();
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
+
 
   const openModal = () => {
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
@@ -24,29 +30,34 @@ export default function AddProducts() {
     }
   };
 
+
   const HandleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     if (e.target.files && e.target.files[0]) {
-
-        if(images.length > 2) {
-
-          alert("You can only upload up to 3 images.");
-          return
+      if (images.length > 2) {
+        alert("You can only upload up to 3 images.");
+        return;
+      }
   
-        }
-
-        const file = e.target.files[0];
-        const urlImage = URL.createObjectURL(file); // Create a local URL for the image
-        setImages((prevImages) => [...prevImages, urlImage]);
-
+      const file = e.target.files[0];
+      setImages((prevImages) => [...prevImages, file]);
+  
+      const urlImage = URL.createObjectURL(file);
+      setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
     }
-
-  }
-
-
-  const removeImage = (index: number) => {
-    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
+
+
+  
+  const removeImage = (index: number) => {
+    const updatedImages = images.filter((_, i) => i !== index);
+    setImages(updatedImages);
+  
+
+    const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
+    setPreviewImages(updatedPreviewImages);
+  };
+
+
   
   const previewImage = (urlImage: string) => {
     window.open(urlImage, "_blank");
@@ -58,8 +69,6 @@ export default function AddProducts() {
     const fetchData = async () => {
 
       const token = localStorage.getItem('token');
-
-      console.log("token: ", token)
       
       if (!token) {
           router.push('/');
@@ -145,6 +154,46 @@ export default function AddProducts() {
     }
 
     try {
+
+      const uploadPromises = images.map(async (image:any, index) => {
+
+        if (!(image instanceof File)) {
+
+          throw new Error(`Image ${index + 1} is not a valid file object`);
+
+        }
+        
+        const formData = new FormData();
+        formData.append('file', image);
+        formData.append('upload_preset', 'Onlinemarket');
+  
+        const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+        console.log('Cloudinary Cloud Name:', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+
+        if (!cloudName) {
+          
+          throw new Error('Cloudinary cloud name is not set');
+          
+        }
+  
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+          method: 'POST',
+          body: formData
+        });
+  
+        if (!response.ok) {
+
+          const errorText = await response.text();
+          console.error(`Failed to upload image ${index + 1}. Status: ${response.status}. Response: ${errorText}`);
+          throw new Error(`Failed to upload image ${index + 1}. Status: ${response.status}`);
+          
+        }
+  
+        const data = await response.json();
+        return data.secure_url;
+      });
+  
+      const cloudinaryUrls = await Promise.all(uploadPromises);
       
       const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/Products', {
         method: 'POST',
@@ -155,7 +204,7 @@ export default function AddProducts() {
         body: JSON.stringify({
           productName,
           description,
-          images,
+          images: cloudinaryUrls,
         }),
       });
   
@@ -163,13 +212,13 @@ export default function AddProducts() {
 
       setproductName('');
       setDescription('');
-      setImages([]);
+      setPreviewImages([]);
 
       const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
 
       if (modal) {
 
-        modal.close();
+       modal.close();
 
       }
 
@@ -191,7 +240,7 @@ export default function AddProducts() {
     
     <div className="h-full bg-white pt-7 lg:ml-0 lg:rounded-3xl">
 
-    <div className="flex w-36 mt-10 h-40 ml-7 bg-black rounded-xl flex-col items-center">
+    <div className="flex w-36 h-40 ml-7 mt-10 lg:mt-0 bg-black rounded-xl flex-col items-center">
       <h1 className='text-white font-bold text-base mt-5'>Add Products</h1>
     
       <div className="mt-4">
@@ -275,7 +324,7 @@ export default function AddProducts() {
         <AddImage />
       </div>
 
-      {images.map((imageUrl, index) => (
+      {previewImages.map((imageUrl, index) => (
                 <div
                   key={index}
                   style={{
@@ -313,7 +362,7 @@ export default function AddProducts() {
               ))}
             </div>
 
-        <input type="file" id="product-image" accept=".jpg, .jpeg, .png"  style={{ display: 'none' }} onChange={HandleImage} required/>
+        <input type="file" multiple id="product-image" accept=".jpg, .jpeg, .png"  style={{ display: 'none' }} onChange={HandleImage} required/>
   
       
       <div className="w-full flex justify-end">

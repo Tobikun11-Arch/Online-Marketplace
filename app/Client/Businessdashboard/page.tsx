@@ -1,6 +1,8 @@
 import '../../Client/auth/Css/Background.css'
 import Slidebar from '../Components/Slidebar'
 import AddProducts from '../Components/addProducts'
+import ProductCard from './ProductCard'
+
 
 export default function page() {
 
@@ -13,6 +15,8 @@ export default function page() {
     <AddProducts />
     </div>
     </div>
+
+    <ProductCard />
 
    </>
   )

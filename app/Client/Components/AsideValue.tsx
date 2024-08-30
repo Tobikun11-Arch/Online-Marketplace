@@ -13,6 +13,7 @@ import AccountSettings from '../Svg/AccountSettings'
 import Support from '../Svg/Support'
 import { useRouter } from 'next/navigation';
 import '../auth/Css/load.css'
+import Link from 'next/link'
 
 export default function AsideValue() {
 
@@ -69,6 +70,15 @@ export default function AsideValue() {
 
         fetchUserData();
     }, [router]);
+
+
+    const Logout = () => {
+
+        const token = ''
+        localStorage.setItem('token', token)
+
+    }
+
 
   return (
     <>
@@ -147,6 +157,9 @@ export default function AsideValue() {
         <Support />
         <p className='text-base lg:text-lg'>Support</p>
         </div>
+
+        <Link href={'/'}><p className='text-base lg:text-lg font-bold' onClick={Logout}>Logout</p></Link>
+
         </div>
 
     </>
