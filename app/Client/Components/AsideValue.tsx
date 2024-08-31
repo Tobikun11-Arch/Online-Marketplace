@@ -113,7 +113,7 @@ export default function AsideValue() {
     </div>
 
     <div>
-         <p>{firstname} {lastname}</p>
+         <p>{firstname ? firstname : user?.firstname} {lastname ? lastname : user?.lastname}</p>
      </div>
 
     </div>
