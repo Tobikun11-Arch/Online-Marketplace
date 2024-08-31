@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import AddProduct from '../Svg/AddProducts'
 import AddImage from '../Svg/AddImage'
 import '../auth/Css/Background.css'
@@ -168,7 +168,6 @@ export default function AddProducts() {
         formData.append('upload_preset', 'Onlinemarket');
   
         const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-        console.log('Cloudinary Cloud Name:', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
 
         if (!cloudName) {
           
@@ -203,6 +202,7 @@ export default function AddProducts() {
       if (modal) {
 
        modal.close();
+
 
       }
 
@@ -242,10 +242,36 @@ export default function AddProducts() {
 
   }
 
+
+
+  const handleNumber = (e: ChangeEvent<HTMLInputElement>) => {
+
+      const inputValue = e.target.value;
+      if (/^\d*$/.test(inputValue)) {
+        setPrice(inputValue);   
+      } else {
+        setPrice('');
+      }
+
+  }
+
+
+  const handleQuantity = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const inputValue = e.target.value;
+    if (/^\d*$/.test(inputValue)) {
+      setQuantity(inputValue);   
+    } else {
+      setQuantity('');
+    }
+
+}
+
+
+
   return (
     <>
     
-    <div className="h-full bg-white pt-7 lg:ml-0 lg:rounded-3xl">
 
     <div className="flex w-36 h-40 ml-7 mt-10 lg:mt-0 bg-black rounded-xl flex-col items-center">
       <h1 className='text-white font-bold text-base mt-5'>Add Products</h1>
@@ -317,25 +343,17 @@ export default function AddProducts() {
         
         <label htmlFor="product-name" className='mt-10'>Product Name:</label>
         <input type="text" id="product-name" placeholder='Shoes' className='border-b-2 bg-white marginLeft border-black outline-none' value={productName} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setproductName(e.target.value)} required />
-      </div>
+         </div>
 
-      <label htmlFor="product-price" className='mt-10'>Product Price:</label>
-      <input type="text" id="product-price" placeholder='₱345.00' className='border-b-2 bg-white mt-4 ProductPrice border-black outline-none' value={productPrice} pattern="[0-9]*"
-  onKeyPress={(e) => {
-    if (!e.key.match(/[0-9]/)) {
-      e.preventDefault();
-    }
-  }} onChange={(e) => setPrice(e.target.value)} required />
+        <div className="mt-4 lg:mt-0">
+       <label htmlFor="product-price" className='mt-10'>Product Price:</label>
+       <input type="text" id="product-price" placeholder='₱345.00' className='border-b-2 bg-white lg:mt-4 ProductPrice border-black outline-none' value={productPrice} onChange={handleNumber} required />
+       </div>
 
-<br />
-<label htmlFor="product-quantity" className='mt-10'>Product Qty:</label>
-      <input type="text" id="product-quantity" placeholder='105' className='border-b-2 Qty bg-white mt-4 border-black outline-none' value={quantity} pattern="[0-9]*"
-  onKeyPress={(e) => {
-    if (!e.key.match(/[0-9]/)) {
-      e.preventDefault();
-    }
-  }} onChange={(e) => setQuantity(e.target.value)} required />
-
+      <div className="mt-4 lg:mt-0">
+       <label htmlFor="product-quantity" className='mt-10'>Product Qty:</label>
+       <input type="text" id="product-quantity" placeholder='105' className='border-b-2 Qty bg-white lg:mt-4 border-black outline-none' value={quantity} onChange={handleQuantity} required />
+       </div>
 
 
       <div className='flex flex-col'>
@@ -401,7 +419,7 @@ export default function AddProducts() {
 
       </dialog>
    
-    </div>
+
     </>
   )
 }

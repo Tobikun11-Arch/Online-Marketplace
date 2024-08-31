@@ -1,19 +1,10 @@
-"use client"
-
-
-import '../../Client/auth/Css/Background.css'
-
-import Slidebar from '../Components/Slidebar'
-import AddProducts from '../Components/addProducts'
-
+import React from 'react'
+import AddProducts from '../../Components/addProducts'
+import Slidebar from '../../Components/Slidebar'
 
 export default function Page() {
-
-
-
-
   return (
-   <>
+    <>
 
     <div className="w-full h-screen flex bg-gray-900" style={{filter: 'drop-shadow(-8px 7px 0px #008000)'}}>
     <Slidebar/>
@@ -25,14 +16,9 @@ export default function Page() {
     
     </div>
     </div>
-
     </div>
+
 
    </>
   )
 }
-
-
-
-
-  

@@ -42,9 +42,20 @@ export default function AsideValue() {
                 if (response.ok) {
                     setLoader(false)
                     const data = await response.json();
+
+                    const firstname = data.user.FirstName;
+                    const lastname = data.user.LastName;
+                    
+                    // Store in localStorage, overwriting any existing values
+                    localStorage.setItem('FirstName', firstname);
+                    localStorage.setItem('LastName', lastname);
+
                     setUser({ firstname: data.user.FirstName, lastname: data.user.LastName, email: data.user.Email, userId: data.user.userId}); 
-                }
+
+                }            
                 
+                
+
                 else {
 
                     const data = await response.json();
@@ -74,10 +85,21 @@ export default function AsideValue() {
 
     const Logout = () => {
 
-        const token = ''
-        localStorage.setItem('token', token)
+       localStorage.removeItem('token')
+       localStorage.removeItem('FirstName')
+       localStorage.removeItem('LastName')
 
     }
+    
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setFirstname(localStorage.getItem('FirstName') || '');
+            setLastname(localStorage.getItem('LastName') || '');
+        }
+    }, []);
 
 
   return (
@@ -90,15 +112,10 @@ export default function AsideValue() {
         backgroundPosition: 'center' }}>
     </div>
 
-    <div>{loader ? (
-        <>
-              <div className="skeleton-loader"></div>
-        </>
-    ) : (
-        <>
-         <p>{user?.firstname} {user?.lastname}</p>
-         </>
-    )}</div>
+    <div>
+         <p>{firstname} {lastname}</p>
+     </div>
+
     </div>
     
     <div className="flex ml-5 mt-10 flex-col gap-5">
@@ -109,12 +126,12 @@ export default function AsideValue() {
         <WareHouse />
         <AccordionTrigger className='text-base lg:text-lg py-0'>Product Management</AccordionTrigger>
         </div>
-        <AccordionContent className='text-base lg:text-lg ml-3 mt-2'>
-         Add products
+        <AccordionContent className='text-base lg:text-lg ml-3 mt-2 cursor-default'>
+       <Link href={'/Client/Businessdashboard/Add-Products'}>Add products</Link>
         </AccordionContent>
-
-        <AccordionContent className='text-base lg:text-lg ml-3 mt-2'>
-        Inventory
+        
+        <AccordionContent className='text-base lg:text-lg ml-3 mt-2 cursor-default'>   
+         <Link href={'/Client/Businessdashboard/Inventory'}>Inventory</Link>
         </AccordionContent>
         </AccordionItem>
         </Accordion>

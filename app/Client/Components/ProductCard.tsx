@@ -53,16 +53,13 @@ export default function ProductCard() {
 
     }, []);
 
-    console.log("ProductLists: ", products)
-
-
   return (
    <>
    
-   <div className="w-full h-screen flex justify-center items-center">
+  
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {products.map((list, index) => (
-            <li key={index} className="bg-white shadow-md rounded-lg overflow-hidjden">
+            <li key={index} className="bg-white shadow-md rounded-lg overflow-hidden w-48 ml-10">
               <div
                 className="w-48 h-48 bg-cover bg-center"
                 style={{ backgroundImage: `url(${list.images[0]})` }}
@@ -76,7 +73,6 @@ export default function ProductCard() {
             </li>
           ))}
         </ul>
-      </div>
 
    </>
   )
