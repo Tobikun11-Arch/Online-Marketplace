@@ -101,3 +101,10 @@ textarea.placeholder-large::placeholder {
   background-color: #fdfcff;
 
 }
+
+
+input:-webkit-autofill {
+  background-color: transparent !important;
+  color: inherit !important;
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+}

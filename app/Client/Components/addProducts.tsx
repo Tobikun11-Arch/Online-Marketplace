@@ -6,6 +6,7 @@ import '../auth/Css/Background.css'
 import { useRouter } from 'next/navigation'
 import '../auth/Css/Background.css'
 import dotenv from 'dotenv';
+import Cookies from 'universal-cookie';
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ export default function AddProducts() {
   const [images, setImages] = useState<File[]>([])
   const router = useRouter();
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-
+  const cookies = new Cookies();
 
   const openModal = () => {
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
@@ -65,12 +66,12 @@ export default function AddProducts() {
   };
 
   //Fetch Api
-  useEffect(() => {
+    useEffect(() => {
 
-    const fetchData = async () => {
+      const fetchData = async () => {
 
-      const token = localStorage.getItem('token');
-      
+        const token = localStorage.getItem('token');
+  
       if (!token) {
           router.push('/');
           return;

@@ -85,8 +85,6 @@ export default function LoginForm() {
 
         console.error('There was a problem with the fetch operation:', error);
 
-        setMessage('Please confirm again.'); // Set an error message
-
     }
 
   }
@@ -139,7 +137,7 @@ export default function LoginForm() {
       if (response.ok) {
 
         const { token, user } = await response.json();
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(user));
       if(user.Role === 'Buyer') {
 
