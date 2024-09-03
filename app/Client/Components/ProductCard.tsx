@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Skeleton } from '../../../@/components/ui/skeleton';
-import { userData } from '../Businessdashboard/page'
+import { userData } from '../Businessdashboard/userData'
 
 export default function ProductCard() {
 
