@@ -14,6 +14,7 @@ import Support from '../Svg/Support'
 import { useRouter } from 'next/navigation';
 import '../auth/Css/load.css'
 import Link from 'next/link'
+import axios from 'axios'
 
 export default function AsideValue() {
 
@@ -31,17 +32,15 @@ export default function AsideValue() {
 
             try {
                 setLoader(true)
-                const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/dashboard', {
-                    method: 'GET',
+                const response = await axios.get('https://online-marketplace-backend-six.vercel.app/api/dashboard', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                 });
 
-                if (response.ok) {
                     setLoader(false)
-                    const data = await response.json();
+                    const data = response.data;
 
                     const firstname = data.user.FirstName;
                     const lastname = data.user.LastName;
@@ -51,29 +50,14 @@ export default function AsideValue() {
                     localStorage.setItem('LastName', lastname);
 
                     setUser({ firstname: data.user.FirstName, lastname: data.user.LastName, email: data.user.Email, userId: data.user.userId}); 
-
-                }            
-                
-                
-
-                else {
-
-                    const data = await response.json();
-                    
-                    if(data.error === "Invalid token") {
-
-                        router.push('/')
-
-                    }
-
-                    console.error('Error fetching protected data:', data);
-
-                }
+                          
+            
             } 
             
             catch (error) {
 
                 console.error('Error making request:', error);
+                router.push('/')
 
             }
 
@@ -85,9 +69,7 @@ export default function AsideValue() {
 
     const Logout = () => {
 
-       localStorage.removeItem('token')
-       localStorage.removeItem('FirstName')
-       localStorage.removeItem('LastName')
+       localStorage.clear();
 
     }
     
@@ -101,6 +83,18 @@ export default function AsideValue() {
         }
     }, []);
 
+
+    const handleInventory = () => {
+
+        router.push('/Client/Businessdashboard/Inventory')
+
+    }
+
+    const handleProducts = () => {
+
+        router.push('/Client/Businessdashboard/Add-Products')
+
+    }
 
   return (
     <>
@@ -126,12 +120,12 @@ export default function AsideValue() {
         <WareHouse />
         <AccordionTrigger className='text-base lg:text-lg py-0'>Product Management</AccordionTrigger>
         </div>
-        <AccordionContent className='text-base lg:text-lg ml-3 mt-2 cursor-default'>
-       <Link href={'/Client/Businessdashboard/Add-Products'}>Add products</Link>
+        <AccordionContent className='text-base lg:text-lg ml-3 mt-2 cursor-default' onClick={handleProducts}>
+        Add products
         </AccordionContent>
         
-        <AccordionContent className='text-base lg:text-lg ml-3 mt-2 cursor-default'>   
-         <Link href={'/Client/Businessdashboard/Inventory'}>Inventory</Link>
+        <AccordionContent className='text-base lg:text-lg ml-3 mt-2 cursor-default' onClick={handleInventory}>   
+         Inventory
         </AccordionContent>
         </AccordionItem>
         </Accordion>

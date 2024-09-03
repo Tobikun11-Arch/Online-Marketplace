@@ -1,8 +1,10 @@
 "use client"
+import axios from 'axios';
 import './Css/load.css'
 import React, { FormEvent, useState } from 'react'
 import './Css/Background.css'
 import {useRouter} from 'next/navigation';
+import {useForm} from '../hooks/useForm'
 
 export default function LoginForm() {
 
@@ -15,7 +17,13 @@ export default function LoginForm() {
 
   }
 
-  const [formData, setFormData] = useState({ FirstName: '', LastName: '', Email: '', Password: ''});
+  const { formData, handleChange, setFormData } = useForm({
+    FirstName: '',
+    LastName: '',
+    Email: '',
+    Password: '',
+  });
+
   const [message, setMessage] = useState('');
   const [messageLogin, setMessagelogin] = useState('');
   const [email, setEmail] = useState('');
@@ -24,12 +32,6 @@ export default function LoginForm() {
   const [open, setOpen] = useState(false)
   const [loader, setLoader] = useState(false)
   const [option, setOption] = useState<string | null>(null)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
 
   const handlePop = () => setOpen(true);
 
@@ -60,24 +62,14 @@ export default function LoginForm() {
 
         };
 
-        const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/register', { 
-            //kukunin nya ung routes then dto isesend ung value ng formData because the method is POST 
-            method: 'POST',
+         await axios.post('https://online-marketplace-backend-six.vercel.app/api/users/register', DatawithOption, { 
             headers: {
                 'Content-Type': 'application/json', 
             },
-
-            body: JSON.stringify(DatawithOption),
         });
-
-        // Check if the response is OK (status in the range 200-299)
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
 
         setFormData({FirstName: '', LastName: '', Email: '', Password: ''});
         setOption(null)
-       
 
     } 
     
@@ -124,21 +116,18 @@ export default function LoginForm() {
 
     try {
       setLoader(true)
-      const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/users/login', {
-          method: 'POST',
+    const response = await axios.post('https://online-marketplace-backend-six.vercel.app/api/users/login', { Email: email, Password: password }, {
           headers: {
               'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ Email: email, Password: password }), // Ensure email and password are set correctly
-          
+          },         
       });
 
-      
-      if (response.ok) {
-
-        const { token, user } = await response.json();
+        localStorage.removeItem('FirstName')
+        localStorage.removeItem('LastName')
+        const { token, user } = response.data;
         localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(user));
+
       if(user.Role === 'Buyer') {
 
         router.push('/Client/ClientDashboard')
@@ -152,24 +141,13 @@ export default function LoginForm() {
       }
 
 
-    }
-
-    
-    
-    else {
-
-      setLoader(false)
-        const errorData = await response.json();
-        console.error("Error login:", errorData);
-        setMessagelogin(errorData.error || 'Login failed');
-        
-    }
-
     } 
     
     catch (error) {
-
-      console.error('Error logging in:', error);
+      
+      setLoader(false)
+      router.push('/');
+      setMessagelogin('Invalid Email or Password')
 
     }
 

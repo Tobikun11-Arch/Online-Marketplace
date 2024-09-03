@@ -6,7 +6,7 @@ import '../auth/Css/Background.css'
 import { useRouter } from 'next/navigation'
 import '../auth/Css/Background.css'
 import dotenv from 'dotenv';
-import Cookies from 'universal-cookie';
+import axios from 'axios'
 
 dotenv.config();
 
@@ -22,7 +22,6 @@ export default function AddProducts() {
   const [images, setImages] = useState<File[]>([])
   const router = useRouter();
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const cookies = new Cookies();
 
   const openModal = () => {
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
@@ -79,43 +78,42 @@ export default function AddProducts() {
       
       try {
         
-        const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/dashboard', {
-          method: 'GET',
+        const response = await axios.get('https://online-marketplace-backend-six.vercel.app/api/dashboard', {
           headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
           },
       });
 
-      if(response.ok) {
-
-        const data = await response.json();
+        const data = response.data;
 
         setuserID({userId: data.user.userId})
+      
+    }//try close
 
-      }
-
-      else {
-
-        const data = await response.json();
+      catch (error: unknown) {
         
-        if(data.error === "Invalid token") {
+        if (axios.isAxiosError(error)) {
+        const data = error.response?.data;
+        
+        if(data && data.error === "Invalid token") {
 
             router.push('/')
 
         }
 
-        console.error('Error fetching protected data:', data);
-
-    }
-      
-    }//try close
-
-      catch (error) {
-        
-        console.error('Error making request:', error);
+        console.error('Error fetching protected data:', data || error.message);
 
       }
+
+      else {
+
+        console.error('Unexpected error:', error);
+
+      }
+
+    }
+
 
     }
 
@@ -123,16 +121,6 @@ export default function AddProducts() {
 
   }, [router])
 
-
-
-  const HandleAdd = () => {
-
-    const timer = setTimeout(() => {
-      setOpen(false);
-    }, 3000);
-  
-    return () => clearTimeout(timer);
-  };
 
 
   const handlePublish = async (e: React.FormEvent) => {
@@ -175,64 +163,45 @@ export default function AddProducts() {
           throw new Error('Cloudinary cloud name is not set');
           
         }
-  
-        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-          method: 'POST',
-          body: formData
-        });
-  
-        if (!response.ok) {
 
-          const errorText = await response.text();
-          console.error(`Failed to upload image ${index + 1}. Status: ${response.status}. Response: ${errorText}`);
-          throw new Error(`Failed to upload image ${index + 1}. Status: ${response.status}`);
-          
-        }
-  
-        const data = await response.json();
+        const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
+ 
+        const data = response.data;
         return data.secure_url;
       });
+
+      
+      //modal closed
+      const closeModalAfterDelay = () => {
+        const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
+          setTimeout(() => {
+            modal.close();
+          }, 1200);
+
+      };
+      
+      closeModalAfterDelay();
   
       const cloudinaryUrls = await Promise.all(uploadPromises);
-
-      if(cloudinaryUrls) {
-
-        
-      const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
-
-      if (modal) {
-
-       modal.close();
-
-
-      }
-
-      }
       
-      const response = await fetch('https://online-marketplace-backend-six.vercel.app/api/Products', {
-        method: 'POST',
+      await axios.post('https://online-marketplace-backend-six.vercel.app/api/Products',{
+        productName,
+        productPrice,
+        quantity,
+        description,
+        images: cloudinaryUrls,
+      }, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          productName,
-          productPrice,
-          quantity,
-          description,
-          images: cloudinaryUrls,
-        }),
       });
   
-      if(response.ok) {
-
       setproductName('');
       setDescription('');
       setPreviewImages([]);
 
     } 
-
-    } //try close
     
     catch (error) {
 
@@ -282,9 +251,6 @@ export default function AddProducts() {
       </div>
 
     </div>
-
-  
-    <h1 className='text-black font-bold text-2xl mt-6 ml-7 '>PRODUCTS:</h1>
 
 
      {/**Modal ======>*/}
@@ -373,31 +339,15 @@ export default function AddProducts() {
 
       {previewImages.map((imageUrl, index) => (
                 <div
+                className='previewImage'
                   key={index}
                   style={{
-                    position: "relative",
-                    backgroundImage: `url(${imageUrl})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    width: "80px",
-                    height: "80px",
-                    margin: "5px",
-                    cursor: "pointer",
+                   backgroundImage: `url(${imageUrl})`,
                   }}
                   onClick={() => previewImage(imageUrl)}
                 >
                   <button
-                    style={{
-                      position: "absolute",
-                      top: "5px",
-                      right: "5px",
-                      backgroundColor: "rgba(255, 255, 255, 0.7)",
-                      border: "none",
-                      borderRadius: "50%",
-                      cursor: "pointer",
-                      padding: "2px 5px",
-                      fontSize: "12px",
-                    }}
+                  className='publish-button'
                     onClick={(e) => {
                       e.stopPropagation();
                       removeImage(index);
@@ -414,7 +364,7 @@ export default function AddProducts() {
       
       <div className="w-full flex justify-end">
         <p></p>
-      <button className='mt-10 bg-blue-800 p-2 text-white rounded-md' onClick={HandleAdd}>Publish</button></div>
+      <button className='mt-10 bg-blue-800 p-2 text-white rounded-md'>Publish</button></div>
     </form>
         </div>
 

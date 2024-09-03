@@ -1,7 +1,5 @@
-import React from 'react'
 import AddProducts from '../../Components/addProducts'
 import Slidebar from '../../Components/Slidebar'
-
 
 export default function Page() {
 
