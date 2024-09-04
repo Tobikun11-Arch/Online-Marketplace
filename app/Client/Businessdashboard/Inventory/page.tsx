@@ -12,7 +12,7 @@ export default function Page() {
 
     <div className="h-full bg-white pt-7 lg:ml-0 lg:rounded-3xl">
 
-    <Inventory />
+    <Inventory /> 
     
     </div>
     </div>
