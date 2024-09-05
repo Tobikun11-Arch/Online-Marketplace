@@ -58,6 +58,7 @@ function ProductCardData() {
     return (
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
         {Array.from({ length: 1 }).map((_, index) => (
+          <>
           <li key={index} className="bg-white shadow-md rounded-lg overflow-hidden w-48 ml-10">
             <Skeleton className="w-48 h-48 bg-gray-200 p-2" />
             <div className="p-4">
@@ -67,6 +68,17 @@ function ProductCardData() {
               <Skeleton className="text-gray-700 h-4 mb-2 bg-gray-200" />
             </div>
           </li>
+
+          <li key={index} className="bg-white shadow-md rounded-lg overflow-hidden w-48 ml-10">
+            <Skeleton className="w-48 h-48 bg-gray-200 p-2" />
+            <div className="p-4">
+              <Skeleton className="text-xl font-bold h-4 mb-2 bg-gray-100" />
+              <Skeleton className="text-gray-700 h-4 mb-2 bg-gray-100" />
+              <Skeleton className="text-gray-700 h-4 mb-2 bg-gray-100" />
+              <Skeleton className="text-gray-700 h-4 mb-2 bg-gray-100" />
+            </div>
+          </li>
+          </>
         ))}
       </ul>
     );

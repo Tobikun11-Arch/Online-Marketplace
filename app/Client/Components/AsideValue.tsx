@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
     Accordion,
     AccordionContent,
@@ -15,74 +15,65 @@ import { useRouter } from 'next/navigation';
 import '../auth/Css/load.css'
 import Link from 'next/link'
 import axios from 'axios'
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+
+const queryClient = new QueryClient()
 
 export default function AsideValue() {
+    return(
+        <QueryClientProvider client={queryClient}>
+        <Value />
+      </QueryClientProvider>
+    )
+}
 
-    const [user, setUser] = useState<{ firstname: string; lastname: string; email: string, userId: string} | null>(null);
-    const [loader, setLoader] = useState(false)
+interface User {
+    FirstName: string;
+    LastName: string;
+    Email: string;
+    userId: string;
+}
+
+interface ApiResponse {
+    message: string;
+    user: User;
+}
+
+function Value() {
+
     const router = useRouter();
+    const dataUrl = process.env.NEXT_PUBLIC_DASHBOARD!;
 
-    useEffect(() => {
-        const fetchUserData = async () => {
+    const { error, data } = useQuery<ApiResponse | null>({
+        queryKey: ['UserData'],
+        queryFn: async () => {
+    
+          try {
             const token = localStorage.getItem('token');
             if (!token) {
-                router.push('/');
-                return;
+              throw new Error("No token found");
             }
-
-            try {
-                setLoader(true)
-                const response = await axios.get('https://online-marketplace-backend-six.vercel.app/api/dashboard', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                    setLoader(false)
-                    const data = response.data;
-
-                    const firstname = data.user.FirstName;
-                    const lastname = data.user.LastName;
-                    
-                    // Store in localStorage, overwriting any existing values
-                    localStorage.setItem('FirstName', firstname);
-                    localStorage.setItem('LastName', lastname);
-
-                    setUser({ firstname: data.user.FirstName, lastname: data.user.LastName, email: data.user.Email, userId: data.user.userId}); 
-                          
-            
-            } 
-            
-            catch (error) {
-
-                console.error('Error making request:', error);
-                router.push('/')
-
-            }
-
-        };
-
-        fetchUserData();
-    }, [router]);
-
+            const response = await axios.get(dataUrl, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            return response.data;
+          } 
+          
+          catch (error: any) {
+            console.error('Error fetching data:', error);
+            throw new Error(error.response?.data?.message || 'Failed to fetch products');
+          }
+    
+        },
+    }); 
 
     const Logout = () => {
 
        localStorage.clear();
 
     }
-    
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setFirstname(localStorage.getItem('FirstName') || '');
-            setLastname(localStorage.getItem('LastName') || '');
-        }
-    }, []);
-
 
     const handleInventory = () => {
 
@@ -96,6 +87,12 @@ export default function AsideValue() {
 
     }
 
+    if (error) {
+        return <p className="text-red-500">An error has occurred: {error.message}</p>;
+      }
+
+      const user = data?.user;
+
   return (
     <>
 
@@ -107,7 +104,7 @@ export default function AsideValue() {
     </div>
 
     <div>
-         <p>{firstname ? firstname : user?.firstname} {lastname ? lastname : user?.lastname}</p>
+    <p>{user?.FirstName}</p>
      </div>
 
     </div>
