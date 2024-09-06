@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Input from '../Components/Input'
 import TextArea from '../Components/textArea'
 
-export default function page() {
+export default function Page() {
 
     const [formData, setFormdata] = useState({
         productName: '',
