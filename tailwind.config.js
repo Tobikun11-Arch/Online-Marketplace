@@ -72,6 +72,9 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
+    fontFamily: {
+      abc: ["Roboto", "sans-serif"]
+    }
   },
   plugins: [require("tailwindcss-animate"),
     require('daisyui')

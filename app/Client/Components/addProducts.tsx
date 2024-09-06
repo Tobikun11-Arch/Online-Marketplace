@@ -37,29 +37,25 @@ export default function AddProducts() {
         alert("You can only upload up to 3 images.");
         return;
       }
-  
+
       const file = e.target.files[0];
       setImages((prevImages) => [...prevImages, file]);
-  
+
       const urlImage = URL.createObjectURL(file);
       setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
     }
   };
 
 
-
-  
   const removeImage = (index: number) => {
     const updatedImages = images.filter((_, i) => i !== index);
     setImages(updatedImages);
-  
 
     const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
     setPreviewImages(updatedPreviewImages);
   };
 
 
-  
   const previewImage = (urlImage: string) => {
     window.open(urlImage, "_blank");
   };

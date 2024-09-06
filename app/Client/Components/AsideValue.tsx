@@ -104,7 +104,7 @@ function Value() {
     </div>
 
     <div>
-    <p>{user?.FirstName}</p>
+    <p>{user?.FirstName} {user?.LastName}</p>
      </div>
 
     </div>

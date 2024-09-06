@@ -69,7 +69,7 @@ function ProductCardData() {
             </div>
           </li>
 
-          <li key={index} className="bg-white shadow-md rounded-lg overflow-hidden w-48 ml-10">
+          <li className="bg-white shadow-md rounded-lg overflow-hidden w-48 ml-10">
             <Skeleton className="w-48 h-48 bg-gray-200 p-2" />
             <div className="p-4">
               <Skeleton className="text-xl font-bold h-4 mb-2 bg-gray-100" />

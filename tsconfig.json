@@ -36,7 +36,7 @@
     "server/protectedRoutes.ts",
     "server/config.ts",  
     "server/userInterface.ts"  
-, "app/Client/SendEmail"  ],
+, "app/Client/SendEmail", "app/SellerDashboard/Components/Input.tsx"  ],
   "exclude": [
     "node_modules"
     // "server/api/index.ts"  // Consider removing this line unless you want to exclude it
