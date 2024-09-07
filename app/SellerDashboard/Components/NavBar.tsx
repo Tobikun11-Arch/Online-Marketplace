@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { House, Box, Truck, ChartNoAxesCombined, Megaphone, Settings } from 'lucide-react';
 import NavItem from './NavItem';
 import IconHome from '../Home/IconHome';
+import { Menu } from 'lucide-react';
 
 
 export default function NavBar() {
@@ -27,8 +28,13 @@ export default function NavBar() {
 
             return (
             <>
-            <nav className='w-80 h-screen bg-gray-50'>
-            <ul className='pt-10 pl-10'>
+
+            <div className="xl:hidden ml-5 pt-5 fixed">
+             <Menu size={44} color="#000000" />
+            </div>
+
+            <nav className='xl:w-80 h-screen bg-gray-50 '>
+            <ul className='pt-10 pl-10 hidden xl:block'>
 
             <NavItem
             icon={activeItem === 'Dashboard' ? <IconHome/> : <House/>}
