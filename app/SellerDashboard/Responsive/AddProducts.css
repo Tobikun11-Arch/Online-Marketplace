@@ -1,5 +1,12 @@
-@media (max-width: 956px) {
+@media (max-width: 446px) {
     .Products {
-        flex-direction: column;
+       width: 300px;
+       margin-top: 40px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 836px) {
+    .parent {
+        width: 320px;
     }
 }

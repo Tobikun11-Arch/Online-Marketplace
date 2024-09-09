@@ -8,7 +8,7 @@ interface categoryProps {
 export default function Category({onChange, value}: categoryProps) {
   return (
 
-    <select className="select border-slate-950 text-black bg-white mt-3 w-96" value={value}  onChange={onChange}>
+    <select className="select border-slate-950 text-black bg-white mt-3 w-full" value={value}  onChange={onChange}>
     <option disabled value={''} className='border-black'>Category</option>
     <option className='text-black font-abc font-light'>Electronics</option>
     <option className='text-black font-abc font-light'>Home & Kitchen</option>

@@ -8,7 +8,7 @@ interface ConditionProps {
 export default function Category({onChange, value}: ConditionProps) {
   return (
 
-    <select className="select border-slate-950 text-black bg-white mt-3 w-96" value={value}  onChange={onChange}>
+    <select className="select border-slate-950 text-black bg-white mt-3 w-full" value={value}  onChange={onChange}>
     <option disabled value={''} className='border-black'>Condition</option>
     <option className='text-black font-abc font-light'>New</option>
     <option className='text-black font-abc font-light'>Refurbished</option>
