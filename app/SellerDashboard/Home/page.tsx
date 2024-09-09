@@ -42,7 +42,7 @@ export default function Home() {
           <h1 className='font-abc font-semibold mt-4'>Create a New Product</h1>
 
           <AddProduct
-          href='/SellerDashboard/Add-Product'
+          href='/SellerDashboard/Seller'
           onClick={handleAddProducts}
           label='Add new Product'
           />

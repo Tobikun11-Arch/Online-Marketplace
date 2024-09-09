@@ -5,7 +5,6 @@ import NavItem from './NavItem';
 import IconHome from '../Home/IconHome';
 import { Menu } from 'lucide-react';
 
-
 export default function NavBar() {
             const [activeItem, setActiveItem] = useState<string | null>(null);
 
@@ -30,11 +29,11 @@ export default function NavBar() {
             <>
 
             <div className="xl:hidden ml-5 pt-5 fixed">
-             <Menu size={44} color="#000000" />
+            <Menu size={44} color="#000000" />
             </div>
 
-            <nav className='xl:w-80 h-screen bg-gray-50 '>
-            <ul className='pt-10 pl-10 hidden xl:block'>
+            <nav className='w-80 h-screen bg-gray-700 xl:block hidden'>
+            <ul className='pt-10 pl-10'>
 
             <NavItem
             icon={activeItem === 'Dashboard' ? <IconHome/> : <House/>}
