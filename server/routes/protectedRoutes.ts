@@ -38,36 +38,29 @@ protectedroute.get('/dashboard', async (req: RequestWithUser, res: Response) => 
 
 
 protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => {
-
     const userId = req.user?._id;
-
     try {
-
-    const { description, productName, images, productPrice,
-        quantity, } = req.body;
-
+    const { description, productName, images, productPrice, category, condition } = req.body;
     const Products = new Product({
         userId,
         productName, 
         description, 
         productPrice,
-        quantity,
+        category,
+        condition,
         images,
     });
 
+    console.log(description, productName, images, productPrice);
+
     await Products.save();
-
     res.status(201).json({ message: 'Product created successfully' });
-
     } 
     
     catch (error) {
-        
         console.error('Error creating product:', error);
         res.status(500).json({ error: 'Internal server error' });
-
     }
-
 });
 
 
@@ -89,7 +82,6 @@ protectedroute.get('/productList', async  (req: RequestWithUser, res: Response) 
 
             productName: list.productName,
             productPrice: list.productPrice,
-            quantity: list.quantity,
             images: list.images,
             description: list.description,
 

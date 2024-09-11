@@ -7,7 +7,7 @@ export default function Page() {
     <>
       <div className="w-full h-min bg-gray-200 flex">
         <NavBar />
-        <div className="w-full flex-grow overflow-y-scroll flex justify-center p-4 md:p-8">
+        <div className="w-full flex-grow overflow-y-scroll flex justify-center">
             <ProductDetails />
          </div>
       </div>  

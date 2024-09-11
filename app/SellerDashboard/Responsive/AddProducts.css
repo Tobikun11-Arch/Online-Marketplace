@@ -3,6 +3,25 @@
        width: 300px;
        margin-top: 40px;
     }
+
+    .UploadBox {
+        width: 100px;
+        height: 75px;
+    }
+
+    .Warning {
+        margin-top: 0;
+    }
+
+    .FormBox {
+        margin-left: 0;
+    }
+
+    .parentUpload{
+        height: 60px;
+        padding-left: 0;
+    }
+
 }
 
 @media (min-width: 768px) and (max-width: 836px) {

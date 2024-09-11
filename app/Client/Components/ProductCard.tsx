@@ -19,7 +19,6 @@ interface Product {
   description: string;
   images: string[];
   productPrice: number;
-  quantity: number;
 }
 
 interface Products {
@@ -103,7 +102,6 @@ function ProductCardData() {
           <div className="p-4">
             <h1 className="text-xl text-gray-700 font-bold">{list.productName}</h1>
             <p className="text-gray-700">{list.productPrice}</p>
-            <p className="text-gray-700">{list.quantity}</p>
             <p className="text-gray-700">{list.description}</p>
           </div>
         </li>

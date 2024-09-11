@@ -33,10 +33,6 @@ export default function AddProducts() {
 
   const HandleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      if (images.length > 2) {
-        alert("You can only upload up to 3 images.");
-        return;
-      }
 
       const file = e.target.files[0];
       setImages((prevImages) => [...prevImages, file]);
@@ -44,7 +40,7 @@ export default function AddProducts() {
       const urlImage = URL.createObjectURL(file);
       setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
     }
-  };
+  };  
 
 
   const removeImage = (index: number) => {
@@ -140,28 +136,21 @@ export default function AddProducts() {
 
     try {
 
-      const uploadPromises = images.map(async (image:any, index) => {
-
+  const uploadPromises = images.map(async (image:any, index) => {
         if (!(image instanceof File)) {
-
           throw new Error(`Image ${index + 1} is not a valid file object`);
-
         }
         
         const formData = new FormData();
         formData.append('file', image);
         formData.append('upload_preset', 'Onlinemarket');
-  
         const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
-        if (!cloudName) {
-          
-          throw new Error('Cloudinary cloud name is not set');
-          
+        if (!cloudName) {  
+          throw new Error('Cloudinary cloud name is not set');  
         }
 
         const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
- 
         const data = response.data;
         return data.secure_url;
       });
@@ -176,7 +165,7 @@ export default function AddProducts() {
 
       };
       
-      closeModalAfterDelay();
+
   
       const cloudinaryUrls = await Promise.all(uploadPromises);
       
@@ -196,14 +185,11 @@ export default function AddProducts() {
       setproductName('');
       setDescription('');
       setPreviewImages([]);
-
     } 
     
     catch (error) {
-
       console.error('Error making request:', error);
       setMessage("Please Try again!")
-
     }
 
   }
@@ -238,7 +224,6 @@ export default function AddProducts() {
   return (
     <>
     
-
     <div className="flex w-36 h-40 ml-7 mt-10 lg:mt-0 bg-black rounded-xl flex-col items-center">
       <h1 className='text-white font-bold text-base mt-5'>Add Products</h1>
     
@@ -324,8 +309,6 @@ export default function AddProducts() {
         <textarea id="product-description" className='border-b-2 border-l-2 bg-white border-black outline-none mt-2 pl-2 resize-none' placeholder='Enter product description (200 characters max)'value={description} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>)=> setDescription(e.target.value)} maxLength={200} rows={5} required />
       </div>
 
-
-
       <p className='cursor-default text-gray-500 mt-5'>Add Image {images.length}/3</p>
 
       <div className="flex items-center gap-1 mt-3 h-20">
@@ -355,7 +338,7 @@ export default function AddProducts() {
               ))}
             </div>
 
-        <input type="file" multiple id="product-image" accept=".jpg, .jpeg, .png"  style={{ display: 'none' }} onChange={HandleImage} required/>
+        <input type="file" id="product-image" accept=".jpg, .jpeg, .png"  style={{ display: 'none' }} onChange={HandleImage} required/>
   
       
       <div className="w-full flex justify-end">
