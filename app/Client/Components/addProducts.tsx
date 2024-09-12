@@ -170,16 +170,16 @@ export default function AddProducts() {
       const cloudinaryUrls = await Promise.all(uploadPromises);
       
       await axios.post('https://online-marketplace-backend-six.vercel.app/api/Products',{
-        productName,
-        productPrice,
-        quantity,
-        description,
-        images: cloudinaryUrls,
+      productName,
+      productPrice,
+      quantity,
+      description,
+      images: cloudinaryUrls,
       }, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+      headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      },
       });
       setproductName('');
       setDescription('');
@@ -193,29 +193,22 @@ export default function AddProducts() {
 
   }
 
-
-
   const handleNumber = (e: ChangeEvent<HTMLInputElement>) => {
-
-      const inputValue = e.target.value;
-      if (/^\d*$/.test(inputValue)) {
-        setPrice(inputValue);   
-      } else {
-        setPrice('');
-      }
-
+  const inputValue = e.target.value;
+  if (/^\d*$/.test(inputValue)) {
+  setPrice(inputValue);   
+  } else {
+  setPrice('');
+  }
   }
 
-
   const handleQuantity = (e: ChangeEvent<HTMLInputElement>) => {
-
     const inputValue = e.target.value;
     if (/^\d*$/.test(inputValue)) {
       setQuantity(inputValue);   
     } else {
       setQuantity('');
     }
-
 }
 
 

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { CircleChevronLeft, Upload, X, CircleAlert } from 'lucide-react'
 import Link from 'next/link'
 import Input from '../Components/Input'
@@ -17,9 +17,9 @@ export default function ProductDetails() {
     const [images, setImages] = useState<File[]>([])
     const [message, setMessage] = useState('')
     const [formData, setFormdata] = useState({
-        productName: '',
-        description: '',
-        productPrice: '',
+    productName: '',
+    description: '',  
+    productPrice: '',
     })
 
     const [Category, setCategory] = useState<string | null>(null)
@@ -27,62 +27,65 @@ export default function ProductDetails() {
 
 
     const HandleCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setCategory(event.target.value)
+    setCategory(event.target.value)
     }
 
     const HandleCondition = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setCondition(event.target.value)
+    setCondition(event.target.value)
     }
 
     const openModal = () => {
-        const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
-        if (modal) {
-          modal.showModal();
-        }
-      };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormdata({ ...formData, [name]: value });
-        if(name === "productPrice") {
-            const inputValue = e.target.value;
-            if (/^\d*$/.test(inputValue)) {
-                setFormdata({...formData, [name]: inputValue});   
-            }   
-            else {
-                setFormdata({...formData, [name]: ''});
-            }
-        }
-        
+    const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
+    if (modal) {
+      modal.showModal();
+      }
     };
 
-        const HandleImage = (e:React.                          ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-        if (images.length > 3) {
-        alert("You can only upload up to 3 images.");
-          return;
-          }
+    const memoPreviewImages = useMemo(() => {
+      return previewImages;
+    }, [previewImages])
 
-          const file = e.target.files[0];
-          setImages((prevImages) => [...prevImages, file]);
-            
-          const urlImage = URL.createObjectURL(file);
-          setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
-        }
-      };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormdata({ ...formData, [name]: value });
+    if(name === "productPrice") {
+    const inputValue = e.target.value;
+    if (/^\d*$/.test(inputValue)) {
+    setFormdata({...formData, [name]: inputValue});   
+    }   
+    else {
+    setFormdata({...formData, [name]: ''});
+    }
+    }
+    };
+
+
+    const HandleImage = (e:React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0]) {
+      if (images.length > 3) {
+      alert("You can only upload up to 4 images.");
+      return;
+      }
+
+      const file = e.target.files[0];
+      setImages((prevImages) => [...prevImages, file]);
+
+      const urlImage = URL.createObjectURL(file);
+      setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
+      }
+    };
 
       const previewImage = (urlImage: string) => {
-        window.open(urlImage, "_blank");
+      window.open(urlImage, "_blank");
       };
 
       const removeImage = (index: number) => {
-        const updatedImages = images.filter((_, i) => i !== index);
-        setImages(updatedImages);
+      const updatedImages = images.filter((_, i) => i !== index);
+      setImages(updatedImages);
 
-        const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
-        setPreviewImages(updatedPreviewImages);
+      const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
+      setPreviewImages(updatedPreviewImages);
       };
-
 
       //Handle Submitting to Database
       const HandlePublish = async (e: React.FormEvent) => {
@@ -113,38 +116,38 @@ export default function ProductDetails() {
         throw new Error('Cloudinary cloud name is not set');  
         }
 
-          const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, imgData);
-          const data = response.data;
-          return data.secure_url;
-          });
+        const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, imgData);
+        const data = response.data;
+        return data.secure_url;
+        });
 
-          const cloudinaryUrls = await Promise.all(uploadPromises);
-          console.log("url: ", cloudinaryUrls)
+        const cloudinaryUrls = await Promise.all(uploadPromises);
+        console.log("url: ", cloudinaryUrls)
 
-          const productData = {
-          productName: formData.productName,
-          description: formData.description,
-          productPrice: formData.productPrice,
-          category: Category,
-          condition: Condition,
-          images: cloudinaryUrls, 
+        const productData = {
+        productName: formData.productName,
+        description: formData.description,
+        productPrice: formData.productPrice,
+        category: Category,
+        condition: Condition,
+        images: cloudinaryUrls, 
         };
 
         await axios.post('https://online-marketplace-backend-six.vercel.app/api/Products',productData, {
-          headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          },
-          });
+        headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        },
+        });
 
-          setFormdata({
-            productName: '',
-            description: '',
-            productPrice: ''
-          });
-          setCategory(null)
-          setCondition(null)
-          setPreviewImages([]);
+        setFormdata({
+        productName: '',
+        description: '',
+        productPrice: ''
+        });
+        setCategory(null)
+        setCondition(null)
+        setPreviewImages([]);
         } 
 
         catch (error) {
@@ -159,7 +162,7 @@ export default function ProductDetails() {
 
             <div className="h-screen pt-10 pl-5 md:flex gap-8 justify-center ">
 
-             <Link href={'/SellerDashboard/Home'} className='h-10'>
+            <Link href={'/SellerDashboard/Home'} className='h-10'>
             <div className="items-center gap-1 hidden 2xl:block">
             <CircleChevronLeft size={32}/>
             <p>Back</p>
@@ -169,10 +172,10 @@ export default function ProductDetails() {
             {/* Modal for Submit Button */}
             <dialog id="my_modal_3" className="modal">
             <div className="modal-box">
-                <form method="dialog">
-                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white">✕</button>
-                </form>
-                <p className="py-4 text-white">{message ? `${message}` : 'Product Published'}</p>
+            <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white">✕</button>
+            </form>
+            <p className="py-4 text-white">{message ? `${message}` : 'Product Published'}</p>
             </div>
             </dialog>
 
@@ -235,8 +238,8 @@ export default function ProductDetails() {
             <div className='flex gap-1 items-center ml-2'>
             <CircleAlert color="#043481" size={20}/>
             <p className='text-xs font-bold'>Please Upload four images.</p>
-             </div>
-              </>
+            </div>
+            </>
             )}
             <div className='flex mt-2 items-center' onClick={openModal}>
             <Button className='px-4 py-1 rounded-lg font-abc font-bold text-sm h-10 w-24'>Cancel</Button>
@@ -250,7 +253,7 @@ export default function ProductDetails() {
             </div>
             
             <div className='grid grid-cols-2 gap-3 p-4 ImageContainer'> {/* Show all upload */}
-            {previewImages.map((imageUrl, index) => (
+            {memoPreviewImages.map((imageUrl, index) => (
             <div
             className='previewImage w-40 h-40'
             key={index}
