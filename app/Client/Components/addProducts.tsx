@@ -181,12 +181,11 @@ export default function AddProducts() {
           'Content-Type': 'application/json',
         },
       });
-  
       setproductName('');
       setDescription('');
       setPreviewImages([]);
     } 
-    
+
     catch (error) {
       console.error('Error making request:', error);
       setMessage("Please Try again!")

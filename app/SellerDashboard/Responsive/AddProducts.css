@@ -4,6 +4,11 @@
        margin-top: 40px;
     }
 
+    .ImageContainer {
+        margin-top: 40px;
+        padding: 0px 10px 10px 0px;
+    }
+
     .UploadBox {
         width: 100px;
         height: 75px;

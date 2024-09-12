@@ -59,9 +59,9 @@ export default function ProductDetails() {
         const HandleImage = (e:React.                          ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
         if (images.length > 3) {
-                alert("You can only upload up to 3 images.");
-                return;
-            }
+        alert("You can only upload up to 3 images.");
+          return;
+          }
 
           const file = e.target.files[0];
           setImages((prevImages) => [...prevImages, file]);
@@ -78,18 +78,18 @@ export default function ProductDetails() {
       const removeImage = (index: number) => {
         const updatedImages = images.filter((_, i) => i !== index);
         setImages(updatedImages);
-    
+
         const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
         setPreviewImages(updatedPreviewImages);
       };
 
 
       //Handle Submitting to Database
-     const HandlePublish = async (e: React.FormEvent) => {
+      const HandlePublish = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!formData.productName || !formData.description || !formData.productPrice || images.length === 3 || !Category || !Condition) {
-          setMessage("Please fill in all fields and Upload four images.");
-          return;
+        if (!formData.productName || !formData.description || !formData.productPrice || images.length <= 3 || !Category || !Condition) {
+        setMessage("Please fill in all fields and Upload four images.");
+        return;
         }
 
         setMessage('')  
@@ -98,42 +98,43 @@ export default function ProductDetails() {
           router.push('/');
           return;
         }
+
         try {
-            const uploadPromises = images.map(async (image:any, index) => {
-            if (!(image instanceof File)) {
-              throw new Error(`Image ${index + 1} is not a valid file object`);
-            }
+        const uploadPromises = images.map(async (image:any, index) => {
+        if (!(image instanceof File)) {
+        throw new Error(`Image ${index + 1} is not a valid file object`);
+        }
 
-            const imgData = new FormData();
-            imgData.append('file', image);
-            imgData.append('upload_preset', 'Onlinemarket');
-            const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-            if (!cloudName) {  
-              throw new Error('Cloudinary cloud name is not set');  
-            }
+        const imgData = new FormData();
+        imgData.append('file', image);
+        imgData.append('upload_preset', 'Onlinemarket');
+        const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+        if (!cloudName) {  
+        throw new Error('Cloudinary cloud name is not set');  
+        }
 
-            const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, imgData);
-            const data = response.data;
-            return data.secure_url;
-            });
+          const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, imgData);
+          const data = response.data;
+          return data.secure_url;
+          });
 
           const cloudinaryUrls = await Promise.all(uploadPromises);
           console.log("url: ", cloudinaryUrls)
 
           const productData = {
-            productName: formData.productName,
-            description: formData.description,
-            productPrice: formData.productPrice,
-            category: Category,
-            condition: Condition,
-            images: cloudinaryUrls, 
+          productName: formData.productName,
+          description: formData.description,
+          productPrice: formData.productPrice,
+          category: Category,
+          condition: Condition,
+          images: cloudinaryUrls, 
         };
 
-          await axios.post('https://online-marketplace-backend-six.vercel.app/api/Products',productData, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
+        await axios.post('https://online-marketplace-backend-six.vercel.app/api/Products',productData, {
+          headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          },
           });
 
           setFormdata({
@@ -147,8 +148,8 @@ export default function ProductDetails() {
         } 
 
         catch (error) {
-          console.error('Error making request:', error);
-          setMessage("Please Try again!")
+        console.error('Error making request:', error);
+        setMessage("Please Try again!")
         }
       }
 
@@ -177,7 +178,7 @@ export default function ProductDetails() {
 
             <div className="FormBox ml-5 mt-10 flex flex-col w-96 Products h-auto sm:h-3/4 bg-white rounded-sm p-2" style={{filter: 'drop-shadow(-9px 9px 0px #000000)'}}>
             <h1 className='foont-abc font-bold text-3xl cursor-default'>Add new Product</h1>
-            
+
             <Input
             value={formData.productName}
             onChange={handleChange}
@@ -226,16 +227,16 @@ export default function ProductDetails() {
             <div className="mt-5 Warning">
             <div className="flex flex-col">
             {images.length > 3 ? (
-                <>
-                <p className='text-xs ml-5 font-bold'>Please check before submitting.</p>
-                </>
-                ) : (
-                <>
-                <div className='flex gap-1 items-center ml-2'>
-                <CircleAlert color="#043481" size={20}/>
-                <p className='text-xs font-bold'>Please Upload four images.</p>
-                 </div>
-                </>
+            <>
+            <p className='text-xs ml-5 font-bold'>Please check before submitting.</p>
+            </>
+            ) : (
+            <>
+            <div className='flex gap-1 items-center ml-2'>
+            <CircleAlert color="#043481" size={20}/>
+            <p className='text-xs font-bold'>Please Upload four images.</p>
+             </div>
+              </>
             )}
             <div className='flex mt-2 items-center' onClick={openModal}>
             <Button className='px-4 py-1 rounded-lg font-abc font-bold text-sm h-10 w-24'>Cancel</Button>
@@ -248,7 +249,7 @@ export default function ProductDetails() {
             </div>
             </div>
             
-            <div className='grid grid-cols-2 gap-3 pb-4'> {/* Show all upload */}
+            <div className='grid grid-cols-2 gap-3 p-4 ImageContainer'> {/* Show all upload */}
             {previewImages.map((imageUrl, index) => (
             <div
             className='previewImage w-40 h-40'
