@@ -4,10 +4,12 @@ import NavBar from '../Components/NavBar'
 export default function Page() {
   return (
     <>
-    <div className="flex">
-    <NavBar />
-    <h1>Orders</h1>
-    </div>
+       <div className='w-full h-screen bg-gray-200'>
+        <NavBar/>
+        <div className='w-full h-screen flex items-start flex-col'>
+          <h1 className='mt-14 xl:mt-0 xl:ml-64'>Orders</h1>
+        </div>
+     </div>
    </>
   )
 }

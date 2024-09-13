@@ -21,30 +21,33 @@ export default function ProductDetails() {
     description: '',  
     productPrice: '',
     })
-
     const [Category, setCategory] = useState<string | null>(null)
     const [Condition, setCondition] = useState<string | null>(null)
 
-
+    //Set Product Category value
     const HandleCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(event.target.value)
     }
 
+    //Set Product Condition value
     const HandleCondition = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCondition(event.target.value)
     }
 
+    //Modal that show message error and Publish success
     const openModal = () => {
     const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
     if (modal) {
-      modal.showModal();
-      }
+    modal.showModal();
+    }
     };
 
+    //Memoizing the show images that user pick to Publish
     const memoPreviewImages = useMemo(() => {
-      return previewImages;
+    return previewImages;
     }, [previewImages])
 
+    //Saving the data from form and putting condition for setting price
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormdata({ ...formData, [name]: value });
@@ -59,36 +62,36 @@ export default function ProductDetails() {
     }
     };
 
-
+    //Handling uploading Images thru Upload logo
     const HandleImage = (e:React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files[0]) {
-      if (images.length > 3) {
-      alert("You can only upload up to 4 images.");
-      return;
-      }
+    if (e.target.files && e.target.files[0]) {
+    if (images.length > 3) {
+    alert("You can only upload up to 4 images.");
+    return;
+    }
 
-      const file = e.target.files[0];
-      setImages((prevImages) => [...prevImages, file]);
+    const file = e.target.files[0];
+    setImages((prevImages) => [...prevImages, file]);
 
-      const urlImage = URL.createObjectURL(file);
-      setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
-      }
+    const urlImage = URL.createObjectURL(file);
+    setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
+    }
     };
 
-      const previewImage = (urlImage: string) => {
+    const previewImage = (urlImage: string) => {
       window.open(urlImage, "_blank");
-      };
+    };
 
-      const removeImage = (index: number) => {
-      const updatedImages = images.filter((_, i) => i !== index);
-      setImages(updatedImages);
+    const removeImage = (index: number) => {
+    const updatedImages = images.filter((_, i) => i !== index);
+    setImages(updatedImages);
 
-      const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
-      setPreviewImages(updatedPreviewImages);
-      };
+    const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
+    setPreviewImages(updatedPreviewImages);
+    };
 
-      //Handle Submitting to Database
-      const HandlePublish = async (e: React.FormEvent) => {
+    //Handle Submitting to Database
+    const HandlePublish = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.productName || !formData.description || !formData.productPrice || images.length <= 3 || !Category || !Condition) {
         setMessage("Please fill in all fields and Upload four images.");
@@ -139,28 +142,32 @@ export default function ProductDetails() {
         'Content-Type': 'application/json',
         },
         });
+      } 
 
-        setFormdata({
-        productName: '',
-        description: '',
-        productPrice: ''
-        });
-        setCategory(null)
-        setCondition(null)
-        setPreviewImages([]);
-        } 
-
-        catch (error) {
+      catch (error) {
         console.error('Error making request:', error);
         setMessage("Please Try again!")
-        }
       }
+   }
 
-  return (
+    const handleReset = () => {
+    if(!message) {
+    setFormdata({
+    productName: '',
+    description: '',
+    productPrice: ''
+    });
+    setCategory(null)
+    setCondition(null)
+    setPreviewImages([]);
+    }
+    }
+
+   return (
     <>
      <div className="flex min-h-screen">
 
-            <div className="h-screen pt-10 pl-5 md:flex gap-8 justify-center ">
+          <div className="h-screen pt-10 pl-5 md:flex gap-8 justify-center ">
 
             <Link href={'/SellerDashboard/Home'} className='h-10'>
             <div className="items-center gap-1 hidden 2xl:block">
@@ -173,7 +180,7 @@ export default function ProductDetails() {
             <dialog id="my_modal_3" className="modal">
             <div className="modal-box">
             <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white" onClick={handleReset}>✕</button>
             </form>
             <p className="py-4 text-white">{message ? `${message}` : 'Product Published'}</p>
             </div>
@@ -241,21 +248,26 @@ export default function ProductDetails() {
             </div>
             </>
             )}
-            <div className='flex mt-2 items-center' onClick={openModal}>
+
+            <div className='flex mt-2 items-center'>
+            <Link href={'/SellerDashboard'}>
             <Button className='px-4 py-1 rounded-lg font-abc font-bold text-sm h-10 w-24'>Cancel</Button>
+            </Link>
+            <div onClick={openModal}>
             <div className='SubmitButton '>
             <Button className='px-4 py-1 rounded-lg font-abc font-bold text-white w-24 bg-blue-800 text-sm' onClick={HandlePublish}>Submit</Button>
+            </div>
             </div>
 
             </div>
             </div>
             </div>
             </div>
-            
+
             <div className='grid grid-cols-2 gap-3 p-4 ImageContainer'> {/* Show all upload */}
             {memoPreviewImages.map((imageUrl, index) => (
             <div
-            className='previewImage w-40 h-40'
+            className='previewImage w-40 h-40 ImageSize'
             key={index}
             style={{
             backgroundImage: `url(${imageUrl})`,
