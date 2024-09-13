@@ -11,12 +11,18 @@ import '../Responsive/AddProducts.css'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
+interface FormDetails {
+  productName: string;
+  description: string;
+  productPrice: string;
+}
+
 export default function ProductDetails() {
     const router = useRouter();
     const [previewImages, setPreviewImages] = useState<string[]>([]);
     const [images, setImages] = useState<File[]>([])
-    const [message, setMessage] = useState('')
-    const [formData, setFormdata] = useState({
+    const [message, setMessage] = useState<string>('')
+    const [formData, setFormdata] = useState<FormDetails>({
     productName: '',
     description: '',  
     productPrice: '',

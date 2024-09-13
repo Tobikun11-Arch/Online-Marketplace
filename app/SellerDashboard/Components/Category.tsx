@@ -28,9 +28,3 @@ export default function Category({onChange, value}: categoryProps) {
   )
 }
 
-
-{/* <select className="select text-white border-slate-400 bg-transparent w-1/2 mt-3" value={option || ''} onChange={HandleOption}>
-  <option disabled selected value={''}>Buyer or Seller</option>
-  <option className='text-black'>Buyer</option>
-  <option className='text-black'>Seller</option>
-</select> */}

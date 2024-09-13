@@ -1,14 +1,13 @@
 import React from 'react'
 import NavBar from '../Components/NavBar'
+import ManageProducts from '../Components/ManageProducts'
 
 export default function Products() {
   return (
    <>
      <div className='w-full h-screen bg-gray-200'>
         <NavBar/>
-        <div className='w-full h-screen flex items-start flex-col'>
-          <h1 className='mt-14 xl:mt-0 xl:ml-64'>Manage Products</h1>
-        </div>
+       <ManageProducts/>
      </div>
    </>
   )
