@@ -136,7 +136,7 @@ export default function LoginForm() {
 
       else {
 
-        router.push('/Client/Businessdashboard')
+        router.push('/SellerDashboard')
 
       }
 

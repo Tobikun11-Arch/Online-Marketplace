@@ -185,7 +185,7 @@ export default function ProductDetails() {
 
             {/* Modal for Submit Button */}
             <dialog id="my_modal_3" className="modal">
-            <div className="modal-box">
+            <div className="modal-box bg-gray-700">
             <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white" onClick={handleReset}>✕</button>
             </form>
