@@ -18,7 +18,6 @@ export default function ProductTable() {
 
     function ProductDetails() {
         const dataUrl = process.env.NEXT_PUBLIC_PRODUCT_LIST!;
-
         const { isLoading, error, data: products } = useQuery<Products | null>({
         queryKey: ['ProductList'],
         queryFn: async () => {
@@ -40,7 +39,6 @@ export default function ProductTable() {
         console.error('Error fetching data:', error);
         throw new Error(error.response?.data?.message || 'Failed to fetch products');
         }
-        
         },
     });
 
@@ -57,25 +55,29 @@ export default function ProductTable() {
     }
 
     return (
-        <div className="w-full overflow-x-auto mt-4 pb-4">
-            <table className="min-w-full table-auto border-collapse border border-gray-300">
-            <thead className="bg-gray-100">
+        <div className="w-full overflow-x-auto mt-2 pb-4">
+            <table className="min-w-full table-auto border-collapse rounded-lg">
+            <thead className="bg-white">
             <tr>
-            <th className="px-4 py-2 border border-gray-300 text-left">Product</th>
-            <th className="px-4 py-2 border border-gray-300 text-left">Price</th>
-            <th className="px-4 py-2 border border-gray-300 text-left">Inventory</th>
-            <th className="px-4 py-2 border border-gray-300 text-left">Status</th>
-            <th className="px-4 py-2 border border-gray-300 text-left">More</th>
+            <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Product</th>
+            <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Price</th>
+            <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Inventory</th>
+            <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Status</th>
+            <th className="px-4 py-2 border-b-2 border-gray-500 text-left">More</th>
             </tr>
             </thead>
             {products?.ProductLists.map((list, index) => (
-            <tbody key={index}>
+            <tbody key={index} className='bg-white border-b-2 border-gray-400'>
             <tr>
-            <td className="px-4 py-2 border border-gray-300">{list.productName}</td>
-            <td className="px-4 py-2 border border-gray-300">{list.productPrice}</td>
-            <td className="px-4 py-2 border border-gray-300">Inventory</td>
-            <td className="px-4 py-2 border border-gray-300">Stats</td>
-            <td className="px-4 py-2 border border-gray-300">More</td>
+            <td className="px-4 py-2">
+            <div className="w-12 h-12 rounded-full bg-cover bg-center"
+            style={{ backgroundImage: `url(${list.images[0]})`}}> 
+            </div>
+            </td>   
+            <td className="pl-4 pr-24 py-2 cursor-default">₱{list.productPrice}</td>
+            <td className="px-4 py-2">Inventory</td>
+            <td className="px-4 py-2">Stats</td>
+            <td className="px-4 py-2">More</td>
             </tr>
             </tbody>
             ))}

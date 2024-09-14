@@ -99,7 +99,8 @@ export default function ProductDetails() {
     //Handle Submitting to Database
     const HandlePublish = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!formData.productName || !formData.description || !formData.productPrice || images.length <= 3 || !Category || !Condition) {
+        //Change later images.length to <= 3
+        if (!formData.productName || !formData.description || !formData.productPrice || images.length <= 1 || !Category || !Condition) {
         setMessage("Please fill in all fields and Upload four images.");
         return;
         }

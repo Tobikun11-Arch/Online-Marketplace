@@ -4,4 +4,3 @@ export interface Product {
     images: string[];
     productPrice: number;
 }
-
