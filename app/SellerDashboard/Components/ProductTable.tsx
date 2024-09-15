@@ -67,7 +67,7 @@ export default function ProductTable() {
             </tr>
             </thead>
             {products?.ProductLists.map((product) => (
-            <tbody key={product.productName} className='bg-white border-b-2 border-gray-400'>
+            <tbody key={product.description} className='bg-white border-b-2 border-gray-400'>
             <tr>
             <td className="px-4 py-2">
             <div className="w-12 h-12 rounded-full bg-cover bg-center bg-gray-400"

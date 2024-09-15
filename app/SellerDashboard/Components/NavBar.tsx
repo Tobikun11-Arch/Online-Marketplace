@@ -15,12 +15,12 @@ import IconHome from "../Home/IconHome";
 export default function NavBar() {
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false); 
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null); 
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const savedItem = localStorage.getItem("activeItem") || "Dashboard";
-      setActiveItem(savedItem);
+      setActiveItem(savedItem)
     }
   }, []);
 

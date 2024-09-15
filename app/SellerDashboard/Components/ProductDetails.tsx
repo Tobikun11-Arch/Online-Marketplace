@@ -1,5 +1,6 @@
 "use client"
 import React, { useCallback, useMemo, useState } from 'react'
+import { useQueryClient, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CircleChevronLeft, Upload, X, CircleAlert } from 'lucide-react'
 import Link from 'next/link'
 import Input from '../Components/Input'
@@ -10,6 +11,9 @@ import Button from '../Components/Button'
 import '../Responsive/AddProducts.css'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+
+// Define the query client globally
+const queryClient = new QueryClient();
 
 interface FormDetails {
   productName: string;
@@ -23,158 +27,153 @@ export default function ProductDetails() {
     const [images, setImages] = useState<File[]>([])
     const [message, setMessage] = useState<string>('')
     const [formData, setFormdata] = useState<FormDetails>({
-    productName: '',
-    description: '',  
-    productPrice: '',
-    })
-    const [Category, setCategory] = useState<string | null>(null)
-    const [Condition, setCondition] = useState<string | null>(null)
+        productName: '',
+        description: '',  
+        productPrice: '',
+    });
+    const [Category, setCategory] = useState<string | null>(null);
+    const [Condition, setCondition] = useState<string | null>(null);
 
     //Set Product Category value
     const HandleCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(event.target.value)
+        setCategory(event.target.value)
     }
 
     //Set Product Condition value
     const HandleCondition = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCondition(event.target.value)
+        setCondition(event.target.value)
     }
 
     //Modal that show message error and Publish success
     const openModal = () => {
-    const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
-    if (modal) {
-    modal.showModal();
-    }
+        const modal = document.getElementById('my_modal_3') as HTMLDialogElement;
+        if (modal) {
+            modal.showModal();
+        }
     };
 
     //Memoizing the show images that user pick to Publish
     const memoPreviewImages = useMemo(() => {
-    return previewImages;
+        return previewImages;
     }, [previewImages])
 
-    //Saving the data from form and putting condition for setting price
+    // Handle changes in form inputs
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormdata({ ...formData, [name]: value });
-    if(name === "productPrice") {
-    const inputValue = e.target.value;
-    if (/^\d*$/.test(inputValue)) {
-    setFormdata({...formData, [name]: inputValue});   
-    }   
-    else {
-    setFormdata({...formData, [name]: ''});
-    }
-    }
+        const { name, value } = e.target;
+        setFormdata({ ...formData, [name]: value });
+        if(name === "productPrice") {
+            const inputValue = e.target.value;
+            if (/^\d*$/.test(inputValue)) {
+                setFormdata({...formData, [name]: inputValue});   
+            } else {
+                setFormdata({...formData, [name]: ''});
+            }
+        }
     };
 
-    //Handling uploading Images thru Upload logo
+    // Handling image uploads
     const HandleImage = (e:React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-    if (images.length > 3) {
-    alert("You can only upload up to 4 images.");
-    return;
-    }
+        if (e.target.files && e.target.files[0]) {
+            if (images.length > 3) {
+                alert("You can only upload up to 4 images.");
+                return;
+            }
 
-    const file = e.target.files[0];
-    setImages((prevImages) => [...prevImages, file]);
+            const file = e.target.files[0];
+            setImages((prevImages) => [...prevImages, file]);
 
-    const urlImage = URL.createObjectURL(file);
-    setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
-    }
+            const urlImage = URL.createObjectURL(file);
+            setPreviewImages((prevPreviews) => [...prevPreviews, urlImage]);
+        }
     };
 
     const previewImage = (urlImage: string) => {
-      window.open(urlImage, "_blank");
+        window.open(urlImage, "_blank");
     };
 
     const removeImage = (index: number) => {
-    const updatedImages = images.filter((_, i) => i !== index);
-    setImages(updatedImages);
+        const updatedImages = images.filter((_, i) => i !== index);
+        setImages(updatedImages);
 
-    const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
-    setPreviewImages(updatedPreviewImages);
+        const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
+        setPreviewImages(updatedPreviewImages);
     };
 
-    //Handle Submitting to Database
+    // Handle submitting form to database
     const HandlePublish = async (e: React.FormEvent) => {
         e.preventDefault();
-        //Change later images.length to <= 3
         if (!formData.productName || !formData.description || !formData.productPrice || images.length <= 1 || !Category || !Condition) {
-        setMessage("Please fill in all fields and Upload four images.");
-        return;
+            setMessage("Please fill in all fields and Upload four images.");
+            return;
         }
 
-        setMessage('')  
+        setMessage('');  
         const token = localStorage.getItem('token');
         if (!token) {
-          router.push('/');
-          return;
+            router.push('/');
+            return;
         }
-
+        
         try {
-        const uploadPromises = images.map(async (image:any, index) => {
-        if (!(image instanceof File)) {
-        throw new Error(`Image ${index + 1} is not a valid file object`);
+            const uploadPromises = images.map(async (image:any, index) => {
+                if (!(image instanceof File)) {
+                    throw new Error(`Image ${index + 1} is not a valid file object`);
+                }
+
+                const imgData = new FormData();
+                imgData.append('file', image);
+                imgData.append('upload_preset', 'Onlinemarket');
+                const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+                if (!cloudName) {  
+                    throw new Error('Cloudinary cloud name is not set');  
+                }
+
+                const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, imgData);
+                const data = response.data;
+                return data.secure_url;
+            });
+
+            const cloudinaryUrls = await Promise.all(uploadPromises);
+
+            const productData = {
+                productName: formData.productName,
+                description: formData.description,
+                productPrice: formData.productPrice,
+                category: Category,
+                condition: Condition,
+                images: cloudinaryUrls, 
+            };
+
+            await axios.post('https://online-marketplace-backend-six.vercel.app/api/Products', productData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+        } catch (error) {
+            console.error('Error making request:', error);
+            setMessage("Please Try again!")
         }
-
-        const imgData = new FormData();
-        imgData.append('file', image);
-        imgData.append('upload_preset', 'Onlinemarket');
-        const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-        if (!cloudName) {  
-        throw new Error('Cloudinary cloud name is not set');  
-        }
-
-        const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, imgData);
-        const data = response.data;
-        return data.secure_url;
-        });
-
-        const cloudinaryUrls = await Promise.all(uploadPromises);
-        console.log("url: ", cloudinaryUrls)
-
-        const productData = {
-        productName: formData.productName,
-        description: formData.description,
-        productPrice: formData.productPrice,
-        category: Category,
-        condition: Condition,
-        images: cloudinaryUrls, 
-        };
-
-        await axios.post('https://online-marketplace-backend-six.vercel.app/api/Products',productData, {
-        headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        },
-        });
-      } 
-
-      catch (error) {
-        console.error('Error making request:', error);
-        setMessage("Please Try again!")
-      }
-   }
+    }
 
     const handleReset = () => {
-    if(!message) {
-    setFormdata({
-    productName: '',
-    description: '',
-    productPrice: ''
-    });
-    setCategory(null)
-    setCondition(null)
-    setPreviewImages([]);
-    }
+        if (!message) {
+            queryClient.invalidateQueries({ queryKey: ['ProductLists'] });
+            setFormdata({
+                productName: '',
+                description: '',
+                productPrice: ''
+            });
+            setCategory(null);
+            setCondition(null);
+            setPreviewImages([]);
+        }
     }
 
-   return (
-    <>
-     <div className="flex min-h-screen">
-
-          <div className="h-screen pt-10 pl-5 md:flex gap-8 justify-center ">
+    return (
+        <QueryClientProvider client={queryClient}>
+            <div className="flex min-h-screen">
+            <div className="h-screen pt-10 pl-5 md:flex gap-8 justify-center ">
 
             <Link href={'/SellerDashboard/Home'} className='h-10'>
             <div className="items-center gap-1 hidden 2xl:block">
@@ -300,7 +299,7 @@ export default function ProductDetails() {
             </div>  {/* Closed of handle upload */}
             </div>
          </div>
-    </>
+         </QueryClientProvider>
   )
 }
 

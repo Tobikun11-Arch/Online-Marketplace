@@ -136,7 +136,8 @@ export default function LoginForm() {
 
       else {
 
-        router.push('/SellerDashboard')
+        localStorage.removeItem('activeItem')
+        router.push('/SellerDashboard/Home')
 
       }
 
