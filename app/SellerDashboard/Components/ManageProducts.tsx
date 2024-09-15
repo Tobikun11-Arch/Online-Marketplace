@@ -5,15 +5,34 @@ import InStock from './InStock'
 import OutofStock from './OutofStock'
 import Draft from './Draft'
 import ProductTable from './ProductTable'
+import axios from 'axios'
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { Product } from '../types/types'
+
+interface Products {
+    ProductLists: Product[];
+  }
+
 
 interface Select {
-    OverallStorage: string | null;
-    InStock: string | null;
-    OutofStock: string | null;
-    Draft: string | null;
+  OverallStorage: string | null;
+  InStock: string | null;
+  OutofStock: string | null;
+  Draft: string | null;
 }
 
+const queryClient = new QueryClient()
 export default function ManageProducts() {
+  return (
+    <QueryClientProvider client={queryClient}>
+    <Manage />
+    </QueryClientProvider>
+    )
+}
+
+function Manage() {
+  const dataUrl = process.env.NEXT_PUBLIC_PRODUCT_LIST!;
+
   const [Selected, setSelect] = useState<Select>({
     OverallStorage: null,
     InStock: null,
@@ -30,13 +49,49 @@ export default function ManageProducts() {
   });
   }
 
-  
+  const { isLoading, error, data: products } = useQuery<Products | null>({
+  queryKey: ['ProductLists'],
+  queryFn: async () => {
+  try {
+  const token = localStorage.getItem('token');
+  if (!token) {
+  throw new Error("No token found");
+  }
+
+  const response = await axios.get(dataUrl, {
+  headers: {
+  Authorization: `Bearer ${token}`,
+  },
+  });
+  return response.data;
+  } 
+
+  catch (error: any) {
+  console.error('Error fetching data:', error);
+  throw new Error(error.response?.data?.message || 'Failed to fetch products');
+  }
+  },
+  });
+
+  const data = products?.ProductLists.map((product) => (product.productName))
+
+  if (isLoading) {
+  return <p>Loading...</p>;
+  }
+
+  if (error) {
+  return <p className="text-red-500">An error has occurred: {error.message}</p>;
+  }
+
+  if (products?.ProductLists.length === 0) {
+  return <p className="text-gray-500">No products available.</p>;
+  }
 
   return (
   <>
   <div className='w-full h-screen flex items-start flex-col px-2'>
     <h1 className='mt-14 xl:mt-0 xl:ml-64 text-2xl font-bold'>Manage Products</h1>
-    <p className='text-xs font-medium'>You have 0 products in your catalog.</p>
+    <p className='text-xs font-medium'>You have {data?.length} products in your catalog.</p>
     <input type="text" placeholder='Search' className='bg-white outline-none rounded-md w-full px-2 mt-2 h-12'/>
 
     <div className="w-full flex items-center gap-x-2 pb-2 overflow-x-auto overflow-y-hidden">  
