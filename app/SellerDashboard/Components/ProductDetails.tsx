@@ -150,6 +150,7 @@ export default function ProductDetails() {
                     'Content-Type': 'application/json',
                 },
             });
+            queryClient.invalidateQueries({ queryKey: ['ProductLists'] });
         } catch (error) {
             console.error('Error making request:', error);
             setMessage("Please Try again!")
@@ -158,7 +159,6 @@ export default function ProductDetails() {
 
     const handleReset = () => {
         if (!message) {
-            queryClient.invalidateQueries({ queryKey: ['ProductLists'] });
             setFormdata({
                 productName: '',
                 description: '',
