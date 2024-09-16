@@ -51,11 +51,16 @@ function ProductDetails() {
     });
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8;
-    const [active, setActive] = useState<number | null>(1)
+    const itemsPerPage = 7;
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <>
+                <main className='w-full h-screen bg-gray-200 flex justify-center items-center'>
+                <span className="loading loading-ring loading-lg"></span>
+                </main>
+            </>
+        )
     }
 
     if (error) {
@@ -74,11 +79,11 @@ function ProductDetails() {
     const currentProducts = products?.ProductLists.slice(indexOfFirstProduct, indexOfLastProduct);
 
     const handlePageChange = (pageNumber: number) => {
-        setActive(pageNumber)
         setCurrentPage(pageNumber);
     };
 
     return (
+        <>
         <div className="w-full overflow-x-auto mt-2 mb-4 border">
             <table className="min-w-full table-auto border-collapse rounded-lg">
                 <thead className="bg-white">
@@ -106,6 +111,7 @@ function ProductDetails() {
                     ))}
                 </tbody>
             </table>
+        </div>
 
             {/* Pagination Component */}
             {totalProducts > itemsPerPage && (
@@ -132,7 +138,7 @@ function ProductDetails() {
                                 {Array.from({ length: totalPages }, (_, index) => (
                                     <PaginationItem key={index + 1} >
                                         <PaginationLink
-                                            className={`ml-5 ${currentPage === index + 1 ? 'text-red-600 font-bold text-xl' : 'bg-blue'}`}
+                                            className={`ml-5 ${currentPage === index + 1 ? 'text-red-600 font-bold text-2xl' : 'bg-blue'}`}
                                             href="#"
                                             onClick={() => handlePageChange(index + 1)}
                                             >
@@ -151,6 +157,6 @@ function ProductDetails() {
                     </PaginationContent>
                 </Pagination>
             )}
-        </div>
+        </>
     );
 }

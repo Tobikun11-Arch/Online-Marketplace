@@ -89,9 +89,11 @@ function Manage() {
 
   return (
   <>
-  <div className='w-full h-screen flex items-start flex-col px-2'>
-    <h1 className='mt-14 xl:mt-0 xl:ml-64 text-2xl font-bold'>Manage Products</h1>
+  <div className='w-full h-screen flex items-start flex-col px-2 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center'>
+    <div className="flex flex-col w-full justify-start">
+    <h1 className='mt-14 text-2xl font-bold xl:mt-7'>Manage Products</h1>
     <p className='text-xs font-medium'>You have {data?.length} products in your catalog.</p>
+    </div>
     <input type="text" placeholder='Search' className='bg-white outline-none rounded-md w-full px-2 mt-2 h-12'/>
 
     <div className="w-full flex items-center gap-x-2 pb-2 overflow-x-auto overflow-y-hidden">  
