@@ -84,7 +84,7 @@ function ProductDetails() {
 
     return (
         <>
-        <div className="w-full overflow-x-auto mt-2 mb-4 border">
+        <div className="w-full overflow-x-auto mt-2 border">
             <table className="min-w-full table-auto border-collapse rounded-lg">
                 <thead className="bg-white">
                     <tr>
