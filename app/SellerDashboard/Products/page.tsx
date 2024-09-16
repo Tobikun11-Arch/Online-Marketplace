@@ -5,7 +5,7 @@ import ManageProducts from '../Components/ManageProducts'
 export default function Products() {
   return (
    <>
-     <div className='w-full h-screen bg-gray-200'>
+     <div className='w-full min-h-screen bg-gray-200'>
         <NavBar/>
        <ManageProducts/>
      </div>
