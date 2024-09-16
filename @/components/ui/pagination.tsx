@@ -70,6 +70,7 @@ const PaginationPrevious = ({
     {...props}
   >
     <ChevronLeft className="h-4 w-4" />
+    <span></span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = "PaginationPrevious"
@@ -100,6 +101,7 @@ const PaginationEllipsis = ({
     {...props}
   >
     <MoreHorizontal className="h-4 w-4" />
+    <span className="sr-only"></span>
   </span>
 )
 PaginationEllipsis.displayName = "PaginationEllipsis"
