@@ -52,6 +52,7 @@ function ProductDetails() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
+    const [active, setActive] = useState<number | null>(1)
 
     if (isLoading) {
         return <p>Loading...</p>;
@@ -73,11 +74,12 @@ function ProductDetails() {
     const currentProducts = products?.ProductLists.slice(indexOfFirstProduct, indexOfLastProduct);
 
     const handlePageChange = (pageNumber: number) => {
+        setActive(pageNumber)
         setCurrentPage(pageNumber);
     };
 
     return (
-        <div className="w-full overflow-x-auto mt-2 mb-4 border border-gray-300">
+        <div className="w-full overflow-x-auto mt-2 mb-4 border">
             <table className="min-w-full table-auto border-collapse rounded-lg">
                 <thead className="bg-white">
                     <tr>
@@ -90,9 +92,9 @@ function ProductDetails() {
                 </thead>
                 <tbody>
                     {currentProducts?.map((product, index) => (
-                        <tr key={`${product.description}-${index}`} className='bg-white border-b-2 border-gray-400'>
+                        <tr key={`${product.description}-${index}`} className='bg-white border-b border-gray-400'>
                             <td className="px-4 py-2">
-                                <div className="w-12 h-12 rounded-full bg-cover bg-center bg-gray-400"
+                                <div className="w-10 h-10 rounded-full bg-cover bg-center bg-gray-400"
                                     style={{ backgroundImage: product.images ? `url(${product.images[0]})` : '' }}>
                                 </div>
                             </td>
@@ -116,8 +118,9 @@ function ProductDetails() {
                             />
                         </PaginationItem>
                         {totalPages === 1 ? (
-                            <PaginationItem>
+                            <PaginationItem >
                                 <PaginationLink
+                                className='bg-black hover:bg-black'
                                     href="#"
                                     onClick={() => handlePageChange(1)}
                                 >
@@ -127,12 +130,12 @@ function ProductDetails() {
                         ) : (
                             <>
                                 {Array.from({ length: totalPages }, (_, index) => (
-                                    <PaginationItem key={index + 1}>
+                                    <PaginationItem key={index + 1} >
                                         <PaginationLink
-                                        className='pl-5'
+                                            className={`ml-5 ${currentPage === index + 1 ? 'text-red-600 font-bold text-xl' : 'bg-blue'}`}
                                             href="#"
                                             onClick={() => handlePageChange(index + 1)}
-                                        >
+                                            >
                                             {index + 1}
                                         </PaginationLink>
                                     </PaginationItem>
