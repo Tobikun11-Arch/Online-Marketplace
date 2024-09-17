@@ -1,5 +1,5 @@
 import React from 'react'
-import BoxItem from './BoxItem'               
+import BoxItem from '../Common/BoxItem'               
 import AddProduct from './AddProduct'
 
 export default function HomePage() {

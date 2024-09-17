@@ -1,6 +1,6 @@
 import React from 'react'
-import NavBar from '../Components/NavBar'
-import ManageProducts from '../Components/ManageProducts'
+import NavBar from '../Components/Common/NavBar'
+import ManageProducts from '../Components/Product Management/ManageProducts'
 
 export default function Products() {
   return (

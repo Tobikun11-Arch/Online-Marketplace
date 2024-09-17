@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { Product } from '../types/types';
+import { Product } from '../../types/types';
 import {
     Pagination,
     PaginationContent,
@@ -10,7 +10,7 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from '../../../@/components/ui/pagination';
+} from '../../../../@/components/ui/pagination';
 
 interface Products {
     ProductLists: Product[];
@@ -56,7 +56,7 @@ function ProductDetails() {
     if (isLoading) {
         return (
             <>
-                <main className='w-full h-screen bg-gray-200 flex justify-center items-center'>
+                <main className='w-full h-screen bg-transparent flex justify-center items-center'>
                 <span className="loading loading-ring loading-lg"></span>
                 </main>
             </>
@@ -68,7 +68,7 @@ function ProductDetails() {
     }
 
     if (products?.ProductLists.length === 0) {
-        return <p className="text-gray-500">No products available.</p>;
+        return <p className="text-gray-500">No products found for this account. Start adding products!</p>;
     }
 
     // Pagination Logic

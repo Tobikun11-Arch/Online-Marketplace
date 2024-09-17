@@ -7,7 +7,7 @@ import Draft from './Draft'
 import ProductTable from './ProductTable'
 import axios from 'axios'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { Product } from '../types/types'
+import { Product } from '../../types/types'
 
 interface Products {
     ProductLists: Product[];
@@ -58,22 +58,33 @@ function Manage() {
   throw new Error("No token found");
   }
 
-  const response = await axios.get(dataUrl, {
+  const response = await axios.get(dataUrl, { 
   headers: {
   Authorization: `Bearer ${token}`,
   },
   });
   return response.data;
-  } 
+  }
 
   catch (error: any) {
-  console.error('Error fetching data:', error);
-  throw new Error(error.response?.data?.message || 'Failed to fetch products');
+    if (axios.isCancel(error)) {
+      console.error("Request was cancelled:", error.message);
+    } else if (error.code === 'ECONNABORTED') {
+      console.error("Request timed out:", error.message);
+    } else {
+      console.error("Error fetching data:", error);
+    }
+    throw new Error(error.response?.data?.message || 'Failed to fetch products');
   }
   },
   });
-
+  
   const data = products?.ProductLists.map((product) => (product.productName))
+
+  console.table({
+    "products: ": products,
+    "data: ": data
+  })
 
   if (isLoading) {
   return <p>Loading...</p>;
@@ -82,10 +93,7 @@ function Manage() {
   if (error) {
   return <p className="text-red-500">An error has occurred: {error.message}</p>;
   }
-
-  if (products?.ProductLists.length === 0) {
-  return <p className="text-gray-500">No products available.</p>;
-  }
+ 
 
   return (
   <>

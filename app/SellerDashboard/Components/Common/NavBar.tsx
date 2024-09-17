@@ -10,7 +10,7 @@ import {
   Menu,
 } from "lucide-react";
 import NavItem from "./NavItem";
-import IconHome from "../Home/IconHome";
+import IconHome from "../../Home/IconHome";
 
 export default function NavBar() {
   const [activeItem, setActiveItem] = useState<string | null>(null);

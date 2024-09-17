@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
-import NavBar from '../Components/NavBar'
-import HomePage from '../Components/HomePage'
+import NavBar from '../Components/Common/NavBar'
+import HomePage from '../Components/Home/HomePage'
 
 export default function Home() {
 

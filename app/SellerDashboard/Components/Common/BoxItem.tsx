@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Responsive/AddProducts.css'
+import '../../Responsive/AddProducts.css'
 
 interface Data {
   DataNumber: number;
