@@ -9,4 +9,28 @@
     />
 
 
-    
+Zustand Docs:
+import create from 'zustand';
+
+interface RegistrationState {
+  username: string;
+  email: string;
+  password: string;
+  setUsername: (username: string) => void;
+  setEmail: (email: string) => void;
+  setPassword: (password: string) => void;
+  resetForm: () => void;
+}
+
+export const useRegistrationStore = create<RegistrationState>((set) => ({
+  username: '',
+  email: '',
+  password: '',
+  setUsername: (username) => set({ username }),
+  setEmail: (email) => set({ email }),
+  setPassword: (password) => set({ password }),
+  resetForm: () => set({ username: '', email: '', password: '' }),
+}));
+
+
+  const { username, email, password, setUsername, setEmail, setPassword, resetForm } = useRegistrationStore();

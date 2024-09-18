@@ -71,7 +71,7 @@ protectedroute.get('/productList', async (req: RequestWithUser, res: Response) =
   
     try {
       const productList = await productlist.find({ userId: userId });
-
+  
       if (productList.length === 0) {
         return res.json({ ProductLists: [] });
       }

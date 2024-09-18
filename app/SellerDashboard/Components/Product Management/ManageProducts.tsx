@@ -78,16 +78,17 @@ function Manage() {
   }
   },
   });
-  
+
   const data = products?.ProductLists.map((product) => (product.productName))
 
-  console.table({
-    "products: ": products,
-    "data: ": data
-  })
-
   if (isLoading) {
-  return <p>Loading...</p>;
+  return (
+    <>
+      <div className="flex items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 xl:ml-48 border-gray-900"></div>
+      </div>
+    </> 
+  )
   }
 
   if (error) {

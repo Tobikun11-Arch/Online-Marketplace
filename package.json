@@ -38,7 +38,8 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "universal-cookie": "^7.2.0"
+    "universal-cookie": "^7.2.0",
+    "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
