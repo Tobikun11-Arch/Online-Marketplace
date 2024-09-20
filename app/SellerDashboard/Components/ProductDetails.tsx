@@ -223,11 +223,13 @@ export default function ProductDetails() {
             <CategoryProduct
             onChange={HandleCategory}
             value={Category || ''}
+            className=''
             />
 
             <ProductCondition
             value={Condition || ''}
             onChange={HandleCondition}
+            className=''
             />
             </div>    
 

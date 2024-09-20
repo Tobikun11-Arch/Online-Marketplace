@@ -9,7 +9,7 @@
     />
 
 
-Zustand Docs:
+// Zustand Docs:
 import create from 'zustand';
 
 interface RegistrationState {
@@ -19,7 +19,7 @@ interface RegistrationState {
   setUsername: (username: string) => void;
   setEmail: (email: string) => void;
   setPassword: (password: string) => void;
-  resetForm: () => void;
+  resetForm: () => void;  
 }
 
 export const useRegistrationStore = create<RegistrationState>((set) => ({
