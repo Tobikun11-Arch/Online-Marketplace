@@ -1,47 +1,93 @@
 "use client"
 import React from 'react'
-import {ChevronLeft, Images} from 'lucide-react'
+import {ChevronLeft} from 'lucide-react'
 import Input from '../../NewProduct/Prototype/Input'
 import TextArea from '../../NewProduct/Prototype/TextArea'
 import Category from '../Common/Category'
 import Condition from './Condition'
 import Weight from '../../NewProduct/Prototype/Weight'
+import PackageSize from './PackageSize'
+import Pricing from './Pricing'
+import Button from '../Common/Button'
+import Link from 'next/link'
+import { useProductStore } from '../../hooks/UseHooks'
+import ProductImages from './ProductImages'
 
 export default function newProduct() {
+  const { 
+    productName, 
+    productDescription, 
+    productCategory, 
+    productQuality, 
+    productQuantity, 
+    Sku, 
+    productSize,
+    productPrice,
+    productDiscount,
+    productWeight, 
+    productImages,
+    message, 
+    setProductName, 
+    setProductDescription, 
+    setProductCategory, 
+    setProductQuality, 
+    setProductQuantity, 
+    setSku, 
+    setProductWeight,  
+    setMessage 
+  } = useProductStore();
 
-  const handleChange = () => {
-
+  const handlePublish = () => {
+    console.table({
+      "ProductName:": productName,
+      "productDescription:": productDescription,
+      "product Size": productSize,
+      "Category": productCategory,
+      "Quality": productQuality,
+      "Price": productPrice,
+      "Discount": productDiscount,
+      "Sku": Sku,
+      "Quantity": productQuantity,
+      "Weight": productWeight,
+      "productImages": productImages
+    })  
   }
 
   return (
     <>
-      <main className='px-3 pb-3 pt-14 md:pt-14'>
+      <main className='px-3 pb-3 pt-12 md:pt-12 xl:pt-0'>
 
-        <div className='flex items-center h-10'>
+        <Link href={'/SellerDashboard/Home'}>
+        <div className='flex items-center h-10 xl:ml-60'>
         <ChevronLeft/>
-        <h1 className='font-abc font-bold text-xl'>Add New Product</h1>
+        <h1 className='font-abc font-bold text-xl cursor-default'>Add New Product</h1>
         </div>
+        </Link>
 
-        <section className='h-full w-full md:flex gap-4'>
-          <div className="parent1 bg-white px-5 md:w-2/3 py-5 ">
+        <section className='h-full w-full md:flex'>
+          <div className="parent1 bg-white px-2 md:w-2/3 py-3 xl:ml-60">
 
-            <h1 className='font-bold'>Description</h1>
+              <h1 className='font-bold pb-1'>Description</h1>
               <div className="merge border border-gray-300 p-4 rounded-sm">
                 <h3 className='text-sm'>Product Name</h3>
                 <Input
                 className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
-                onChange={handleChange}
+                onChange={(e) => setProductName(e.target.value)}
                 type='text'
                 id=''
                 accept=''
                 style={{}}
                 required={true}
+                value={productName}
+                placeholder=''
                 />
                 <h3 className='text-sm pt-1'>Business Description</h3>
                 <TextArea
+                onChange={(e) => setProductDescription(e.target.value)}
                 name=''
                 id=''
                 className='w-full bg-white h-36 rounded-lg outline-none resize-none border border-gray-300 p-2'
+                value={productDescription}
                 />
               </div>
 
@@ -50,15 +96,15 @@ export default function newProduct() {
               <h3 className='text-sm'>Product Category</h3>
               <Category
               className= 'select border-slate-300 text-black bg-white w-full'
-              onChange={handleChange}
-              value=''
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setProductCategory(e.target.value)}
+              value={productCategory}
               />
 
               <h3 className='text-sm pt-1'>Product Quality</h3>
               <Condition
-              onChange={handleChange}
+              onChange={(e) => setProductQuality(e.target.value)}
               className='select border-slate-300 text-black bg-white w-full'
-              value=''
+              value={productQuality}
               />
             </div>
 
@@ -67,49 +113,36 @@ export default function newProduct() {
               <h3 className='text-sm'>Quantity</h3>
               <Input
                 className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
-                onChange={handleChange}
+                onChange={(e) => setProductQuantity(e.target.value)}
                 type='text'
                 id=''
                 accept=''
                 style={{}}
                 required={true}
+                placeholder=''
+                value={productQuantity}
               />
 
               <h3 className='text-sm pt-1'>SKU (Optional)</h3>
               <Input
                 className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
-                onChange={handleChange}
+                onChange={(e) => setSku(e.target.value)}
                 type='text'
                 id=''
                 accept=''
                 style={{}}
                 required={false}
+                placeholder=''
+                value={Sku}
               />
             </div>
           </div>
 
-          <div className='parent2 bg-white pt-5 px-5 md:w-2/4'>
+          <div className='parent2 bg-white pt-3 px-2 md:w-2/4'>
 
-            <h1>Product Images</h1>
+            <h1 className='font-bold pb-1'>Product Images</h1>
             <div className="merge border border-gray-300 p-4 rounded-sm">
-              <div className='box1 flex gap-3'>
-                <div className='h-36 w-2/4 bg-white border-2 border-dashed border-gray-400 flex flex-col justify-center items-center'>
-                  <Images />
-                  <p className='text-xs'>Browse Images</p>
-                </div>
-                <div className='h-36 w-2/4 bg-gray-300'>
-                  <div className=''></div>
-                </div>
-              </div>
-
-               <div className='box2 flex gap-3 pt-3'>
-                 <div className='h-36 w-2/4 bg-gray-300'>
-                  <div className=''></div>
-                </div>
-                 <div className='h-36 w-2/4 bg-gray-300'>
-                  <div className=''></div>
-                </div>
-               </div>
+             <ProductImages/>
             </div>
 
             <h1 className='font-bold mt-4 pb-1'>Shipping & Delivery</h1>
@@ -118,33 +151,40 @@ export default function newProduct() {
               <div className="relative w-full max-w-md">
               <Input
                 className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
-                onChange={handleChange}
+                onChange={(e) => setProductWeight('Weight', e.target.value)}
                 type='text'
                 id=''
                 accept=''
                 style={{}}
                 required={true}
+                placeholder=''
+                value={productWeight.Weight}
               />
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                 <Weight
                 className='bg-transparent text-gray-400'
-                onChange={handleChange}
-                value={''}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setProductWeight('WeightIndicator', e.target.value)}
+                value={productWeight.WeightIndicator}
                 />
               </div>
               </div>
 
               <h3 className='text-sm pt-1'>Package Size</h3>
-              <Input
-                className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
-                onChange={handleChange}
-                type='text'
-                id=''
-                accept=''
-                style={{}}
-                required={false}
-              />
+              <PackageSize/>
+            </div>
+
+            <h1 className='font-bold mt-4 pb-1'>Pricing</h1>
+            <div className="merge border border-gray-300 p-4 rounded-sm">
+              <Pricing/>
+            </div>
+
+            <div className='mt-3 flex justify-between pb-3'>
+              <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400'>Discard</Button>
+              <div className="Save flex gap-2">
+                <Button className='rounded-lg font-bold font-abc bg-gray-200 px-4 py-1 text-blue-600'>Schedule</Button>
+                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={handlePublish}>Publish</Button>
+              </div>
             </div>
           </div>
         </section>

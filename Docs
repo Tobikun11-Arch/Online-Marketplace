@@ -1,16 +1,16 @@
-<Image 
-      loading='lazy'
-      alt='Zoro picture'
-      width={300}
-      height={300}
-      src={"https://i.pinimg.com/564x/c0/51/4a/c0514ad71f49a6f94b879b863184e621.jpg"}
-      placeholder='blur'
-      blurDataURL='data:image/svg+xml;base64,...'
-    />
+// <Image 
+//       loading='lazy'
+//       alt='Zoro picture'
+//       width={300}
+//       height={300}
+//       src={"https://i.pinimg.com/564x/c0/51/4a/c0514ad71f49a6f94b879b863184e621.jpg"}
+//       placeholder='blur'
+//       blurDataURL='data:image/svg+xml;base64,...'
+//     />
 
 
 // Zustand Docs:
-import create from 'zustand';
+import {create} from 'zustand';
 
 interface RegistrationState {
   username: string;
@@ -22,7 +22,7 @@ interface RegistrationState {
   resetForm: () => void;  
 }
 
-export const useRegistrationStore = create<RegistrationState>((set) => ({
+export const useRegistrationStore = create<RegistrationState>((set: RegistrationState) => ({
   username: '',
   email: '',
   password: '',
@@ -34,3 +34,33 @@ export const useRegistrationStore = create<RegistrationState>((set) => ({
 
 
   const { username, email, password, setUsername, setEmail, setPassword, resetForm } = useRegistrationStore();
+
+
+
+
+
+
+
+
+
+
+
+gettind data from other files 
+
+  import create from 'zustand';
+
+type ProductSize = {
+  length: string;
+  width: string;
+  breadth: string;
+};
+
+export const useProductStore = create((set) => ({
+  productSize: { length: '', width: '', breadth: '' }, // Initialize with empty values
+  setProductSize: (key: keyof ProductSize, value: string) => set((state) => ({
+    productSize: {
+      ...state.productSize, // Spread the existing productSize object
+      [key]: value,        // Update the specific key (length, width, or breadth)
+    },
+  })),
+}));

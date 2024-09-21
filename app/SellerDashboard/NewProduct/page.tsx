@@ -5,7 +5,7 @@ import NavBar from '../Components/Common/NavBar'
 export default function Page() {
   return (
    <>
-     <div className='w-full min-h-screen bg-gray-200'>
+     <div className='w-full min-h-screen bg-white'>
      <NavBar/>
       <NewProduct />
      </div>
