@@ -1,6 +1,6 @@
 import React from 'react'
 import Input from '../../NewProduct/Prototype/Input'
-import { useProductStore } from '../../hooks/UseHooks'
+import { UseProductStore } from '../../hooks/UseHooks'
 
 export default function Pricing() {
     const {
@@ -8,7 +8,7 @@ export default function Pricing() {
         productPrice, 
         setProductPrice, 
         setProductDiscount, 
-    } = useProductStore()
+    } = UseProductStore()
 
   return (
     <>

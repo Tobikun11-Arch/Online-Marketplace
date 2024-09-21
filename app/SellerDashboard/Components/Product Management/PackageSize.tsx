@@ -1,6 +1,6 @@
 import React from 'react'
 import Input from '../../NewProduct/Prototype/Input'
-import { useProductStore } from '../../hooks/UseHooks'
+import { UseProductStore } from '../../hooks/UseHooks'
 
 
 
@@ -8,7 +8,7 @@ export default function PackageSize() {
     const {
        productSize,
        setProductSize
-    } = useProductStore()
+    } = UseProductStore()
 
   return (
     <>

@@ -44,7 +44,7 @@ interface ProductInfo {
 }
 
 // Properly typed Zustand store
-export const useProductStore = create<ProductInfo>((set) => ({
+export const UseProductStore = create<ProductInfo>((set) => ({
     // Initial state
     productName: '',
     productDescription: '',

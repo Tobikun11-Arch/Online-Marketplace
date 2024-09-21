@@ -10,7 +10,7 @@ import PackageSize from './PackageSize'
 import Pricing from './Pricing'
 import Button from '../Common/Button'
 import Link from 'next/link'
-import { useProductStore } from '../../hooks/UseHooks'
+import { UseProductStore } from '../../hooks/UseHooks'
 import ProductImages from './ProductImages'
 
 export default function newProduct() {
@@ -35,7 +35,7 @@ export default function newProduct() {
     setSku, 
     setProductWeight,  
     setMessage 
-  } = useProductStore();
+  } = UseProductStore();
 
   const handlePublish = () => {
     console.table({

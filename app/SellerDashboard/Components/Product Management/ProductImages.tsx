@@ -1,6 +1,6 @@
 import React from 'react'
 import {Images} from 'lucide-react'
-import { useProductStore } from '../../hooks/UseHooks'
+import { UseProductStore } from '../../hooks/UseHooks'
 import Input from '../../NewProduct/Prototype/Input'
 
 export default function ProductImages() {
@@ -9,7 +9,7 @@ export default function ProductImages() {
         setProductImages,
         previewImages,
         setPreviewImages
-    } = useProductStore()
+    } = UseProductStore()
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
