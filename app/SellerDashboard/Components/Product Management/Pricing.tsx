@@ -15,7 +15,7 @@ export default function Pricing() {
         <div className="PackageSize flex gap-2">
                 <div>
                     <p className='text-xs text-gray-400'>Price</p>
-                    <div className="relative max-w-md">
+                    <div className="relative">
                         <Input
                         className='w-full bg-white h-10 rounded-lg outline-none border pl-7 border-gray-300'
                         onChange={(e)=> setProductPrice(e.target.value)}
@@ -36,7 +36,7 @@ export default function Pricing() {
                 
                 <div>
                     <p className='text-xs text-gray-400'>Discount Price</p>
-                    <div className="relative max-w-md">
+                    <div className="relative">
                         <Input
                         className='w-full bg-white h-10 rounded-lg outline-none border pl-7 border-gray-300'
                         onChange={(e)=> setProductDiscount(e.target.value)}

@@ -38,19 +38,25 @@ export default function newProduct() {
   } = UseProductStore();
 
   const handlePublish = () => {
-    console.table({
-      "ProductName:": productName,
-      "productDescription:": productDescription,
-      "product Size": productSize,
-      "Category": productCategory,
-      "Quality": productQuality,
-      "Price": productPrice,
-      "Discount": productDiscount,
-      "Sku": Sku,
-      "Quantity": productQuantity,
-      "Weight": productWeight,
-      "productImages": productImages
-    })  
+
+    if (/^\d*$/.test(productQuantity)) {
+        console.log("Number")
+
+        console.table({
+          "ProductName:": productName,
+          "productDescription:": productDescription,
+          "product Size": productSize,
+          "Category": productCategory,
+          "Quality": productQuality,
+          "Price": productPrice,
+          "Discount": productDiscount,
+          "Sku": Sku,
+          "Quantity": productQuantity,
+          "Weight": productWeight,
+          "productImages": productImages
+        })  
+    }
+
   }
 
   return (
@@ -109,32 +115,36 @@ export default function newProduct() {
             </div>
 
             <h1 className='font-bold mt-4 pb-1'>Inventory</h1>
-            <div className="merge border border-gray-300 p-4 rounded-sm">
-              <h3 className='text-sm'>Quantity</h3>
-              <Input
-                className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
-                onChange={(e) => setProductQuantity(e.target.value)}
-                type='text'
-                id=''
-                accept=''
-                style={{}}
-                required={true}
-                placeholder=''
-                value={productQuantity}
-              />
+            <div className="merge border border-gray-300 p-4 rounded-sm lg:flex lg:gap-5">
+              <div className="flex flex-col w-full">
+                <h3 className='text-sm'>Quantity</h3>
+                <Input
+                  className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
+                  onChange={(e) => setProductQuantity(e.target.value)}
+                  type='text'
+                  id=''
+                  accept=''
+                  style={{}}
+                  required={true}
+                  placeholder=''
+                  value={productQuantity}
+                />
+              </div>
 
-              <h3 className='text-sm pt-1'>SKU (Optional)</h3>
-              <Input
-                className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
-                onChange={(e) => setSku(e.target.value)}
-                type='text'
-                id=''
-                accept=''
-                style={{}}
-                required={false}
-                placeholder=''
-                value={Sku}
-              />
+              <div className="flex flex-col w-full">
+                <h3 className='text-sm pt-1 lg:pt-0'>SKU (Optional)</h3>
+                <Input
+                  className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
+                  onChange={(e) => setSku(e.target.value)}
+                  type='text'
+                  id=''
+                  accept=''
+                  style={{}}
+                  required={false}
+                  placeholder=''
+                  value={Sku}
+                />
+              </div>
             </div>
           </div>
 
@@ -148,7 +158,7 @@ export default function newProduct() {
             <h1 className='font-bold mt-4 pb-1'>Shipping & Delivery</h1>
             <div className="merge border border-gray-300 p-4 rounded-sm">
               <h3 className='text-sm'>Items Weight</h3>
-              <div className="relative w-full max-w-md">
+              <div className="relative w-full">
               <Input
                 className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
                 onChange={(e) => setProductWeight('Weight', e.target.value)}
@@ -170,7 +180,7 @@ export default function newProduct() {
               </div>
               </div>
 
-              <h3 className='text-sm pt-1'>Package Size</h3>
+              <h3 className='text-sm pt-2'>Package Size</h3>
               <PackageSize/>
             </div>
 

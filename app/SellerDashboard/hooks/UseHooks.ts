@@ -92,3 +92,4 @@ export const UseProductStore = create<ProductInfo>((set) => ({
     setProductDiscount: (discount: string) => set(() => ({ productDiscount: discount })),
     setMessage: (message: string) => set(() => ({ message })),
 }));
+
