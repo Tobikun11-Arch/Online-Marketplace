@@ -9,58 +9,42 @@
 //     />
 
 
-// Zustand Docs:
-import {create} from 'zustand';
-
-interface RegistrationState {
-  username: string;
-  email: string;
-  password: string;
-  setUsername: (username: string) => void;
-  setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
-  resetForm: () => void;  
-}
-
-export const useRegistrationStore = create<RegistrationState>((set: RegistrationState) => ({
-  username: '',
-  email: '',
-  password: '',
-  setUsername: (username) => set({ username }),
-  setEmail: (email) => set({ email }),
-  setPassword: (password) => set({ password }),
-  resetForm: () => set({ username: '', email: '', password: '' }),
-}));
 
 
-  const { username, email, password, setUsername, setEmail, setPassword, resetForm } = useRegistrationStore();
+const hasBackground = previewImages[0] !== '';
+
+  return (
+    <div
+      className={`h-36 w-2/4 bg-gray-300 relative ${hasBackground ? 'group' : ''}`}
+      style={{
+        backgroundImage: hasBackground ? `url(${previewImages[0]})` : '',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
 
 
-
-
-
-
-
-
-
-
-
-gettind data from other files 
-
-  import create from 'zustand';
-
-type ProductSize = {
-  length: string;
-  width: string;
-  breadth: string;
+{hasBackground && (
+  <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity">
+    <button
+      className="bg-white text-black py-2 px-4 m-1 rounded"
+      onClick={() => console.log('Replace clicked')}
+    >
+      Replace
+    </button>
+    <button
+      className="bg-white text-black py-2 px-4 m-1 rounded"
+      onClick={() => console.log('Remove clicked')}
+    >
+      Remove
+    </button>
+  </div>
+)}
+</div>
+);
 };
 
-export const useProductStore = create((set) => ({
-  productSize: { length: '', width: '', breadth: '' }, // Initialize with empty values
-  setProductSize: (key: keyof ProductSize, value: string) => set((state) => ({
-    productSize: {
-      ...state.productSize, // Spread the existing productSize object
-      [key]: value,        // Update the specific key (length, width, or breadth)
-    },
-  })),
-}));
+
+
+
