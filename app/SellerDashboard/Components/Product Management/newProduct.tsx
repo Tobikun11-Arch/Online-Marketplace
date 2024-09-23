@@ -93,7 +93,6 @@ export default function NewProduct() {
           });
 
           const cloudinaryUrls = await Promise.all(uploadPromises);
-          console.log("cloudinaryUrls", cloudinaryUrls)
 
           const productData = {
             productName, 
@@ -109,13 +108,7 @@ export default function NewProduct() {
             images: cloudinaryUrls, 
           };
 
-          const productEnv = process.env.NEXT_PUBLIC_PRODUCTS;
-
-          if (!productEnv) {  
-            throw new Error('not product data');  
-          }
-
-          console.log("productEnv", productEnv)
+          const productEnv = process.env.NEXT_PUBLIC_PRODUCTS!;
 
           await axios.post(productEnv, productData, {
               headers: {
