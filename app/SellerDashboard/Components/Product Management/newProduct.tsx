@@ -15,10 +15,10 @@ import ProductImages from './ProductImages'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { useLoading } from '../../hooks/ReusableHooks'
-import { cardio } from 'ldrs'
+
 
 export default function NewProduct() {
-  cardio.register()
+
   const { 
     productName, 
     productDescription, 
@@ -298,12 +298,7 @@ export default function NewProduct() {
                       <>
                       <div className="flex items-center gap-2">
                         <p>Publishing</p>
-                        <l-cardio
-                          size="20"
-                          stroke="4"
-                          speed="2" 
-                          color="black" 
-                        ></l-cardio>
+                        
                       </div>
                       </>
                     ):('Publish')
