@@ -93,6 +93,7 @@ export default function NewProduct() {
           });
 
           const cloudinaryUrls = await Promise.all(uploadPromises);
+          console.log("cloudinaryUrls", cloudinaryUrls)
 
           const productData = {
             productName, 
