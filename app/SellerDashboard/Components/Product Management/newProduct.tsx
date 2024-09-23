@@ -15,7 +15,7 @@ import ProductImages from './ProductImages'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 
-export default function newProduct() {
+export default function NewProduct() {
   const { 
     productName, 
     productDescription, 
