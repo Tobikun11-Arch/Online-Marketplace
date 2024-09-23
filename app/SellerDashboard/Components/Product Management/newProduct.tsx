@@ -108,7 +108,11 @@ export default function NewProduct() {
             images: cloudinaryUrls, 
           };
 
-          const productEnv = process.env.NEXT_PUBLIC_PRODUCTS!;
+          const productEnv = process.env.NEXT_PUBLIC_PRODUCTS;
+
+          if (!productEnv) {  
+            throw new Error('not product data');  
+          }
 
           await axios.post(productEnv, productData, {
               headers: {

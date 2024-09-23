@@ -43,7 +43,7 @@ const productSchema = new mongoose.Schema<IProducts>(
     productDiscount: { type: String, required: true },
     productWeight: {
         Weight: { type: String, required: true },
-        WeightIndicator: { type: String, required: true },
+        WeightIndicator: { type: String, required: false },
     },
     images: { type: [String], required: true }, // Array of image URLs
     createdAt: { type: Date, default: Date.now },
