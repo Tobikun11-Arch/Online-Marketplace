@@ -115,6 +115,8 @@ export default function NewProduct() {
             throw new Error('not product data');  
           }
 
+          console.log("productEnv", productEnv)
+
           await axios.post(productEnv, productData, {
               headers: {
                   'Authorization': `Bearer ${token}`,
