@@ -56,7 +56,7 @@ export const UseProductStore = create<ProductInfo>((set) => ({
     productImages: [],
     productWeight: {
         Weight: '',
-        WeightIndicator: ''
+        WeightIndicator: 'kg'
     },
     productSize: {
         length: '',

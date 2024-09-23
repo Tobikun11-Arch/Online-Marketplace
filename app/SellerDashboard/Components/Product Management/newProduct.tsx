@@ -12,6 +12,8 @@ import Button from '../Common/Button'
 import Link from 'next/link'
 import { UseProductStore } from '../../hooks/UseHooks'
 import ProductImages from './ProductImages'
+import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
 export default function newProduct() {
   const { 
@@ -37,26 +39,91 @@ export default function newProduct() {
     setMessage 
   } = UseProductStore();
 
-  const handlePublish = () => {
+  const router = useRouter()
 
-    if (/^\d*$/.test(productQuantity)) {
-        console.log("Number")
+  const handlePublish = async () => {
+    const isNumber = (value: string) => /^\d*$/.test(value);
 
-        console.table({
-          "ProductName:": productName,
-          "productDescription:": productDescription,
-          "product Size": productSize,
-          "Category": productCategory,
-          "Quality": productQuality,
-          "Price": productPrice,
-          "Discount": productDiscount,
-          "Sku": Sku,
-          "Quantity": productQuantity,
-          "Weight": productWeight,
-          "productImages": productImages
-        })  
-    }
+   if (
+    !productName || 
+    !productDescription || 
+    !productCategory || 
+    !productQuality || 
+    !productQuantity || 
+    !isNumber(productQuantity) ||
+    !productSize.length || !isNumber(productSize.length) ||
+    !productSize.breadth || !isNumber(productSize.breadth) ||
+    !productSize.width || !isNumber(productSize.width) ||
+    !productWeight.Weight || !isNumber(productWeight.Weight) ||
+    !productPrice || !isNumber(productPrice) ||
+    !productDiscount || !isNumber(productDiscount) ||
+    productImages.length <= 2 
+  ) {
+    // If validation fails, log the error
+    console.log("Incomplete")
+    setMessage("Failed to publish: One or more fields are invalid or empty.");
+    return;
+  } 
+  
+  else {
+    // If all validations pass, log the product details
+    const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/');
+            return;
+        }
 
+        try {
+          const uploadPromises = productImages.map(async (image:any, index) => {
+              if (!(image instanceof File)) {
+                  throw new Error(`Image ${index + 1} is not a valid file object`);
+              }
+
+              const imgData = new FormData();
+              imgData.append('file', image);
+              imgData.append('upload_preset', 'Onlinemarket');
+              const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+              if (!cloudName) {  
+                  throw new Error('Cloudinary cloud name is not set');  
+              }
+
+              const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, imgData);
+              const data = response.data;
+              return data.secure_url;
+          });
+
+          const cloudinaryUrls = await Promise.all(uploadPromises);
+
+          const productData = {
+            productName, 
+            productDescription, 
+            productCategory, 
+            productQuality, 
+            productQuantity, 
+            Sku, 
+            productSize,
+            productPrice,
+            productDiscount,
+            productWeight, 
+            images: cloudinaryUrls, 
+          };
+
+          const productEnv = process.env.NEXT_PUBLIC_PRODUCTS!;
+
+          await axios.post(productEnv, productData, {
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+              },
+          });
+        
+      } catch (error) {
+          console.error('Error making request:', error);
+          setMessage("Please Try again!")
+      }
+
+  }
+    
   }
 
   return (
@@ -126,9 +193,11 @@ export default function newProduct() {
                   accept=''
                   style={{}}
                   required={true}
-                  placeholder=''
+                  placeholder='e.g., 10'
+                  pattern='\d*'
                   value={productQuantity}
-                />
+                /> 
+
               </div>
 
               <div className="flex flex-col w-full">
@@ -167,7 +236,8 @@ export default function newProduct() {
                 accept=''
                 style={{}}
                 required={true}
-                placeholder=''
+                placeholder='e.g., 50'
+                pattern='\d*'
                 value={productWeight.Weight}
               />
 

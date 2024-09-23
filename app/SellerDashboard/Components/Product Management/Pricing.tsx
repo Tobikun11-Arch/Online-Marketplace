@@ -25,7 +25,8 @@ export default function Pricing() {
                         accept=''
                         style={{}}
                         required={true}
-                        placeholder=''
+                        placeholder='e.g., 240'
+                        pattern='\d*'
                         />
 
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -46,7 +47,8 @@ export default function Pricing() {
                         accept=''
                         style={{}}
                         required={false}
-                        placeholder=''
+                        placeholder='e.g., 25%'
+                        pattern='\d*'
                         />
 
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3">

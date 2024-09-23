@@ -39,20 +39,38 @@ protectedroute.get('/dashboard', async (req: RequestWithUser, res: Response) => 
 
 protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => {
     const userId = req.user?._id;
+
     try {
-    const { description, productName, images, productPrice, category, condition } = req.body;
+    const { 
+      productName, 
+      productDescription, 
+      productCategory, 
+      productQuality, 
+      productQuantity, 
+      Sku, 
+      productSize,
+      productPrice,
+      productDiscount,
+      productWeight, 
+      images
+    } = req.body;
+
     const Products = new Product({
         userId,
         productName, 
-        description, 
+        productDescription, 
+        productCategory, 
+        productQuality, 
+        productQuantity, 
+        Sku, 
+        productSize,
         productPrice,
-        category,
-        condition,
-        images,
+        productDiscount,
+        productWeight, 
+        images
     });
 
-    console.log(description, productName, images, productPrice);
-
+    console.log("Products Working")
     await Products.save();
     res.status(201).json({ message: 'Product created successfully' });
     } 
@@ -80,7 +98,7 @@ protectedroute.get('/productList', async (req: RequestWithUser, res: Response) =
         productName: list.productName,
         productPrice: list.productPrice,
         images: list.images,
-        description: list.description,
+        description: list.productDescription,
       }));
   
       res.json({ ProductLists });

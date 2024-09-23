@@ -34,7 +34,7 @@ export default function HomePage() {
 
           <div className='xl:ml-64 px-4 xl:pl-4 xl:pr-2 mt-2 w-full xl:w-3/4 AddProductBtn'>
           <AddProduct
-          href='/SellerDashboard/Add-Product'
+          href='/SellerDashboard/New-Product'
           label='Add new Product' 
           />
           </div>
