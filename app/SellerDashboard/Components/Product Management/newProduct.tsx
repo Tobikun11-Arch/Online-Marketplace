@@ -14,8 +14,11 @@ import { UseProductStore } from '../../hooks/UseHooks'
 import ProductImages from './ProductImages'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { useLoading } from '../../hooks/ReusableHooks'
+import { cardio } from 'ldrs'
 
 export default function NewProduct() {
+  cardio.register()
   const { 
     productName, 
     productDescription, 
@@ -28,7 +31,10 @@ export default function NewProduct() {
     productDiscount,
     productWeight, 
     productImages,
+    previewImages,
     message, 
+    setPreviewImages,
+    setProductImages,
     setProductName, 
     setProductDescription, 
     setProductCategory, 
@@ -36,9 +42,13 @@ export default function NewProduct() {
     setProductQuantity, 
     setSku, 
     setProductWeight,  
-    setMessage 
+    setMessage,
+    setProductSize,
+    setProductPrice,
+    setProductDiscount
   } = UseProductStore();
 
+  const { isLoading, setLoading } = useLoading();
   const router = useRouter()
 
   const handlePublish = async () => {
@@ -60,7 +70,6 @@ export default function NewProduct() {
     productImages.length <= 2 
   ) {
     // If validation fails, log the error
-    console.log("Incomplete")
     setMessage("Failed to publish: One or more fields are invalid or empty.");
     return;
   } 
@@ -72,6 +81,8 @@ export default function NewProduct() {
             router.push('/');
             return;
         }
+
+        setLoading(true)
 
         try {
           const uploadPromises = productImages.map(async (image:any, index) => {
@@ -116,14 +127,32 @@ export default function NewProduct() {
                   'Content-Type': 'application/json',
               },
           });
-        
-      } catch (error) {
+
+        setLoading(false)
+        setProductName('')
+        setProductDescription('') 
+        setProductCategory('') 
+        setProductQuality('') 
+        setProductQuantity('') 
+        setSku('')
+        setProductWeight('WeightIndicator', '')
+        setProductWeight('Weight', '')
+        setProductSize('length', '')
+        setProductSize('breadth', '')
+        setProductSize('width', '')
+        setPreviewImages([])
+        setProductImages([])
+        setProductPrice('')
+        setProductDiscount('')
+        setMessage('')
+      } 
+
+      catch (error) {
           console.error('Error making request:', error);
           setMessage("Please Try again!")
       }
 
-  }
-    
+    }
   }
 
   return (
@@ -263,7 +292,23 @@ export default function NewProduct() {
               <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400'>Discard</Button>
               <div className="Save flex gap-2">
                 <Button className='rounded-lg font-bold font-abc bg-gray-200 px-4 py-1 text-blue-600'>Schedule</Button>
-                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={handlePublish}>Publish</Button>
+                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={handlePublish}>
+                  {
+                    isLoading ? (
+                      <>
+                      <div className="flex items-center gap-2">
+                        <p>Publishing</p>
+                        <l-cardio
+                          size="20"
+                          stroke="4"
+                          speed="2" 
+                          color="black" 
+                        ></l-cardio>
+                      </div>
+                      </>
+                    ):('Publish')
+                  }
+                </Button>
               </div>
             </div>
           </div>

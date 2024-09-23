@@ -29,7 +29,6 @@ export default function ProductImages() {
     const removeImage = (index: number) => {
         const updatedImages = productImages.filter((_, i) => i !== index);
         setProductImages(updatedImages);
-
         const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
         setPreviewImages(updatedPreviewImages);
     };

@@ -24,7 +24,7 @@ export default function PackageSize() {
                         accept=''
                         style={{}}
                         required={true}
-                        placeholder='e.g., 4'
+                        placeholder='4'
                         pattern='\d*'
                         value={productSize.length}
                         />
@@ -46,7 +46,7 @@ export default function PackageSize() {
                         accept=''
                         style={{}}
                         required={true}
-                        placeholder='e.g., 7'
+                        placeholder='7'
                         pattern='\d*'
                         value={productSize.breadth}
                         />
@@ -68,7 +68,7 @@ export default function PackageSize() {
                             accept=''
                             style={{}}
                             required={true}
-                            placeholder='e.g., 15'
+                            placeholder='15'
                             pattern='\d*'
                             value={productSize.width}
                         />

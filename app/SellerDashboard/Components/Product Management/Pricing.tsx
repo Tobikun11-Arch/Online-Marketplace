@@ -25,7 +25,7 @@ export default function Pricing() {
                         accept=''
                         style={{}}
                         required={true}
-                        placeholder='e.g., 240'
+                        placeholder='240'
                         pattern='\d*'
                         />
 
@@ -47,7 +47,7 @@ export default function Pricing() {
                         accept=''
                         style={{}}
                         required={false}
-                        placeholder='e.g., 25%'
+                        placeholder='25'
                         pattern='\d*'
                         />
 
