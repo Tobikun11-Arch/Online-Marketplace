@@ -72,7 +72,7 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
 
     console.log("Products Working")
     await Products.save();
-    res.status(201).json({ message: 'Product created successfully' });
+    res.status(201).json({ message: 'Product successfuly added' });
     } 
     
     catch (error) {

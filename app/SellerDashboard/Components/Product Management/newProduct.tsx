@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, {useEffect} from 'react'
 import {ChevronLeft} from 'lucide-react'
 import Input from '../../NewProduct/Prototype/Input'
 import TextArea from '../../NewProduct/Prototype/TextArea'
@@ -15,10 +15,9 @@ import ProductImages from './ProductImages'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { useLoading } from '../../hooks/ReusableHooks'
-
+import { waveform } from 'ldrs'
 
 export default function NewProduct() {
-
   const { 
     productName, 
     productDescription, 
@@ -51,6 +50,12 @@ export default function NewProduct() {
   const { isLoading, setLoading } = useLoading();
   const router = useRouter()
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      waveform.register(); 
+    }
+  }, []);
+
   const handlePublish = async () => {
     const isNumber = (value: string) => /^\d*$/.test(value);
 
@@ -70,6 +75,7 @@ export default function NewProduct() {
     productImages.length <= 2 
   ) {
     // If validation fails, log the error
+    window.alert("This is temporary error ui: Failed to publish: One or more fields are invalid or empty.")
     setMessage("Failed to publish: One or more fields are invalid or empty.");
     return;
   } 
@@ -296,11 +302,16 @@ export default function NewProduct() {
                   {
                     isLoading ? (
                       <>
-                      <div className="flex items-center gap-2">
+                      <div className="flex gap-2 items-center">
                         <p>Publishing</p>
-                        
+                          <l-waveform
+                          size="15"
+                          stroke="4"
+                          speed="3.5" 
+                          color="white" 
+                        ></l-waveform>
                       </div>
-                      </>
+                      </> 
                     ):('Publish')
                   }
                 </Button>
