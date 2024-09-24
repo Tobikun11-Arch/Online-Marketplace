@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { Product } from '../../types/types';
 import {
     Pagination,
@@ -11,76 +10,29 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '../../../../@/components/ui/pagination';
+import { useData } from '../../hooks/ReusableHooks';
 
 interface Products {
     ProductLists: Product[];
 }
 
-const queryClient = new QueryClient();
-
 export default function ProductTable() {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <ProductDetails />
-        </QueryClientProvider>
-    );
-}
-
-function ProductDetails() {
-    const dataUrl = process.env.NEXT_PUBLIC_PRODUCT_LIST!;
-    const { isLoading, error, data: products } = useQuery<Products | null>({
-        queryKey: ['ProductLists'],
-        queryFn: async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    throw new Error("No token found");
-                }
-
-                const response = await axios.get(dataUrl, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                return response.data;
-            } catch (error: any) {
-                console.error('Error fetching data:', error);
-                throw new Error(error.response?.data?.message || 'Failed to fetch products');
-            }
-        },
-    });
+    const { dataPass } = useData()
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
 
-    if (isLoading) {
-        return (
-            <>
-                <main className='w-full h-screen bg-transparent flex justify-center items-center'>
-                <span className="loading loading-ring loading-lg"></span>
-                </main>
-            </>
-        )
-    }
-
-    if (error) {
-        return <p className="text-red-500">An error has occurred: {error.message}</p>;
-    }
-
-    if (products?.ProductLists.length === 0) {
-        return <p className="text-gray-500">No products found for this account. Start adding products!</p>;
-    }
-
     // Pagination Logic
-    const totalProducts = products?.ProductLists.length || 0;
+    const totalProducts = dataPass?.length || 0;
     const totalPages = Math.ceil(totalProducts / itemsPerPage);
     const indexOfLastProduct = currentPage * itemsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-    const currentProducts = products?.ProductLists.slice(indexOfFirstProduct, indexOfLastProduct);
+    const currentProducts = dataPass?.slice(indexOfFirstProduct, indexOfLastProduct);
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
+
 
     return (
         <>
@@ -159,4 +111,5 @@ function ProductDetails() {
             )}
         </>
     );
+
 }

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import OverallStorage from './OverallStorage'
 import InStock from './InStock'
 import OutofStock from './OutofStock'
@@ -8,11 +8,11 @@ import ProductTable from './ProductTable'
 import axios from 'axios'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { Product } from '../../types/types'
+import { useData } from '../../hooks/ReusableHooks'
 
 interface Products {
     ProductLists: Product[];
   }
-
 
 interface Select {
   OverallStorage: string | null;
@@ -31,6 +31,7 @@ export default function ManageProducts() {
 }
 
 function Manage() {
+  const { setData, dataPass } = useData();
   const dataUrl = process.env.NEXT_PUBLIC_PRODUCT_LIST!;
 
   const [Selected, setSelect] = useState<Select>({
@@ -79,7 +80,12 @@ function Manage() {
   },
   });
 
-  const data = products?.ProductLists.map((product) => (product.productName))
+ 
+  useEffect(() => {
+    if (products?.ProductLists) {
+      setData(products.ProductLists);
+    }
+  }, [products, setData]);
 
   if (isLoading) {
   return (
@@ -101,7 +107,7 @@ function Manage() {
   <div className='w-full min-h-screen items-start px-2 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center'>
     <div className="flex flex-col w-full justify-start">
     <h1 className='mt-14 text-2xl font-bold xl:mt-7'>Manage Products</h1>
-    <p className='text-xs font-medium'>You have {data?.length} products in your catalog.</p>
+    <p className='text-xs font-medium'>You have {products?.ProductLists.length} products in your catalog.</p>
     </div>
     <input type="text" placeholder='Search' className='bg-white outline-none rounded-md w-full px-2 mt-2 h-12'/>
 

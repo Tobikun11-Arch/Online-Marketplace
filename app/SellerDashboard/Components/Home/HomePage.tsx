@@ -1,8 +1,11 @@
 import React from 'react'
 import BoxItem from '../Common/BoxItem'               
 import AddProduct from './AddProduct'
+import { useData } from '../../hooks/ReusableHooks'
 
 export default function HomePage() {
+
+  const { dataPass } = useData()
 
   return (
     <>

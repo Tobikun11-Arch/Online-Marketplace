@@ -303,11 +303,10 @@ export default function NewProduct() {
                     isLoading ? (
                       <>
                       <div className="flex gap-2 items-center">
-                        <p>Publishing</p>
                           <l-waveform
                           size="15"
                           stroke="4"
-                          speed="3.5" 
+                          speed="4.5" 
                           color="white" 
                         ></l-waveform>
                       </div>
