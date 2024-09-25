@@ -1,18 +1,18 @@
 import {create} from 'zustand'
 import { Product } from '../types/types'
 
-// interface Products {
-//     productLists: Product[]
-// }
-
 interface loadingProps {
-    isLoading: boolean;
-    setLoading: (isLoading: boolean) => void;
+    isLoadingPublish: boolean;
+    isLoadingDiscard: boolean;
+    setLoadingPublish: (isLoadingPublish: boolean) => void;
+    setLoadingDiscard: (isLoadingDiscard: boolean) => void;
 }
 
 export const useLoading = create<loadingProps>((set) => ({
-    isLoading: false,
-    setLoading: (isLoading: boolean) => set(() => ({ isLoading }))
+    isLoadingPublish: false,
+    isLoadingDiscard: false,
+    setLoadingPublish: (isLoadingPublish: boolean) => set(() => ({ isLoadingPublish })),
+    setLoadingDiscard: (isLoadingDiscard: boolean) => set(() => ({ isLoadingDiscard }))
 }))
 
 
@@ -25,3 +25,5 @@ export const useData = create<dataProps>((set) => ({
     dataPass: [],
     setData: (dataPass: Product[] | undefined) => set(() => ({ dataPass }))
 }))
+
+

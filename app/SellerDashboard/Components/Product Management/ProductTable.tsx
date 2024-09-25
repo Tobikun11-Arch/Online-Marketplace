@@ -22,8 +22,6 @@ export default function ProductTable() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
 
-    console.log("data: ", dataPass)
-
     // Pagination Logic
     const totalProducts = dataPass?.length || 0;
     const totalPages = Math.ceil(totalProducts / itemsPerPage);

@@ -33,7 +33,6 @@ export default function ManageProducts() {
 
 function Manage() {
   const { setData, dataPass } = useData();
-  console.log("datapass manage: ", dataPass)
 
   const [Selected, setSelect] = useState<Select>({
     OverallStorage: null,

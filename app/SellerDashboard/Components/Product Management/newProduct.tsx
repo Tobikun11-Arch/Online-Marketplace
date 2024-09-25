@@ -27,7 +27,7 @@ export default function NewProduct() {
     setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
 
-  const { isLoading, setLoading } = useLoading();
+  const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard } = useLoading();
   const router = useRouter()
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function NewProduct() {
     }
   }, []);
 
-  const handleStatusChange = async (status: 'Published' | 'Unpublished') => {
+  const handleStatusChange = async (status: 'Published' | 'Unpublished', type: 'publish' | 'discard') => {
     const isNumber = (value: string) => /^\d*$/.test(value);
 
     if (
@@ -64,7 +64,11 @@ export default function NewProduct() {
             return;
         }
 
-        setLoading(true)
+        if (type === 'publish') {
+          setLoadingPublish(true);
+        } else {
+          setLoadingDiscard(true);
+        }
 
         try {
           const uploadPromises = productImages.map(async (image:any, index) => {
@@ -106,7 +110,6 @@ export default function NewProduct() {
               },
           });
 
-        setLoading(false)
         setProductName('')
         setProductDescription('') 
         setProductCategory('') 
@@ -128,6 +131,14 @@ export default function NewProduct() {
       catch (error) {
           console.error('Error making request:', error);
           setMessage("Please Try again!")
+      }
+
+      finally{
+        if (type === 'publish') {
+          setLoadingPublish(false);
+        } else {
+          setLoadingDiscard(false);
+        }
       }
 
     }
@@ -267,9 +278,9 @@ export default function NewProduct() {
             </div>
 
             <div className='mt-3 flex justify-between pb-3'>
-              <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400' onClick={()=> handleStatusChange('Unpublished')}>
+              <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400' onClick={()=> handleStatusChange('Unpublished', 'discard')}>
                 {
-                  isLoading ? (
+                  isLoadingDiscard ? (
                     <>
                     <div className="flex gap-2 items-center">
                       <l-waveform
@@ -285,9 +296,9 @@ export default function NewProduct() {
               </Button>
               <div className="Save flex gap-2">
                 <Button className='rounded-lg font-bold font-abc bg-gray-200 px-4 py-1 text-blue-600'>Schedule</Button>
-                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={()=> handleStatusChange('Published')}>
+                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={()=> handleStatusChange('Published', 'publish')}>
                   {
-                    isLoading ? (
+                    isLoadingPublish ? (
                       <>
                       <div className="flex gap-2 items-center">
                           <l-waveform
