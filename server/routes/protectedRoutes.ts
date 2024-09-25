@@ -52,7 +52,8 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
       productPrice,
       productDiscount,
       productWeight, 
-      images
+      images,
+      status
     } = req.body;
 
     const Products = new Product({
@@ -67,7 +68,8 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
         productPrice,
         productDiscount,
         productWeight, 
-        images
+        images,
+        status
     });
 
     console.log("Products Working")
@@ -96,6 +98,7 @@ protectedroute.get('/productList', async (req: RequestWithUser, res: Response) =
   
       const ProductLists = productList.map((list) => ({
         productName: list.productName,
+        productStatus: list.status,
         productPrice: list.productPrice,
         images: list.images,
         description: list.productDescription,

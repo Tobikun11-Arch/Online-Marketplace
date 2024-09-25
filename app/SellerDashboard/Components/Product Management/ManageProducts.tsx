@@ -5,10 +5,11 @@ import InStock from './InStock'
 import OutofStock from './OutofStock'
 import Draft from './Draft'
 import ProductTable from './ProductTable'
-import axios from 'axios'
+import {productList} from '../../axios/axios'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { Product } from '../../types/types'
 import { useData } from '../../hooks/ReusableHooks'
+import axios from 'axios'
 
 interface Products {
     ProductLists: Product[];
@@ -32,7 +33,7 @@ export default function ManageProducts() {
 
 function Manage() {
   const { setData, dataPass } = useData();
-  const dataUrl = process.env.NEXT_PUBLIC_PRODUCT_LIST!;
+  console.log("datapass manage: ", dataPass)
 
   const [Selected, setSelect] = useState<Select>({
     OverallStorage: null,
@@ -59,7 +60,7 @@ function Manage() {
   throw new Error("No token found");
   }
 
-  const response = await axios.get(dataUrl, { 
+  const response = await productList.get('', { 
   headers: {
   Authorization: `Bearer ${token}`,
   },

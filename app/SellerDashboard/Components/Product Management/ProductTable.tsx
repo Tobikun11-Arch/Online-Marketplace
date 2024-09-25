@@ -22,6 +22,8 @@ export default function ProductTable() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
 
+    console.log("data: ", dataPass)
+
     // Pagination Logic
     const totalProducts = dataPass?.length || 0;
     const totalPages = Math.ceil(totalProducts / itemsPerPage);
@@ -57,7 +59,7 @@ export default function ProductTable() {
                             </td>
                             <td className="pl-4 pr-24 py-2 cursor-default">₱{product.productPrice}</td>
                             <td className="px-4 py-2">Inventory</td>
-                            <td className="px-4 py-2">Stats</td>
+                            <td className="px-4 py-2">{product.productStatus}</td>
                             <td className="px-4 py-2">More</td>
                         </tr>
                     ))}

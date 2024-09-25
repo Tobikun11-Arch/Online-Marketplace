@@ -4,6 +4,7 @@ export interface IProducts extends Document {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
   productName: string;
+  status: string;
   productDescription: string;
   productCategory: string;
   productQuality: string;
@@ -25,10 +26,12 @@ export interface IProducts extends Document {
   updatedAt: Date;
 }
 
+
 const productSchema = new mongoose.Schema<IProducts>(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     productName: { type: String, required: true },
+    status: { type: String, required: true },
     productDescription: { type: String, required: true },
     productCategory: { type: String, required: true },
     productQuality: { type: String, required: true },

@@ -13,38 +13,18 @@ import Link from 'next/link'
 import { UseProductStore } from '../../hooks/UseHooks'
 import ProductImages from './ProductImages'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
 import { useLoading } from '../../hooks/ReusableHooks'
 import { waveform } from 'ldrs'
+import {Cloudinary, ProductApi} from '../../axios/axios'
 
 export default function NewProduct() {
   const { 
-    productName, 
-    productDescription, 
-    productCategory, 
-    productQuality, 
-    productQuantity, 
-    Sku, 
-    productSize,
-    productPrice,
-    productDiscount,
-    productWeight, 
-    productImages,
-    previewImages,
-    message, 
-    setPreviewImages,
-    setProductImages,
-    setProductName, 
-    setProductDescription, 
-    setProductCategory, 
-    setProductQuality, 
-    setProductQuantity, 
-    setSku, 
-    setProductWeight,  
-    setMessage,
-    setProductSize,
-    setProductPrice,
-    setProductDiscount
+    productName, productDescription, productCategory, productQuality, 
+    productQuantity, Sku, productSize, productPrice, productDiscount, 
+    productWeight, productImages, previewImages, message, setPreviewImages, 
+    setProductImages, setProductName, setProductDescription, setProductCategory, 
+    setProductQuality, setProductQuantity, setSku, setProductWeight, setMessage, 
+    setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
 
   const { isLoading, setLoading } = useLoading();
@@ -56,26 +36,22 @@ export default function NewProduct() {
     }
   }, []);
 
-  const handlePublish = async () => {
+  const handleStatusChange = async (status: 'Published' | 'Unpublished') => {
     const isNumber = (value: string) => /^\d*$/.test(value);
 
-   if (
-    !productName || 
-    !productDescription || 
-    !productCategory || 
-    !productQuality || 
-    !productQuantity || 
-    !isNumber(productQuantity) ||
-    !productSize.length || !isNumber(productSize.length) ||
-    !productSize.breadth || !isNumber(productSize.breadth) ||
-    !productSize.width || !isNumber(productSize.width) ||
-    !productWeight.Weight || !isNumber(productWeight.Weight) ||
-    !productPrice || !isNumber(productPrice) ||
-    !productDiscount || !isNumber(productDiscount) ||
-    productImages.length <= 2 
-  ) {
+    if (
+      !productName               || !productDescription    ||
+      !productCategory           || !productQuality        || 
+      !productQuantity           || !isNumber(productQuantity) ||
+      !productSize.length        || !isNumber(productSize.length) ||
+      !productSize.breadth       || !isNumber(productSize.breadth) ||
+      !productSize.width         || !isNumber(productSize.width) ||
+      !productWeight.Weight      || !isNumber(productWeight.Weight) ||
+      !productPrice              || !isNumber(productPrice) ||
+      !productDiscount           || !isNumber(productDiscount) ||
+      productImages.length <= 2
+    ) {
     // If validation fails, log the error
-    window.alert("This is temporary error ui: Failed to publish: One or more fields are invalid or empty.")
     setMessage("Failed to publish: One or more fields are invalid or empty.");
     return;
   } 
@@ -99,12 +75,9 @@ export default function NewProduct() {
               const imgData = new FormData();
               imgData.append('file', image);
               imgData.append('upload_preset', 'Onlinemarket');
-              const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-              if (!cloudName) {  
-                  throw new Error('Cloudinary cloud name is not set');  
-              }
+            
 
-              const response = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, imgData);
+              const response = await Cloudinary.post('/image/upload', imgData);
               const data = response.data;
               return data.secure_url;
           });
@@ -123,11 +96,10 @@ export default function NewProduct() {
             productDiscount,
             productWeight, 
             images: cloudinaryUrls, 
+            status: status
           };
 
-          const productEnv = process.env.NEXT_PUBLIC_PRODUCTS!;
-
-          await axios.post(productEnv, productData, {
+          await ProductApi.post('', productData, {
               headers: {
                   'Authorization': `Bearer ${token}`,
                   'Content-Type': 'application/json',
@@ -295,10 +267,25 @@ export default function NewProduct() {
             </div>
 
             <div className='mt-3 flex justify-between pb-3'>
-              <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400'>Discard</Button>
+              <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400' onClick={()=> handleStatusChange('Unpublished')}>
+                {
+                  isLoading ? (
+                    <>
+                    <div className="flex gap-2 items-center">
+                      <l-waveform
+                      size="15"
+                      stroke="4"  
+                      speed="4.5" 
+                      color="blue" 
+                      ></l-waveform>
+                    </div>
+                    </> 
+                  ):('Discard')
+                }
+              </Button>
               <div className="Save flex gap-2">
                 <Button className='rounded-lg font-bold font-abc bg-gray-200 px-4 py-1 text-blue-600'>Schedule</Button>
-                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={handlePublish}>
+                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={()=> handleStatusChange('Published')}>
                   {
                     isLoading ? (
                       <>
