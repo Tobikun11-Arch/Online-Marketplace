@@ -79,9 +79,8 @@ export default function NewProduct() {
               const imgData = new FormData();
               imgData.append('file', image);
               imgData.append('upload_preset', 'Onlinemarket');
-            
 
-              const response = await Cloudinary.post('/image/upload', imgData);
+              const response = await Cloudinary.post('', imgData);
               const data = response.data;
               return data.secure_url;
           });

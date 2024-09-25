@@ -1,14 +1,7 @@
 import axios from "axios";
 
-
-//get cloudname and post
-const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-if (!cloudName) {  
-    throw new Error('Cloudinary cloud name is not set');  
-}
-const cloud = process.env.NEXT_PUBLIC_CLOUDINARY;
-const cloudinary_Connection =`${cloud}${cloudName}`
-
+const cloudinary_Connection = process.env.NEXT_PUBLIC_CLOUDINARY;
+console.log("asd:", cloudinary_Connection)
 export const Cloudinary = axios.create({
   baseURL: cloudinary_Connection
 })
