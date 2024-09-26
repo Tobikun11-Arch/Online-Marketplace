@@ -15,6 +15,26 @@ export const useLoading = create<loadingProps>((set) => ({
     setLoadingDiscard: (isLoadingDiscard: boolean) => set(() => ({ isLoadingDiscard }))
 }))
 
+interface scheduleProps {
+    isSchedule: boolean;
+    setSchedule: (isSchedule: boolean) => void;
+
+    DateSchedule: string;
+    setDate: (DateScedule: string) => void;
+
+    TimeSchedule: string;
+    setTime: (TimeSchedule: string) => void;
+}
+
+export const useSchedule = create<scheduleProps>((set) => ({
+    isSchedule: false,
+    DateSchedule: '',
+    TimeSchedule: '',
+
+    setSchedule: (isSchedule: boolean) => set(() => ({ isSchedule })),
+    setDate: (DateSchedule: string) => set(() => ({ DateSchedule })),
+    setTime: (TimeSchedule: string) => set(() => ({ TimeSchedule }))
+}))
 
 interface dataProps {
     dataPass: Product[] | undefined;

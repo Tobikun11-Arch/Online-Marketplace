@@ -13,9 +13,10 @@ import Link from 'next/link'
 import { UseProductStore } from '../../hooks/UseHooks'
 import ProductImages from './ProductImages'
 import { useRouter } from 'next/navigation'
-import { useLoading } from '../../hooks/ReusableHooks'
-import { waveform } from 'ldrs'
+import { useLoading, useSchedule } from '../../hooks/ReusableHooks'
+import { pinwheel } from 'ldrs'
 import {Cloudinary, ProductApi} from '../../axios/axios'
+import Schedule from './Schedule'
 
 export default function NewProduct() {
   const { 
@@ -27,12 +28,13 @@ export default function NewProduct() {
     setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
 
-  const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard } = useLoading();
+  const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard } = useLoading()
+  const { setSchedule, isSchedule, DateSchedule } = useSchedule()
   const router = useRouter()
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      waveform.register(); 
+      pinwheel.register()
     }
   }, []);
 
@@ -143,9 +145,46 @@ export default function NewProduct() {
     }
   }
 
+  const handleSchedule = () => {
+    console.log("date: ", DateSchedule)
+  }
+
   return (
     <>
       <main className='px-3 pb-3 pt-12 md:pt-12 xl:pt-0'>
+
+          {isLoadingDiscard || isLoadingPublish ? 
+          (<>
+          <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 bg-black opacity-50 z-50">
+            <div className="load">
+                <l-pinwheel
+                  size="70"
+                  stroke="3.5"
+                  speed="0.9" 
+                  color="white" 
+                ></l-pinwheel>
+              </div>
+          </div>
+          </>) : ('')}
+
+          {isSchedule ?
+        (<>
+        <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 z-50 px-5 sm:px-0">
+          <div className="bg-gray-800 rounded-md py-5 pl-5 text-white">
+            <Schedule/>
+
+            <div className='pt-12 flex justify-between pr-5'> 
+            <Button className='bg-gray-400 px-5 py-1 rounded-md text-black font-bold font-abc' onClick={()=> setSchedule(false)}>
+                Cancel
+            </Button>
+
+            <Button className='bg-blue-800 px-8 py-1 rounded-md text-white font-bold font-abc' onClick={handleSchedule}>
+                Post
+            </Button>
+       </div>
+          </div>
+        </div>
+        </>) : ('')}
 
         <Link href={'/SellerDashboard/Home'}>
         <div className='flex items-center h-10 xl:ml-60'>
@@ -171,6 +210,7 @@ export default function NewProduct() {
                 value={productName}
                 placeholder=''
                 />
+
                 <h3 className='text-sm pt-1'>Business Description</h3>
                 <TextArea
                 onChange={(e) => setProductDescription(e.target.value)}
@@ -235,7 +275,6 @@ export default function NewProduct() {
           </div>
 
           <div className='parent2 bg-white pt-3 px-2 md:w-2/4'>
-
             <h1 className='font-bold pb-1'>Product Images</h1>
             <div className="merge border border-gray-300 p-4 rounded-sm">
              <ProductImages/>
@@ -277,40 +316,10 @@ export default function NewProduct() {
             </div>
 
             <div className='mt-3 flex justify-between pb-3'>
-              <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400' onClick={()=> handleStatusChange('Unpublished', 'discard')}>
-                {
-                  isLoadingDiscard ? (
-                    <>
-                    <div className="flex gap-2 items-center">
-                      <l-waveform
-                      size="15"
-                      stroke="4"  
-                      speed="4.5" 
-                      color="blue" 
-                      ></l-waveform>
-                    </div>
-                    </> 
-                  ):('Discard')
-                }
-              </Button>
+              <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400' onClick={()=> handleStatusChange('Unpublished', 'discard')}>Discard</Button>
               <div className="Save flex gap-2">
-                <Button className='rounded-lg font-bold font-abc bg-gray-200 px-4 py-1 text-blue-600'>Schedule</Button>
-                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={()=> handleStatusChange('Published', 'publish')}>
-                  {
-                    isLoadingPublish ? (
-                      <>
-                      <div className="flex gap-2 items-center">
-                          <l-waveform
-                          size="15"
-                          stroke="4"
-                          speed="4.5" 
-                          color="white" 
-                        ></l-waveform>
-                      </div>
-                      </> 
-                    ):('Publish')
-                  }
-                </Button>
+                <Button className='rounded-lg font-bold font-abc bg-gray-200 px-4 py-1 text-blue-600' onClick={()=> setSchedule(true)}>Schedule</Button>
+                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={()=> handleStatusChange('Published', 'publish')}>Publish</Button>
               </div>
             </div>
           </div>

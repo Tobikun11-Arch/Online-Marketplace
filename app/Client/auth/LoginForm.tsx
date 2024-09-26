@@ -1,8 +1,7 @@
 "use client"
 import axios from 'axios';
-import './Css/load.css'
+import '../auth/Css/load.css'
 import React, { FormEvent, useState } from 'react'
-import './Css/Background.css'
 import {useRouter} from 'next/navigation';
 import {useForm} from '../hooks/useForm'
 
@@ -167,7 +166,7 @@ export default function LoginForm() {
       {/**Register area */}
       
 
-   <div className="Main w-full min-h-screen BackgroundBox Background flex justify-center items-center">
+   <div className="Main w-full min-h-screen bg-gray-950 flex justify-center items-center">
 
    {open && (
   message ? (
@@ -253,7 +252,7 @@ export default function LoginForm() {
    ) : (
     <>
     
-    <div className="Main w-full min-h-screen BackgroundBox Background flex justify-center items-center">
+    <div className="Main w-full min-h-screen bg-gray-950 flex justify-center items-center">
 
     {messageLogin ? (
   <>
