@@ -4,15 +4,19 @@ import { Product } from '../types/types'
 interface loadingProps {
     isLoadingPublish: boolean;
     isLoadingDiscard: boolean;
+    isLoadingSchedule: boolean;
     setLoadingPublish: (isLoadingPublish: boolean) => void;
     setLoadingDiscard: (isLoadingDiscard: boolean) => void;
+    setLoadingSchedule: (isLoadingSchedule: boolean) => void;
 }
 
 export const useLoading = create<loadingProps>((set) => ({
     isLoadingPublish: false,
     isLoadingDiscard: false,
+    isLoadingSchedule: false,
     setLoadingPublish: (isLoadingPublish: boolean) => set(() => ({ isLoadingPublish })),
-    setLoadingDiscard: (isLoadingDiscard: boolean) => set(() => ({ isLoadingDiscard }))
+    setLoadingDiscard: (isLoadingDiscard: boolean) => set(() => ({ isLoadingDiscard })),
+    setLoadingSchedule: (isLoadingSchedule: boolean) => set(() => ({ isLoadingSchedule }))
 }))
 
 interface scheduleProps {

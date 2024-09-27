@@ -56,9 +56,9 @@ export default function ProductTable() {
                                 </div>
                             </td>
                             <td className="pl-4 pr-24 py-2 cursor-default">₱{product.productPrice}</td>
-                            <td className="px-4 py-2">Inventory</td>
-                            <td className="px-4 py-2">{product.productStatus}</td>
-                            <td className="px-4 py-2">More</td>
+                            <td className="px-4 py-2 cursor-default">{product.productQuantity < '20' ? 'Out of stock' : 'In stock'}</td>
+                            <td className="px-4 py-2 cursor-default">{product.productStatus}</td>
+                            <td className="px-4 py-2 cursor-default">{product.productStatus === 'Published' ? 'View Analystics' : 'Edit Listing'}</td>
                         </tr>
                     ))}
                 </tbody>

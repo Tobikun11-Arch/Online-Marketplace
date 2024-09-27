@@ -28,8 +28,8 @@ export default function NewProduct() {
     setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
 
-  const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard } = useLoading()
-  const { setSchedule, isSchedule, DateSchedule } = useSchedule()
+  const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule } = useLoading()
+  const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()
   const router = useRouter()
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function NewProduct() {
     }
   }, []);
 
-  const handleStatusChange = async (status: 'Published' | 'Unpublished', type: 'publish' | 'discard') => {
+  const handleStatusChange = async (status: 'Published' | 'Unpublished' | 'Scheduled', type: 'publish' | 'discard' | 'schedule') => {
     const isNumber = (value: string) => /^\d*$/.test(value);
 
     if (
@@ -51,7 +51,7 @@ export default function NewProduct() {
       !productWeight.Weight      || !isNumber(productWeight.Weight) ||
       !productPrice              || !isNumber(productPrice) ||
       !productDiscount           || !isNumber(productDiscount) ||
-      productImages.length <= 2
+      productImages.length <= 0 //make this 2 later
     ) {
     // If validation fails, log the error
     setMessage("Failed to publish: One or more fields are invalid or empty.");
@@ -68,9 +68,15 @@ export default function NewProduct() {
 
         if (type === 'publish') {
           setLoadingPublish(true);
-        } else {
+        } 
+        else if (type === 'discard') {
           setLoadingDiscard(true);
         }
+        else {
+          setLoadingSchedule(true)
+        }
+
+        
 
         try {
           const uploadPromises = productImages.map(async (image:any, index) => {
@@ -89,6 +95,19 @@ export default function NewProduct() {
 
           const cloudinaryUrls = await Promise.all(uploadPromises);
 
+          if (status === 'Scheduled') {
+            if (!TimeSchedule || !DateSchedule) {
+              console.log("no sched")
+              setLoadingSchedule(false)
+              return;
+            }
+          }
+
+          const ScheduleData = {
+            TimePublish: TimeSchedule,
+            DatePublish: DateSchedule
+          }
+
           const productData = {
             productName, 
             productDescription, 
@@ -101,7 +120,8 @@ export default function NewProduct() {
             productDiscount,
             productWeight, 
             images: cloudinaryUrls, 
-            status: status
+            status: status,
+            ScheduleDate: ScheduleData || undefined
           };
 
           await ProductApi.post('', productData, {
@@ -126,7 +146,11 @@ export default function NewProduct() {
         setProductImages([])
         setProductPrice('')
         setProductDiscount('')
+        setTime('')
+        setDate('')
         setMessage('')
+        setSchedule(false)
+
       } 
 
       catch (error) {
@@ -137,16 +161,16 @@ export default function NewProduct() {
       finally{
         if (type === 'publish') {
           setLoadingPublish(false);
-        } else {
+        } 
+        else if (type === 'discard') {
           setLoadingDiscard(false);
+        }
+        else {
+          setLoadingSchedule(false)
         }
       }
 
     }
-  }
-
-  const handleSchedule = () => {
-    console.log("date: ", DateSchedule)
   }
 
   return (
@@ -178,9 +202,23 @@ export default function NewProduct() {
                 Cancel
             </Button>
 
-            <Button className='bg-blue-800 px-8 py-1 rounded-md text-white font-bold font-abc' onClick={handleSchedule}>
+            <Button className='bg-blue-800 px-8 py-1 rounded-md text-white font-bold font-abc' onClick={()=> handleStatusChange('Scheduled', 'schedule')}>
                 Post
             </Button>
+
+            {isLoadingSchedule ? 
+          (<>
+          <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 bg-black opacity-50 z-50">
+            <div className="load">
+                <l-pinwheel
+                  size="70"
+                  stroke="3.5"
+                  speed="0.9" 
+                  color="white" 
+                ></l-pinwheel>
+              </div>
+          </div>
+          </>) : ('')}
        </div>
           </div>
         </div>
@@ -301,7 +339,7 @@ export default function NewProduct() {
                 <Weight
                 className='bg-transparent text-gray-400'
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setProductWeight('WeightIndicator', e.target.value)}
-                value={productWeight.WeightIndicator}
+                value={productWeight.WeightIndicator || 'kg'}
                 />
               </div>
               </div>

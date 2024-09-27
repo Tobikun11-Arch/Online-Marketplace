@@ -101,13 +101,14 @@ function Manage() {
   return <p className="text-red-500">An error has occurred: {error.message}</p>;
   }
  
+  const productLength = products?.ProductLists.length
 
   return (
   <>
   <div className='w-full min-h-screen items-start px-2 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center'>
     <div className="flex flex-col w-full justify-start">
     <h1 className='mt-14 text-2xl font-bold xl:mt-7'>Manage Products</h1>
-    <p className='text-xs font-medium'>You have {products?.ProductLists.length} products in your catalog.</p>
+    <p className='text-xs font-medium'>You have {productLength} products in your catalog.</p>
     </div>
     <input type="text" placeholder='Search' className='bg-white outline-none rounded-md w-full px-2 mt-2 h-12'/>
 
@@ -138,6 +139,8 @@ function Manage() {
     </div>
 
     <ProductTable/>
+    <h1 className='text-gray-400'>{(productLength !== undefined && productLength != 0) ? '' : 'No products available'}</h1>
+
     </div>
     </>
   )

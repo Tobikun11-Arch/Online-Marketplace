@@ -80,7 +80,7 @@ export default function ProductImages() {
                             </div>
 
                             <div className="z-10 flex flex-col items-center space-y-2">
-                                <Button className='py-1 px-6 rounded-lg text-sm font-medium bg-white text-black' onClick={() => previewImage(urlImage[0])}>View</Button>
+                                <Button className='py-1 px-6 rounded-lg text-sm font-medium bg-white text-black' onClick={() => previewImage(urlImage[0])}>Preview</Button>
                                 <Button className='py-1 px-3 rounded-lg text-sm font-medium bg-white text-black' onClick={(e) => {
                                 e.stopPropagation();
                                 setView(null);

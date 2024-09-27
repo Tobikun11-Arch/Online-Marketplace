@@ -22,6 +22,10 @@ export interface IProducts extends Document {
     WeightIndicator: string;
   };
   images: string[]; // Assuming images are URLs, use array of strings
+  ScheduleDate: {
+    TimePublish: string;
+    DatePublish: string;
+  },
   createdAt: Date;
   updatedAt: Date;
 }
@@ -48,7 +52,11 @@ const productSchema = new mongoose.Schema<IProducts>(
         Weight: { type: String, required: true },
         WeightIndicator: { type: String, required: false },
     },
-    images: { type: [String], required: true }, // Array of image URLs
+    images: { type: [String], required: true },
+    ScheduleDate: {
+      TimePublish: { type: String, required: false },
+      DatePublish: { type: String, required: false }
+    },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   },
