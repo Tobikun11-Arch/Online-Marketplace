@@ -10,7 +10,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '../../../../@/components/ui/pagination';
-import { useData } from '../../hooks/ReusableHooks';
+import { useData, useSearch } from '../../hooks/ReusableHooks';
 
 interface Products {
     ProductLists: Product[];
@@ -18,16 +18,24 @@ interface Products {
 
 export default function ProductTable() {
     const { dataPass } = useData()
+    const { searchField, selected } = useSearch()
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
+
+    const filteredProducts = dataPass?.filter((product) => {
+        const productName = product.productName.toLowerCase();
+        const productStatus = product.productStatus.toLowerCase();
+        const searchTerm = searchField.toLowerCase();
+        return productName.includes(searchTerm) || productStatus.startsWith(searchTerm); 
+    });
 
     // Pagination Logic
     const totalProducts = dataPass?.length || 0;
     const totalPages = Math.ceil(totalProducts / itemsPerPage);
     const indexOfLastProduct = currentPage * itemsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-    const currentProducts = dataPass?.slice(indexOfFirstProduct, indexOfLastProduct);
+    const currentProducts = filteredProducts?.slice(indexOfFirstProduct, indexOfLastProduct);
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -36,7 +44,7 @@ export default function ProductTable() {
 
     return (
         <>
-        <div className="w-full overflow-x-auto mt-2 border">
+        <div className="w-full overflow-x-auto mt-2 border rounded-md">
             <table className="min-w-full table-auto border-collapse rounded-lg">
                 <thead className="bg-white">
                     <tr>
@@ -51,14 +59,14 @@ export default function ProductTable() {
                     {currentProducts?.map((product, index) => (
                         <tr key={`${product.description}-${index}`} className='bg-white border-b border-gray-400'>
                             <td className="px-4 py-2">
-                                <div className="w-10 h-10 rounded-full bg-cover bg-center bg-gray-400"
+                                <div className="w-8 h-8 rounded-full bg-cover bg-center bg-gray-400"
                                     style={{ backgroundImage: product.images ? `url(${product.images[0]})` : '' }}>
                                 </div>
                             </td>
-                            <td className="pl-4 pr-24 py-2 cursor-default">₱{product.productPrice}</td>
-                            <td className="px-4 py-2 cursor-default">{product.productQuantity < '20' ? 'Out of stock' : 'In stock'}</td>
-                            <td className="px-4 py-2 cursor-default">{product.productStatus}</td>
-                            <td className="px-4 py-2 cursor-default">{product.productStatus === 'Published' ? 'View Analystics' : 'Edit Listing'}</td>
+                            <td className="pl-4 pr-16 py-2 cursor-default font-abc font-bold text-sm text-gray-800">₱{product.productPrice}</td>
+                            <td className="pl-4 pr-10 cursor-default font-abc font-bold text-sm text-gray-800">{product.productQuantity < '20' ? 'Out of stock' : 'In stock'}</td>
+                            <td className="px-4 py-2 cursor-default font-abc font-bold text-sm text-gray-800">{product.productStatus}</td>
+                            <td className="px-4 py-2 cursor-default font-abc font-bold text-gray-500 text-sm">{product.productStatus === 'Published' ? 'View Analystics' : 'Edit Listing'}</td>
                         </tr>
                     ))}
                 </tbody>

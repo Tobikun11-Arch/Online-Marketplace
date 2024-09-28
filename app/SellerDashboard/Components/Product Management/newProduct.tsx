@@ -52,7 +52,7 @@ export default function NewProduct() {
       !productWeight.Weight      || !isNumber(productWeight.Weight) ||
       !productPrice              || !isNumber(productPrice) ||
       !productDiscount           || !isNumber(productDiscount) ||
-      productImages.length <= 0 //make this 2 later
+      productImages.length <= 2 
     ) {
     // If validation fails, log the error
     setError(true)
@@ -235,7 +235,10 @@ export default function NewProduct() {
         <section className='h-full w-full md:flex'>
           <div className="parent1 bg-white px-2 md:w-2/3 py-3 xl:ml-60">
 
+              <div className="flex justify-between items-center">
               <h1 className='font-bold pb-1'>Description</h1>
+              <p className='text-xs xl:text-base text-gray-400'>Please fill in all the fields.</p>
+              </div>
               <div className="merge border border-gray-300 p-4 rounded-sm">
                 <h3 className='text-sm'>Product Name</h3>
                 <Input
@@ -293,7 +296,7 @@ export default function NewProduct() {
                   pattern='\d*'
                   value={productQuantity}
                 /> 
-                {isNumber(productQuantity) ? '' : (<><p className='text-red-600 font-abc'>Please Input an number</p></>)}
+                {isNumber(productQuantity) ? '' : (<><p className='text-red-600 font-abc text-xs'>Please Input an number</p></>)}
               </div>
 
               <div className="flex flex-col w-full">
@@ -319,7 +322,7 @@ export default function NewProduct() {
               <ProductImages/>
               {isError ? 
               (<>
-              {productImages.length >= 2 ? '' : (<><p className='text-red-600 font-abc'>Upload 3 images of your product</p></>)}
+              {productImages.length <= 2 ? (<><p className='text-red-600 font-abc text-xs'>Upload 3 images of your product</p></>) : '' }
               </>) 
               : 
               ''}
@@ -350,17 +353,17 @@ export default function NewProduct() {
                 />
               </div>
               </div>
-              {isNumber(productWeight.Weight ) ? '' : (<><p className='text-red-600 font-abc'>Please Input an number</p></>)}
+              {isNumber(productWeight.Weight ) ? '' : (<><p className='text-red-600 font-abc text-xs'>Please Input an number</p></>)}
 
               <h3 className='text-sm pt-2'>Package Size</h3>
               <PackageSize/>
-              {isNumber(productSize.breadth) && isNumber(productSize.length) && isNumber(productSize.width) ? '' : (<><p className='text-red-600 font-abc'>Please Input an number</p></>)}
+              {isNumber(productSize.breadth) && isNumber(productSize.length) && isNumber(productSize.width) ? '' : (<><p className='text-red-600 font-abc text-xs'>Please Input an number</p></>)}
             </div>
 
             <h1 className='font-bold mt-4 pb-1'>Pricing</h1>
             <div className="merge border border-gray-300 p-4 rounded-sm">
               <Pricing/>
-              {isNumber(productPrice) && isNumber(productDiscount) ? '' : (<><p className='text-red-600 font-abc'>Please Input an number</p></>)}
+              {isNumber(productPrice) && isNumber(productDiscount) ? '' : (<><p className='text-red-600 font-abc text-xs'>Please Input an number</p></>)}
             </div>
 
             <div className='mt-3 flex justify-between pb-3'>

@@ -88,4 +88,3 @@ export const UseProductStore = create<ProductInfo>((set) => ({
     setProductPrice: (price: string) => set(() => ({ productPrice: price })),
     setProductDiscount: (discount: string) => set(() => ({ productDiscount: discount }))
 }));
-

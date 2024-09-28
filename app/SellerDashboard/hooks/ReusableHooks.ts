@@ -54,4 +54,27 @@ export const useData = create<dataProps>((set) => ({
     setData: (dataPass: Product[] | undefined) => set(() => ({ dataPass }))
 }))
 
-
+interface Select {
+    OverallStorage: string;
+    InStock: string;
+    OutofStock: string;
+    Draft: string;
+  }
+interface searchProps {
+    searchField: string;
+    selected: Select;
+    setSelected: (selected: Select) => void;
+    setSearchField: (searchField: string) => void;
+  }
+  
+  export const useSearch = create<searchProps>((set) => ({
+    searchField: '',
+    selected: {
+      OverallStorage: '',
+      InStock: '',
+      OutofStock: '',
+      Draft: '',
+    },
+    setSelected: (selected: Select) => set(() => ({ selected })),
+    setSearchField: (searchField: string) => set(() => ({ searchField }))
+  }));

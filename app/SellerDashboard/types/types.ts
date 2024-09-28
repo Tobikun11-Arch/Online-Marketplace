@@ -5,4 +5,6 @@ export interface Product {
     productPrice: number;
     productStatus: string;
     productQuantity: string;
+    createdAt: Date;
+    productDiscount: string;
 }

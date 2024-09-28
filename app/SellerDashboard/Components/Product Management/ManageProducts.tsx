@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEvent } from 'react'
 import OverallStorage from './OverallStorage'
 import InStock from './InStock'
 import OutofStock from './OutofStock'
@@ -8,7 +8,7 @@ import ProductTable from './ProductTable'
 import {productList} from '../../axios/axios'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { Product } from '../../types/types'
-import { useData } from '../../hooks/ReusableHooks'
+import { useData, useSearch } from '../../hooks/ReusableHooks'
 import axios from 'axios'
 import { hourglass } from 'ldrs'
 
@@ -17,10 +17,10 @@ interface Products {
   }
 
 interface Select {
-  OverallStorage: string | null;
-  InStock: string | null;
-  OutofStock: string | null;
-  Draft: string | null;
+  OverallStorage: string;
+  InStock: string;
+  OutofStock: string;
+  Draft: string;
 }
 
 const queryClient = new QueryClient()
@@ -33,21 +33,22 @@ export default function ManageProducts() {
 }
 
 function Manage() {
-  const { setData, dataPass } = useData();
+  const { setData } = useData();
+  const { setSearchField, setSelected } = useSearch()
 
   const [Selected, setSelect] = useState<Select>({
-    OverallStorage: null,
-    InStock: null,
-    OutofStock: null, 
-    Draft: null,  
+    OverallStorage: '',
+    InStock: '',
+    OutofStock: '', 
+    Draft: '',  
   })
 
   const handleSelectChange = (name: keyof Select, value: string) => {
   setSelect({
-  OverallStorage: name === "OverallStorage" ? value : null,
-  InStock: name === "InStock" ? value : null,
-  OutofStock: name === "OutofStock" ? value : null,
-  Draft: name === "Draft" ? value : null
+  OverallStorage: name === "OverallStorage" ? value : '',
+  InStock: name === "InStock" ? value : '',
+  OutofStock: name === "OutofStock" ? value : '',
+  Draft: name === "Draft" ? value : ''
   });
   }
 
@@ -94,6 +95,16 @@ function Manage() {
     }
   }, [products, setData]);
 
+
+  useEffect(() => {
+    setSelected({
+      OverallStorage: Selected.OverallStorage,
+      InStock: Selected.InStock,
+      OutofStock: Selected.OutofStock,
+      Draft: Selected.Draft
+    });
+  }, [Selected, setSelected]);
+
   if (isLoading) {
   return (
     <>
@@ -117,6 +128,11 @@ function Manage() {
  
   const productLength = products?.ProductLists.length
 
+  const onsearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const searchString = event.target.value.toLowerCase()
+    setSearchField(searchString)
+  }
+
   return (
   <>
   <div className='w-full min-h-screen items-start px-2 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center'>
@@ -124,7 +140,7 @@ function Manage() {
     <h1 className='mt-14 text-2xl font-bold xl:mt-7'>Manage Products</h1>
     <p className='text-xs font-medium'>You have {productLength} products in your catalog.</p>
     </div>
-    <input type="text" placeholder='Search' className='bg-white outline-none rounded-md w-full px-2 mt-2 h-12'/>
+    <input type="text" placeholder='Search' className='bg-white outline-none rounded-md w-full px-2 mt-2 h-12' onChange={onsearchChange}/>
 
     <div className="w-full flex items-center gap-x-2 pb-2 overflow-x-auto overflow-y-hidden">  
     <OverallStorage
