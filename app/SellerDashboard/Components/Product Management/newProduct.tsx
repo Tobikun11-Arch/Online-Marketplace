@@ -1,6 +1,6 @@
 "use client"
 import React, {useEffect} from 'react'
-import {ChevronLeft} from 'lucide-react'
+import {ChevronLeft, Divide} from 'lucide-react'
 import Input from '../../NewProduct/Prototype/Input'
 import TextArea from '../../NewProduct/Prototype/TextArea'
 import Category from '../Common/Category'
@@ -22,13 +22,13 @@ export default function NewProduct() {
   const { 
     productName, productDescription, productCategory, productQuality, 
     productQuantity, Sku, productSize, productPrice, productDiscount, 
-    productWeight, productImages, previewImages, message, setPreviewImages, 
+    productWeight, productImages, previewImages, setPreviewImages, 
     setProductImages, setProductName, setProductDescription, setProductCategory, 
-    setProductQuality, setProductQuantity, setSku, setProductWeight, setMessage, 
+    setProductQuality, setProductQuantity, setSku, setProductWeight, 
     setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
 
-  const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule } = useLoading()
+  const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
   const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()
   const router = useRouter()
 
@@ -38,8 +38,9 @@ export default function NewProduct() {
     }
   }, []);
 
+  const isNumber = (value: string) => /^\d*$/.test(value);
+
   const handleStatusChange = async (status: 'Published' | 'Unpublished' | 'Scheduled', type: 'publish' | 'discard' | 'schedule') => {
-    const isNumber = (value: string) => /^\d*$/.test(value);
 
     if (
       !productName               || !productDescription    ||
@@ -54,7 +55,8 @@ export default function NewProduct() {
       productImages.length <= 0 //make this 2 later
     ) {
     // If validation fails, log the error
-    setMessage("Failed to publish: One or more fields are invalid or empty.");
+    setError(true)
+   console.log("Failed to publish: One or more fields are invalid or empty.")
     return;
   } 
   
@@ -148,14 +150,12 @@ export default function NewProduct() {
         setProductDiscount('')
         setTime('')
         setDate('')
-        setMessage('')
         setSchedule(false)
-
+        setError(false)
       } 
 
       catch (error) {
           console.error('Error making request:', error);
-          setMessage("Please Try again!")
       }
 
       finally{
@@ -223,6 +223,7 @@ export default function NewProduct() {
           </div>
         </div>
         </>) : ('')}
+
 
         <Link href={'/SellerDashboard/Home'}>
         <div className='flex items-center h-10 xl:ml-60'>
@@ -292,7 +293,7 @@ export default function NewProduct() {
                   pattern='\d*'
                   value={productQuantity}
                 /> 
-
+                {isNumber(productQuantity) ? '' : (<><p className='text-red-600 font-abc'>Please Input an number</p></>)}
               </div>
 
               <div className="flex flex-col w-full">
@@ -315,7 +316,13 @@ export default function NewProduct() {
           <div className='parent2 bg-white pt-3 px-2 md:w-2/4'>
             <h1 className='font-bold pb-1'>Product Images</h1>
             <div className="merge border border-gray-300 p-4 rounded-sm">
-             <ProductImages/>
+              <ProductImages/>
+              {isError ? 
+              (<>
+              {productImages.length >= 2 ? '' : (<><p className='text-red-600 font-abc'>Upload 3 images of your product</p></>)}
+              </>) 
+              : 
+              ''}
             </div>
 
             <h1 className='font-bold mt-4 pb-1'>Shipping & Delivery</h1>
@@ -343,21 +350,24 @@ export default function NewProduct() {
                 />
               </div>
               </div>
+              {isNumber(productWeight.Weight ) ? '' : (<><p className='text-red-600 font-abc'>Please Input an number</p></>)}
 
               <h3 className='text-sm pt-2'>Package Size</h3>
               <PackageSize/>
+              {isNumber(productSize.breadth) && isNumber(productSize.length) && isNumber(productSize.width) ? '' : (<><p className='text-red-600 font-abc'>Please Input an number</p></>)}
             </div>
 
             <h1 className='font-bold mt-4 pb-1'>Pricing</h1>
             <div className="merge border border-gray-300 p-4 rounded-sm">
               <Pricing/>
+              {isNumber(productPrice) && isNumber(productDiscount) ? '' : (<><p className='text-red-600 font-abc'>Please Input an number</p></>)}
             </div>
 
             <div className='mt-3 flex justify-between pb-3'>
               <Button className='rounded-lg font-bold font-abc px-4 py-1 border border-gray-400' onClick={()=> handleStatusChange('Unpublished', 'discard')}>Discard</Button>
               <div className="Save flex gap-2">
                 <Button className='rounded-lg font-bold font-abc bg-gray-200 px-4 py-1 text-blue-600' onClick={()=> setSchedule(true)}>Schedule</Button>
-                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white' onClick={()=> handleStatusChange('Published', 'publish')}>Publish</Button>
+                <Button className='rounded-lg font-bold font-abc px-4 py-1 bg-blue-600 text-white'  onClick={() => handleStatusChange('Published', 'publish')}>Publish</Button>
               </div>
             </div>
           </div>

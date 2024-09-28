@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 import { Product } from '../../types/types'
 import { useData } from '../../hooks/ReusableHooks'
 import axios from 'axios'
+import { hourglass } from 'ldrs'
 
 interface Products {
     ProductLists: Product[];
@@ -49,6 +50,12 @@ function Manage() {
   Draft: name === "Draft" ? value : null
   });
   }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      hourglass.register()
+    }
+  }, []);
 
   const { isLoading, error, data: products } = useQuery<Products | null>({
   queryKey: ['ProductLists'],
@@ -90,8 +97,15 @@ function Manage() {
   if (isLoading) {
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 xl:ml-48 border-gray-900"></div>
+      <div className="flex items-center justify-center min-h-screen bg-gray-300">
+        <div className='xl:ml-48'>
+            <l-hourglass
+              size="70"
+              bg-opacity="0.1"
+              speed="1.75" 
+              color="black" 
+            ></l-hourglass>
+        </div>
       </div>
     </> 
   )

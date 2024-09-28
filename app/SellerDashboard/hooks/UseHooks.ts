@@ -25,7 +25,6 @@ interface ProductInfo {
     productSize: productSize;
     productPrice: string;
     productDiscount: string;
-    message: string;
 
     // Methods to update the state
     setProductName: (productName: string) => void;
@@ -40,7 +39,6 @@ interface ProductInfo {
     setProductSize: (key: keyof productSize, value: string) => void;
     setProductPrice: (productPrice: string) => void;
     setProductDiscount: (productDiscount: string) => void;
-    setMessage: (message: string) => void;
 }
 
 // Properly typed Zustand store
@@ -65,7 +63,6 @@ export const UseProductStore = create<ProductInfo>((set) => ({
     },
     productPrice: '',
     productDiscount: '',
-    message: '',
 
     // Methods to update state
     setProductName: (productName: string) => set(() => ({ productName })),
@@ -89,7 +86,6 @@ export const UseProductStore = create<ProductInfo>((set) => ({
         },
     })),
     setProductPrice: (price: string) => set(() => ({ productPrice: price })),
-    setProductDiscount: (discount: string) => set(() => ({ productDiscount: discount })),
-    setMessage: (message: string) => set(() => ({ message })),
+    setProductDiscount: (discount: string) => set(() => ({ productDiscount: discount }))
 }));
 
