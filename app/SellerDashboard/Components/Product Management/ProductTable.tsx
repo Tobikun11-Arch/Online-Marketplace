@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Product } from '../../types/types';
 import {
@@ -18,10 +18,15 @@ interface Products {
 
 export default function ProductTable() {
     const { dataPass } = useData()
+    const [ productSelected, setSelect ] = useState<Product | null>(null)
     const { searchField, selected } = useSearch()
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selected.InStock, selected.OverallStorage, searchField]);
 
     const filteredAndSortedProducts = dataPass?.filter((product) => {
     const productName = product.productName.toLowerCase();
@@ -61,6 +66,11 @@ export default function ProductTable() {
         setCurrentPage(pageNumber);
     };
 
+    const handleDetails = (product: Product) => {
+        setSelect(product)
+    }
+
+    console.log("Products: ", productSelected)
 
     return (
         <>
@@ -86,7 +96,7 @@ export default function ProductTable() {
                             <td className="pl-4 pr-16 py-2 cursor-default font-abc font-bold text-sm text-gray-800">₱{product.productPrice}</td>
                             <td className="pl-4 pr-10 cursor-default font-abc font-bold text-sm text-gray-800">{product.productQuantity < '20' ? 'Out of stock' : 'In stock'}</td>
                             <td className="px-4 py-2 cursor-default font-abc font-bold text-sm text-gray-800">{product.productStatus}</td>
-                            <td className="px-4 py-2 cursor-default font-abc font-bold text-gray-500 text-sm">{product.productStatus === 'Published' ? 'View Analystics' : 'Edit Listing'}</td>
+                            <td className="px-4 py-2 cursor-default font-abc font-bold text-gray-500 text-sm" onClick={()=> handleDetails(product)}>{product.productStatus === 'Published' ? 'View Analystics' : 'Edit Listing'}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -5,7 +5,6 @@ import { useData } from '../../hooks/ReusableHooks'
 
 export default function HomePage() {
 
-  const { dataPass } = useData()
 
   return (
     <>
