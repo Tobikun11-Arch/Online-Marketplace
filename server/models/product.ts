@@ -26,6 +26,7 @@ export interface IProducts extends Document {
     TimePublish: string;
     DatePublish: string;
   },
+  Featured: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -47,7 +48,7 @@ const productSchema = new mongoose.Schema<IProducts>(
       width: { type: String, required: true }
     },
     productPrice: { type: String, required: true },
-    productDiscount: { type: String, required: true },
+    productDiscount: { type: String, required: false },
     productWeight: {
         Weight: { type: String, required: true },
         WeightIndicator: { type: String, required: false },
@@ -57,6 +58,7 @@ const productSchema = new mongoose.Schema<IProducts>(
       TimePublish: { type: String, required: false },
       DatePublish: { type: String, required: false }
     },
+    Featured: { type: String, required: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   },

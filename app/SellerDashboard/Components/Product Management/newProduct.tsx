@@ -1,6 +1,6 @@
 "use client"
-import React, {useEffect} from 'react'
-import {ChevronLeft, Divide} from 'lucide-react'
+import React, {useEffect, useState} from 'react'
+import {ChevronLeft, CircleHelp, Star} from 'lucide-react'
 import Input from '../../NewProduct/Prototype/Input'
 import TextArea from '../../NewProduct/Prototype/TextArea'
 import Category from '../Common/Category'
@@ -30,6 +30,7 @@ export default function NewProduct() {
 
   const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
   const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()
+  const [ featured, setFeature ] = useState<boolean>(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -50,13 +51,12 @@ export default function NewProduct() {
       !productSize.breadth       || !isNumber(productSize.breadth) ||
       !productSize.width         || !isNumber(productSize.width) ||
       !productWeight.Weight      || !isNumber(productWeight.Weight) ||
-      !productPrice              || !isNumber(productPrice) ||
-      !productDiscount           || !isNumber(productDiscount) ||
+      !productPrice              || !isNumber(productPrice)       
+      || !isNumber(productDiscount) ||
       productImages.length <= 2 
     ) {
     // If validation fails, log the error
     setError(true)
-   console.log("Failed to publish: One or more fields are invalid or empty.")
     return;
   } 
   
@@ -99,7 +99,6 @@ export default function NewProduct() {
 
           if (status === 'Scheduled') {
             if (!TimeSchedule || !DateSchedule) {
-              console.log("no sched")
               setLoadingSchedule(false)
               return;
             }
@@ -123,7 +122,8 @@ export default function NewProduct() {
             productWeight, 
             images: cloudinaryUrls, 
             status: status,
-            ScheduleDate: ScheduleData || undefined
+            ScheduleDate: ScheduleData || undefined,
+            Featured: featured ? 'Featured' : 'not feature'
           };
 
           await ProductApi.post('', productData, {
@@ -317,7 +317,17 @@ export default function NewProduct() {
           </div>
 
           <div className='parent2 bg-white pt-3 px-2 md:w-2/4'>
-            <h1 className='font-bold pb-1'>Product Images</h1>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-1 pb-1">
+                <h1 className='font-bold'>Product Images</h1>
+                <CircleHelp size={15} color='gray'/>
+              </div>
+              <Star
+              onClick={()=> setFeature(prev => !prev)}
+              fill={featured ? 'yellow' : 'transparent'}
+              size={20}
+              />
+            </div>
             <div className="merge border border-gray-300 p-4 rounded-sm">
               <ProductImages/>
               {isError ? 

@@ -2,8 +2,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
 import OverallStorage from './OverallStorage'
 import InStock from './InStock'
-import OutofStock from './OutofStock'
-import Draft from './Draft'
 import ProductTable from './ProductTable'
 import {productList} from '../../axios/axios'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
@@ -16,12 +14,10 @@ interface Products {
     ProductLists: Product[];
   }
 
-interface Select {
-  OverallStorage: string;
-  InStock: string;
-  OutofStock: string;
-  Draft: string;
-}
+  interface Select {
+    OverallStorage: string;
+    InStock: string;
+  }
 
 const queryClient = new QueryClient()
 export default function ManageProducts() {
@@ -38,17 +34,13 @@ function Manage() {
 
   const [Selected, setSelect] = useState<Select>({
     OverallStorage: '',
-    InStock: '',
-    OutofStock: '', 
-    Draft: '',  
+    InStock: ''
   })
 
   const handleSelectChange = (name: keyof Select, value: string) => {
   setSelect({
   OverallStorage: name === "OverallStorage" ? value : '',
-  InStock: name === "InStock" ? value : '',
-  OutofStock: name === "OutofStock" ? value : '',
-  Draft: name === "Draft" ? value : ''
+  InStock: name === "InStock" ? value : ''
   });
   }
 
@@ -99,9 +91,7 @@ function Manage() {
   useEffect(() => {
     setSelected({
       OverallStorage: Selected.OverallStorage,
-      InStock: Selected.InStock,
-      OutofStock: Selected.OutofStock,
-      Draft: Selected.Draft
+      InStock: Selected.InStock
     });
   }, [Selected, setSelected]);
 
@@ -153,18 +143,6 @@ function Manage() {
     className="select text-black font-abc font-bold bg-white mt-3" 
     onChange={(e)=> handleSelectChange("InStock", e.target.value)}
     value={Selected.InStock || ''}
-    />
-
-    <OutofStock
-    className="select text-black font-abc font-bold bg-white mt-3" 
-    onChange={(e)=> handleSelectChange("OutofStock", e.target.value)}
-    value={Selected.OutofStock || ''}
-    />
-
-    <Draft
-    className="select font-abc font-bold text-black bg-white mt-3" 
-    onChange={(e)=> handleSelectChange("Draft", e.target.value)}
-    value={Selected.Draft || ''}
     />
     </div>
 

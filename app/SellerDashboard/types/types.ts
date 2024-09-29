@@ -7,4 +7,5 @@ export interface Product {
     productQuantity: string;
     createdAt: Date;
     productDiscount: string;
+    Featured: string;
 }

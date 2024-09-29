@@ -57,8 +57,6 @@ export const useData = create<dataProps>((set) => ({
 interface Select {
     OverallStorage: string;
     InStock: string;
-    OutofStock: string;
-    Draft: string;
   }
 interface searchProps {
     searchField: string;
@@ -72,8 +70,6 @@ interface searchProps {
     selected: {
       OverallStorage: '',
       InStock: '',
-      OutofStock: '',
-      Draft: '',
     },
     setSelected: (selected: Select) => set(() => ({ selected })),
     setSearchField: (searchField: string) => set(() => ({ searchField }))

@@ -23,19 +23,39 @@ export default function ProductTable() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
 
-    const filteredProducts = dataPass?.filter((product) => {
-        const productName = product.productName.toLowerCase();
-        const productStatus = product.productStatus.toLowerCase();
-        const searchTerm = searchField.toLowerCase();
-        return productName.includes(searchTerm) || productStatus.startsWith(searchTerm); 
-    });
+    const filteredAndSortedProducts = dataPass?.filter((product) => {
+    const productName = product.productName.toLowerCase();
+    const productStatus = product.productStatus.toLowerCase();
+    const productDiscounted = product.productDiscount > '0'
+    const productFeatured = product.Featured === 'Featured'
+    
+    if(selected.InStock === 'Discounted items') {
+        return productDiscounted
+    }
+
+    if(selected.InStock === 'Featured products') {
+        return productFeatured
+    }
+
+    const searchTerm = searchField.toLowerCase();
+    return productName.includes(searchTerm) || productStatus.startsWith(searchTerm); 
+  })?.sort((a, b) => {
+    if(selected.InStock === 'Price range'){
+        return (a.productPrice) - (b.productPrice)
+    }
+    if (selected.OverallStorage === 'Oldest') {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    } else {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    }
+  });
 
     // Pagination Logic
-    const totalProducts = dataPass?.length || 0;
+    const totalProducts = filteredAndSortedProducts?.length || 0;
     const totalPages = Math.ceil(totalProducts / itemsPerPage);
     const indexOfLastProduct = currentPage * itemsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-    const currentProducts = filteredProducts?.slice(indexOfFirstProduct, indexOfLastProduct);
+    const currentProducts = filteredAndSortedProducts?.slice(indexOfFirstProduct, indexOfLastProduct);
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
