@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Product } from '../../types/types';
 import {
     Pagination,
@@ -10,7 +9,8 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '../../../../@/components/ui/pagination';
-import { useData, useSearch } from '../../hooks/ReusableHooks';
+import { useData, useSearch, useSelectedProducts } from '../../hooks/ReusableHooks';
+import ProductDetails from './ProductDetails';
 
 interface Products {
     ProductLists: Product[];
@@ -18,7 +18,7 @@ interface Products {
 
 export default function ProductTable() {
     const { dataPass } = useData()
-    const [ productSelected, setSelect ] = useState<Product | null>(null)
+    const { setSelect, setModalOpen } = useSelectedProducts()
     const { searchField, selected } = useSearch()
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -68,9 +68,8 @@ export default function ProductTable() {
 
     const handleDetails = (product: Product) => {
         setSelect(product)
+        setModalOpen(true)
     }
-
-    console.log("Products: ", productSelected)
 
     return (
         <>
@@ -102,6 +101,8 @@ export default function ProductTable() {
                 </tbody>
             </table>
         </div>
+
+        <ProductDetails/>
 
             {/* Pagination Component */}
             {totalProducts > itemsPerPage && (

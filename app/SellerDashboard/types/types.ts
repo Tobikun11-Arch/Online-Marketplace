@@ -8,4 +8,6 @@ export interface Product {
     createdAt: Date;
     productDiscount: string;
     Featured: string;
+    productQuality: string;
+    productCategory: string | null;
 }

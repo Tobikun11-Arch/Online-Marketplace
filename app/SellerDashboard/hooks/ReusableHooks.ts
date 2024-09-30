@@ -1,5 +1,6 @@
 import {create} from 'zustand'
 import { Product } from '../types/types'
+import { BooleanExpression } from 'mongoose';
 
 interface loadingProps {
     isLoadingPublish: boolean;
@@ -74,3 +75,17 @@ interface searchProps {
     setSelected: (selected: Select) => set(() => ({ selected })),
     setSearchField: (searchField: string) => set(() => ({ searchField }))
   }));
+
+  interface SelectedProps {
+    productSelected: Product | null;
+    isModalOpen: boolean;
+    setSelect: (productSelected: Product | null)  => void;
+    setModalOpen: (isModalOpen: boolean)  => void;
+  }
+
+  export const useSelectedProducts = create<SelectedProps>((set)=> ({
+    productSelected: null,
+    isModalOpen: false,
+    setSelect: (productSelected: Product | null) => set(() => ({ productSelected })),
+    setModalOpen: (isModalOpen: boolean) => set(() => ({ isModalOpen }))
+  }))
