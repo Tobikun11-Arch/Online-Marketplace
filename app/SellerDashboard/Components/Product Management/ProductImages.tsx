@@ -64,7 +64,7 @@ export default function ProductImages() {
                 </div>
 
                 <div className='h-36 w-2/4 bg-gray-300'
-                style={{ background: previewImages[0] ? `url(${previewImages[0]}) center / cover no-repeat` : '' }}
+                style={{ background: previewImages[0] ? `url(${previewImages[0]}) center center / contain no-repeat` : '' }}
                 onClick={()=> handleView(0)}
                 >
                     {previewImages[0] && viewIndex === 0 ? (
@@ -97,7 +97,7 @@ export default function ProductImages() {
 
             <div className='box2 flex gap-3 pt-3'>
                 <div className='h-36 w-2/4 bg-gray-300'
-                style={{ background: previewImages[1] ? `url(${previewImages[1]}) center / cover no-repeat` : '' }}
+                style={{ background: previewImages[1] ? `url(${previewImages[1]}) center center / contain no-repeat` : '' }}
                 onClick={()=> handleView(1)}
                 >
                     {previewImages[1] && viewIndex === 1 ? (
@@ -113,7 +113,7 @@ export default function ProductImages() {
                             </div>
 
                             <div className="z-10 flex flex-col items-center space-y-2">
-                                <Button className='py-1 px-6 rounded-lg text-sm font-medium bg-white text-black' onClick={() => previewImage(urlImage[1])}>View</Button>
+                                <Button className='py-1 px-6 rounded-lg text-sm font-medium bg-white text-black' onClick={() => previewImage(urlImage[1])}>Preview</Button>
                                 <Button className='py-1 px-3 rounded-lg text-sm font-medium bg-white text-black' onClick={(e) => {
                                 e.stopPropagation();
                                 setView(null);
@@ -127,7 +127,7 @@ export default function ProductImages() {
                 </div>
 
                 <div className='h-36 w-2/4 bg-gray-300'
-                style={{ background: previewImages[2] ? `url(${previewImages[2]}) center / cover no-repeat` : '' }}
+                style={{ background: previewImages[2] ? `url(${previewImages[2]}) center center / contain no-repeat` : '' }}
                 onClick={()=> handleView(2)}
                 >
                     {previewImages[2] && viewIndex === 2 ? (
@@ -143,7 +143,7 @@ export default function ProductImages() {
                             </div>
 
                             <div className="z-10 flex flex-col items-center space-y-2">
-                                <Button className='py-1 px-6 rounded-lg text-sm font-medium bg-white text-black' onClick={() => previewImage(urlImage[2])}>View</Button>
+                                <Button className='py-1 px-6 rounded-lg text-sm font-medium bg-white text-black' onClick={() => previewImage(urlImage[2])}>Preview</Button>
                                 <Button className='py-1 px-3 rounded-lg text-sm font-medium bg-white text-black' onClick={(e) => {
                                 e.stopPropagation();
                                 setView(null);
