@@ -9,9 +9,7 @@ const sendMail = require('../services/sendMail');
 dotenv.config();
 
 interface RequestWithUser extends Request {
-    
-    user?: any;
-
+  user?: any;
 }
 
 
@@ -19,39 +17,34 @@ export const Register = async (req: Request, res: Response) => {
   const { FirstName, LastName, Email, Password, Role } = req.body;
 
 if (!Email || !Password) {
-    return res.status(400).json({ error: 'Email and Password are required' });
+  return res.status(400).json({ error: 'Email and Password are required' });
 }
 
 const lowerCaseEmail = Email.toLowerCase();
 
   try {
-
       const HashPassword = await bcrypt.hash(Password, 10);
       const emailToken = crypto.randomBytes(64).toString('hex');
       const newUser = new User({ FirstName, LastName, Email: lowerCaseEmail, Password: HashPassword, Role, emailToken });
       await sendMail(lowerCaseEmail, emailToken)
       await newUser.save();
       res.status(201).json();
-
   }
-  
-  catch (error) {
 
+  catch (error) {
       console.error('Error registering user:', error);
       res.status(500).json({ message: 'Registration failed' });
-
   }
 };
-
 
 
 export const Login = async (req: Request, res: Response) => {
   const { Email, Password } = req.body;
 
-  if (!Email || !Password) {
-    return res.status(400).json({ error: 'Email and Password are required' });
+if (!Email || !Password) {
+  return res.status(400).json({ error: 'Email and Password are required' });
 }
-    
+
   try {
 
     const user = await User.findOne({ Email: Email.toLowerCase() });

@@ -10,4 +10,10 @@ export interface Product {
     Featured: string;
     productQuality: string;
     productCategory: string | null;
+    productSize: {
+        length: string;
+        breadth: string;
+        width: string;
+    }
+    productDescription: string;
 }

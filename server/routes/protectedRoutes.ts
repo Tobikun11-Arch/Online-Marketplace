@@ -111,7 +111,9 @@ protectedroute.get('/productList', async (req: RequestWithUser, res: Response) =
         productDiscount: list.productDiscount,
         Featured: list.Featured,
         productQuality: list.productQuality,
-        productCategory: list.productCategory
+        productCategory: list.productCategory,
+        productSize: list.productSize,
+        productDescription: list.productDescription
       }));
   
       res.json({ ProductLists });

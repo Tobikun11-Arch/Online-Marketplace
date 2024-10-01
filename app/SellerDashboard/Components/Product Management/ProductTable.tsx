@@ -10,7 +10,7 @@ import {
     PaginationPrevious,
 } from '../../../../@/components/ui/pagination';
 import { useData, useSearch, useSelectedProducts } from '../../hooks/ReusableHooks';
-import ProductDetails from './ProductDetails';
+import ProductDetails from '../Product Details/ProductDetails';
 
 interface Products {
     ProductLists: Product[];
