@@ -26,6 +26,38 @@ export default function ProductImages() {
         }
     };
 
+    //Remove bg integration
+    // const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files) {
+    //         const filesArray = Array.from(e.target.files); // Convert FileList to array
+    // const newImagePreviews: string[] = [];
+
+    //     for (const file of filesArray) {
+    //     const formData = new FormData();
+    //     formData.append('image_file', file);
+
+    //     try {
+    //         const response = await Remove_Bg.post('', formData, {
+    //             headers: {
+    //             'X-Api-Key': process.env.NEXT_PUBLIC_REMOVEBGAPI, 
+    //             'Content-Type': 'multipart/form-data',
+    //             },
+    //             responseType: 'blob', 
+    //         });
+
+    //         const newImageUrl = URL.createObjectURL(response.data);
+    //         newImagePreviews.push(newImageUrl);
+    //     } catch (error) {
+    //         console.error('Error removing background:', error);
+    //     }
+    // }
+
+    // // Append the new images to the existing ones
+    // setProductImages([...productImages, ...filesArray]);
+    // setPreviewImages([...previewImages, ...newImagePreviews]);
+    //     }
+    // };
+
     const removeImage = (index: number) => {
         const updatedImages = productImages.filter((_, i) => i !== index);
         setProductImages(updatedImages);

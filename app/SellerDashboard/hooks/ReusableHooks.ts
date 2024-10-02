@@ -1,6 +1,5 @@
 import {create} from 'zustand'
 import { Product } from '../types/types'
-import { BooleanExpression } from 'mongoose';
 
 interface loadingProps {
     isLoadingPublish: boolean;

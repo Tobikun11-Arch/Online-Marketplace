@@ -24,3 +24,9 @@ if(!productList_api) {
 export const productList = axios.create({
     baseURL: productList_api
 })
+
+
+const Remove_Api = process.env.NEXT_PUBLIC_REMOVEBG
+export const Remove_Bg = axios.create({
+  baseURL: Remove_Api
+})
