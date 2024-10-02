@@ -4,7 +4,7 @@ import { ChevronRight, ArrowRight } from "lucide-react"
 import Link from 'next/link'
 import { useSelectedProducts } from '../hooks/ReusableHooks'
 
-export default function page() {
+export default function Page() {
     const { productSelected } = useSelectedProducts()
 
     return (
