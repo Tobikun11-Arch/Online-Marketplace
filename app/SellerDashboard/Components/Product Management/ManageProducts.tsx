@@ -125,7 +125,7 @@ function Manage() {
 
   return (
   <>
-  <div className='w-full min-h-screen items-start px-2 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center'>
+  <div className='w-full min-h-screen items-start px-2 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center cursor-default'>
     <div className="flex flex-col w-full justify-start">
     <h1 className='mt-14 text-2xl font-bold xl:mt-7'>Manage Products</h1>
     <p className='text-xs font-medium'>You have {productLength} products in your catalog.</p>

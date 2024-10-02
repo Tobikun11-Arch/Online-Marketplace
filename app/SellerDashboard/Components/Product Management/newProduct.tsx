@@ -22,11 +22,12 @@ export default function NewProduct() {
   const { 
     productName, productDescription, productCategory, productQuality, 
     productQuantity, Sku, productSize, productPrice, productDiscount, 
-    productWeight, productImages, previewImages, setPreviewImages, 
+    productWeight, productImages, setPreviewImages, 
     setProductImages, setProductName, setProductDescription, setProductCategory, 
     setProductQuality, setProductQuantity, setSku, setProductWeight, 
     setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
+
 
   const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
   const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()

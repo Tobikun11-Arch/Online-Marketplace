@@ -33,15 +33,15 @@ export default function Ratings() {
                     <Star strokeWidth={1} size={17} fill='gray'/>
                     <Star strokeWidth={1} size={17} fill='gray'/>
                     <Star strokeWidth={1} size={17} fill='gray'/>
-                    <p className='pl-1 mt-0.5 text-sm font-normal'>{Rating_Review}</p>
+                    <p className='pl-1 mt-0.5 text-sm font-normal'>{productSelected?.productStatus === 'Published' ? Rating_Review : ''}</p>
                 </div>
 
-                <p className='text-sm font-normal mt-0.5'>{Total_Review} Reviews</p>
+                <p className='text-sm font-normal mt-0.5'>{productSelected?.productStatus === 'Published' ? `${Total_Review} Reviews` : ''}</p>
             </div>
 
             <div className="flex gap-2 items-center mt-1">
-                <p className='bg-gray-200 rounded-sm py-1 px-3 text-sm font-medium font-abc'>{Sold_Product} Sold</p>
-                <p className='bg-gray-200 rounded-sm py-1 px-3 text-sm font-medium font-abc'>{Product_Remaining} Remaining</p>
+                <p className='bg-gray-200 rounded-sm py-1 px-3 text-sm font-medium font-abc'>{productSelected?.productStatus === 'Published' ? `${Sold_Product} Sold` : ''}</p>
+                <p className='bg-gray-200 rounded-sm py-1 px-3 text-sm font-medium font-abc'>{productSelected?.productStatus === 'Published' ? `${Product_Remaining} Remaining` : ''}</p>
             </div>
         </>
     )

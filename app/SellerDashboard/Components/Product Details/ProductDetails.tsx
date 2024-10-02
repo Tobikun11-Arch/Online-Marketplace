@@ -5,9 +5,10 @@ import ProductImages from './ProductImages'
 import Size from './Size'
 import Button from '../Common/Button'
 import { Eye, PencilLine, X } from "lucide-react"
+import Link from 'next/link'
 
 export default function ProductDetails() {
-    const { isModalOpen, setModalOpen } = useSelectedProducts()
+    const { isModalOpen, setModalOpen, productSelected } = useSelectedProducts()
 
 return (
     <>
@@ -17,7 +18,7 @@ return (
                 <div className="bg-white rounded-md w-11/12 h-3/4 sm:h-auto overflow-y-auto overflow-x-hidden max-w-lg min-h-3/6 text-black border border-gray-400 pb-5">
                     <div className='px-5 pt-3 '>
                         <div className="flex justify-between items-center">
-                            <h1 className='font-bold font-abc text-xl'>Product detail</h1>
+                            <h1 className='font-bold font-abc text-xl text-gray-400'>Product detail</h1>
                             <X
                             onClick={()=> setModalOpen(false)}
                             />
@@ -27,15 +28,24 @@ return (
                         <Size/>
 
                         <div className="flex flex-wrap justify-center items-center gap-3 mt-4">
-                            <div className="flex gap-2 items-center justify-center w-full sm:w-auto bg-white border py-2.5 px-8 rounded-md">
-                                <Eye strokeWidth={1} size={18}/>
-                                <Button className='text-sm font-semibold'>Customer View</Button>
-                            </div>
+                            <Link href={'/SellerDashboard/NewProduct'}
+                                onClick={(e) => {
+                                    if(productSelected?.productStatus !== 'Published') {
+                                        e.preventDefault()
+                                    }
+                                }}>
+                                <div className={`flex gap-2 items-center justify-center w-full sm:w-auto bg-white border py-2.5 px-8 rounded-md ${productSelected?.productStatus === 'Published' ? 'cursor-default' : 'cursor-not-allowed'}`}>
+                                    <Eye strokeWidth={1} size={18} className={`${productSelected?.productStatus === 'Published' ? 'cursor-default' : 'cursor-not-allowed'}`}/>
+                                    <Button className={`text-sm font-semibold ${productSelected?.productStatus === 'Published' ? 'cursor-default' : 'cursor-not-allowed'}`}>Customer View</Button>
+                                </div>
+                            </Link>
 
-                            <div className="flex gap-2 items-center w-full justify-center sm:w-auto bg-gray-200 py-2.5 px-8 rounded-md ">
-                                <PencilLine strokeWidth={1} size={18}/>
-                                <Button className='text-sm font-semibold'>Edit Product</Button>
-                            </div>
+                            <Link href={'/SellerDashboard/NewProduct'}>
+                                <div className="flex gap-2 items-center w-full justify-center sm:w-auto bg-gray-200 py-2.5 px-8 rounded-md ">
+                                    <PencilLine strokeWidth={1} size={18}/>
+                                    <Button className='text-sm font-semibold'>Edit Product</Button>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

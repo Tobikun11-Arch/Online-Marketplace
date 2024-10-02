@@ -74,7 +74,7 @@ export default function ProductTable() {
     return (
         <>
         <div className="w-full overflow-x-auto mt-2 border rounded-md">
-            <table className="min-w-full table-auto border-collapse rounded-lg">
+            <table className="min-w-full table-auto border-collapse rounded-lg cursor-default">
                 <thead className="bg-white">
                     <tr>
                         <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Product</th>
