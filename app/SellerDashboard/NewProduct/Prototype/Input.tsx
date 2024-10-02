@@ -1,13 +1,13 @@
 interface InputProps {
-    className: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    type: string;
-    id: string;
-    accept: string;
-    style: React.CSSProperties;
-    required: boolean | undefined;
-    placeholder: string;
-    value: string | string[];
+    className?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    type?: string;
+    id?: string;
+    accept?: string;
+    style?: React.CSSProperties;
+    required?: boolean | undefined;
+    placeholder?: string;
+    value?: string | string[];
     pattern?: string;
     title?: string;
 }

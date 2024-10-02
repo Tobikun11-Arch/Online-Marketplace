@@ -1,10 +1,11 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ChevronRight, ArrowRight } from "lucide-react"
 import Link from 'next/link'
 import { useSelectedProducts } from '../hooks/ReusableHooks'
 import Edit_ProductImages from './Edit_ProductImages'
 import { useRouter } from 'next/navigation'
+import Edit_ProductInformation from './Edit_ProductInformation'
 
 export default function Page() {
     const { productSelected } = useSelectedProducts()
@@ -35,6 +36,7 @@ export default function Page() {
 
             <div className='w-full bg-white mt-2'>
                 <Edit_ProductImages/>
+                <Edit_ProductInformation/>
             </div>
 
         </div>
