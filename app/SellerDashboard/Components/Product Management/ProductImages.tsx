@@ -148,7 +148,10 @@ export default function ProductImages() {
                 )}
 
                 <div className='h-36 w-2/4 bg-gray-300'
-                style={{ background: previewImages[0] ? `url(${previewImages[0]}) center center / contain no-repeat` : '' }}
+                style={{ background: previewImages[0] ? `url(${previewImages[0]}) center center / contain no-repeat` : '',
+                height: '144px', // Height should match the height of your gray box
+                width: '50%', 
+                }}
                 onClick={()=> handleView(0)}
                 >
                     {previewImages[0] && viewIndex === 0 ? (

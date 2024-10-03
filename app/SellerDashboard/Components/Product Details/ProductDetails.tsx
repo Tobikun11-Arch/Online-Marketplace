@@ -15,8 +15,8 @@ return (
         {isModalOpen ? 
         (<>
             <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 z-50 px-5 sm:px-0 cursor-default">
-                <div className="bg-white rounded-md w-11/12 h-3/4 sm:h-auto overflow-y-auto overflow-x-hidden max-w-lg min-h-3/6 text-black border border-gray-400 pb-5">
-                    <div className='px-5 pt-3 '>
+                <div className="bg-white rounded-md w-auto h-auto sm:h-auto overflow-y-auto overflow-x-hidden max-w-lg min-h-3/6 text-black border border-gray-400 pb-5">
+                    <div className='px-3 pt-3 '>
                         <div className="flex justify-between items-center">
                             <h1 className='font-bold font-abc text-xl text-gray-400'>Product detail</h1>
                             <X

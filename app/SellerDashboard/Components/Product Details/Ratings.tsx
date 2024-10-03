@@ -21,12 +21,12 @@ export default function Ratings() {
 
     return (
         <>
-            <div className="flex justify-between text-base font-semibold mt-3">
+            <div className="flex justify-between text-base font-semibold mt-1">
                 <p>{productSelected?.productName}</p>
                 <p>${Final_Price}</p>    
             </div>      
 
-            <div className="flex gap-2 items-center mt-1">
+            <div className="flex gap-2 items-center justify-between mt-1">
                 <div className="flex items-center">
                     <Star strokeWidth={1} size={17} fill='gray'/>
                     <Star strokeWidth={1} size={17} fill='gray'/>
