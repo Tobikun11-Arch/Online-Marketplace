@@ -17,12 +17,24 @@ export default function ProductImages() {
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            const filesArray = Array.from(e.target.files); // convert FileList to array
-            const newImagePreviews = filesArray.map((file) => URL.createObjectURL(file));
+            const filesArray = Array.from(e.target.files); 
+            const newImagePreviews = filesArray.map((file) => {
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+                
+                img.onload = () => {
+                    if (img.width === 1380 && img.height === 1500) {
+                        // Only add images with the specific or correct size
+                        setProductImages([...productImages, file]);
+                        setPreviewImages([...previewImages, img.src]);
+                    } 
 
-            // Append the new images to the existing ones
-            setProductImages([...productImages, ...filesArray]);
-            setPreviewImages([...previewImages, ...newImagePreviews]);
+                    else {
+                        alert('Image must be 1380x1500 pixels.');
+                    }
+                };
+                return img.src;
+            });
         }
     };
 
