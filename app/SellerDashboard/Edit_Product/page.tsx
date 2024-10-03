@@ -34,7 +34,7 @@ export default function Page() {
                 </div>
             </div>
 
-            <div className='w-full bg-white mt-2'>
+            <div className='w-full bg-white mt-2 sm:flex'>
                 <Edit_ProductImages/>
                 <Edit_ProductInformation/>
             </div>

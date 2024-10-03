@@ -8,7 +8,7 @@ export default function Edit_ProductImages() {
     return (
     <>
         <div className='w-full flex gap-1'>
-        <div className="h-52 w-full xl:w-full bg-cover bg-center p-2">
+        <div className="h-52 w-full xl:w-full bg-cover bg-center py-2">
                 {productSelected?.images[0] ? (
                     <div
                     style={{

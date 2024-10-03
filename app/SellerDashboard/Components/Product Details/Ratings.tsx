@@ -11,7 +11,7 @@ export default function Ratings() {
     const Product_Remaining = 233
     const Prod_Price = productSelected?.productPrice ? parseInt(productSelected?.productPrice.toString(), 10) : 0
     const Disc_Price = productSelected?.productDiscount ? parseInt(productSelected?.productDiscount.toString(), 10) : 0
-    const Final_Price = Prod_Price * Disc_Price
+    const Final_Price = Prod_Price - Disc_Price
 
 //Total Points=(200×5)+(200×4)+(100×3)+(0×2)+(0×1)=1000+800+300+0+0=2100
 
