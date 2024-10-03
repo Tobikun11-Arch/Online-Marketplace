@@ -4,6 +4,8 @@ import {Images, X} from 'lucide-react'
 import { UseProductStore } from '../../hooks/UseHooks'
 import Input from '../../NewProduct/Prototype/Input'
 import Button from '../Common/Button'
+import Cropper from 'react-easy-crop'
+import { getCroppedImg } from './CropUtils' 
 
 export default function ProductImages() {
     const {
@@ -14,6 +16,25 @@ export default function ProductImages() {
     } = UseProductStore()
 
     const [viewIndex, setView] = useState<number | null>(null)
+    const [croppingImage, setCroppingImage] = useState<string | null>(null); //to crop
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+    const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    };
+
+    const handleCrop = async () => {
+        if (croppingImage && croppedAreaPixels) {
+            const croppedImage = await getCroppedImg(croppingImage, croppedAreaPixels);
+            const croppedFile = new File([croppedImage], 'croppedImage.jpg', { type: 'image/jpeg' });
+        
+            setProductImages([...productImages, croppedFile]);
+            setPreviewImages([...previewImages, URL.createObjectURL(croppedFile)]);
+            setCroppingImage(null); // close cropping modal
+        }
+    };
 
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -30,7 +51,7 @@ export default function ProductImages() {
                     } 
 
                     else {
-                        alert('Image must be 1380x1500 pixels.');
+                        setCroppingImage(img.src); 
                     }
                 };
                 return img.src;
@@ -106,6 +127,25 @@ export default function ProductImages() {
                 <Images />
                 <p className='text-xs cursor-default'>Browse Images</p>
                 </div>
+
+                {croppingImage && (
+                    <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 z-50 px-5 sm:px-0">
+                        <div className="crop-container relative" style={{ width: '460px', height: '500px' }}> 
+                            <Cropper
+                                image={croppingImage}
+                                crop={crop}
+                                zoom={zoom}
+                                aspect={1380 / 1500} // Maintains a fixed aspect ratio
+                                onCropChange={setCrop}
+                                onZoomChange={setZoom}
+                                onCropComplete={onCropComplete}
+                            />
+                            <Button className="absolute bottom-4 right-4 z-10 bg-blue-500 text-white px-4 py-2 rounded-md shadow-lg" onClick={handleCrop}>
+                                    Crop & Upload
+                            </Button> 
+                        </div>
+                    </div>
+                )}
 
                 <div className='h-36 w-2/4 bg-gray-300'
                 style={{ background: previewImages[0] ? `url(${previewImages[0]}) center center / contain no-repeat` : '' }}
