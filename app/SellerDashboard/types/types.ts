@@ -16,4 +16,9 @@ export interface Product {
         width: string;
     }
     productDescription: string;
+    Sku: string;
+    productweight: {
+        Weight: string;
+        WeightIndicator: string;
+    }
 }

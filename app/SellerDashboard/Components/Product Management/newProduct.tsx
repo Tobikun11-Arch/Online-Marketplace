@@ -28,7 +28,6 @@ export default function NewProduct() {
     setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
 
-
   const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
   const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()
   const [ featured, setFeature ] = useState<boolean>(false)
