@@ -27,11 +27,6 @@ export default function Page() {
                     <ChevronRight size={20} color='gray'/>
                     <h1 className='text-xs'>Edit Product</h1>
                 </div>
-
-                <div className='flex bg-[#2FCC73] pl-5 py-2 rounded-3xl items-center gap-6 pr-3'>
-                    <h1 className='text-white text-xs'>{product !== 'Published' ? '' : 'Save'}</h1>
-                    <ArrowRight size={16} color='white'/>
-                </div>
             </div>
 
             <div className='w-full bg-white mt-2 sm:flex'>

@@ -21,6 +21,7 @@ export default function Edit_ProductInformation() {
     const Prod_Price = productSelected?.productPrice ? parseInt(productSelected?.productPrice.toString(), 10) : 0
     const Disc_Price = productSelected?.productDiscount ? parseInt(productSelected?.productDiscount.toString(), 10) : 0
     const Final_Price = Prod_Price - Disc_Price
+    const product = productSelected?.productStatus
 
     return (
     <>
@@ -162,10 +163,11 @@ export default function Edit_ProductInformation() {
             <textarea
                 onChange={(e) => setDescription(e.target.value)}
                 name=''
-                id=''
                 className='w-full bg-white h-36 rounded-lg mt-2 outline-none resize-none border border-gray-300 p-2'
                 value={productDescription}
                 />
+
+                <h1 className='text-black mt-2 bg-blue-900'>{product !== 'Published' ? 'Publish' : 'Save'}</h1>
             </div>
 
         </div>

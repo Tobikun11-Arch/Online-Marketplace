@@ -30,7 +30,6 @@ connectToMongoDB()
         process.exit(1); // Exit if the connection fails
     });
 
-
 app.use('/api/users', UserRoutes);
 app.use('/api', ProtectedRoutes);
 app.use('/', verificationRoutes); 
