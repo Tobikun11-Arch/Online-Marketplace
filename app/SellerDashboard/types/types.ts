@@ -21,4 +21,5 @@ export interface Product {
         Weight: string;
         WeightIndicator: string;
     }
+    productId: string;
 }

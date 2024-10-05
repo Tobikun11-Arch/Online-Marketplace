@@ -23,6 +23,139 @@ export default function Edit_ProductInformation() {
     const Final_Price = Prod_Price - Disc_Price
     const product = productSelected?.productStatus
 
+    const handleStatusChange = async (status: 'Published' | 'Unpublished' | 'Scheduled', type: 'publish' | 'discard' | 'schedule') => {
+            
+        if (
+          !productName               || !productDescription    ||
+          !productCategory           || !productQuality        || 
+          !productQuantity           || !isNumber(productQuantity) ||
+          !productSize.length        || !isNumber(productSize.length) ||
+          !productSize.breadth       || !isNumber(productSize.breadth) ||
+          !productSize.width         || !isNumber(productSize.width) ||
+          !productWeight.Weight      || !isNumber(productWeight.Weight) ||
+          !productPrice              || !isNumber(productPrice)       
+          || !isNumber(productDiscount) ||
+          productImages.length <= 2 
+        ) {
+        // If validation fails, log the error
+        setError(true)
+        return;
+      } 
+      
+      else {
+        // If all validations pass, log the product details
+        const token = localStorage.getItem('token');
+            if (!token) {
+                router.push('/');
+                return;
+            }
+    
+            if (type === 'publish') {
+              setLoadingPublish(true);
+            } 
+            else if (type === 'discard') {
+              setLoadingDiscard(true);
+            }
+            else {
+              setLoadingSchedule(true)
+            }
+    
+            
+    
+            try {
+              const uploadPromises = productImages.map(async (image:any, index) => {
+                  if (!(image instanceof File)) {
+                      throw new Error(`Image ${index + 1} is not a valid file object`);
+                  }
+    
+                  const imgData = new FormData();
+                  imgData.append('file', image);
+                  imgData.append('upload_preset', 'Onlinemarket');
+    
+                  const response = await Cloudinary.post('', imgData);
+                  const data = response.data;
+                  return data.secure_url;
+              });
+    
+              const cloudinaryUrls = await Promise.all(uploadPromises);
+    
+              if (status === 'Scheduled') {
+                if (!TimeSchedule || !DateSchedule) {
+                  setLoadingSchedule(false)
+                  return;
+                }
+              }
+    
+              const ScheduleData = {
+                TimePublish: TimeSchedule,
+                DatePublish: DateSchedule
+              }
+    
+              const productData = {
+                productName, 
+                productDescription, 
+                productCategory, 
+                productQuality, 
+                productQuantity, 
+                Sku, 
+                productSize,
+                productPrice,
+                productDiscount,
+                productWeight, 
+                images: cloudinaryUrls, 
+                status: status,
+                ScheduleDate: ScheduleData || undefined,
+                Featured: featured ? 'Featured' : 'not feature'
+            };
+    
+            await ProductApi.post('', productData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            setProductName('')
+            setProductDescription('') 
+            setProductCategory('') 
+            setProductQuality('') 
+            setProductQuantity('') 
+            setSku('')
+            setProductWeight('WeightIndicator', '')
+            setProductWeight('Weight', '')
+            setProductSize('length', '')
+            setProductSize('breadth', '')
+            setProductSize('width', '')
+            setPreviewImages([])
+            setProductImages([])
+            setProductPrice('')
+            setProductDiscount('')
+            setTime('')
+            setDate('')
+            setSchedule(false)
+            setError(false)
+          } 
+    
+          catch (error) {
+              console.error('Error making request:', error);
+          }
+    
+          finally{
+            if (type === 'publish') {
+              setLoadingPublish(false);
+            } 
+            else if (type === 'discard') {
+              setLoadingDiscard(false);
+            }
+            else {
+              setLoadingSchedule(false)
+            }
+          }
+    
+        }
+      }
+
+
     return (
     <>
         <div className='w-full sm:flex mt-4'>
@@ -167,9 +300,11 @@ export default function Edit_ProductInformation() {
                 value={productDescription}
                 />
 
-                <h1 className='text-black mt-2 bg-blue-900'>{product !== 'Published' ? 'Publish' : 'Save'}</h1>
+                <div className="flex justify-between">
+                    <h1></h1>
+                    <h1 className='mt-2 py-1 px-5 rounded-lg text-white bg-blue-700'>{product !== 'Published' ? 'Publish' : 'Save'}</h1>
+                </div>
             </div>
-
         </div>
     </>
     )

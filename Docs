@@ -13,16 +13,82 @@
 
 
 
-import axios from "axios";
+UPDATE
+protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => {
+  const userId = req.user?._id;
 
-const BASE_URL = 'http://localhost:4000/'
+  try {
+      const {
+          productId, // Optional: ID for the product to update
+          productName,
+          productDescription,
+          productCategory,
+          productQuality,
+          productQuantity,
+          Sku,
+          productSize,
+          productPrice,
+          productDiscount,
+          productWeight,
+          images,
+          status,
+          ScheduleDate,
+          Featured
+      } = req.body;
 
-const api = axios.create({
-  baseURL: BASE_URL
-})
+      // If productId is provided, update the existing product
+      if (productId) {
+          const updatedProduct = await Product.findByIdAndUpdate(
+              productId,
+              {
+                  productName,
+                  productDescription,
+                  productCategory,
+                  productQuality,
+                  productQuantity,
+                  Sku,
+                  productSize,
+                  productPrice,
+                  productDiscount,
+                  productWeight,
+                  images,
+                  status,
+                  ScheduleDate,
+                  Featured
+              },
+              { new: true } // Return the updated document
+          );
 
-export default api
+          if (!updatedProduct) {
+              return res.status(404).json({ error: 'Product not found' });
+          }
 
+          return res.status(200).json({ message: 'Product successfully updated', product: updatedProduct });
+      } else {
+          // Otherwise, create a new product
+          const newProduct = new Product({
+              userId,
+              productName,
+              productDescription,
+              productCategory,
+              productQuality,
+              productQuantity,
+              Sku,
+              productSize,
+              productPrice,
+              productDiscount,
+              productWeight,
+              images,
+              status,
+              ScheduleDate,
+              Featured
+          });
 
-
-const response = await api.get('/endpoint');
+          await newProduct.save();
+          return res.status(201).json({ message: 'Product successfully added', product: newProduct });
+      }
+  } catch (error) {
+      console.error('Error processing product:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+  }
+});

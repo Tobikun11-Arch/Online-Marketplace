@@ -8,6 +8,7 @@ import { Request, Response } from "express";
 interface RequestWithUser extends Request {
 
     user?: any;
+    product?: any;
 
   } 
 
@@ -41,7 +42,8 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
     const userId = req.user?._id;
 
     try {
-    const { 
+    const {
+      productId,
       productName, 
       productDescription, 
       productCategory, 
@@ -57,6 +59,8 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
       ScheduleDate,
       Featured
     } = req.body;
+
+    
 
     const Products = new Product({
         userId,
@@ -101,6 +105,7 @@ protectedroute.get('/productList', async (req: RequestWithUser, res: Response) =
       }
   
       const ProductLists = productList.map((list) => ({
+        productId: list._id,
         productName: list.productName,
         productStatus: list.status,
         productPrice: list.productPrice,
@@ -117,7 +122,7 @@ protectedroute.get('/productList', async (req: RequestWithUser, res: Response) =
         Sku: list.Sku,
         productweight: list.productWeight
       }));
-  
+
       res.json({ ProductLists });
     } 
     catch (error) {
