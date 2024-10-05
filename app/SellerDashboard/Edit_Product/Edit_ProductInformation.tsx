@@ -35,6 +35,7 @@ useEffect(() => {
         }
     }, [productSelected]);
 
+    const productId = productSelected?.productId
     const { isError, setError, setLoadingPublish, isLoadingPublish } = useLoading()
 
     const Prod_Price = productSelected?.productPrice ? parseInt(productSelected?.productPrice.toString(), 10) : 0
@@ -51,18 +52,6 @@ useEffect(() => {
     const isNumber = (value: string) => /^\d*$/.test(value);
 
     const handleUploadEdit = async () => {
-        console.log({
-            productName,
-            productDescription,
-            productCategory,
-            productQuality,
-            productQuantity,
-            productSize,
-            productWeight,
-            productPrice,
-            productDiscount,
-            productImages,
-        });
 
         if (
             !productName               || !productDescription    ||
@@ -85,29 +74,15 @@ useEffect(() => {
             // If all validations pass, log the product details
             const token = localStorage.getItem('token');
             if (!token) {
-                router.push('/');
+                router.push('/SellerDashboard/Products');
                 return;
             }
 
             setLoadingPublish(true)
-            try {
-            const uploadPromises = productImages.map(async (image:any, index) => {
-                if (!(image instanceof File)) {
-                    throw new Error(`Image ${index + 1} is not a valid file object`);
-                }
-    
-                const imgData = new FormData();
-                imgData.append('file', image);
-                imgData.append('upload_preset', 'Onlinemarket');
-    
-                const response = await Cloudinary.post('', imgData);
-                const data = response.data;
-                return data.secure_url;
-            });
-      
-                const cloudinaryUrls = await Promise.all(uploadPromises);
 
+            try{
                 const productData = {
+                    productId,
                     productName, 
                     productDescription, 
                     productCategory, 
@@ -118,7 +93,7 @@ useEffect(() => {
                     productPrice,
                     productDiscount,
                     productWeight, 
-                    images: cloudinaryUrls, 
+                    images: productImages, 
                     status: 'Published',
                 };
 
@@ -129,7 +104,7 @@ useEffect(() => {
                     },
                 });
 
-                router.push('/')
+                router.push('/SellerDashboard/Products')
                 setLoadingPublish(false)
                 setError(false)
 

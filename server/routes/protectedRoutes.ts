@@ -60,10 +60,10 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
       Featured
     } = req.body;
 
-    
-
-    const Products = new Product({
-        userId,
+    if(productId) {
+      const updateProduct = await Product.findByIdAndUpdate (
+        productId,
+        {
         productName, 
         productDescription, 
         productCategory, 
@@ -75,15 +75,42 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
         productDiscount,
         productWeight, 
         images,
-        status,
-        ScheduleDate,
-        Featured
-    });
+        status
+        },
+        {new: true}
+      )
 
-    console.log("Products Working")
-    await Products.save();
-    res.status(201).json({ message: 'Product successfuly added' });
-    } 
+      if (!updateProduct) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+
+      return res.status(200).json({ message: 'Product successfully updated', product: updateProduct });
+    }
+
+    else {
+      const Products = new Product({
+          userId,
+          productName, 
+          productDescription, 
+          productCategory, 
+          productQuality, 
+          productQuantity, 
+          Sku, 
+          productSize,
+          productPrice,
+          productDiscount,
+          productWeight, 
+          images,
+          status,
+          ScheduleDate,
+          Featured
+      });
+
+      console.log("Products Working")
+      await Products.save();
+      res.status(201).json({ message: 'Product successfuly added' });
+      } 
+    }
     
     catch (error) {
         console.error('Error creating product:', error);

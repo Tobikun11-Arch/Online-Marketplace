@@ -46,7 +46,7 @@ export default function ProductTable() {
     return productName.includes(searchTerm) || productStatus.startsWith(searchTerm); 
   })?.sort((a, b) => {
     if(selected.InStock === 'Price range'){
-        return (a.productPrice) - (b.productPrice)
+        return parseFloat(a.productPrice) - parseFloat(b.productPrice);
     }
     if (selected.OverallStorage === 'Oldest') {
       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
