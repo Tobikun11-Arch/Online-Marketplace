@@ -78,8 +78,6 @@ export default function NewProduct() {
           setLoadingSchedule(true)
         }
 
-        
-
         try {
           const uploadPromises = productImages.map(async (image:any, index) => {
               if (!(image instanceof File)) {
