@@ -4,6 +4,7 @@ import Condition from '../Components/Product Management/Condition'
 import Category from '../Components/Common/Category'
 import Weight from '../NewProduct/Prototype/Weight'
 import { useRouter } from 'next/navigation'
+import {Cloudinary, ProductApi} from '../axios/axios'
 
 export default function Edit_ProductInformation() {
     const { productSelected } = useSelectedProducts()
@@ -27,76 +28,8 @@ export default function Edit_ProductInformation() {
 
     const handleUploadEdit = async () => {
 
-        //need to change all variable name to current edit name and the productImages too
-      
-        // If all validations pass, log the product details
-        const token = localStorage.getItem('token');
-            if (!token) {
-                router.push('/');
-                return;
-            }
-    
-            try {
-              const uploadPromises = productImages.map(async (image:any, index) => {
-                  if (!(image instanceof File)) {
-                      throw new Error(`Image ${index + 1} is not a valid file object`);
-                  }
-    
-                  const imgData = new FormData();
-                  imgData.append('file', image);
-                  imgData.append('upload_preset', 'Onlinemarket');
-    
-                  const response = await Cloudinary.post('', imgData);
-                  const data = response.data;
-                  return data.secure_url;
-              });
-    
-              const cloudinaryUrls = await Promise.all(uploadPromises);
-    
-              if (status === 'Scheduled') {
-                if (!TimeSchedule || !DateSchedule) {
-                  setLoadingSchedule(false)
-                  return;
-                }
-              }
-    
-              const ScheduleData = {
-                TimePublish: TimeSchedule,
-                DatePublish: DateSchedule
-              }
-    
-              const productData = {
-                productName, 
-                productDescription, 
-                productCategory, 
-                productQuality, 
-                productQuantity, 
-                Sku, 
-                productSize,
-                productPrice,
-                productDiscount,
-                productWeight, 
-                images: cloudinaryUrls, 
-                status: status,
-                ScheduleDate: ScheduleData || undefined,
-                Featured: featured ? 'Featured' : 'not feature'
-            };
-    
-            await ProductApi.post('', productData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
 
-            } 
-    
-            catch (error) {
-                console.error('Error making request:', error);
-            }
-    
-      }
-
+    }
 
     return (
     <>
