@@ -3,6 +3,7 @@ import { useSelectedProducts } from '../hooks/ReusableHooks'
 import Condition from '../Components/Product Management/Condition'
 import Category from '../Components/Common/Category'
 import Weight from '../NewProduct/Prototype/Weight'
+import { useRouter } from 'next/navigation'
 
 export default function Edit_ProductInformation() {
     const { productSelected } = useSelectedProducts()
@@ -10,6 +11,7 @@ export default function Edit_ProductInformation() {
     const [ category, setProductCategory ] = useState(productSelected?.productCategory) //make form for this tomorrow
     const [ productWeight, setProductWeight ] = useState(productSelected?.productweight.Weight)
     const [ productWeightIndicator, setProductWeightIndicator ] = useState(productSelected?.productweight.WeightIndicator)
+    const router = useRouter()
 
     //Package Size
     const [ productLength, setProductLength ] = useState(productSelected?.productSize.length)
@@ -23,44 +25,16 @@ export default function Edit_ProductInformation() {
     const Final_Price = Prod_Price - Disc_Price
     const product = productSelected?.productStatus
 
-    const handleStatusChange = async (status: 'Published' | 'Unpublished' | 'Scheduled', type: 'publish' | 'discard' | 'schedule') => {
-            
-        if (
-          !productName               || !productDescription    ||
-          !productCategory           || !productQuality        || 
-          !productQuantity           || !isNumber(productQuantity) ||
-          !productSize.length        || !isNumber(productSize.length) ||
-          !productSize.breadth       || !isNumber(productSize.breadth) ||
-          !productSize.width         || !isNumber(productSize.width) ||
-          !productWeight.Weight      || !isNumber(productWeight.Weight) ||
-          !productPrice              || !isNumber(productPrice)       
-          || !isNumber(productDiscount) ||
-          productImages.length <= 2 
-        ) {
-        // If validation fails, log the error
-        setError(true)
-        return;
-      } 
+    const handleUploadEdit = async () => {
+
+        //need to change all variable name to current edit name and the productImages too
       
-      else {
         // If all validations pass, log the product details
         const token = localStorage.getItem('token');
             if (!token) {
                 router.push('/');
                 return;
             }
-    
-            if (type === 'publish') {
-              setLoadingPublish(true);
-            } 
-            else if (type === 'discard') {
-              setLoadingDiscard(true);
-            }
-            else {
-              setLoadingSchedule(true)
-            }
-    
-            
     
             try {
               const uploadPromises = productImages.map(async (image:any, index) => {
@@ -115,44 +89,12 @@ export default function Edit_ProductInformation() {
                 },
             });
 
-            setProductName('')
-            setProductDescription('') 
-            setProductCategory('') 
-            setProductQuality('') 
-            setProductQuantity('') 
-            setSku('')
-            setProductWeight('WeightIndicator', '')
-            setProductWeight('Weight', '')
-            setProductSize('length', '')
-            setProductSize('breadth', '')
-            setProductSize('width', '')
-            setPreviewImages([])
-            setProductImages([])
-            setProductPrice('')
-            setProductDiscount('')
-            setTime('')
-            setDate('')
-            setSchedule(false)
-            setError(false)
-          } 
-    
-          catch (error) {
-              console.error('Error making request:', error);
-          }
-    
-          finally{
-            if (type === 'publish') {
-              setLoadingPublish(false);
             } 
-            else if (type === 'discard') {
-              setLoadingDiscard(false);
-            }
-            else {
-              setLoadingSchedule(false)
-            }
-          }
     
-        }
+            catch (error) {
+                console.error('Error making request:', error);
+            }
+    
       }
 
 
@@ -302,7 +244,7 @@ export default function Edit_ProductInformation() {
 
                 <div className="flex justify-between">
                     <h1></h1>
-                    <h1 className='mt-2 py-1 px-5 rounded-lg text-white bg-blue-700'>{product !== 'Published' ? 'Publish' : 'Save'}</h1>
+                    <h1 className='mt-2 py-1 px-5 rounded-lg text-white bg-blue-700' onClick={handleUploadEdit}>{product !== 'Published' ? 'Publish' : 'Save'}</h1>
                 </div>
             </div>
         </div>
