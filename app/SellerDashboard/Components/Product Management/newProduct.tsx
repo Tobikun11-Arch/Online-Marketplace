@@ -17,6 +17,8 @@ import { useLoading, useSchedule } from '../../hooks/ReusableHooks'
 import { pinwheel } from 'ldrs'
 import {Cloudinary, ProductApi} from '../../axios/axios'
 import Schedule from './Schedule'
+import Pinwheel from './Loading/Pinwheel'
+import LoadingSchedule from './Loading/LoadingSchedule'
 
 export default function NewProduct() {
   const { 
@@ -175,49 +177,24 @@ export default function NewProduct() {
     <>
       <main className='px-3 pb-3 pt-12 md:pt-12 xl:pt-0'>
 
-          {isLoadingDiscard || isLoadingPublish ? 
-          (<>
-          <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 bg-black opacity-50 z-50">
-            <div className="load">
-                <l-pinwheel
-                  size="70"
-                  stroke="3.5"
-                  speed="0.9" 
-                  color="white" 
-                ></l-pinwheel>
-              </div>
-          </div>
-          </>) : ('')}
+        <Pinwheel/>
 
           {isSchedule ?
         (<>
         <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 z-50 px-5 sm:px-0">
           <div className="bg-gray-800 rounded-md py-5 pl-5 text-white">
-            <Schedule/>
+              <Schedule/>
 
-            <div className='pt-12 flex justify-between pr-5'> 
-            <Button className='bg-gray-400 px-5 py-1 rounded-md text-black font-bold font-abc' onClick={()=> setSchedule(false)}>
-                Cancel
-            </Button>
+              <div className='pt-12 w-full flex justify-between pr-5'> 
+                <Button className='bg-gray-400 px-5 py-1 rounded-md text-black font-bold font-abc' onClick={()=> setSchedule(false)}>
+                    Cancel
+                </Button>
 
-            <Button className='bg-blue-800 px-8 py-1 rounded-md text-white font-bold font-abc' onClick={()=> handleStatusChange('Scheduled', 'schedule')}>
-                Post
-            </Button>
-
-            {isLoadingSchedule ? 
-          (<>
-          <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 bg-black opacity-50 z-50">
-            <div className="load">
-                <l-pinwheel
-                  size="70"
-                  stroke="3.5"
-                  speed="0.9" 
-                  color="white" 
-                ></l-pinwheel>
+                <Button className='bg-blue-800 px-8 py-1 rounded-md text-white font-bold font-abc' onClick={()=> handleStatusChange('Scheduled', 'schedule')}>
+                    Post
+                </Button>
               </div>
-          </div>
-          </>) : ('')}
-       </div>
+              <LoadingSchedule/>
           </div>
         </div>
         </>) : ('')}
