@@ -10,7 +10,7 @@ import { useProductDetails } from '../hooks/EditProduct'
 import { spiral } from 'ldrs'
 
 export default function Edit_ProductInformation() {
-    const { productSelected } = useSelectedProducts()
+    const { productSelected, setModalOpen } = useSelectedProducts()
     const router = useRouter()
     const { productName, productDescription, productCategory, productQuality, productQuantity, Sku, productWeight, productSize, productPrice, productDiscount,
             setProductName, setProductDescription, setProductCategory, setProductQuality, setProductQuantity, setSku, setProductWeight, setProductSize, setProductPrice,
@@ -105,6 +105,7 @@ useEffect(() => {
                 });
 
                 router.push('/SellerDashboard/Products')
+                setModalOpen(false)
                 setLoadingPublish(false)
                 setError(false)
 
