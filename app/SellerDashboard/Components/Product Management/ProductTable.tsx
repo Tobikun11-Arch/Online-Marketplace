@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Product } from '../../types/types';
 import {
     Pagination,
@@ -69,10 +69,10 @@ export default function ProductTable() {
         setCurrentPage(pageNumber);
     };
 
-    const handleDetails = (product: Product) => {
+    const handleDetails = useCallback((product: Product) => {
         setSelect(product)
         setModalOpen(true)
-    }
+    }, [])
 
     return (
         <>
