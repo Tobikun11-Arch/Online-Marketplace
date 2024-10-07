@@ -103,11 +103,11 @@ export default function ProductTable() {
                             <td className="px-4 py-2 cursor-default font-abc font-bold text-gray-500 text-sm" onClick={()=> handleDetails(product)}>{product.productStatus === 'Published' ? 'View Analystics' : 'Edit Listing'}</td>
                         </tr>
                     ))}
-                    <h1 className='text-gray-400 mt-1'>{totalProducts < 1 && 'No product found'}</h1>
                 </tbody>
             </table>
         </div>
 
+        <h1 className='text-gray-400 mt-1'>{totalProducts < 1 && 'No product found'}</h1>
         <ProductDetails/>
 
             {/* Pagination Component */}

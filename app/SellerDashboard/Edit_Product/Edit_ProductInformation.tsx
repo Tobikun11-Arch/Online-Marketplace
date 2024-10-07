@@ -120,7 +120,7 @@ useEffect(() => {
 
     return (
     <>
-        <div className='w-full sm:flex mt-4'>
+        <div className='w-full sm:w-3/5 sm:flex mt-4'>
 
         {isLoadingPublish ? 
         (<>
@@ -273,10 +273,11 @@ useEffect(() => {
                 </div>
             </div>
 
+            <p className='text-xs text-gray-400 mt-2'>Product Description</p>
             <textarea
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setProductDescription(e.target.value)}
                 name=''
-                className='w-full bg-white h-36 rounded-lg mt-2 outline-none resize-none border border-gray-300 p-2'
+                className='w-full bg-white h-36 rounded-lg outline-none resize-none border border-gray-300 p-2'
                 value={productDescription}
                 />
 

@@ -147,7 +147,6 @@ function Manage() {
     </div>
 
     <ProductTable/>
-    <h1 className='text-gray-400'>{(productLength !== undefined && productLength != 0) ? '' : 'No products available'}</h1>
 
     </div>
     </>

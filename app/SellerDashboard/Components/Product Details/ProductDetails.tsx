@@ -41,7 +41,7 @@ return (
                             </Link>
 
                             <Link href={'/SellerDashboard/Edit_Product'}>
-                                <div className="flex gap-2 items-center w-full justify-center sm:w-auto bg-gray-200 py-2.5 px-8 rounded-md ">
+                                <div className="flex gap-2 items-center w-full justify-center sm:w-auto bg-gray-200 py-2.5 px-8 rounded-md" onClick={()=> setModalOpen(false)}>
                                     <PencilLine strokeWidth={1} size={18}/>
                                     <Button className='text-sm font-semibold'>Edit Product</Button>
                                 </div>
