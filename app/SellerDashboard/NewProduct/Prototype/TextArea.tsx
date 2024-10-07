@@ -1,11 +1,11 @@
 import React from 'react'
 
 interface TextAreaProps {
-    id: string;
-    name: string;
-    className: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    id?: string;
+    name?: string;
+    className?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export default function TextArea({id, name, className = '', value, onChange}: TextAreaProps) {

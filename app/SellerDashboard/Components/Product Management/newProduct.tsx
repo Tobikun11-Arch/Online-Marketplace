@@ -30,7 +30,7 @@ export default function NewProduct() {
     setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
 
-  const { isLoadingPublish, setLoadingPublish, isLoadingDiscard, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
+  const { setLoadingPublish, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
   const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()
   const [ featured, setFeature ] = useState<boolean>(false)
   const router = useRouter()
@@ -220,19 +220,13 @@ export default function NewProduct() {
                 className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
                 onChange={(e) => setProductName(e.target.value)}
                 type='text'
-                id=''
-                accept=''
-                style={{}}
                 required={true}
                 value={productName}
-                placeholder=''
                 />
 
                 <h3 className='text-sm pt-1'>Business Description</h3>
                 <TextArea
                 onChange={(e) => setProductDescription(e.target.value)}
-                name=''
-                id=''
                 className='w-full bg-white h-36 rounded-lg outline-none resize-none border border-gray-300 p-2'
                 value={productDescription}
                 />
@@ -263,9 +257,6 @@ export default function NewProduct() {
                   className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
                   onChange={(e) => setProductQuantity(e.target.value)}
                   type='text'
-                  id=''
-                  accept=''
-                  style={{}}
                   required={true}
                   placeholder='e.g., 10'
                   pattern='\d*'
@@ -280,11 +271,7 @@ export default function NewProduct() {
                   className='w-full pl-2 bg-white h-10 rounded-lg outline-none border border-gray-300'
                   onChange={(e) => setSku(e.target.value)}
                   type='text'
-                  id=''
-                  accept=''
-                  style={{}}
                   required={false}
-                  placeholder=''
                   value={Sku}
                 />
               </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Product } from '../../types/types';
 import {
     Pagination,
@@ -28,32 +28,35 @@ export default function ProductTable() {
         setCurrentPage(1);
     }, [selected.InStock, selected.OverallStorage, searchField]);
 
-    const filteredAndSortedProducts = dataPass?.filter((product) => {
-    const productName = product.productName.toLowerCase();
-    const productStatus = product.productStatus.toLowerCase();
-    const productDiscounted = product.productDiscount > '0'
-    const productFeatured = product.Featured === 'Featured'
-    
-    if(selected.InStock === 'Discounted items') {
-        return productDiscounted
-    }
+    const filteredAndSortedProducts = useMemo(() => {
+        return dataPass?.filter((product) => {
+            const productName = product.productName.toLowerCase();
+            const productStatus = product.productStatus.toLowerCase();
+            const productDiscounted = product.productDiscount > '0';
+            const productFeatured = product.Featured === 'Featured';
 
-    if(selected.InStock === 'Featured products') {
-        return productFeatured
-    }
+            if (selected.InStock === 'Discounted items') {
+                return productDiscounted;
+            }
 
-    const searchTerm = searchField.toLowerCase();
-    return productName.includes(searchTerm) || productStatus.startsWith(searchTerm); 
-  })?.sort((a, b) => {
-    if(selected.InStock === 'Price range'){
-        return parseFloat(a.productPrice) - parseFloat(b.productPrice);
-    }
-    if (selected.OverallStorage === 'Oldest') {
-      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-    } else {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    }
-  });
+            if (selected.InStock === 'Featured products') {
+                return productFeatured;
+            }
+
+            const searchTerm = searchField.toLowerCase();
+            return productName.includes(searchTerm) || productStatus.startsWith(searchTerm);
+        })
+        ?.sort((a, b) => {
+            if (selected.InStock === 'Price range') {
+                return parseFloat(a.productPrice) - parseFloat(b.productPrice);
+            }
+            if (selected.OverallStorage === 'Oldest') {
+                return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+            } else {
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+            }
+        })
+    }, [dataPass, selected.InStock, selected.OverallStorage, searchField])
 
     // Pagination Logic
     const totalProducts = filteredAndSortedProducts?.length || 0;
