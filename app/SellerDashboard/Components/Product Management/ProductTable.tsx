@@ -9,22 +9,32 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '../../../../@/components/ui/pagination';
-import { useData, useSearch, useSelectedProducts } from '../../hooks/ReusableHooks';
+import { useData, useLoading, useSearch, useSelectedProducts } from '../../hooks/ReusableHooks';
 import ProductDetails from '../Product Details/ProductDetails';
 import { useDelete} from '../../hooks/DeleteProduct';
 import { useRouter } from 'next/navigation';
 import { Delete_Product } from '../../axios/axios';
+import { square } from 'ldrs'
+import SquareLoading from './Loading/SquareLoading';
 
 interface Products {
     ProductLists: Product[];
 }
 
 export default function ProductTable() {
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            square.register()
+        }
+    }, []);
+
     const router = useRouter()
-    const { dataPass } = useData()
+    const { dataPass, setData } = useData()
     const { setSelect, setModalOpen } = useSelectedProducts()
     const { searchField, selected } = useSearch()
     const { selectedProducts, setSelectedProducts } = useDelete()
+    const { setLoading } = useLoading()
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
@@ -95,6 +105,9 @@ export default function ProductTable() {
             router.push('/SellerDashboard/Products');
             return;
         }
+        const updatedProductList = dataPass?.filter((product) => !selectedProducts.some((selected) => selected.productId === product.productId))
+        setSelectedProducts([]); 
+        setLoading(true)
 
         const productIds = selectedProducts.map((productId)=> productId.productId)
         try {
@@ -104,6 +117,9 @@ export default function ProductTable() {
                 'Content-Type': 'application/json',
             },
         });
+
+        setData(updatedProductList)
+        setLoading(false)
         } 
 
         catch (error) {
@@ -114,6 +130,8 @@ export default function ProductTable() {
 
     return (
         <>
+        <SquareLoading/>
+
         <div className="flex justify-between">
                 <h1></h1>
                 {selectedProducts.length > 0 && (

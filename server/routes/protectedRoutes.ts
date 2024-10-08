@@ -134,10 +134,6 @@ protectedroute.post('/Products/Delete', async (req: RequestWithUser, res: Respon
       return res.status(200).json({ message: 'Products deleted successfully' });
     }
 
-    if(productId) {
-      return res.status(200).json({ message: 'Products deleted successfully' });
-    }
-
   } catch (error) {
     console.error("Error")
   }

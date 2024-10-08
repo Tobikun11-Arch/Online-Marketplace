@@ -5,14 +5,17 @@ interface loadingProps {
     isLoadingPublish: boolean;
     isLoadingDiscard: boolean;
     isLoadingSchedule: boolean;
+    isLoading: boolean;
     isError: boolean;
     setLoadingPublish: (isLoadingPublish: boolean) => void;
     setLoadingDiscard: (isLoadingDiscard: boolean) => void;
     setLoadingSchedule: (isLoadingSchedule: boolean) => void;
+    setLoading: (isLoadingSchedule: boolean) => void;
     setError: (isError: boolean) => void;
 }
 
 export const useLoading = create<loadingProps>((set) => ({
+    isLoading: false,
     isLoadingPublish: false,
     isLoadingDiscard: false,
     isLoadingSchedule: false,
@@ -20,6 +23,7 @@ export const useLoading = create<loadingProps>((set) => ({
     setLoadingPublish: (isLoadingPublish: boolean) => set(() => ({ isLoadingPublish })),
     setLoadingDiscard: (isLoadingDiscard: boolean) => set(() => ({ isLoadingDiscard })),
     setLoadingSchedule: (isLoadingSchedule: boolean) => set(() => ({ isLoadingSchedule })),
+    setLoading: (isLoading: boolean) => set(() => ({ isLoading })),
     setError: (isError: boolean) => set(() => ({ isError }))
 }))
 
