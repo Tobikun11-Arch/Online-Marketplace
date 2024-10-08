@@ -11,15 +11,20 @@ import {
 } from '../../../../@/components/ui/pagination';
 import { useData, useSearch, useSelectedProducts } from '../../hooks/ReusableHooks';
 import ProductDetails from '../Product Details/ProductDetails';
+import { useDelete} from '../../hooks/DeleteProduct';
+import { useRouter } from 'next/navigation';
+import { Delete_Product } from '../../axios/axios';
 
 interface Products {
     ProductLists: Product[];
 }
 
 export default function ProductTable() {
+    const router = useRouter()
     const { dataPass } = useData()
     const { setSelect, setModalOpen } = useSelectedProducts()
     const { searchField, selected } = useSearch()
+    const { selectedProducts, setSelectedProducts } = useDelete()
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
@@ -74,10 +79,47 @@ export default function ProductTable() {
         setModalOpen(true)
     }, [])
 
-    
+    const handleSelectDelete = (product: Product, checked: boolean) => {
+        if (checked) {
+        setSelectedProducts([...selectedProducts, product]);
+        } else {
+        setSelectedProducts(
+            selectedProducts.filter((p) => p.description !== product.description)
+        );
+        }
+    };
+
+    const handleDelete = async() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/SellerDashboard/Products');
+            return;
+        }
+
+        const productIds = selectedProducts.map((productId)=> productId.productId)
+        try {
+        await Delete_Product.post('', {productId: productIds}, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        } 
+
+        catch (error) {
+            console.error("Error")
+        }
+        
+    }
 
     return (
         <>
+        <div className="flex justify-between">
+                <h1></h1>
+                {selectedProducts.length > 0 && (
+                    <button className='px-4 py-1 border border-gray-400 rounded-md font-bold font-abc text-black' onClick={handleDelete}>Delete</button>
+                )}
+            </div>
         <div className="w-full overflow-x-auto mt-2 border rounded-md">
             <table className="min-w-full table-auto border-collapse rounded-lg cursor-default">
                 <thead className="bg-white">
@@ -92,7 +134,8 @@ export default function ProductTable() {
                 <tbody>
                     {currentProducts?.map((product, index) => (
                         <tr key={`${product.description}-${index}`} className='bg-white border-b border-gray-400'>
-                            <td className="px-4 py-2">
+                            <td className="px-4 py-2 flex items-center gap-1">
+                                <input type="checkbox" className='appearance-none h-5 w-5 border border-gray-300 rounded bg-white checked:bg-blue-500 focus:outline-none cursor-pointer' onChange={(e)=> handleSelectDelete(product, e.target.checked)}/>
                                 <div className="w-8 h-8 rounded-full bg-cover bg-center bg-gray-400"
                                     style={{ backgroundImage: product.images ? `url(${product.images[0]})` : '' }}>
                                 </div>

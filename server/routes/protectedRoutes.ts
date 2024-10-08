@@ -106,7 +106,6 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
           Featured
       });
 
-      console.log("Products Working")
       await Products.save();
       res.status(201).json({ message: 'Product successfuly added' });
       } 
@@ -119,7 +118,30 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
 });
 
 
+protectedroute.post('/Products/Delete', async (req: RequestWithUser, res: Response) => {
+  const userId = req.user?._id;
 
+  try {
+    const { productId } = req.body
+
+    if (!productId || productId.length === 0) {
+      return res.status(400).json({ message: 'No product IDs provided' });
+    }
+
+    const result = await Product.deleteMany({ _id: { $in: productId }, userId });
+
+    if(result.deletedCount > 0) {
+      return res.status(200).json({ message: 'Products deleted successfully' });
+    }
+
+    if(productId) {
+      return res.status(200).json({ message: 'Products deleted successfully' });
+    }
+
+  } catch (error) {
+    console.error("Error")
+  }
+})
 
 protectedroute.get('/productList', async (req: RequestWithUser, res: Response) => {
     const userId = req.user?._id;

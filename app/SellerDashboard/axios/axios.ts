@@ -30,3 +30,8 @@ const Remove_Api = process.env.NEXT_PUBLIC_REMOVEBG
 export const Remove_Bg = axios.create({
   baseURL: Remove_Api
 })
+
+const ProductDelete = process.env.NEXT_PUBLIC_PRODUCTS_DELETE;
+export const Delete_Product = axios.create({
+  baseURL: ProductDelete
+})
