@@ -29,7 +29,7 @@ export default function ManageProducts() {
 }
 
 function Manage() {
-  const { setData } = useData();
+  const { setData, dataPass } = useData();
   const { setSearchField, setSelected } = useSearch()
 
   const [Selected, setSelect] = useState<Select>({
@@ -116,7 +116,7 @@ function Manage() {
   return <p className="text-red-500">An error has occurred: {error.message}</p>;
   }
  
-  const productLength = products?.ProductLists.length
+  const productLength = dataPass?.length
 
   const onsearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value.toLowerCase()

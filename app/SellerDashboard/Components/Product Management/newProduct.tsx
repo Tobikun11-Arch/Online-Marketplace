@@ -55,7 +55,7 @@ export default function NewProduct() {
       !productWeight.Weight      || !isNumber(productWeight.Weight) ||
       !productPrice              || !isNumber(productPrice)       
       || !isNumber(productDiscount) ||
-      productImages.length <= 2 
+      productImages.length <= 0
     ) {
     // If validation fails, log the error
     setError(true)
