@@ -9,7 +9,7 @@ export default function HomePage() {
 
   return (
     <>
-        <div className='w-full h-screen flex items-start flex-col'>
+        <div className='w-full h-screen flex items-start flex-col cursor-default'>
           <h1 className='foont-abc font-bold text-3xl cursor-default mt-14 xl:ml-64 pl-3'>Your Dashboard</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 w-full xl:w-3/4 md:grid-cols-4 p-2 gap-2 xl:mt-0 BoxItemContainer xl:ml-64">
               <BoxItem 
@@ -56,17 +56,17 @@ export default function HomePage() {
                 <tr>
                   <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Product Name</th>
                   <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Price</th>
-                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Inventory</th>
-                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Status</th>
-                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">More</th>
+                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Date</th>
+                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Order id</th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr>
-                  <td>
-
-                  </td>
+                <tr className='bg-white border-b border-gray-400'>
+                <td className="pl-4 pr-16 py-2 cursor-default text-sm text-gray-800">Product Name</td>
+                  <td className="pl-4 pr-16 py-2 cursor-default text-sm text-gray-800">Price</td>
+                  <td className="pl-4 pr-16 py-2 cursor-default text-sm text-gray-800">Date</td>
+                  <td className="pl-4 pr-16 py-2 cursor-default text-sm text-gray-800">Order id</td>
                 </tr>
               </tbody>
             </table>
