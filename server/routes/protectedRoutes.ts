@@ -110,13 +110,12 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
       res.status(201).json({ message: 'Product successfuly added' });
       } 
     }
-    
-    catch (error) {
-        console.error('Error creating product:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
 
+    catch (error) {
+      console.error('Error creating product:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+}); 
 
 protectedroute.post('/Products/Delete', async (req: RequestWithUser, res: Response) => {
   const userId = req.user?._id;

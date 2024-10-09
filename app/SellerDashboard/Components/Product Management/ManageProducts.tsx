@@ -115,14 +115,13 @@ function Manage() {
   if (error) {
   return <p className="text-red-500">An error has occurred: {error.message}</p>;
   }
- 
+
   const productLength = dataPass?.length
 
   const onsearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchString = event.target.value.toLowerCase()
     setSearchField(searchString)
   }
-
   return (
   <>
   <div className='w-full min-h-screen items-start px-3 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center cursor-default'>

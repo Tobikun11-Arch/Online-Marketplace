@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import BoxItem from '../Common/BoxItem'               
 import AddProduct from './AddProduct'
 import { useData } from '../../hooks/ReusableHooks'
+import {Download} from 'lucide-react'
 
 export default function HomePage() {
 
@@ -38,6 +39,38 @@ export default function HomePage() {
           href='/SellerDashboard/NewProduct'
           label='Add new Product' 
           />
+          </div>
+
+          <div className="Sales px-4 pt-4 w-full">
+            <div className="flex justify-between xl:ml-64 mt-2 w-full xl:w-3/4">
+              <h1 className='font-bold'>Latest Sales</h1>
+              <div className="flex gap-1 items-center px-3 py-1 border">
+                <Download size={15}/>
+                <p className='text-xs'>Download Report</p>
+              </div>
+            </div>
+
+            <div className='xl:ml-64 mt-2 w-full xl:w-3/4'>
+            <table className="min-w-full table-auto border-collapse rounded-lg cursor-default ">
+              <thead className="bg-white">
+                <tr>
+                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Product Name</th>
+                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Price</th>
+                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Inventory</th>
+                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">Status</th>
+                  <th className="px-4 py-2 border-b-2 border-gray-500 text-left">More</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
           </div>
 
         </div>

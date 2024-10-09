@@ -125,13 +125,12 @@ export default function ProductTable() {
         catch (error) {
             console.error("Error")
         }
-        
+
     }
 
     return (
         <>
         <SquareLoading/>
-
         <div className="flex justify-between">
                 <h1></h1>
                 {selectedProducts.length > 0 && (

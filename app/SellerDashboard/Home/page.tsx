@@ -7,10 +7,10 @@ export default function Home() {
 
   return (
     <>
-     <div className='w-full h-screen bg-gray-200'>
-        <NavBar/>
-        <HomePage/>
-     </div>
+      <div className='w-full h-screen bg-white'>
+          <NavBar/>
+          <HomePage/>
+      </div>
     </>    
   )
 }
