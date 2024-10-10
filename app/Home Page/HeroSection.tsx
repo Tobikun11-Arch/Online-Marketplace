@@ -5,9 +5,10 @@ import HomePageUi from './Components/HomePageUi'
 const HeroSection = () => {
     return (
         <>
-            <div id='Home' className='Home h-screen bg-gray-100'>
+            <div id='Home' className='Home h-screen bg-gray-100 flex flex-col'>
                 <NavBar/>
-                <HomePageUi/>
+                <HomePageUi/>   
+                {/* you can also add an flex-grow to div */}
             </div>
 
             <div id='About' className="About h-screen bg-gray-100">
