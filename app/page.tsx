@@ -1,16 +1,12 @@
-import LoginForm from '../app/Client/auth/page'
+import React from 'react'
+import LoginForm from './Client/auth/LoginForm'
 
-export default function page() {
-
+const Page = () => {
   return (
-    <>
-
     <div className="w-full h-screen bg-gray-100 flex justify-center items-center">
-
-    <LoginForm />
-
+      <LoginForm />
     </div>
-
-    </>
   )
 }
+
+export default Page
