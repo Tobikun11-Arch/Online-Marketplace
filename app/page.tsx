@@ -1,10 +1,10 @@
 import React from 'react'
-import LoginForm from './Client/auth/LoginForm'
+import HomePage from './Home Page/page'
 
 const Page = () => {
   return (
-    <div className="w-full h-screen bg-gray-100 flex justify-center items-center">
-      <LoginForm />
+    <div className="w-full h-screen bg-gray-100">
+      <HomePage />
     </div>
   )
 }
