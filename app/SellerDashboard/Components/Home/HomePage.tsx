@@ -9,8 +9,8 @@ export default function HomePage() {
 
   return (
     <>
-        <div className='w-full h-screen flex items-start flex-col cursor-default'>
-          <h1 className='foont-abc font-bold text-3xl cursor-default mt-10 xl:ml-64 pl-3'>Your Dashboard</h1>
+        <div className='w-full min-h-screen flex items-start flex-col cursor-default pb-4'>
+          <h1 className='foont-abc font-bold text-3xl cursor-default mt-12 xl:mt-10 xl:ml-64 pl-3'>Your Dashboard</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 w-full xl:w-3/4 md:grid-cols-4 p-2 gap-2 xl:mt-0 BoxItemContainer xl:ml-64">
               <BoxItem 
               DataNumber={1}
@@ -50,7 +50,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className='xl:ml-64 mt-2 w-full xl:w-3/4'>
+            <div className='xl:ml-64 mt-2 w-full xl:w-3/4 overflow-x-auto border rounded-md'>
             <table className="min-w-full table-auto border-collapse rounded-lg cursor-default ">
               <thead className="bg-white">
                 <tr>
