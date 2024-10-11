@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useCallback } from 'react'
 import NavMenu from './ui/NavMenu'
 import { Search, User, ShoppingCart, Menu, X } from 'lucide-react'
 import MenuProps from '../Components/ui/Menu'
@@ -8,7 +8,9 @@ import Theme from './ui/Theme'
 
 const NavBar = () => {
     const { isOpen, setOpen }= useOpen()
-    const toggleMenu = () => setOpen(!isOpen)
+    const toggleMenu = useCallback(()=> {
+        setOpen(!isOpen)
+    }, [isOpen])
 
     return (
         <div className='h-14 flex justify-between items-center px-4 md:px-12 cursor-default'>
