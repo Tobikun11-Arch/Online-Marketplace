@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 
+
 const HomePageUi = () => {
     return (
         <main className='px-4 md:px-12 flex flex-col-reverse md:grid md:grid-cols-2 h-full '>
