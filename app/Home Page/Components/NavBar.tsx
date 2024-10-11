@@ -13,7 +13,7 @@ const NavBar = () => {
     }, [isOpen])
 
     return (
-        <div className='h-14 flex justify-between items-center px-4 md:px-12 cursor-default'>
+        <div className='h-16 flex justify-between items-center px-4 md:px-12 cursor-default'>
             <div className="Menu flex gap-1 md:hidden">
                 {isOpen ? (
                     ''
@@ -31,7 +31,7 @@ const NavBar = () => {
 
             {isOpen && (
                 <>
-                    <div className="fixed inset-0 bg-white dark:bg-black z-40" onClick={toggleMenu}></div>
+                    <div className="fixed inset-0 bg-white dark:bg-gray-950 z-40" onClick={toggleMenu}></div>
                     <MenuProps className={`fixed inset-0 flex items-center justify-center z-50 flex-col gap-2`} />
                 </>
             )}
