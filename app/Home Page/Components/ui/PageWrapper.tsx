@@ -1,4 +1,6 @@
+"use client"
 import React from 'react'
+import { motion, AnimatePresence } from "framer-motion"
 
 interface PageWrapperProps {
     children: React.ReactNode;
@@ -6,10 +8,27 @@ interface PageWrapperProps {
 
 const PageWrapper = ({children}: PageWrapperProps) => {
     return (
-        <div className='min-h-screen flex items-center justify-center'> 
-            {children}
-        </div>
+        <>
+            <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className='min-h-screen flex items-center justify-center'>
+                {children}
+            </motion.div>
+        </>
     )
 }
 
 export default PageWrapper
+
+
+{/* <AnimatePresence>
+<motion.div 
+initial={{ opacity: 0 }}
+animate={{ opacity: 1 }}
+exit={{ opacity: 0 }}
+className='min-h-screen flex items-center justify-center'> 
+    {children}
+</motion.div>
+</AnimatePresence> */}
