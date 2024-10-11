@@ -17,7 +17,7 @@ const Menu = ({className}: Menuprops) => {
                 <li
                     key={item}
                     className={`${
-                        selected === item ? 'text-black' : 'text-gray-500 hover:text-gray-400'
+                        selected === item ? 'text-black dark:text-gray-300' : 'text-gray-500 hover:text-gray-400 dark:text-white'
                     }`}
                     onClick={() => setSelected(item)}>  
 

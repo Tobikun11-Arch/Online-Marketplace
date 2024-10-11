@@ -4,7 +4,6 @@ import Menu from './Menu';
 
 const NavMenu = () => {
 
-
     return (
         <div>
             <Menu className="md:flex gap-x-10 items-center cursor-pointer hidden text-base">

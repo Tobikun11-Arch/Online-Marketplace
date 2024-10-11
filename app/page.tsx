@@ -4,7 +4,7 @@ import LoginForm from './Client/auth/LoginForm'
 
 const Page = () => {
   return (
-    <div className="w-full h-screen bg-gray-100">
+    <div className="w-full h-screen">
       <HomePage />
     </div>
   )
