@@ -11,7 +11,7 @@ const AuthOnline = () => {
 
             <AuthStyle>
                 <div className={`w-8 h-8 rounded-full bg-[url('https://www.logo.wine/a/logo/Facebook/Facebook-f_Logo-Blue-Logo.wine.svg')] bg-cover bg-center`}></div>
-                <p className='text-black'> Google</p>
+                <p className='text-black'>Facebook</p>
             </AuthStyle>
         </div>
     )
