@@ -13,7 +13,7 @@ const NavBar = () => {
     }, [isOpen])
 
     return (
-        <div className='h-16 flex justify-between items-center px-4 md:px-12 cursor-default'>
+        <div className='h-20 flex justify-between items-center px-4 md:px-12 cursor-default'>
             <div className="Menu flex gap-1 md:hidden">
                 {isOpen ? (
                     ''
