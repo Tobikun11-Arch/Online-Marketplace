@@ -11,7 +11,7 @@ exports[`renders homepage unchanged 1`] = `
         id="Home"
       >
         <div
-          class="h-16 flex justify-between items-center px-4 md:px-12 cursor-default"
+          class="h-20 flex justify-between items-center px-4 md:px-12 cursor-default"
         >
           <div
             class="Menu flex gap-1 md:hidden"
@@ -173,7 +173,7 @@ exports[`renders homepage unchanged 1`] = `
         </div>
         <div
           class="min-h-screen flex items-center justify-center"
-          style="opacity: 0; will-change: transform; transform: scale(0.9);"
+          style="opacity: 0; will-change: transform; transform: translateY(100px);"
         >
           <main
             class="px-4 md:px-12 flex flex-col-reverse md:grid md:grid-cols-2 h-full "
@@ -193,11 +193,15 @@ exports[`renders homepage unchanged 1`] = `
               >
                 Explore our range of fashionable, durable, and spacious bags, perfect for your everyday adventures. Built with high-quality materials to ensure long-lasting use.
               </p>
-              <button
-                class="mt-4 md:mt-14 px-6 py-2 border border-gray-500 hover:bg-gray-800 hover:text-white"
+              <a
+                href="./Auth"
               >
-                Shop Now
-              </button>
+                <button
+                  class="mt-4 md:mt-14 px-6 py-2 border border-gray-500 hover:bg-gray-800 hover:text-white"
+                >
+                  Shop Now
+                </button>
+              </a>
             </section>
             <div
               class="flex h-full items-center justify-center"
