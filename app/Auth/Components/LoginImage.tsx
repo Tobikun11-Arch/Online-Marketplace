@@ -4,7 +4,7 @@ import LoginWrapper from './ui/LoginWrapper'
 
 const LoginImage = () => {
     return (
-        <div className='w-2/5 hidden sm:block'>
+        <div className='w-2/4 hidden md:block'>
             <Image 
                 loading='lazy'
                 alt='Zoro picture'

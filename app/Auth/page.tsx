@@ -7,7 +7,7 @@ const Page = () => {
 
     return (
         <>
-            <div className="h-screen w-full flex bg-white items-center justify-center">
+            <div className="h-screen w-full flex bg-white sm:items-center sm:justify-center">
                 <Login_Form/>
             </div>
         </>
