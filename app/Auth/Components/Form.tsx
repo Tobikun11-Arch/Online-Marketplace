@@ -1,9 +1,10 @@
 import React from 'react'
 import AuthOnline from './ui/AuthOnline'
+import Input from './ui/Input'
 
 const Form = () => {
     return (
-        <div className='p-5 cursor-default'>
+        <div className='px-28 py-5 cursor-default'>
             <div className="flex gap-1 items-center">
                 <div className={`w-8 h-8 rounded-full bg-gray-400 bg-[url('https://marketplace.canva.com/EAFvDRwEHHg/1/0/1600w/canva-colorful-abstract-online-shop-free-logo-cpI8ixEpis8.jpg')] bg-cover bg-center`}></div>
                 <h1 className='text-blue-800 font-bold'>SajuBazaar</h1>
@@ -13,6 +14,7 @@ const Form = () => {
             <p className='text-xs text-gray-400'>Welcome back! Select method to log in:</p>
             <AuthOnline/>
             <p className='text-gray-400 text-sm flex justify-center mt-5'>or continue with email</p>
+            <Input type="text" className='w-full text-black bg-white border outline-none border-gray-300 rounded-md h-10'/>
         </div>
     )
 }
