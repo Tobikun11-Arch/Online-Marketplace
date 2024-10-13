@@ -14,7 +14,7 @@ const Form = () => {
                     <h1 className='text-blue-800 font-bold'>SajuBazaar</h1>
                 </div>
 
-                <h1 className='text-gray-950 font-bold mt-4 text-2xl font-abc'>Log in to your Account</h1>  
+                <h1 className='text-gray-950 font-bold mt-4 text-2xl'>Log in to your Account</h1>  
                 <p className='text-xs text-gray-400'>Welcome back! Select method to log in:</p>
                 <AuthOnline/>
                 <p className='text-gray-400 text-sm flex justify-center mt-5'>or continue with email</p>
