@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import AuthOnline from './ui/AuthOnline'
 import Input, { LoginInput } from './ui/Input'
 import IconSide from './ui/IconSide'
 import { Mail, LockKeyhole } from 'lucide-react'
-
+import { useForm } from '../StateHandlers/Form'
 
 const Form = () => {
+    const { isForm, setForm } = useForm()
+
+    const Form_Set = useCallback(()=> {
+        setForm(true)
+    }, [isForm])
+
     return (
         <div className="h-screen w-screen flex justify-center items-center sm:h-full sm:w-full">
             <div className='py-5 cursor-default w-3/4 sm:w-full'>
@@ -19,11 +25,11 @@ const Form = () => {
                 <AuthOnline/>
                 <p className='text-gray-400 text-sm flex justify-center mt-5'>or continue with email</p>
                 <div className="flex flex-col gap-3 mt-5">
-                    <IconSide Icon={Mail} color='gray'>
+                    <IconSide Icon={Mail} color='gray' size={18}>
                         <Input type="text" className={`${LoginInput}`} placeholder='Email'/>
-                    </IconSide>
+                    </IconSide> 
 
-                    <IconSide Icon={LockKeyhole} color='gray'>
+                    <IconSide Icon={LockKeyhole} color='gray' size={18}>
                         <Input type="password" className={`${LoginInput}`} placeholder='Password'/>
                     </IconSide>
                 </div>
@@ -40,7 +46,7 @@ const Form = () => {
                     <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
                 </button>
 
-                <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center'>Don't have an account? <span className='text-blue-700'>Create an account</span></p>
+                <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center' onClick={Form_Set}>Don't have an account? <span className='text-blue-700'>Create an account</span></p>
             </div>
         </div>
     )
