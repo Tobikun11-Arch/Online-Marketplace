@@ -4,11 +4,12 @@ interface InputProps {
     type?: string;
     className?: string;
     defaultChecked?: boolean;
+    placeholder?: string;
 }
 
-const Input = ({type, className, defaultChecked}: InputProps) => {
+const Input = ({type, className, defaultChecked, placeholder}: InputProps) => {
     return (
-        <input className={className} type={type} defaultChecked={defaultChecked}/>
+        <input className={className} type={type} defaultChecked={defaultChecked} placeholder={placeholder}/>
     )
 }
 

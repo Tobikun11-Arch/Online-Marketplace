@@ -14,22 +14,33 @@ const Form = () => {
                     <h1 className='text-blue-800 font-bold'>SajuBazaar</h1>
                 </div>
 
-                <h1 className='text-gray-950 font-bold mt-8 text-2xl font-abc'>Log in to your Account</h1>  
+                <h1 className='text-gray-950 font-bold mt-4 text-2xl font-abc'>Log in to your Account</h1>  
                 <p className='text-xs text-gray-400'>Welcome back! Select method to log in:</p>
                 <AuthOnline/>
                 <p className='text-gray-400 text-sm flex justify-center mt-5'>or continue with email</p>
-                <div className="flex flex-col gap-3 mt-3">
+                <div className="flex flex-col gap-3 mt-5">
                     <IconSide Icon={Mail} color='gray'>
-                        <Input type="text" className={`${LoginInput}`}/>
+                        <Input type="text" className={`${LoginInput}`} placeholder='Email'/>
                     </IconSide>
 
                     <IconSide Icon={LockKeyhole} color='gray'>
-                        <Input type="password" className={`${LoginInput}`}/>
+                        <Input type="password" className={`${LoginInput}`} placeholder='Password'/>
                     </IconSide>
                 </div>
-                <div className="flex justify-between">
-                    <Input type="checkbox" defaultChecked className="checkbox checkbox-sm"></Input>
+
+                <div className="flex justify-between items-center mt-3">
+                    <div className="flex gap-2 items-center">
+                        <Input type="checkbox" defaultChecked className="checkbox border w-4 h-4 border-gray-400 rounded-none [--chkbg:theme(colors.indigo.600)] [--chkfg:white]"></Input>
+                        <p className='text-xs text-gray-400 font-medium'>Remember me</p>
+                    </div>
+                    <p className='text-gray-400 text-xs font-semibold'>Forgot Password?</p>
                 </div>
+
+                <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3'>
+                    <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
+                </button>
+
+                <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center'>Don't have an account? <span className='text-blue-700'>Create an account</span></p>
             </div>
         </div>
     )
