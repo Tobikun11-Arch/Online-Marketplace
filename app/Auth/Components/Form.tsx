@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import AuthOnline from './ui/AuthOnline'
-import Input, { LoginInput } from './ui/Input'
-import IconSide from './ui/IconSide'
+import Input, { LoginInput, SingUpInput } from './ui/Input'
+import IconSide, { PasswordInput } from './ui/IconSide'
 import { Mail, LockKeyhole } from 'lucide-react'
 import { useForm } from '../StateHandlers/Form'
 
@@ -29,9 +29,9 @@ const Form = () => {
                         <Input type="text" className={`${LoginInput}`} placeholder='Email'/>
                     </IconSide> 
 
-                    <IconSide Icon={LockKeyhole} color='gray' size={18}>
-                        <Input type="password" className={`${LoginInput}`} placeholder='Password'/>
-                    </IconSide>
+                    <PasswordInput Icon={LockKeyhole}>
+                        <Input type="password" className={`${SingUpInput}`} placeholder='Password'/>
+                    </PasswordInput>
                 </div>
 
                 <div className="flex justify-between items-center mt-3">
@@ -46,7 +46,7 @@ const Form = () => {
                     <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
                 </button>
 
-                <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center' onClick={Form_Set}>Don't have an account? <span className='text-blue-700'>Create an account</span></p>
+                <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center'>Don't have an account? <span className='text-blue-700' onClick={Form_Set}>Create an account</span></p>
             </div>
         </div>
     )
