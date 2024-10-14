@@ -55,10 +55,8 @@ export default function LoginForm() {
 
       setMessage('')
         const DatawithOption = {
-
           ...formData,
           Role: option
-
         };
 
         await axios.post('https://online-marketplace-backend-six.vercel.app/api/users/register', DatawithOption, { 
@@ -146,7 +144,7 @@ export default function LoginForm() {
     catch (error) {
       
       setLoader(false)
-      router.push('/');
+      router.push('/Client/auth');
       setMessagelogin('Invalid Email or Password')
 
     }

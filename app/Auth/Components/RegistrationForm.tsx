@@ -20,7 +20,7 @@ const RegistrationForm = () => {
                 <h1 className='text-blue-800 font-bold'>SajuBazaar</h1>
             </div>
 
-            <h1 className='text-gray-950 font-bold mt-4 text-2xl'>Sign Up for SajuBazaar</h1>  
+            <h1 className='text-gray-950 font-bold mt-4 text-2xl'>Sign Up for <span className='text-blue-900'>SajuBazaar</span></h1>  
             <p className='text-xs text-gray-400'>Join as buyer/seller</p>
 
             <AuthOnline/>

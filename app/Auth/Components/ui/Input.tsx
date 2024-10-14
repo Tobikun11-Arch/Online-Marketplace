@@ -13,6 +13,6 @@ const Input = ({type, className, defaultChecked, placeholder}: InputProps) => {
     )
 }
 
-export const LoginInput = 'w-full text-black bg-white border outline-none border-gray-300 rounded-md h-10 pl-10 pr-1';
-export const SingUpInput = 'w-full text-black bg-white border outline-none border-gray-300 rounded-md h-10 pl-10 pr-10';
+export const LoginInput = 'w-full text-black bg-white border outline-none border-gray-300 rounded-md h-10 pl-10 pr-1 text-sm font-normal';
+export const SingUpInput = 'w-full text-black bg-white border outline-none border-gray-300 rounded-md h-10 pl-10 pr-10 text-sm';
 export default Input
