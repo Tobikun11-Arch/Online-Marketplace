@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema<IUser>({
     Username: { type: String, required: true },
     isVerifiedEmail: { type: Boolean, default: false, required: true},
     emailToken: { type: String, required: false}
-}, { collection: 'Accounts'});
+}, { collection: 'SellerAccounts'});
 
 
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {

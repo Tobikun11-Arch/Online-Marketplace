@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import AuthOnline from './ui/AuthOnline'
 import Input, { LoginInput, SingUpInput } from './ui/Input'
 import IconSide, { PasswordInput } from './ui/IconSide'
 import { Mail, LockKeyhole } from 'lucide-react'
 import { useForm } from '../StateHandlers/Form'
 import { useNewUser } from '../StateHandlers/RegisterForm'
-import { Label } from "../../../@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "../../../@/components/ui/radio-group"
+import { newRegister } from '../../SellerDashboard/axios/axios'
+import { leapfrog } from 'ldrs'
 
 const RegistrationForm = () => {
     const { isForm, setForm } = useForm()
@@ -15,33 +15,53 @@ const RegistrationForm = () => {
     const adjectives = ['Happy', 'Sunny', 'Clever', 'Swift', 'Bright', 'Cool', 'Witty', 'Brave'];
     const nouns = ['Tiger', 'Dolphin', 'Phoenix', 'Eagle', 'Lion', 'Wolf', 'Bear', 'Fox'];
     const ButtonStyle = 'font-semibold rounded-md w-full border text-xs py-1 transition duration-200 hover:bg-blue-600 hover:text-white'
+    const [ loading, setLoading ] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            leapfrog.register()
+        }
+    }, []);
 
     const handleRoleSelection = (role: string) => {
         setRole(role)
     }
 
     const RegisterAccount = async () => {
-        if(!Email || !Password || !ConfirmPassword || !Email.includes('@')) {
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+        if(!Email || !Role || !Password || !ConfirmPassword || !Email.includes('@') || !passwordPattern.test(Password)) {
             seterror(true)
             return;
         }
 
         seterror(false)
+        setLoading(true)
         const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
         const noun = nouns[Math.floor(Math.random() * nouns.length)];
-        const number = Math.floor(Math.random() * 1000);
-        setUsername(`${adjective}${noun}${number}`);
+        const number = Math.floor(Math.random() * 1000);    
+        const generatedUsername = `${adjective}${noun}${number}`; //set a random username
+        setUsername(generatedUsername); 
 
         try {
             const userDetails = {
-                FirstName, LastName, Email, Password, Role, Username
+                FirstName, LastName, Email, Password, Role, Username: generatedUsername
             }
 
+            await newRegister.post('', userDetails)
+            console.log("inserted")
 
+            setLoading(false)
+            setForm(false)
+            setEmail(''), setPassword(''), setUsername(''), setRole(''), setConfirmPassword('')
         } 
 
-        catch (error) {
-            
+        catch (error: any) {
+            console.error("User registration failed:", error);  // Log the error locally for developers
+            // Customize messages based on the error type
+            if (error.response && error.response.status === 400) {
+                console.warn("Invalid user data:", error.response.data); // Handle client-side error (bad request)
+            } 
         }
     }
 
@@ -79,7 +99,18 @@ const RegistrationForm = () => {
                 <PasswordInput Icon={LockKeyhole}>
                     <Input type={isPasswordVisible ? 'text' : 'password'} className={`${SingUpInput}`} placeholder='Password'  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)} value={Password}/>
                 </PasswordInput>
-                <p className='text-transparent text-xs'>{Error && !Password && <><span className='text-red-500'>Password is required.</span></>}Password</p>
+                <p className='text-transparent text-xs'>
+                    {Error && (!Password ? (
+                        <span className='text-red-500'>Password is required</span>
+                    ) : Password.length < 8 ? (
+                        <span className='text-red-500'>Password must be at least 8 characters</span>
+                    ) : !/[A-Z]/.test(Password) ? (
+                        <span className='text-red-500'>Password must contain an uppercase letter</span>
+                    ) : !/[!@#$%^&*(),.?":{}|<>]/.test(Password) ? (
+                        <span className='text-red-500'>Password must contain a special character</span>
+                    ) : null)}
+                    Password
+                </p>
 
                 <IconSide Icon={LockKeyhole} color='gray' size={18}>
                     <Input type="password" className={`${LoginInput}`} placeholder='Confirm Password'  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setConfirmPassword(e.target.value)} value={ConfirmPassword}/>
@@ -96,38 +127,48 @@ const RegistrationForm = () => {
             </div>
 
             <div className="flex justify-between items-center mt-1">
-                    <div className="flex gap-2 items-center">
-                        <Input type="checkbox" defaultChecked className="checkbox border w-4 h-4 border-gray-400 rounded-none [--chkbg:theme(colors.indigo.600)] [--chkfg:white]"></Input>
-                        <p className='text-xs text-gray-400 font-medium'>Remember me</p>
-                    </div>
-                    <p className='text-gray-400 text-xs font-semibold'></p>
+                <div className="flex gap-2 items-center">
+                    <Input type="checkbox" defaultChecked className="checkbox border w-4 h-4 border-gray-400 rounded-none [--chkbg:theme(colors.indigo.600)] [--chkfg:white]"></Input>
+                    <p className='text-xs text-gray-400 font-medium'>Remember me</p>
                 </div>
+                <p className='text-gray-400 text-xs font-semibold'></p>
+            </div>
 
-                <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3' onClick={RegisterAccount}>
-                    <span className='text-xs font-bold text-gray-200 hover:text-white'>Sign Up</span>
+            <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3' onClick={RegisterAccount}>
+                {loading ? (<>
+                <div className="flex items-center gap-2">
+                <span className='text-xs font-bold text-gray-200 hover:text-white'>Signing Up</span>
+                <l-leapfrog
+                size="25"
+                speed="2.5" 
+                color="white" 
+                ></l-leapfrog>
+                </div>
+                </>):
+                (<>
+                <span className='text-xs font-bold text-gray-200 hover:text-white'>Sign Up</span>
+                </>)}
+            </button>
+
+        
+
+            <div className="flex mt-3 gap-2 sm:gap-4">
+                <button
+                    onClick={() => handleRoleSelection('seller')}
+                    className={`${Role === 'seller' ? 'bg-blue-600 text-white' : 'bg-white text-black'
+                    } ${ButtonStyle}`}>
+                    Become a Seller
                 </button>
 
-                <div className="flex mt-3 gap-2 sm:gap-4">
-                    <button
-                        onClick={() => handleRoleSelection('seller')}
-                        className={`${Role === 'seller' ? 'bg-blue-600 text-white' : 'bg-white text-black'
-                        } ${ButtonStyle}`}>
-                        Become a Seller
-                    </button>
-
-                    <button
-                        onClick={() => handleRoleSelection('buyer')}
-                        className={`${Role === 'buyer' ? 'bg-blue-600 text-white' : 'bg-white text-black'
-                        } ${ButtonStyle}`}
-                        value={Role}>
-                        Become a Buyer
-                    </button>
-        </div>
-
-                <p className='text-gray-500 text-xs font-semibold mt-3 flex gap-1 justify-center'>Already have an account?<span className='text-blue-700' onClick={Form_Set}>Log in</span></p>
-                <div className="flex fap-2">
-             
-                </div>
+                <button
+                    onClick={() => handleRoleSelection('buyer')}
+                    className={`${Role === 'buyer' ? 'bg-blue-600 text-white' : 'bg-white text-black'
+                    } ${ButtonStyle}`}
+                    value={Role}>
+                    Become a Buyer
+                </button>
+            </div>
+            <p className='text-gray-500 text-xs font-semibold mt-3 flex gap-1 justify-center'>Already have an account?<span className='text-blue-700' onClick={Form_Set}>Log in</span></p>
 
         </div>
     </div>

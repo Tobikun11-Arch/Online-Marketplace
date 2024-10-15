@@ -35,3 +35,11 @@ const ProductDelete = process.env.NEXT_PUBLIC_PRODUCTS_DELETE;
 export const Delete_Product = axios.create({
   baseURL: ProductDelete
 })
+
+const registerUser = process.env.NEXT_PUBLIC_REGISTER;
+export const newRegister = axios.create({
+  baseURL: registerUser,
+  headers: {
+    'Content-Type': 'application/json',
+  }
+})

@@ -14,7 +14,7 @@ interface RequestWithUser extends Request {
 
 
 export const Register = async (req: Request, res: Response) => {
-  const { FirstName, LastName, Email, Password, Role } = req.body;
+  const { FirstName, LastName, Email, Password, Role, Username } = req.body;
 if (!Email || !Password) {
   return res.status(400).json({ error: 'Email and Password are required' });
 }
@@ -22,7 +22,7 @@ const lowerCaseEmail = Email.toLowerCase();
   try {
       const HashPassword = await bcrypt.hash(Password, 10);
       const emailToken = crypto.randomBytes(64).toString('hex');
-      const newUser = new User({ FirstName, LastName, Email: lowerCaseEmail, Password: HashPassword, Role, emailToken });
+      const newUser = new User({ FirstName, LastName, Email: lowerCaseEmail, Password: HashPassword, Role, Username, emailToken });
       await sendMail(lowerCaseEmail, emailToken)
       await newUser.save();
       res.status(201).json();
