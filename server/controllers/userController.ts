@@ -15,13 +15,10 @@ interface RequestWithUser extends Request {
 
 export const Register = async (req: Request, res: Response) => {
   const { FirstName, LastName, Email, Password, Role } = req.body;
-
 if (!Email || !Password) {
   return res.status(400).json({ error: 'Email and Password are required' });
 }
-
 const lowerCaseEmail = Email.toLowerCase();
-
   try {
       const HashPassword = await bcrypt.hash(Password, 10);
       const emailToken = crypto.randomBytes(64).toString('hex');
@@ -30,7 +27,6 @@ const lowerCaseEmail = Email.toLowerCase();
       await newUser.save();
       res.status(201).json();
   }
-
   catch (error) {
       console.error('Error registering user:', error);
       res.status(500).json({ message: 'Registration failed' });

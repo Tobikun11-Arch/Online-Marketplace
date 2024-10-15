@@ -7,7 +7,6 @@ router.get('/verify/:token', async (req, res) => {
     const { token } = req.params;
 
     try {
-   
       const user = await User.findOne({ emailToken: token });
     
         if (!user) {
@@ -19,7 +18,6 @@ router.get('/verify/:token', async (req, res) => {
         if (user.isVerifiedEmail) {
 
           return res.status(400).json({ message: 'Email is already verified.' });
-
       }
 
       user.isVerifiedEmail = true;

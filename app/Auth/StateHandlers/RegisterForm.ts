@@ -8,6 +8,7 @@ interface NewUser {
     Password: string;
     ConfirmPassword: string;
     isPasswordVisible: boolean;
+    Role: string;
 
     setFirstName: (FirstName: string) => void;
     setLastName: (LastName: string) => void;
@@ -16,6 +17,7 @@ interface NewUser {
     setPassword: (Password: string) => void;
     setConfirmPassword: (ConfirmPassword: string) => void;
     setIsPasswordVisible: (value: boolean | ((prevState: boolean) => boolean)) => void;
+    setRole: (Role: string) => void;
 }
 
 export const useNewUser = create<NewUser>((set) => ({
@@ -26,6 +28,7 @@ export const useNewUser = create<NewUser>((set) => ({
     Password: '',
     ConfirmPassword: '',
     isPasswordVisible: false,
+    Role: '',
     setFirstName: (FirstName: string) => set(()=> ({ FirstName })), 
     setLastName: (LastName: string) => set(()=> ({ LastName })), 
     setUsername: (Username: string) => set(()=> ({ Username })), 
@@ -35,5 +38,6 @@ export const useNewUser = create<NewUser>((set) => ({
     setIsPasswordVisible: (value: boolean | ((prevState: boolean) => boolean)) => 
         set((state) => ({ 
             isPasswordVisible: typeof value === 'function' ? value(state.isPasswordVisible) : value 
-        }))
+        })),
+        setRole: (Role: string) => set(()=> ({ Role })),
 }))

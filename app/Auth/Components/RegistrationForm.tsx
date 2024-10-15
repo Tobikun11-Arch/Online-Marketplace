@@ -5,13 +5,19 @@ import IconSide, { PasswordInput } from './ui/IconSide'
 import { Mail, LockKeyhole } from 'lucide-react'
 import { useForm } from '../StateHandlers/Form'
 import { useNewUser } from '../StateHandlers/RegisterForm'
+import { Label } from "../../../@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "../../../@/components/ui/radio-group"
 
 const RegistrationForm = () => {
     const { isForm, setForm } = useForm()
-    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible } = useNewUser()
+    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole } = useNewUser()
     const [ Error , seterror ] = useState<boolean>(false)
     const adjectives = ['Happy', 'Sunny', 'Clever', 'Swift', 'Bright', 'Cool', 'Witty', 'Brave'];
     const nouns = ['Tiger', 'Dolphin', 'Phoenix', 'Eagle', 'Lion', 'Wolf', 'Bear', 'Fox'];
+
+    const handleRoleSelection = (role: string) => {
+        setRole(role)
+    }
 
     const RegisterAccount = async () => {
         if(!Email || !Password || !ConfirmPassword || !Email.includes('@')) {
@@ -25,6 +31,17 @@ const RegistrationForm = () => {
         const number = Math.floor(Math.random() * 1000);
         setUsername(`${adjective}${noun}${number}`);
 
+        try {
+            const userDetails = {
+                FirstName, LastName, Email, Password, Role, Username
+            }
+
+            
+        } 
+
+        catch (error) {
+            
+        }
     }
 
     const Form_Set = useCallback(()=> {
@@ -43,9 +60,9 @@ const RegistrationForm = () => {
             <p className='text-xs text-gray-400'>Join as buyer/seller</p>
 
             <AuthOnline/>
-            <p className='text-gray-400 text-sm flex justify-center mt-5'>or sign up with</p>
+            <p className='text-gray-400 text-sm flex justify-center mt-3'>or sign up with</p>
 
-            <div className="flex flex-col mt-5">
+            <div className="flex flex-col mt-3">
                 <IconSide Icon={Mail} color='gray' size={18}>
                     <Input type="email" className={`${LoginInput}`} placeholder='Email' value={Email} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}/>
                 </IconSide> 
@@ -89,15 +106,27 @@ const RegistrationForm = () => {
                     <span className='text-xs font-bold text-gray-200 hover:text-white'>Sign Up</span>
                 </button>
 
-                <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center'>Already have an account?<span className='text-blue-700' onClick={Form_Set}>Log in</span></p>
-            {/* <div className='mt-4 text-black'>
-                <label>
-                    <input type="radio" name="role" value="buyer" /> Buyer
-                </label>
-                <label className='ml-4'>
-                    <input type="radio" name="role" value="seller" /> Seller
-                </label>
-            </div> */}
+                <div className="flex mt-3 gap-2">
+                    <button
+                        onClick={() => handleRoleSelection('seller')}
+                        className={`${Role === 'seller' ? 'bg-blue-600 text-white' : 'bg-white text-black'
+                        } font-semibold rounded-md w-full border text-xs py-1 transition duration-200`}>
+                        Become a Seller
+                    </button>
+
+                    <button
+                        onClick={() => handleRoleSelection('buyer')}
+                        className={`${Role === 'buyer' ? 'bg-blue-600 text-white' : 'bg-white text-black'
+                        } font-semibold rounded-md w-full border text-xs py-1 transition duration-200`}
+                        value={Role}>
+                        Become a Buyer
+                    </button>
+        </div>
+
+                <p className='text-gray-500 text-xs font-semibold mt-3 flex gap-1 justify-center'>Already have an account?<span className='text-blue-700' onClick={Form_Set}>Log in</span></p>
+                <div className="flex fap-2">
+             
+                </div>
 
         </div>
     </div>
