@@ -64,7 +64,7 @@ export default function LoginForm() {
                 'Content-Type': 'application/json', 
             },
         });
-, 
+
         setFormData({FirstName: '', LastName: '', Email: '', Password: ''});
         setOption(null)
 
@@ -149,7 +149,7 @@ export default function LoginForm() {
 
     }
 
-  }   
+  }
 
   };
 
