@@ -14,6 +14,7 @@ const RegistrationForm = () => {
     const [ Error , seterror ] = useState<boolean>(false)
     const adjectives = ['Happy', 'Sunny', 'Clever', 'Swift', 'Bright', 'Cool', 'Witty', 'Brave'];
     const nouns = ['Tiger', 'Dolphin', 'Phoenix', 'Eagle', 'Lion', 'Wolf', 'Bear', 'Fox'];
+    const ButtonStyle = 'font-semibold rounded-md w-full border text-xs py-1 transition duration-200 hover:bg-blue-600 hover:text-white'
 
     const handleRoleSelection = (role: string) => {
         setRole(role)
@@ -36,7 +37,7 @@ const RegistrationForm = () => {
                 FirstName, LastName, Email, Password, Role, Username
             }
 
-            
+
         } 
 
         catch (error) {
@@ -106,18 +107,18 @@ const RegistrationForm = () => {
                     <span className='text-xs font-bold text-gray-200 hover:text-white'>Sign Up</span>
                 </button>
 
-                <div className="flex mt-3 gap-2">
+                <div className="flex mt-3 gap-2 sm:gap-4">
                     <button
                         onClick={() => handleRoleSelection('seller')}
                         className={`${Role === 'seller' ? 'bg-blue-600 text-white' : 'bg-white text-black'
-                        } font-semibold rounded-md w-full border text-xs py-1 transition duration-200`}>
+                        } ${ButtonStyle}`}>
                         Become a Seller
                     </button>
 
                     <button
                         onClick={() => handleRoleSelection('buyer')}
                         className={`${Role === 'buyer' ? 'bg-blue-600 text-white' : 'bg-white text-black'
-                        } font-semibold rounded-md w-full border text-xs py-1 transition duration-200`}
+                        } ${ButtonStyle}`}
                         value={Role}>
                         Become a Buyer
                     </button>
