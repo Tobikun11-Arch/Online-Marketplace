@@ -7,6 +7,7 @@ interface NewUser {
     Email: string;
     Password: string;
     ConfirmPassword: string;
+    isPasswordVisible: boolean;
 
     setFirstName: (FirstName: string) => void;
     setLastName: (LastName: string) => void;
@@ -14,6 +15,7 @@ interface NewUser {
     setEmail: (Email: string) => void;
     setPassword: (Password: string) => void;
     setConfirmPassword: (ConfirmPassword: string) => void;
+    setIsPasswordVisible: (value: boolean | ((prevState: boolean) => boolean)) => void;
 }
 
 export const useNewUser = create<NewUser>((set) => ({
@@ -23,10 +25,15 @@ export const useNewUser = create<NewUser>((set) => ({
     Email: '',
     Password: '',
     ConfirmPassword: '',
+    isPasswordVisible: false,
     setFirstName: (FirstName: string) => set(()=> ({ FirstName })), 
     setLastName: (LastName: string) => set(()=> ({ LastName })), 
     setUsername: (Username: string) => set(()=> ({ Username })), 
     setEmail: (Email: string) => set(()=> ({ Email })), 
     setPassword: (Password: string) => set(()=> ({ Password })), 
-    setConfirmPassword: (ConfirmPassword: string) => set(()=> ({ ConfirmPassword }))// add more fields as required
+    setConfirmPassword: (ConfirmPassword: string) => set(()=> ({ ConfirmPassword })),
+    setIsPasswordVisible: (value: boolean | ((prevState: boolean) => boolean)) => 
+        set((state) => ({ 
+            isPasswordVisible: typeof value === 'function' ? value(state.isPasswordVisible) : value 
+        }))
 }))

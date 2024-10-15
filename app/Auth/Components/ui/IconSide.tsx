@@ -1,5 +1,6 @@
 import React from 'react'
-import { LucideIcon, LockKeyhole, EyeOff } from 'lucide-react'
+import { LucideIcon, LockKeyhole, EyeOff, Eye } from 'lucide-react'
+import { useNewUser } from '../../StateHandlers/RegisterForm';
 
 interface IconSide {
     children: React.ReactNode;
@@ -24,6 +25,12 @@ export default IconSide
 
 
 export const PasswordInput = ({children, Icon}: IconSide) => {
+    const { isPasswordVisible, setIsPasswordVisible } = useNewUser() 
+
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible((prevState: boolean) => !prevState);
+    };
+
     return (
         <>
             <div className="relative w-full">
@@ -33,7 +40,9 @@ export const PasswordInput = ({children, Icon}: IconSide) => {
             </div>
 
             <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                <EyeOff size={18} color='gray'/>
+                <button type="button" onClick={togglePasswordVisibility}>
+                    {isPasswordVisible ? <Eye size={18} color='gray' /> : <EyeOff size={18} color='gray' />}
+                </button>
             </div>
         </div>
         </>
