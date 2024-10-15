@@ -4,9 +4,23 @@ import Input, { LoginInput, SingUpInput } from './ui/Input'
 import IconSide, { PasswordInput } from './ui/IconSide'
 import { Mail, LockKeyhole } from 'lucide-react'
 import { useForm } from '../StateHandlers/Form'
+import { useNewUser } from '../StateHandlers/RegisterForm'
 
 const RegistrationForm = () => {
     const { isForm, setForm } = useForm()
+    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, Email, setConfirmPassword, ConfirmPassword } = useNewUser()
+
+    const RegisterAccount = async () => {
+        console.log("Details:")
+        console.table({
+            "Email": Email,
+            "Password": Password,
+            "FirstName": FirstName,
+            "lastName": LastName,
+            "Username": Username,
+            "ConfirmPassword": ConfirmPassword
+        })
+    }
 
     const Form_Set = useCallback(()=> {
         setForm(false)
@@ -28,15 +42,15 @@ const RegistrationForm = () => {
 
             <div className="flex flex-col gap-3 mt-5">
                 <IconSide Icon={Mail} color='gray' size={18}>
-                    <Input type="text" className={`${LoginInput}`} placeholder='Email'/>
+                    <Input type="email" className={`${LoginInput}`} placeholder='Email' value={Email} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}/>
                 </IconSide> 
 
                 <PasswordInput Icon={LockKeyhole}>
-                    <Input type="password" className={`${SingUpInput}`} placeholder='Password'/>
+                    <Input type="password" className={`${SingUpInput}`} placeholder='Password'  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)} value={Password}/>
                 </PasswordInput>
 
                 <IconSide Icon={LockKeyhole} color='gray' size={18}>
-                    <Input type="password" className={`${LoginInput}`} placeholder='Confirm Password'/>
+                    <Input type="password" className={`${LoginInput}`} placeholder='Confirm Password'  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setConfirmPassword(e.target.value)} value={ConfirmPassword}/>
                 </IconSide>
             </div>
 
@@ -49,7 +63,7 @@ const RegistrationForm = () => {
                 </div>
 
                 <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3'>
-                    <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
+                    <span className='text-xs font-bold text-gray-200 hover:text-white' onClick={RegisterAccount}>Sign Up</span>
                 </button>
 
                 <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center'>Already have an account?<span className='text-blue-700' onClick={Form_Set}>Log in</span></p>

@@ -5,11 +5,13 @@ interface InputProps {
     className?: string;
     defaultChecked?: boolean;
     placeholder?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({type, className, defaultChecked, placeholder}: InputProps) => {
+const Input = ({type, className, defaultChecked, placeholder, value, onChange}: InputProps) => {
     return (
-        <input className={className} type={type} defaultChecked={defaultChecked} placeholder={placeholder}/>
+        <input className={className} value={value} onChange={onChange} type={type} defaultChecked={defaultChecked} placeholder={placeholder}/>
     )
 }
 

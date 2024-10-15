@@ -26,7 +26,7 @@ const Form = () => {
                 <p className='text-gray-400 text-sm flex justify-center mt-5'>or continue with email</p>
                 <div className="flex flex-col gap-3 mt-5">
                     <IconSide Icon={Mail} color='gray' size={18}>
-                        <Input type="text" className={`${LoginInput}`} placeholder='Email'/>
+                        <Input type="email" className={`${LoginInput}`} placeholder='Email'/>
                     </IconSide> 
 
                     <PasswordInput Icon={LockKeyhole}>
