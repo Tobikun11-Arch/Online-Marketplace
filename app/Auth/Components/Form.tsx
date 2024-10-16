@@ -6,11 +6,15 @@ import { Mail, LockKeyhole } from 'lucide-react'
 import { useForm } from '../StateHandlers/Form'
 
 const Form = () => {
-    const { isForm, setForm } = useForm()
+    const { isForm, setForm, Email, setEmail, Password, setPassword } = useForm()
 
     const Form_Set = useCallback(()=> {
         setForm(true)
     }, [isForm])
+
+    const handleSubmit = () => {
+        console.log(Email, Password)
+    }
 
     return (
         <div className="h-screen w-screen flex justify-center items-center sm:h-full sm:w-full">
@@ -26,11 +30,11 @@ const Form = () => {
                 <p className='text-gray-400 text-sm flex justify-center mt-5'>or continue with email</p>
                 <div className="flex flex-col gap-3 mt-5">
                     <IconSide Icon={Mail} color='gray' size={18}>
-                        <Input type="email" className={`${LoginInput}`} placeholder='Email'/>
+                        <Input type="email" className={`${LoginInput}`} placeholder='Email' value={Email} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}/>
                     </IconSide> 
 
                     <PasswordInput Icon={LockKeyhole}>
-                        <Input type="password" className={`${SingUpInput}`} placeholder='Password'/>
+                        <Input type="password" className={`${SingUpInput}`} placeholder='Password'  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)} value={Password}/>
                     </PasswordInput>
                 </div>
 
@@ -42,7 +46,7 @@ const Form = () => {
                     <p className='text-gray-400 text-xs font-semibold'>Forgot Password?</p>
                 </div>
 
-                <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3'>
+                <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3' onClick={handleSubmit}>
                     <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
                 </button>
 

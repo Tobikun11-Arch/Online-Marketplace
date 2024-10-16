@@ -56,13 +56,12 @@ if (!Email || !Password) {
     }
 
     if (!user || !(await user.comparePassword(Password))) {
-      console.log('Invalid attempt');
       return res.status(401).json({ error: 'Invalid Email or Password' });
     }
 
     if (user.isVerifiedEmail === true) {
       const token = GenerateToken(user._id.toString());
-      res.json({ token, user: { FirstName: user.FirstName, LastName: user.LastName, Email: user.Email, Role: user.Role} });
+      res.json({ token });
     }
 
     else if (user.isVerifiedEmail === false) {
@@ -98,5 +97,6 @@ export const Dashboard = async (req: RequestWithUser, res: Response) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 
