@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt'
 import dotenv from "dotenv"
-import { GenerateToken } from '../middleware/AuthenticatedJWT';
+import { GenerateTokens } from '../middleware/AuthenticatedJWT';
 import User from '../models/user';
 const crypto = require('crypto');
 const sendMail = require('../services/sendMail');
@@ -12,6 +12,15 @@ interface RequestWithUser extends Request {
   user?: any;
 }
 
+interface NewUser {
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Password: string;
+  Role: string;
+  Username: string;
+  emailToken: string;
+}
 
 export const Register = async (req: Request, res: Response) => {
   const { FirstName, LastName, Email, Password, Role, Username } = req.body;
@@ -45,23 +54,42 @@ export const Register = async (req: Request, res: Response) => {
 export const Login = async (req: Request, res: Response) => {
   const { Email, Password } = req.body;
 
-if (!Email || !Password) {
-  return res.status(400).json({ error: 'Email and Password are required' });
-}
+  if (!Email || !Password) {
+    return res.status(400).json({ error: 'Email and Password are required' });
+  }
+
+  console.log("working")
 
   try {
     let user = await User('buyer').findOne({ Email: Email.toLowerCase() });
     if(!user) {
       user = await User('seller').findOne({ Email: Email.toLowerCase() });
     }
+    console.log("user: ", user)
+    
 
     if (!user || !(await user.comparePassword(Password))) {
       return res.status(401).json({ error: 'Invalid Email or Password' });
     }
 
     if (user.isVerifiedEmail === true) {
-      const token = GenerateToken(user._id.toString());
-      res.json({ token });
+      const { accessToken, refreshToken } = GenerateTokens(user._id.toString());
+      
+      user.refreshToken = refreshToken
+      await user.save();
+      res.cookie('accessToken', accessToken, {
+        httpOnly: true, 
+        secure: process.env.NODE_ENV === 'production', 
+        maxAge: 2 * 60 * 60 * 1000, // 2 hours
+      });
+
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      });
+
+      return res.json({ message: 'Login successful', user });
     }
 
     else if (user.isVerifiedEmail === false) {
@@ -73,7 +101,6 @@ if (!Email || !Password) {
     console.error('Error logging in:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-  
 };
 
 

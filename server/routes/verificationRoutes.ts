@@ -7,7 +7,7 @@ router.get('/verify/:token', async (req, res) => {
     const { token } = req.params;
 
     try {
-      const user = await User.findOne({ emailToken: token });
+      const user = await User('buyer').findOne({ emailToken: token }) || await User('seller').findOne({ emailToken: token });
     
         if (!user) {
           

@@ -120,6 +120,7 @@ export default function LoginForm() {
       });
 
         const { token, user } = response.data;
+        //set the token to cookies
         localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(user));
 

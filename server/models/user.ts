@@ -11,6 +11,7 @@ export interface IUser extends Document {
     Username: string;
     isVerifiedEmail: boolean;
     emailToken?: string;
+    refreshToken: string
     comparePassword: (candidatePassword: string) => Promise<boolean>;
 }
 
@@ -22,7 +23,8 @@ const userSchema = new mongoose.Schema<IUser>({
     Role: { type: String, required: true },
     Username: { type: String, required: true },
     isVerifiedEmail: { type: Boolean, default: false, required: true},
-    emailToken: { type: String, required: false}
+    emailToken: { type: String, required: false},
+    refreshToken: { type: String, required: false }
 }, { collection: 'SellerAccounts'});
 
 

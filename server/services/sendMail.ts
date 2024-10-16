@@ -30,7 +30,7 @@ const sendMail = async (lowerCaseEmail: string, emailToken: string) => {
             </p>
             <p style="font-size: 14px; color: #777;">
                 If you did not create an account, please ignore this email.
-            </p>
+            </p>  
         </div>
     `
 };

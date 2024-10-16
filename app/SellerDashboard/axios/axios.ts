@@ -43,3 +43,12 @@ export const newRegister = axios.create({
     'Content-Type': 'application/json',
   }
 })
+
+const loginUser = process.env.NEXT_PUBLIC_LOGIN;
+export const userLog = axios.create({
+  baseURL: loginUser,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+})

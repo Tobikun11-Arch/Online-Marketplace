@@ -4,40 +4,30 @@ import User from '../models/user';
 import { IUser } from '../models/user'
 
 interface RequestWithUser extends Request {
-
     user?: IUser;
-
-  }
-
+    }
 
 export const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(' ')[1]; 
-    
     if (!token) {
-
         return res.status(401).json({ error: 'No token provided' });
-
     }
-
     try {
 
         const decoded: any = jwt.verify(token, process.env.JWT_SECRET!); 
-        const user = await User.findById(decoded.userId) as IUser;
+        const sellerUser = await User('seller').findById(decoded.userId) as IUser;
+        const buyerUser = await User('buyer').findById(decoded.userId) as IUser;
 
-        if (!user) {
-            
+        if (!sellerUser || !buyerUser) {
             return res.status(401).json({ error: 'Unauthorized' });
-
         }
 
-        req.user = user; 
+        req.user = sellerUser || buyerUser; 
         next(); 
     } 
-    
+
     catch (error) {
-
         res.status(401).json({ error: 'Invalid token' });
-
     }
 
 };

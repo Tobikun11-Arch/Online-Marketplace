@@ -1,19 +1,58 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import AuthOnline from './ui/AuthOnline'
 import Input, { LoginInput, SingUpInput } from './ui/Input'
 import IconSide, { PasswordInput } from './ui/IconSide'
 import { Mail, LockKeyhole } from 'lucide-react'
 import { useForm } from '../StateHandlers/Form'
+import { useNewUser } from '../StateHandlers/RegisterForm'
+import { userLog } from '../../SellerDashboard/axios/axios'
+import { useRouter } from 'next/navigation'
 
 const Form = () => {
     const { isForm, setForm, Email, setEmail, Password, setPassword } = useForm()
+    const { isPasswordVisible } = useNewUser()
+    const [ Error , seterror ] = useState<boolean>(false)
+    const [ loading, setLoading ] = useState<boolean>(false)
+    const [ messageLogin, setmessageLogin ] = useState<string>('')
+    const router = useRouter()
 
     const Form_Set = useCallback(()=> {
         setForm(true)
     }, [isForm])
 
-    const handleSubmit = () => {
-        console.log(Email, Password)
+    const handleSubmit = async () => {
+        if(!Email || !Password) {
+            seterror(true)
+            return;
+        }
+
+        seterror(false)
+        setLoading(true)
+        console.log("before try")
+
+        try {
+            const userDetails = { Email, Password }
+            const response =  await userLog.post('', userDetails)
+            setLoading(false)
+
+            if (response.data.message === 'Login successful') {
+                const { user } = response.data;
+                if (user.Role === 'buyer') {
+                    router.push('/Client/ClientDashboard');
+                } else {
+                    router.push('/SellerDashboard/Home');
+                }
+            }
+
+            else {
+                console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
+            }
+        } 
+
+        catch (error) {
+            setLoading(false);
+            console.log('Catch area', error)
+        }
     }
 
     return (
@@ -34,7 +73,7 @@ const Form = () => {
                     </IconSide> 
 
                     <PasswordInput Icon={LockKeyhole}>
-                        <Input type="password" className={`${SingUpInput}`} placeholder='Password'  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)} value={Password}/>
+                        <Input  type={isPasswordVisible ? 'text' : 'password'} className={`${SingUpInput}`} placeholder='Password'  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)} value={Password}/>
                     </PasswordInput>
                 </div>
 

@@ -51,3 +51,8 @@ next-env.d.ts
 .vercel
 node_modules
 node_modules/
+
+# config
+server\config\config.ts
+config\config.ts
+config.ts

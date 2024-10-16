@@ -19,8 +19,11 @@ protectedroute.get('/dashboard', async (req: RequestWithUser, res: Response) => 
     const userEmail = req.user?.Email;
 
     try {
-   
-        const user = await User.findOne({ Email: userEmail });
+      let user = await User('buyer').findOne({ Email: userEmail.toLowerCase() });
+
+      if (!user) {
+          user = await User('seller').findOne({ Email: userEmail.toLowerCase() });
+      }
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });

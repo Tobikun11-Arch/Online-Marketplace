@@ -58,7 +58,7 @@ const RegistrationForm = () => {
             setLoading(false)
             console.error("User registration failed:", error); 
             seterror(true)
-            if (error.response.status === 400) {
+            if (error.response) {
                 setExistedEmail('Email is already registered'); // Handle client-side error (bad request)
             } 
             else {
