@@ -30,6 +30,9 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
     return await bcrypt.compare(candidatePassword, this.Password);
 };
 
-const User: Model<IUser> = mongoose.model<IUser>('User', userSchema);
+const User = (role: string): Model<IUser> => {
+    const collectionName = role === 'buyer' ? 'BuyerAccounts' : 'SellerAccounts'
+    return mongoose.model<IUser>('User', userSchema, collectionName)
+}
 
 export default User;
