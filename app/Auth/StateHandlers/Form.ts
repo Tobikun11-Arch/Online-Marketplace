@@ -6,6 +6,6 @@ interface formProps {
 }
 
 export const useForm = create<formProps>((set)=> ({
-    isForm: false, //change this to false after registration form done
+    isForm: false, 
     setForm: (isForm: boolean) => set(()=> ({ isForm }))
 }))

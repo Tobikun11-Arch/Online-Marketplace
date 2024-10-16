@@ -58,6 +58,7 @@ const RegistrationForm = () => {
 
         catch (error: any) {
             console.error("User registration failed:", error);  // Log the error locally for developers
+            console.log("Details: ", FirstName, LastName, Username, Password, ConfirmPassword, Role, Email)
             // Customize messages based on the error type
             if (error.response && error.response.status === 400) {
                 console.warn("Invalid user data:", error.response.data); // Handle client-side error (bad request)
