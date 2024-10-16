@@ -43,8 +43,3 @@ next-env.d.ts
 node_modules
 
 
-# config
-server/config/config.ts
-config/config.ts
-config.ts
-config.ts/
