@@ -15,6 +15,7 @@ const RegistrationForm = () => {
     const adjectives = ['Dab', 'Sunny', 'Clever', 'Swift', 'Bright', 'Cool', 'Witty', 'Brave'];
     const ButtonStyle = 'font-semibold rounded-md w-full border text-xs py-1 transition duration-200 hover:bg-blue-600 hover:text-white'
     const [ loading, setLoading ] = useState<boolean>(false)
+    const [ existedEmail, setExistedEmail ] = useState<string>('')
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -55,13 +56,16 @@ const RegistrationForm = () => {
 
         catch (error: any) {
             setLoading(false)
-            console.error("User registration failed:", error);  // Log the error locally for developers
-            // Customize messages based on the error type
-            if (error.response && error.response.status === 400) {
-                seterror(error.response.data) // Handle client-side error (bad request)
+            console.error("User registration failed:", error); 
+            seterror(true)
+            if (error.response.status === 400) {
+                setExistedEmail('Email is already registered'); // Handle client-side error (bad request)
             } 
+            else {
+                    setExistedEmail('An error occurred, please try again.'); // Handle other errors
+            }
         }
-    }
+    }   
 
     const Form_Set = useCallback(()=> {
         setForm(false)
@@ -90,7 +94,9 @@ const RegistrationForm = () => {
                         <span className='text-red-500'>Email is required</span>
                     ) : !Email.includes('@') ? (
                         <span className='text-red-500'>Please enter a valid email address</span>
-                    ) : <span className='text-red-500'>Email is already registered</span>)}
+                    ) : existedEmail === 'Email is already registered' ? (
+                        <span className='text-red-500'>Email is already registered</span>
+                    ) : null)}
                     Email
                 </p>    
 
