@@ -12,8 +12,7 @@ const RegistrationForm = () => {
     const { isForm, setForm } = useForm()
     const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole } = useNewUser()
     const [ Error , seterror ] = useState<boolean>(false)
-    const adjectives = ['Happy', 'Sunny', 'Clever', 'Swift', 'Bright', 'Cool', 'Witty', 'Brave'];
-    const nouns = ['Tiger', 'Dolphin', 'Phoenix', 'Eagle', 'Lion', 'Wolf', 'Bear', 'Fox'];
+    const adjectives = ['Dab', 'Sunny', 'Clever', 'Swift', 'Bright', 'Cool', 'Witty', 'Brave'];
     const ButtonStyle = 'font-semibold rounded-md w-full border text-xs py-1 transition duration-200 hover:bg-blue-600 hover:text-white'
     const [ loading, setLoading ] = useState<boolean>(false)
 
@@ -38,7 +37,7 @@ const RegistrationForm = () => {
         seterror(false)
         setLoading(true)
         const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-        const noun = nouns[Math.floor(Math.random() * nouns.length)];
+        const noun = Password[Math.floor(Math.random() * Password.length)];
         const number = Math.floor(Math.random() * 1000);    
         const generatedUsername = `${adjective}${noun}${number}`; //set a random username
         setUsername(generatedUsername); 
@@ -55,10 +54,11 @@ const RegistrationForm = () => {
         } 
 
         catch (error: any) {
+            setLoading(false)
             console.error("User registration failed:", error);  // Log the error locally for developers
             // Customize messages based on the error type
             if (error.response && error.response.status === 400) {
-                console.warn("Invalid user data:", error.response.data); // Handle client-side error (bad request)
+                seterror(error.response.data) // Handle client-side error (bad request)
             } 
         }
     }
@@ -90,7 +90,7 @@ const RegistrationForm = () => {
                         <span className='text-red-500'>Email is required</span>
                     ) : !Email.includes('@') ? (
                         <span className='text-red-500'>Please enter a valid email address</span>
-                    ) : null)}
+                    ) : <span className='text-red-500'>Email is already registered</span>)}
                     Email
                 </p>    
 

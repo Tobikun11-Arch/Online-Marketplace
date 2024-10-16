@@ -15,23 +15,19 @@ interface RequestWithUser extends Request {
 
 export const Register = async (req: Request, res: Response) => {
   const { FirstName, LastName, Email, Password, Role, Username } = req.body;
-if (!Email || !Password) {
-  return res.status(400).json({ error: 'Email and Password are required' });
-}
-
-const existedBuyer = await User('buyer').findOne({ Email: Email.toLowerCase() })
-const existedSeller = await User('seller').findOne({ Email: Email.toLowerCase() })
-
-if(existedBuyer && existedSeller) {
-  console.log("existing")
-  return;
-}
-
-const userRole = Role
-const newUser = User(userRole)
-const lowerCaseEmail = Email.toLowerCase();
+  if (!Email || !Password) {
+    return res.status(400).json({ error: 'Email and Password are required' });
+  }
+  const userRole = Role
+  const newUser = User(userRole)
+  const lowerCaseEmail = Email.toLowerCase();
 
   try {
+    const existedBuyer = await User('buyer').findOne({ Email: Email.toLowerCase() })
+    const existedSeller = await User('seller').findOne({ Email: Email.toLowerCase() })
+    if (existedBuyer || existedSeller) {
+      return res.status(400).json({ error: 'Email is already registered' });
+    }
       const HashPassword = await bcrypt.hash(Password, 10);
       const emailToken = crypto.randomBytes(64).toString('hex');
       const newUsers = new newUser({ FirstName, LastName, Email: lowerCaseEmail, Password: HashPassword, Role, Username, emailToken });
