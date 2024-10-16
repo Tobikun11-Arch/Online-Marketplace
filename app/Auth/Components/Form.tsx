@@ -28,7 +28,7 @@ const Form = () => {
 
         seterror(false)
         setLoading(true)
-        console.log("before try")
+        console.log("before try", process.env.NEXT_PUBLIC_LOGIN)
 
         try {
             const userDetails = { Email, Password }

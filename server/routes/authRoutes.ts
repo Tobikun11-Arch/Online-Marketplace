@@ -29,6 +29,7 @@ router.post('/refresh-token', async (req: Request, res: Response) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 2 * 60 * 60 * 1000, // 2 hours
+            sameSite: 'none'
         });
 
         res.json({ accessToken });
