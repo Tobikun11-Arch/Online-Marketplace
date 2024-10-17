@@ -20,10 +20,9 @@ const productList_api = process.env.NEXT_PUBLIC_PRODUCT_LIST;
 if(!productList_api) {
     throw new Error('product list is not set'); 
 }
-
+  
 export const productList = axios.create({
-    baseURL: productList_api,
-    withCredentials: true
+    baseURL: productList_api
 })
 
 

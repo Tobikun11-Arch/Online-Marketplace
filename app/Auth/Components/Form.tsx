@@ -45,14 +45,17 @@
                     if (response.data.message === 'Login successful') {
                         const { user, accessToken } = response.data;
                         Cookies.set('accessToken', accessToken); 
-                        setEmail(''), setPassword('')
-                        setmessageLogin(false)
-                        setLoading(false)
                         if (user.Role === 'buyer') {
+                            setEmail(''), setPassword('')
+                            setmessageLogin(false)
+                            setLoading(false)
                             sentMail(false)
                             router.push('/Client/ClientDashboard');
                         } else {
                             sentMail(false)
+                            setEmail(''), setPassword('')
+                            setmessageLogin(false)
+                            setLoading(false)
                             localStorage.removeItem('activeItem')
                             router.push('/SellerDashboard/Home');
                         }

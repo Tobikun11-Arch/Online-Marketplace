@@ -58,6 +58,7 @@ function Manage() {
   queryKey: ['ProductLists'],
   queryFn: async () => {
     const token = Cookies.get('accessToken');
+    console.log("Token: ", token)
       if (!token) {
         router.push('/Auth');  
         console.log("no token")
@@ -66,7 +67,7 @@ function Manage() {
     try {
     const response = await productList.get('', {
       headers: {
-        Authorization: `Bearer ${token}` // Use Bearer token for API requests
+        Authorization: `Bearer ${token}` 
       } 
     })
     return response.data;

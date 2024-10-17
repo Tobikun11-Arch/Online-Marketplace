@@ -8,10 +8,13 @@ interface RequestWithUser extends Request {
     }
 
 export const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
-    const accessToken = req.cookies.accessToken;
-    if (!accessToken) {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ error: 'No token provided' });
     }
+
+    const accessToken = authHeader.split(' ')[1]; 
     try {
         
         const decoded: any = jwt.verify(accessToken, process.env.NEXT_PUBLIC_JWT_SECRET!); 
