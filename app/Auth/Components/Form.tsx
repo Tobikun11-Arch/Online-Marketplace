@@ -20,6 +20,7 @@
 
         const Form_Set = useCallback(()=> {
             setForm(true)
+            setEmail(''), setPassword('')
         }, [isForm])
 
         useEffect(() => {

@@ -120,7 +120,7 @@ useEffect(() => {
 
     return (
     <>
-        <div className='w-full sm:w-3/5 sm:flex mt-4'>
+        <div className='w-full sm:w-3/5 sm:flex mt-4 dark:text-black'>
 
         {isLoadingPublish ? 
         (<>

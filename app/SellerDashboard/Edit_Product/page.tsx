@@ -17,7 +17,7 @@ export default function Page() {
     }
 
     return (
-        <div className='min-h-screen sm:h-screen bg-gray-200 px-3 py-5 sm:px-7'>
+        <div className='min-h-screen sm:h-screen bg-gray-200 px-3 py-5 sm:px-7 dark:text-black'>
 
             <div className="flex justify-between items-center">
                 <div className="flex gap-1 items-center text-xl font-semibold ">
