@@ -23,6 +23,7 @@ if(!productList_api) {
 
 export const productList = axios.create({
     baseURL: productList_api,
+    withCredentials: true
 })
 
 

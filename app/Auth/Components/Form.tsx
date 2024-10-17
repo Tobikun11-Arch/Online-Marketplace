@@ -29,7 +29,6 @@
 
             seterror(false)
             setLoading(true)
-            console.log("before try", process.env.NEXT_PUBLIC_LOGIN)
 
                 try {
                     const userDetails = { Email, Password }
@@ -39,8 +38,6 @@
                     if (response.data.message === 'Login successful') {
                         const { user, accessToken } = response.data;
                         Cookies.set('accessToken', accessToken); 
-                        const token = Cookies.get('accessToken');
-                        console.log("Retrieved Token:", token);
                         if (user.Role === 'buyer') {
                             router.push('/Client/ClientDashboard');
                             

@@ -8,13 +8,13 @@ interface RequestWithUser extends Request {
     }
 
 export const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
-    const token = req.headers.authorization?.split(' ')[1]; 
-    if (!token) {
+    const accessToken = req.cookies.accessToken;
+    if (!accessToken) {
         return res.status(401).json({ error: 'No token provided' });
     }
     try {
-
-        const decoded: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET!); 
+        
+        const decoded: any = jwt.verify(accessToken, process.env.NEXT_PUBLIC_JWT_SECRET!); 
         const userId = decoded.userId; // Store userId for later use
         const sellerUser = await User('seller').findById(userId) as IUser;
         const buyerUser = await User('buyer').findById(userId) as IUser;

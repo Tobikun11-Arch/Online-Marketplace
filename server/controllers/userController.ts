@@ -72,21 +72,6 @@ export const Login = async (req: Request, res: Response) => {
       const { accessToken, refreshToken } = GenerateTokens(user._id.toString());
       
       user.refreshToken = refreshToken
-      await user.save();
-      res.cookie('accessToken', accessToken, {
-        httpOnly: true, 
-        secure: process.env.NODE_ENV === 'production', 
-        maxAge: 2 * 60 * 60 * 1000, // 2 hours
-        sameSite: 'none',
-      });
-
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        sameSite: 'none'
-      });
-
       return res.json({ message: 'Login successful', user, accessToken });
     }
 

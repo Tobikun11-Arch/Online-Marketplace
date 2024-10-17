@@ -52,23 +52,23 @@ function Manage() {
       hourglass.register()
     }
   }, []);
+  
 
   const { isLoading, error, data: products } = useQuery<Products | null>({
   queryKey: ['ProductLists'],
   queryFn: async () => {
     const token = Cookies.get('accessToken');
-    console.log("Token: ", token)
-      
       if (!token) {
-        router.push('/login');
+        router.push('/Auth');  
+        console.log("no token")
         throw new Error('No authentication token found');
       }
     try {
-    const response = await productList.get('', { 
-    headers: {
-    Authorization: `Bearer ${token}`,
-    },
-    });
+    const response = await productList.get('', {
+      headers: {
+        Authorization: `Bearer ${token}` // Use Bearer token for API requests
+      } 
+    })
     return response.data;
     }
   
