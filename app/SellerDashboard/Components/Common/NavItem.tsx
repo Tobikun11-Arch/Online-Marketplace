@@ -14,7 +14,7 @@ export default function NavItem({icon, label, isActive, onClick, href}: NavItemP
     <Link href={href}>
     <li
     className={`flex items-center gap-2 p-3 rounded-tl-lg rounded-bl-lg cursor-pointer ${
-      isActive ? 'bg-white' : 'hover:bg-gray-950 text-white'
+      isActive ? 'bg-white dark:text-black' : 'hover:bg-gray-950 text-white'
     }`}
     onClick={onClick}>
     {icon}

@@ -1,4 +1,4 @@
-    import React, { useCallback, useState } from 'react'
+    import React, { useCallback, useState, useEffect } from 'react'
     import AuthOnline from './ui/AuthOnline'
     import Input, { LoginInput, SingUpInput } from './ui/Input'
     import IconSide, { PasswordInput } from './ui/IconSide'
@@ -8,18 +8,25 @@
     import { userLog } from '../../SellerDashboard/axios/axios'
     import { useRouter } from 'next/navigation'
     import Cookies from 'js-cookie'
+    import { leapfrog } from 'ldrs'
 
     const Form = () => {
         const { isForm, setForm, Email, setEmail, Password, setPassword } = useForm()
-        const { isPasswordVisible } = useNewUser()
+        const { isPasswordVisible, emailSent, sentMail } = useNewUser()
         const [ Error , seterror ] = useState<boolean>(false)
         const [ loading, setLoading ] = useState<boolean>(false)
-        const [ messageLogin, setmessageLogin ] = useState<string>('')
+        const [ messageLogin, setmessageLogin ] = useState<boolean>(false)
         const router = useRouter()
 
         const Form_Set = useCallback(()=> {
             setForm(true)
         }, [isForm])
+
+        useEffect(() => {
+            if (typeof window !== 'undefined') {
+                leapfrog.register()
+            }
+        }, []);
 
         const handleSubmit = async () => {
             if(!Email || !Password) {
@@ -38,10 +45,14 @@
                     if (response.data.message === 'Login successful') {
                         const { user, accessToken } = response.data;
                         Cookies.set('accessToken', accessToken); 
+                        setEmail(''), setPassword('')
+                        setmessageLogin(false)
+                        setLoading(false)
                         if (user.Role === 'buyer') {
+                            sentMail(false)
                             router.push('/Client/ClientDashboard');
-                            
                         } else {
+                            sentMail(false)
                             localStorage.removeItem('activeItem')
                             router.push('/SellerDashboard/Home');
                         }
@@ -53,6 +64,8 @@
                 } 
 
                 catch (error) {
+                    seterror(true)
+                    setmessageLogin(true)
                     setLoading(false);
                     console.log('Catch area', error)
                 }
@@ -70,14 +83,34 @@
                     <p className='text-xs text-gray-400'>Welcome back! Select method to log in:</p>
                     <AuthOnline/>
                     <p className='text-gray-400 text-sm flex justify-center mt-5'>or continue with email</p>
-                    <div className="flex flex-col gap-3 mt-5">
+                    <div className="flex flex-col mt-5">
                         <IconSide Icon={Mail} color='gray' size={18}>
                             <Input type="email" className={`${LoginInput}`} placeholder='Email' value={Email} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}/>
                         </IconSide> 
+                        <p className='text-transparent text-xs'>
+                            {Error && !Email ? (
+                                <span className='text-red-500'>Email is required</span>
+                            ) : null}
+                            {emailSent ? (
+                                <span className='text-red-500'>Please check your email to verify your account!</span>
+                            ) : messageLogin ? (
+                                <span className='text-red-500'>Invalid email or password.</span>
+                            ) : null}
+                            Email
+                        </p>
 
                         <PasswordInput Icon={LockKeyhole}>
                             <Input  type={isPasswordVisible ? 'text' : 'password'} className={`${SingUpInput}`} placeholder='Password'  onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)} value={Password}/>
                         </PasswordInput>
+                        <p className='text-transparent text-xs'>
+                            {Error && !Password ? (
+                                <span className='text-red-500'>Password is required</span>
+                            ) : null}
+                            {messageLogin ? ( 
+                                <span className='text-red-500'>Please try again!</span>
+                            ) : null}
+                            Password
+                        </p>
                     </div>
 
                     <div className="flex justify-between items-center mt-3">
@@ -89,7 +122,19 @@
                     </div>
 
                     <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3' onClick={handleSubmit}>
-                        <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
+                    {loading ? (<>
+                <div className="flex items-center gap-2">
+                <span className='text-xs font-bold text-gray-200 hover:text-white'>Logging in</span>
+                <l-leapfrog
+                size="25"
+                speed="2.5" 
+                color="white" 
+                ></l-leapfrog>
+                </div>
+                </>):
+                (<>
+                <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
+                </>)}
                     </button>
 
                     <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center'>Don't have an account? <span className='text-blue-700' onClick={Form_Set}>Create an account</span></p>

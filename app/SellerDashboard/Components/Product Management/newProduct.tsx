@@ -64,7 +64,7 @@ export default function NewProduct() {
   
   else {
     // If all validations pass, log the product details
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('accessToken');
         if (!token) {
             router.push('/');
             return;
@@ -175,7 +175,7 @@ export default function NewProduct() {
 
   return (
     <>
-      <main className='px-3 pb-3 pt-12 md:pt-12 xl:pt-0'>
+      <main className='px-3 pb-3 pt-12 md:pt-12 xl:pt-0 dark:text-black'>
 
         <Pinwheel/>
 

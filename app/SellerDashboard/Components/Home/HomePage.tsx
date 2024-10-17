@@ -9,7 +9,7 @@ export default function HomePage() {
 
   return (
     <>
-        <div className='w-full min-h-screen flex items-start flex-col cursor-default pb-4'>
+        <div className='w-full min-h-screen flex items-start flex-col cursor-default pb-4 dark:text-black'>
           <h1 className='foont-abc font-bold text-3xl cursor-default mt-12 xl:mt-10 xl:ml-64 pl-3'>Your Dashboard</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 w-full xl:w-3/4 md:grid-cols-4 p-2 gap-2 xl:mt-0 BoxItemContainer xl:ml-64">
               <BoxItem 

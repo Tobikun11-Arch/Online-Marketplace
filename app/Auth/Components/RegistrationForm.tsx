@@ -10,7 +10,7 @@ import { leapfrog } from 'ldrs'
 
 const RegistrationForm = () => {
     const { isForm, setForm } = useForm()
-    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole } = useNewUser()
+    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole, sentMail} = useNewUser()
     const [ Error , seterror ] = useState<boolean>(false)
     const adjectives = ['Dab', 'Sunny', 'Clever', 'Swift', 'Bright', 'Cool', 'Witty', 'Brave'];
     const ButtonStyle = 'font-semibold rounded-md w-full border text-xs py-1 transition duration-200 hover:bg-blue-600 hover:text-white'
@@ -50,6 +50,7 @@ const RegistrationForm = () => {
 
             await newRegister.post('', userDetails)
             setLoading(false)
+            sentMail(true)
             setForm(false)
             setEmail(''), setPassword(''), setRole(''), setConfirmPassword('')
         } 

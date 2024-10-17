@@ -13,7 +13,7 @@ export default function Mailpop() {
         Make sure to check your spam or junk folder
         </button>
         <button className="accept">
-           <a href="https://mail.google.com/mail/u/0/">Verify</a>
+          <a href="https://mail.google.com/mail/u/0/">Verify</a>
         </button>
     </div>
 </div>

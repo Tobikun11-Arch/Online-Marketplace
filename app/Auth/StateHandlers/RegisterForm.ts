@@ -9,6 +9,7 @@ interface NewUser {
     ConfirmPassword: string;
     isPasswordVisible: boolean;
     Role: string;
+    emailSent: boolean;
 
     setFirstName: (FirstName: string) => void;
     setLastName: (LastName: string) => void;
@@ -18,6 +19,7 @@ interface NewUser {
     setConfirmPassword: (ConfirmPassword: string) => void;
     setIsPasswordVisible: (value: boolean | ((prevState: boolean) => boolean)) => void;
     setRole: (Role: string) => void;
+    sentMail: (emailSent: boolean) => void;
 }
 
 export const useNewUser = create<NewUser>((set) => ({
@@ -29,6 +31,7 @@ export const useNewUser = create<NewUser>((set) => ({
     ConfirmPassword: '',
     isPasswordVisible: false,
     Role: '',
+    emailSent: false,
     setFirstName: (FirstName: string) => set(()=> ({ FirstName })), 
     setLastName: (LastName: string) => set(()=> ({ LastName })), 
     setUsername: (Username: string) => set(()=> ({ Username })), 
@@ -40,4 +43,5 @@ export const useNewUser = create<NewUser>((set) => ({
             isPasswordVisible: typeof value === 'function' ? value(state.isPasswordVisible) : value 
         })),
         setRole: (Role: string) => set(()=> ({ Role })),
+    sentMail: (emailSent: boolean) => set(()=> ({ emailSent })), 
 }))
