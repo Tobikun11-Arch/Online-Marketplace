@@ -19,6 +19,7 @@ import {Cloudinary, ProductApi} from '../../axios/axios'
 import Schedule from './Schedule'
 import Pinwheel from './Loading/Pinwheel'
 import LoadingSchedule from './Loading/LoadingSchedule'
+import Cookies from 'js-cookie'
 
 export default function NewProduct() {
   const { 
