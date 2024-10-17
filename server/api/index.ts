@@ -13,7 +13,7 @@ const cors = require('cors');
 
 const corsOptions = {
     origin: ['http://localhost:3000', 'https://online-marketplace-beta.vercel.app'],
-    methods: ['GET', 'POST', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true 
 };
@@ -40,7 +40,7 @@ connectToMongoDB()
     });
 
 app.use('/api/users', UserRoutes);
-app.use('/api', ProtectedRoutes, authRoute);
+app.use('/api', ProtectedRoutes);
 app.use('/', verificationRoutes); 
 
 app.get("/", (req: Request, res: Response) => res.send("Express on Vercelss"));

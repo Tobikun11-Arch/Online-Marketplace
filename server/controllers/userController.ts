@@ -45,7 +45,7 @@ export const Register = async (req: Request, res: Response) => {
       res.status(201).json();
   }
   catch (error) {
-      console.error('Error registering user:', error);
+      console.error('Error registering user:', error);      
       res.status(500).json({ message: 'Registration failed' });
   }
 };
@@ -58,15 +58,11 @@ export const Login = async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Email and Password are required' });
   }
 
-  console.log("working")
-
   try {
     let user = await User('buyer').findOne({ Email: Email.toLowerCase() });
     if(!user) {
       user = await User('seller').findOne({ Email: Email.toLowerCase() });
     }
-    console.log("user: ", user)
-    
 
     if (!user || !(await user.comparePassword(Password))) {
       return res.status(401).json({ error: 'Invalid Email or Password' });
@@ -91,7 +87,7 @@ export const Login = async (req: Request, res: Response) => {
         sameSite: 'none'
       });
 
-      return res.json({ message: 'Login successful', user });
+      return res.json({ message: 'Login successful', user, accessToken });
     }
 
     else if (user.isVerifiedEmail === false) {
@@ -104,8 +100,6 @@ export const Login = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
-
 
 
 export const Dashboard = async (req: RequestWithUser, res: Response) => {

@@ -14,11 +14,12 @@ export const authMiddleware = async (req: RequestWithUser, res: Response, next: 
     }
     try {
 
-        const decoded: any = jwt.verify(token, process.env.JWT_SECRET!); 
-        const sellerUser = await User('seller').findById(decoded.userId) as IUser;
-        const buyerUser = await User('buyer').findById(decoded.userId) as IUser;
+        const decoded: any = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET!); 
+        const userId = decoded.userId; // Store userId for later use
+        const sellerUser = await User('seller').findById(userId) as IUser;
+        const buyerUser = await User('buyer').findById(userId) as IUser;
 
-        if (!sellerUser || !buyerUser) {
+        if (!sellerUser && !buyerUser) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
 

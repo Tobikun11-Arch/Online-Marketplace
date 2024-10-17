@@ -9,6 +9,8 @@ import { Product } from '../../types/types'
 import { useData, useSearch } from '../../hooks/ReusableHooks'
 import axios from 'axios'
 import { hourglass } from 'ldrs'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 interface Products {
     ProductLists: Product[];
@@ -31,6 +33,7 @@ export default function ManageProducts() {
 function Manage() {
   const { setData, dataPass } = useData();
   const { setSearchField, setSelected } = useSearch()
+  const router = useRouter()
 
   const [Selected, setSelect] = useState<Select>({
     OverallStorage: '',
@@ -53,40 +56,40 @@ function Manage() {
   const { isLoading, error, data: products } = useQuery<Products | null>({
   queryKey: ['ProductLists'],
   queryFn: async () => {
-  try {
-  const token = localStorage.getItem('token');
-  if (!token) {
-  throw new Error("No token found");
-  }
-
-  const response = await productList.get('', { 
-  headers: {
-  Authorization: `Bearer ${token}`,
-  },
-  });
-  return response.data;
-  }
-
-  catch (error: any) {
-    if (axios.isCancel(error)) {
-      console.error("Request was cancelled:", error.message);
-    } else if (error.code === 'ECONNABORTED') {
-      console.error("Request timed out:", error.message);
-    } else {
-      console.error("Error fetching data:", error);
+    const token = Cookies.get('accessToken');
+    console.log("Token: ", token)
+      
+      if (!token) {
+        router.push('/login');
+        throw new Error('No authentication token found');
+      }
+    try {
+    const response = await productList.get('', { 
+    headers: {
+    Authorization: `Bearer ${token}`,
+    },
+    });
+    return response.data;
     }
-    throw new Error(error.response?.data?.message || 'Failed to fetch products');
-  }
-  },
-  });
+  
+    catch (error: any) {
+      if (axios.isCancel(error)) {
+        console.error("Request was cancelled:", error.message);
+      } else if (error.code === 'ECONNABORTED') {
+        console.error("Request timed out:", error.message);
+      } else {
+        console.error("Error fetching data:", error);
+      }
+      throw new Error(error.response?.data?.message || 'Failed to fetch products');
+    }
+    },
+    });
 
- 
   useEffect(() => {
     if (products?.ProductLists) {
       setData(products.ProductLists);
     }
   }, [products, setData]);
-
 
   useEffect(() => {
     setSelected({
