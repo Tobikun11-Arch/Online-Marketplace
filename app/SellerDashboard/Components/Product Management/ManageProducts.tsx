@@ -59,11 +59,13 @@ function Manage() {
   queryFn: async () => {
     const token = Cookies.get('accessToken');
     console.log("Token: ", token)
+
       if (!token) {
         router.push('/Auth');  
         console.log("no token")
         throw new Error('No authentication token found');
       }
+
     try {
     const response = await productList.get('', {
       headers: {

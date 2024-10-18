@@ -5,10 +5,10 @@
     import { Mail, LockKeyhole } from 'lucide-react'
     import { useForm } from '../StateHandlers/Form'
     import { useNewUser } from '../StateHandlers/RegisterForm'
-    import { userLog } from '../../SellerDashboard/axios/axios'
+    import { userLog, users } from '../../SellerDashboard/axios/axios'
     import { useRouter } from 'next/navigation'
-    import Cookies from 'js-cookie'
     import { leapfrog } from 'ldrs'
+    import { useDetails } from '../../userData/UserData'
 
     const Form = () => {
         const { isForm, setForm, Email, setEmail, Password, setPassword } = useForm()
@@ -16,6 +16,7 @@
         const [ Error , seterror ] = useState<boolean>(false)
         const [ loading, setLoading ] = useState<boolean>(false)
         const [ messageLogin, setmessageLogin ] = useState<boolean>(false)
+        const { setuserDetails, usersdata } = useDetails()
         const router = useRouter()
 
         const Form_Set = useCallback(()=> {
@@ -40,26 +41,19 @@
 
                 try {
                     const userDetails = { Email, Password }
-                    const response =  await userLog.post('', userDetails)
+                    const response =  await userLog.post('', userDetails, {withCredentials: true})
                     setLoading(false)
 
                     if (response.data.message === 'Login successful') {
-                        const { user, accessToken } = response.data;
-                        Cookies.set('accessToken', accessToken); 
+                        const { user } = response.data;
+                        setuserDetails(user)
                         if (user.Role === 'buyer') {
-                            setEmail(''), setPassword('')
-                            setmessageLogin(false)
-                            setLoading(false)
-                            sentMail(false)
                             router.push('/Client/ClientDashboard');
                         } else {
-                            sentMail(false)
-                            setEmail(''), setPassword('')
-                            setmessageLogin(false)
-                            setLoading(false)
                             localStorage.removeItem('activeItem')
                             router.push('/SellerDashboard/Home');
                         }
+                        setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                     }
 
                     else {
@@ -71,7 +65,7 @@
                     seterror(true)
                     setmessageLogin(true)
                     setLoading(false);
-                    console.log('Catch area', error)
+                    console.log('Error: ', error)
                 }
             }
 

@@ -1,11 +1,30 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import BoxItem from '../Common/BoxItem'               
 import AddProduct from './AddProduct'
 import { useData } from '../../hooks/ReusableHooks'
 import {Download} from 'lucide-react'
+import { users } from '../../axios/axios'
+import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
+  const router = useRouter()
 
+  //tommorow try the refresh tokens and after that implement it all the function to all tabs
+
+  useEffect(()=> {
+    const VerifyAccessToken = async () => {
+        try {
+          const response = await users.get('', {withCredentials: true})
+          console.log("VerToken: ", response.data.verToken)
+          if(response.data.verToken === false) {
+            router.push('/')
+          }
+        } catch (error) {
+          router.push('/')
+        }
+    }
+    VerifyAccessToken()
+  }, [])
 
   return (
     <>

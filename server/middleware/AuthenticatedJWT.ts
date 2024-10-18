@@ -2,7 +2,7 @@ import { JWT_SECRET, REFRESH_JWT_SECRET } from "../config/config";
 import jwt from 'jsonwebtoken'
 
 export const GenerateAccessToken = (userId: string) => {
-    return jwt.sign({ userId }, JWT_SECRET, {expiresIn: '2h'});
+    return jwt.sign({ userId }, JWT_SECRET, {expiresIn: '10s'});
 }
 
 export const GenerateRefreshToken = (userId: string) => {
@@ -12,7 +12,7 @@ export const GenerateRefreshToken = (userId: string) => {
 export const VerifyAccessToken = (token: string) => {
     try {
         return jwt.verify(token, JWT_SECRET);
-    } catch (error) {
+    } catch (error) {   
         throw new Error("Invalid access token")
     }
 }
