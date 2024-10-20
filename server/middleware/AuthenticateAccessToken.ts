@@ -56,16 +56,16 @@ export const RefreshToken = async (req: Request, res: Response) => {
     
         res.cookie('refreshToken', newRefreshToken , {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days 
-            sameSite: 'strict',
+            secure: true,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            sameSite: 'none',
         });
     
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 2 * 60 * 60 * 1000, // 2 hours
-            sameSite: 'strict',
+            secure: true,
+            maxAge: 2 * 60 * 60 * 1000,
+            sameSite: 'none',
         });
     
         return res.json({ message: 'Tokens refreshed', cookiesRefreshToken: newRefreshToken });
