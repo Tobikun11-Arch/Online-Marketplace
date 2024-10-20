@@ -5,7 +5,7 @@ import express, {Request, Response} from 'express'
 import verificationRoutes from '../routes/verificationRoutes'; 
 import UserRoutes from '../routes/userRoutes'; 
 import cookieParser from 'cookie-parser';
-import { authenticateToken } from '../middleware/AuthenticateAccessToken';
+import { authenticateToken, RefreshToken } from '../middleware/AuthenticateAccessToken';
 
 dotenv.config(); 
 const app = express();
@@ -16,7 +16,7 @@ const corsOptions = {
     origin: ['http://localhost:3000', 'https://online-marketplace-beta.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true 
+credentials: true 
 };
 
 app.use(cors(corsOptions));
@@ -47,9 +47,14 @@ app.use('/', verificationRoutes);
 app.get("/", (req: Request, res: Response) => res.send("Express on Vercelss"));
 app.get("/home", (req: Request, res: Response) => res.send("Gumana tanga"));
 
-app.get('/sellerDashboard', authenticateToken, (req: Request, res: Response) => {
-    res.status(200).send('Seller Dashboard'); // Temporary response
+app.get('/Authentication', authenticateToken, (req: Request, res: Response) => {
+    return res.json({ verToken: true, message: 'Access token is valid' });
 })
+
+app.post('/AuthenticationRefresh', RefreshToken, (req: Request, res: Response) => {
+    res.status(200).send('Refresh'); // Temporary response
+})
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

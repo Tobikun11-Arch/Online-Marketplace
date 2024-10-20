@@ -44,19 +44,27 @@ export const newRegister = axios.create({
   }
 })
 
-const local = 'http://localhost:5000/api/users/login' //set the deploy backend https 
 const loginUser = process.env.NEXT_PUBLIC_LOGIN;
 export const userLog = axios.create({
-  baseURL: local,
+  baseURL: loginUser,
   headers: {
     'Content-Type': 'application/json',
   },
   withCredentials: true,
 })
 
-const localtry = 'http://localhost:5000/sellerDashboard' //change the api name and 
+const authentication = process.env.NEXT_PUBLIC_Authentication; 
 export const users = axios.create({
-  baseURL: localtry,
+  baseURL: authentication,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+})
+
+const AuthenticationRefresh = process.env.NEXT_PUBLIC_AuthenticationRefresh; 
+export const refresh = axios.create({
+  baseURL: AuthenticationRefresh,
   headers: {
     'Content-Type': 'application/json',
   },
