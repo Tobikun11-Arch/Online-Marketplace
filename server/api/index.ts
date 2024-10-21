@@ -16,7 +16,7 @@ const corsOptions = {
     origin: ['http://localhost:3000', 'https://online-marketplace-beta.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-credentials: true 
+    credentials: true 
 };
 
 app.use(cors(corsOptions));
@@ -54,7 +54,6 @@ app.get('/Authentication', authenticateToken, (req: Request, res: Response) => {
 app.post('/AuthenticationRefresh', RefreshToken, (req: Request, res: Response) => {
     res.status(200).send('Refresh'); // Temporary response
 })
-
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

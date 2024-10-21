@@ -7,10 +7,8 @@ import {productList} from '../../axios/axios'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { Product } from '../../types/types'
 import { useData, useSearch } from '../../hooks/ReusableHooks'
-import axios from 'axios'
 import { hourglass } from 'ldrs'
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
+import useAuth from '../../UseAuth/useAuth';
 
 interface Products {
     ProductLists: Product[];
@@ -33,7 +31,7 @@ export default function ManageProducts() {
 function Manage() {
   const { setData, dataPass } = useData();
   const { setSearchField, setSelected } = useSearch()
-  const router = useRouter()
+  useAuth()
 
   const [Selected, setSelect] = useState<Select>({
     OverallStorage: '',
@@ -57,34 +55,9 @@ function Manage() {
   const { isLoading, error, data: products } = useQuery<Products | null>({
   queryKey: ['ProductLists'],
   queryFn: async () => {
-    const token = Cookies.get('accessToken');
-    console.log("Token: ", token)
-
-      if (!token) {
-        router.push('/Auth');  
-        console.log("no token")
-        throw new Error('No authentication token found');
-      }
-
-    try {
-    const response = await productList.get('', {
-      headers: {
-        Authorization: `Bearer ${token}` 
-      } 
-    })
+    const response = await productList.get('', { withCredentials: true });
+    console.log("Response: ", response.data.ProductLists)
     return response.data;
-    }
-  
-    catch (error: any) {
-      if (axios.isCancel(error)) {
-        console.error("Request was cancelled:", error.message);
-      } else if (error.code === 'ECONNABORTED') {
-        console.error("Request timed out:", error.message);
-      } else {
-        console.error("Error fetching data:", error);
-      }
-      throw new Error(error.response?.data?.message || 'Failed to fetch products');
-    }
     },
     });
 

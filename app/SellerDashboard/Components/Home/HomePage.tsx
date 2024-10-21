@@ -1,10 +1,11 @@
 
+import useAuth from '../../UseAuth/useAuth';
 import BoxItem from '../Common/BoxItem'               
 import AddProduct from './AddProduct'
 import {Download} from 'lucide-react'
 
 export default function HomePage() {
-
+  useAuth();
   return (
     <>
         <div className='w-full min-h-screen flex items-start flex-col cursor-default pb-4 dark:text-black'>

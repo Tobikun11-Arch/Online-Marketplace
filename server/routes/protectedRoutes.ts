@@ -43,7 +43,7 @@ protectedroute.get('/dashboard', async (req: RequestWithUser, res: Response) => 
 
 protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => {
     const userId = req.user?._id;
-
+    const token = req.cookies['accessToken']; 
     try {
     const {
       productId,
@@ -115,7 +115,7 @@ protectedroute.post('/Products', async (req: RequestWithUser, res: Response) => 
     }
 
     catch (error) {
-      console.error('Error creating product:', error);
+      console.error('Error creating product:', error, token);
       res.status(500).json({ error: 'Internal server error' });
     }
 }); 

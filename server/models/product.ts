@@ -34,7 +34,7 @@ export interface IProducts extends Document {
 
 const productSchema = new mongoose.Schema<IProducts>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: false },
     productName: { type: String, required: true },
     status: { type: String, required: true },
     productDescription: { type: String, required: true },

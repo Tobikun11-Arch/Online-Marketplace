@@ -19,9 +19,10 @@ import {Cloudinary, ProductApi} from '../../axios/axios'
 import Schedule from './Schedule'
 import Pinwheel from './Loading/Pinwheel'
 import LoadingSchedule from './Loading/LoadingSchedule'
-import Cookies from 'js-cookie'
+import useAuth from '../../UseAuth/useAuth'
 
 export default function NewProduct() {
+  useAuth()
   const { 
     productName, productDescription, productCategory, productQuality, 
     productQuantity, Sku, productSize, productPrice, productDiscount, 
@@ -34,7 +35,7 @@ export default function NewProduct() {
   const { setLoadingPublish, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
   const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()
   const [ featured, setFeature ] = useState<boolean>(false)
-  const router = useRouter()
+
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -56,7 +57,7 @@ export default function NewProduct() {
       !productWeight.Weight      || !isNumber(productWeight.Weight) ||
       !productPrice              || !isNumber(productPrice)       
       || !isNumber(productDiscount) ||
-      productImages.length <= 0
+      productImages.length <= 0 //change to 3 soon
     ) {
     // If validation fails, log the error
     setError(true)
@@ -65,11 +66,6 @@ export default function NewProduct() {
   
   else {
     // If all validations pass, log the product details
-    const token = Cookies.get('accessToken');
-        if (!token) {
-            router.push('/');
-            return;
-        }
 
         if (type === 'publish') {
           setLoadingPublish(true);
@@ -127,32 +123,34 @@ export default function NewProduct() {
             Featured: featured ? 'Featured' : 'not feature'
           };
 
-          await ProductApi.post('', productData, {
-              headers: {
-                  'Authorization': `Bearer ${token}`,
-                  'Content-Type': 'application/json',
-              },
-          });
+          try {
+            const response = await ProductApi.post('', productData, {
+                withCredentials: true,
+            });
+            console.log('Product added:', response.data);
+        } catch (error: any) {
+          console.error('Error adding product:', error.response ? error.response.data : error.message);
+        }
 
-        setProductName('')
-        setProductDescription('') 
-        setProductCategory('') 
-        setProductQuality('') 
-        setProductQuantity('') 
-        setSku('')
-        setProductWeight('WeightIndicator', '')
-        setProductWeight('Weight', '')
-        setProductSize('length', '')
-        setProductSize('breadth', '')
-        setProductSize('width', '')
-        setPreviewImages([])
-        setProductImages([])
-        setProductPrice('')
-        setProductDiscount('')
-        setTime('')
-        setDate('')
-        setSchedule(false)
-        setError(false)
+        // setProductName('')
+        // setProductDescription('') 
+        // setProductCategory('') 
+        // setProductQuality('') 
+        // setProductQuantity('') 
+        // setSku('')
+        // setProductWeight('WeightIndicator', '')
+        // setProductWeight('Weight', '')
+        // setProductSize('length', '')
+        // setProductSize('breadth', '')
+        // setProductSize('width', '')
+        // setPreviewImages([])
+        // setProductImages([])
+        // setProductPrice('')
+        // setProductDiscount('')
+        // setTime('')
+        // setDate('')
+        // setSchedule(false)
+        // setError(false)
       } 
 
       catch (error) {

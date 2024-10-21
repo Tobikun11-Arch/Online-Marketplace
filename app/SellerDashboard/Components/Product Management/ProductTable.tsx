@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { Delete_Product } from '../../axios/axios';
 import { square } from 'ldrs'
 import SquareLoading from './Loading/SquareLoading';
+import useAuth from '../../UseAuth/useAuth';
 
 interface Products {
     ProductLists: Product[];
@@ -28,7 +29,7 @@ export default function ProductTable() {
         }
     }, []);
 
-    const router = useRouter()
+    useAuth()
     const { dataPass, setData } = useData()
     const { setSelect, setModalOpen } = useSelectedProducts()
     const { searchField, selected } = useSearch()
@@ -100,23 +101,13 @@ export default function ProductTable() {
     };
 
     const handleDelete = async() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            router.push('/SellerDashboard/Products');
-            return;
-        }
         const updatedProductList = dataPass?.filter((product) => !selectedProducts.some((selected) => selected.productId === product.productId))
         setSelectedProducts([]); 
         setLoading(true)
 
         const productIds = selectedProducts.map((productId)=> productId.productId)
         try {
-        await Delete_Product.post('', {productId: productIds}, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
+        await Delete_Product.post('', {productId: productIds}, { withCredentials: true });
 
         setData(updatedProductList)
         setLoading(false)
