@@ -123,34 +123,29 @@ export default function NewProduct() {
             Featured: featured ? 'Featured' : 'not feature'
           };
 
-          try {
             const response = await ProductApi.post('', productData, {
                 withCredentials: true,
             });
-            console.log('Product added:', response.data);
-        } catch (error: any) {
-          console.error('Error adding product:', error.response ? error.response.data : error.message);
-        }
 
-        // setProductName('')
-        // setProductDescription('') 
-        // setProductCategory('') 
-        // setProductQuality('') 
-        // setProductQuantity('') 
-        // setSku('')
-        // setProductWeight('WeightIndicator', '')
-        // setProductWeight('Weight', '')
-        // setProductSize('length', '')
-        // setProductSize('breadth', '')
-        // setProductSize('width', '')
-        // setPreviewImages([])
-        // setProductImages([])
-        // setProductPrice('')
-        // setProductDiscount('')
-        // setTime('')
-        // setDate('')
-        // setSchedule(false)
-        // setError(false)
+        setProductName('')
+        setProductDescription('') 
+        setProductCategory('') 
+        setProductQuality('') 
+        setProductQuantity('') 
+        setSku('')
+        setProductWeight('WeightIndicator', '')
+        setProductWeight('Weight', '')
+        setProductSize('length', '')
+        setProductSize('breadth', '')
+        setProductSize('width', '')
+        setPreviewImages([])
+        setProductImages([])
+        setProductPrice('')
+        setProductDiscount('')
+        setTime('')
+        setDate('')
+        setSchedule(false)
+        setError(false)
       } 
 
       catch (error) {

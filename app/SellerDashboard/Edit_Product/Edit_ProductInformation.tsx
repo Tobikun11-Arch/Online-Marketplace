@@ -96,7 +96,7 @@ useEffect(() => {
                     images: productImages, 
                     status: 'Published',
                 };
-
+                //tommorow target
                 await ProductApi.post('', productData, {
                     headers: {
                         'Authorization': `Bearer ${token}`,

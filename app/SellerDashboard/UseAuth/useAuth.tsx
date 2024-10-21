@@ -10,7 +10,6 @@ const useAuth = () => {
         const verifyAccessToken = async () => {
             try {
                 const response = await auth.get('', { withCredentials: true });
-                console.log("Token: ", response.data.message)
                 if (response.data.verToken === false) {
                     router.push('/');
                 }

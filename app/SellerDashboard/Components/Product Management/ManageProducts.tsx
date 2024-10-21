@@ -56,7 +56,6 @@ function Manage() {
   queryKey: ['ProductLists'],
   queryFn: async () => {
     const response = await productList.get('', { withCredentials: true });
-    console.log("Response: ", response.data.ProductLists)
     return response.data;
     },
     });

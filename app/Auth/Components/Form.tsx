@@ -5,7 +5,7 @@
     import { Mail, LockKeyhole } from 'lucide-react'
     import { useForm } from '../StateHandlers/Form'
     import { useNewUser } from '../StateHandlers/RegisterForm'
-    import { userLog, users, refresh } from '../../SellerDashboard/axios/axios'
+    import { userLog, auth, refresh } from '../../SellerDashboard/axios/axios'
     import { useRouter } from 'next/navigation'
     import { leapfrog } from 'ldrs'
     import { useDetails } from '../../userData/UserData'
