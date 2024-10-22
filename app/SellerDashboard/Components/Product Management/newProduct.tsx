@@ -12,17 +12,15 @@ import Button from '../Common/Button'
 import Link from 'next/link'
 import { UseProductStore } from '../../hooks/UseHooks'
 import ProductImages from './ProductImages'
-import { useRouter } from 'next/navigation'
 import { useLoading, useSchedule } from '../../hooks/ReusableHooks'
 import { pinwheel } from 'ldrs'
 import {Cloudinary, ProductApi} from '../../axios/axios'
 import Schedule from './Schedule'
 import Pinwheel from './Loading/Pinwheel'
 import LoadingSchedule from './Loading/LoadingSchedule'
-import useAuth from '../../UseAuth/useAuth'
+import AuthCheck from '../../../AuthCheck'
 
 export default function NewProduct() {
-  useAuth()
   const { 
     productName, productDescription, productCategory, productQuality, 
     productQuantity, Sku, productSize, productPrice, productDiscount, 
@@ -35,7 +33,6 @@ export default function NewProduct() {
   const { setLoadingPublish, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
   const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()
   const [ featured, setFeature ] = useState<boolean>(false)
-
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -123,9 +120,7 @@ export default function NewProduct() {
             Featured: featured ? 'Featured' : 'not feature'
           };
 
-            const response = await ProductApi.post('', productData, {
-                withCredentials: true,
-            });
+            await ProductApi.post('', productData, { withCredentials: true });
 
         setProductName('')
         setProductDescription('') 
@@ -163,13 +158,12 @@ export default function NewProduct() {
           setLoadingSchedule(false)
         }
       }
-
     }
   }
 
   return (
     <>
-      <main className='px-3 pb-3 pt-12 md:pt-12 xl:pt-0 dark:text-black'>
+      <AuthCheck className='px-3 pb-3 pt-12 md:pt-12 xl:pt-0 dark:text-black'>
 
         <Pinwheel/>
 
@@ -342,7 +336,7 @@ export default function NewProduct() {
           </div>
         </section>
 
-      </main>
+      </AuthCheck>
     </>
   )
 }

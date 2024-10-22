@@ -12,7 +12,6 @@ import {
 import { useData, useLoading, useSearch, useSelectedProducts } from '../../hooks/ReusableHooks';
 import ProductDetails from '../Product Details/ProductDetails';
 import { useDelete} from '../../hooks/DeleteProduct';
-import { useRouter } from 'next/navigation';
 import { Delete_Product } from '../../axios/axios';
 import { square } from 'ldrs'
 import SquareLoading from './Loading/SquareLoading';
@@ -28,8 +27,6 @@ export default function ProductTable() {
             square.register()
         }
     }, []);
-
-    useAuth()
     const { dataPass, setData } = useData()
     const { setSelect, setModalOpen } = useSelectedProducts()
     const { searchField, selected } = useSearch()

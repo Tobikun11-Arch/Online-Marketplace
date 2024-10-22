@@ -59,7 +59,7 @@ export default function NavBar() {
   return (
     <>
 
-        <div className="xl:hidden fixed z-50 w-full h-12 bg-gray-800 flex items-center" onClick={toggleMenu}>
+        <div className="xl:hidden fixed z-50 w-full h-12 bg-gray-950 flex items-center" onClick={toggleMenu}>
         <div className="ml-3">
         <Menu size={30} color="white"/>
         </div>
@@ -70,7 +70,7 @@ export default function NavBar() {
        ref={menuRef}
         className={`${
           menuOpen ? "block" : "hidden"
-        } xl:block w-60 h-screen bg-gray-700 fixed top-0 left-0 transition-transform transform z-50  ${
+        } xl:block w-60 h-screen bg-gray-950 fixed top-0 left-0 transition-transform transform z-50  ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         } xl:translate-x-0`}
       >

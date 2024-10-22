@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 import { Product } from '../../types/types'
 import { useData, useSearch } from '../../hooks/ReusableHooks'
 import { hourglass } from 'ldrs'
-import useAuth from '../../UseAuth/useAuth';
+import AuthCheck from '../../../AuthCheck'
 
 interface Products {
     ProductLists: Product[];
@@ -31,7 +31,6 @@ export default function ManageProducts() {
 function Manage() {
   const { setData, dataPass } = useData();
   const { setSearchField, setSelected } = useSearch()
-  useAuth()
 
   const [Selected, setSelect] = useState<Select>({
     OverallStorage: '',
@@ -102,7 +101,7 @@ function Manage() {
   }
   return (
   <>
-  <div className='w-full min-h-screen items-start px-3 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center cursor-default dark:text-black'>
+  <AuthCheck className='w-full min-h-screen items-start px-3 sm:px-6 md:px-10 xl:w-3/4 xl:ml-72 xl:items-center cursor-default dark:text-black'>
     <div className="flex flex-col w-full justify-start">
     <h1 className='mt-14 text-2xl font-bold xl:mt-7'>Manage Products</h1>
     <p className='text-xs font-medium'>You have {productLength} products in your catalog.</p>
@@ -125,7 +124,7 @@ function Manage() {
 
     <ProductTable/>
 
-    </div>
+    </AuthCheck>
     </>
   )
 }

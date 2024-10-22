@@ -63,7 +63,7 @@ useEffect(() => {
             !productWeight.Weight      || !isNumber(productWeight.Weight) ||
             !productPrice              || !isNumber(productPrice)       
             || !isNumber(productDiscount) ||
-            productImages.length <= 2 
+            productImages.length <= 0 //change this to 3 or 2 next time 
         )  {
         // If validation fails, log the error
         setError(true)
@@ -97,12 +97,7 @@ useEffect(() => {
                     status: 'Published',
                 };
                 //tommorow target
-                await ProductApi.post('', productData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
+                await ProductApi.post('', productData, { withCredentials: true });
 
                 router.push('/SellerDashboard/Products')
                 setModalOpen(false)
