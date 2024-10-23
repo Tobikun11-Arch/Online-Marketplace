@@ -79,3 +79,12 @@ export const refresh = axios.create({
   },
 });
 refresh.defaults.withCredentials = true; // Enable credentials for refresh
+
+const SignoutApi = process.env.NEXT_PUBLIC_SIGNOUT; 
+export const Signout = axios.create({
+  baseURL: SignoutApi,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+Signout.defaults.withCredentials = true;

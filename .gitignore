@@ -43,3 +43,8 @@ next-env.d.ts
 node_modules
 
 
+# server folder
+.server
+server
+.server/
+server/

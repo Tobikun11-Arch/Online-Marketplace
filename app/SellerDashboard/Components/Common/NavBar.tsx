@@ -8,14 +8,18 @@ import {
   Megaphone,
   Settings,
   Menu,
+  CirclePower,
 } from "lucide-react";
 import NavItem from "./NavItem";
 import IconHome from "../../Home/IconHome";
+import { Signout } from '../../axios/axios'
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false); 
   const menuRef = useRef<HTMLDivElement>(null); 
+  const router = useRouter()
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -56,18 +60,31 @@ export default function NavBar() {
     };
   }, [menuOpen]);
 
+  const handleSignOut = async () => {
+    try {
+      console.log("Signout");
+      const response = await Signout.post('', {}, { withCredentials: true });
+      const { message } = response.data;
+      if(message === 'Signed out successfully!'){ 
+        router.push('/')
+      }
+  } catch (error) {
+      console.error("Error during signout:", error);
+  }
+  }
+
   return (
     <>
 
-        <div className="xl:hidden fixed z-50 w-full h-12 bg-gray-950 flex items-center" onClick={toggleMenu}>
+        <div className="xl:hidden fixed z-50 w-full h-12 bg-gray-950 flex items-center">
         <div className="ml-3">
-        <Menu size={30} color="white"/>
+        <Menu size={30} color="white" onClick={toggleMenu}/>
         </div>
         </div>
 
       {/* Sidebar Navigation */}
       <nav
-       ref={menuRef}
+      ref={menuRef}
         className={`${
           menuOpen ? "block" : "hidden"
         } xl:block w-60 h-screen bg-gray-950 fixed top-0 left-0 transition-transform transform z-50  ${
@@ -122,6 +139,14 @@ export default function NavBar() {
             isActive={activeItem === "Settings"}
             onClick={() => handleItemClick("Settings")}
             href="/SellerDashboard/Settings"
+          />
+
+          <NavItem
+            icon={<CirclePower />}
+            label="Sign out"
+            isActive={activeItem === "Sign out"}
+            onClick={handleSignOut}
+            href=""
           />
         </ul>
       </nav>
