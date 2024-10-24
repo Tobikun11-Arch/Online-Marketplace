@@ -63,7 +63,7 @@ useEffect(() => {
             !productWeight.Weight      || !isNumber(productWeight.Weight) ||
             !productPrice              || !isNumber(productPrice)       
             || !isNumber(productDiscount) ||
-            productImages.length <= 0 //change this to 3 or 2 next time 
+            productImages.length !== 3//change this to 3 or 2 next time 
         )  {
         // If validation fails, log the error
         setError(true)
@@ -71,15 +71,7 @@ useEffect(() => {
         } 
 
         else{
-            // If all validations pass, log the product details
-            const token = localStorage.getItem('token');
-            if (!token) {
-                router.push('/SellerDashboard/Products');
-                return;
-            }
-
             setLoadingPublish(true)
-
             try{
                 const productData = {
                     productId,
@@ -96,7 +88,6 @@ useEffect(() => {
                     images: productImages, 
                     status: 'Published',
                 };
-                //tommorow target
                 await ProductApi.post('', productData, { withCredentials: true });
 
                 router.push('/SellerDashboard/Products')
