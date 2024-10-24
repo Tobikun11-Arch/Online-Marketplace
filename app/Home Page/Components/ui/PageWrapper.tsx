@@ -18,7 +18,8 @@ const PageWrapper = ({children}: PageWrapperProps) => {
                     duration: 0.8,
                     ease: [0.6, -0.05, 0.01, 0.99],    
                     }}
-                className='min-h-screen flex items-center justify-center'>
+                className='h-full'> 
+                {/* min-h-screen flex items-center justify-center */}
                     {children}
                 </motion.div>
             </AnimatePresence>

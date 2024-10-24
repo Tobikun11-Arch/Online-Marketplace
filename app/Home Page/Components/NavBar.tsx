@@ -13,18 +13,16 @@ const NavBar = () => {
     }, [isOpen])
 
     return (
-        <div className='h-20 flex justify-between items-center px-4 md:px-12 cursor-default'>
-            <div className="Menu flex gap-1 md:hidden">
+        <div className='h-20 flex justify-end md:justify-between items-center px-4 md:px-12 cursor-default'>
+            {/* <div className="Menu flex gap-1 md:hidden">
                 {isOpen ? (
                     ''
                 ) : (
                     <Menu size={28} strokeWidth={1.5} className='md:hidden' onClick={toggleMenu}/>
                 )}
-            </div>
-            <h1 className='text-gray-500 font-medium text-2xl hidden md:block pb-1 dark:text-white'>SajuBazaar</h1>
-            <NavMenu/>
+            </div> */}
+            <h1 className='text-gray-500 font-medium text-2xl hidden md:block pb-1 dark:text-white'>Saju<span className='text-blue-800'>Baz</span>aar</h1>
             <div className="flex items-center gap-6">
-                <Search size={20} strokeWidth={1.5} />
                 <User size={20} strokeWidth={1.5} />
                 <Theme/>
             </div>
