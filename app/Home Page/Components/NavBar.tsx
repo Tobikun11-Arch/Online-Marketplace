@@ -1,16 +1,19 @@
 "use client"
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import NavMenu from './ui/NavMenu'
-import { Search, User, ShoppingCart, Menu, X } from 'lucide-react'
+import { User} from 'lucide-react'
 import MenuProps from '../Components/ui/Menu'
 import { useOpen } from '../State Handlers/StateHnadler'
 import Theme from './ui/Theme'
 
 const NavBar = () => {
     const { isOpen, setOpen }= useOpen()
+    const [ isUser, setUser ] = useState<boolean>(false)
     const toggleMenu = useCallback(()=> {
         setOpen(!isOpen)
     }, [isOpen])
+
+    const token = undefined
 
     return (
         <div className='h-20 flex justify-end md:justify-between items-center px-4 md:px-12 cursor-default'>
@@ -20,10 +23,17 @@ const NavBar = () => {
                 ) : (
                     <Menu size={28} strokeWidth={1.5} className='md:hidden' onClick={toggleMenu}/>
                 )}
-            </div> */}
+            </div>  docs for next possible project if i will use burger for mobile view*/} 
             <h1 className='text-gray-500 font-medium text-2xl hidden md:block pb-1 dark:text-white'>Saju<span className='text-blue-800'>Baz</span>aar</h1>
             <div className="flex items-center gap-6">
-                <User size={20} strokeWidth={1.5} />
+                <User size={20} strokeWidth={1.5} onClick={()=> setUser(!isUser)}/>
+                {isUser && (<>
+                    <div className='fixed bg-white h-12 w-10 mt-20'>
+                        {/**if the token exist === tommorow*/}
+                        
+                        {token ? (<><p className='text-black'>True</p></>):(<><p className='text-black'>False</p></>)}
+                    </div>
+                </>)}
                 <Theme/>
             </div>
 
