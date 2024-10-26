@@ -101,19 +101,14 @@ export default function ProductTable() {
         const updatedProductList = dataPass?.filter((product) => !selectedProducts.some((selected) => selected.productId === product.productId))
         setSelectedProducts([]); 
         setLoading(true)
-
         const productIds = selectedProducts.map((productId)=> productId.productId)
         try {
-        await Delete_Product.post('', {productId: productIds}, { withCredentials: true });
-
-        setData(updatedProductList)
-        setLoading(false)
-        } 
-
-        catch (error) {
+            await Delete_Product.post('', {productId: productIds}, { withCredentials: true });
+            setData(updatedProductList)
+            setLoading(false)
+        } catch (error) {
             console.error("Error")
         }
-
     }
 
     return (

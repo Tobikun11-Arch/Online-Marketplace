@@ -16,7 +16,7 @@ const Theme: React.FC = () => {
     if (!mounted) return null;
 
     return (
-        <div className="flex items-center">
+        <div className="flex items-center z-50">
             {theme === 'dark' ? (
                 <Button 
                     variant="outline" 

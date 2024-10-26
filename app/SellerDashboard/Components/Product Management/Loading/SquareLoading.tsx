@@ -6,7 +6,7 @@ const SquareLoading = () => {
 
     return (
         <div>
-             {isLoading ? 
+            {isLoading ? 
             (<>
             <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 bg-black opacity-50 z-50">
                 <div className="load">

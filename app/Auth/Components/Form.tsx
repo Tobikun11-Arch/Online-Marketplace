@@ -5,7 +5,7 @@
     import { Mail, LockKeyhole } from 'lucide-react'
     import { useForm } from '../StateHandlers/Form'
     import { useNewUser } from '../StateHandlers/RegisterForm'
-    import { userLog, auth, refresh } from '../../SellerDashboard/axios/axios'
+    import { userLog } from '../../SellerDashboard/axios/axios'
     import { useRouter } from 'next/navigation'
     import { leapfrog } from 'ldrs'
     import { useDetails } from '../../userData/UserData'
@@ -16,7 +16,7 @@
         const [ Error , seterror ] = useState<boolean>(false)
         const [ loading, setLoading ] = useState<boolean>(false)
         const [ messageLogin, setmessageLogin ] = useState<boolean>(false)
-        const { setuserDetails, usersdata } = useDetails()
+        const { setuserDetails } = useDetails()
         const router = useRouter()
 
         const Form_Set = useCallback(()=> {
@@ -70,23 +70,12 @@
                 }
             }
 
-            const testRefresh = async () => {
-                // try {
-                //     const response =  await refresh.get('', {withCredentials: true})
-                //     const { message, cookiesRefreshToken } = response.data
-                //     console.log("Refresh Token: ", message, cookiesRefreshToken)
-                // } catch (error) {
-                //     console.log("error boi")
-                //     // console.error(error)
-                // }
-            }
-
         return (
             <div className="h-screen w-screen flex justify-center items-center sm:h-full sm:w-full">
                 <div className='py-5 cursor-default w-3/4 sm:w-full'>
                     <div className="flex gap-1 items-center">
                         <div className={`w-8 h-8 rounded-full bg-gray-400 bg-[url('https://marketplace.canva.com/EAFvDRwEHHg/1/0/1600w/canva-colorful-abstract-online-shop-free-logo-cpI8ixEpis8.jpg')] bg-cover bg-center`}></div>
-                        <h1 className='text-blue-800 font-bold' onClick={testRefresh}>SajuBazaar</h1>
+                        <h1 className='text-blue-800 font-bold'>SajuBazaar</h1>
                     </div>
 
                     <h1 className='text-gray-950 font-bold mt-4 text-2xl'>Log in to your Account</h1>  
@@ -146,7 +135,6 @@
                 <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
                 </>)}
                     </button>
-
                     <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center'>Don't have an account? <span className='text-blue-700' onClick={Form_Set}>Create an account</span></p>
                 </div>
             </div>

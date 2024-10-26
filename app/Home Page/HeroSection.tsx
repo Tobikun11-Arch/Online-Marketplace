@@ -19,7 +19,7 @@ const HeroSection = () => {
                 }
                 setToken(true)
             } catch (error: any) {
-                console.error("Failed to fetch: ", error)
+                setToken(false)
             }
         };
 

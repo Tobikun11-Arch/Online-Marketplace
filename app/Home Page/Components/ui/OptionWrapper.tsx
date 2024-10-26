@@ -16,10 +16,9 @@ const OptionWrapper = ({children}: PageWrapperProps) => {
                   exit={{ opacity: 0, y: 100 }}     // Animate back to the bottom on exit
                     transition={{
                     duration: 0.8,
-                    ease: [0.6, -0.05, 0.01, 0.99],    
+                    ease: [0.6, -0.05, 0.01, 0.99],  
                     }}
-                className='h-full'> 
-                {/* min-h-screen flex items-center justify-center */}
+                className=''>
                     {children}
                 </motion.div>
             </AnimatePresence>

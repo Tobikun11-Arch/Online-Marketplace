@@ -16,7 +16,7 @@ const HomePageUi = () => {
                     </Link>
                 </section>
 
-                <div className='flex flex-grow h-full items-center justify-center'>
+                <div className='flex flex-grow h-full items-center justify-center z-1 relative'>
                     <Image 
                     loading='lazy'
                     alt='Sofa'
