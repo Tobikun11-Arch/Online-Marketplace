@@ -1,11 +1,14 @@
 "use client"
 import React, { useCallback, useState } from 'react'
-import NavMenu from './ui/NavMenu'
+import { Button } from "../../../@/components/ui/button"
 import { User } from 'lucide-react'
 import MenuProps from '../Components/ui/Menu'
 import { useOpen } from '../State Handlers/StateHnadler'
 import Theme from './ui/Theme'
 import { useTokenValidation } from '../../userData/TokenValidation'
+import Link from 'next/link'
+import OptionWrapper from './ui/OptionWrapper'
+import { LogOut, LogIn, UserPlus  } from 'lucide-react';
 
 const NavBar = () => {
     const { isOpen, setOpen }= useOpen()
@@ -28,10 +31,29 @@ const NavBar = () => {
             <div className="flex items-center gap-6">
                 <User size={20} strokeWidth={1.5} onClick={()=> setUser(!isUser)}/>
                 {isUser && (<>
-                    <div className='fixed bg-white h-12 w-10 mt-20'>
-                        {/**if the token exist === tommorow*/}
-                        
-                        {isToken ? (<><p className='text-black'>True</p></>):(<><p className='text-black'>False</p></>)}
+                    <div className='fixed bg-transparent h-12 w-auto mt-20'>
+                        {isToken ? (<>
+                        <OptionWrapper>
+                                <button className='bg-blue-800 text-white font-semibold px-2 py-1 rounded-md text-sm sm:px-4 md:py-2 flex items-center justify-center gap-1'>
+                                    <LogOut size={15}/>
+                                    <Link href="">Sign out</Link>
+                                </button>
+                        </OptionWrapper>
+                        </>):
+                        (<>
+                        <OptionWrapper>
+                            <div className='gap-1 flex flex-col'>
+                                <button className='bg-blue-800 text-white font-semibold px-2 py-1 rounded-md text-sm sm:px-4 md:py-2 flex items-center justify-center gap-1'>
+                                    <UserPlus  size={15}/>
+                                    <Link href="">Sign up</Link>
+                                </button>
+                                <button className='bg-blue-800 text-white font-semibold px-2 py-1 rounded-md text-sm sm:px-4 md:py-2 flex items-center justify-center gap-1'>
+                                    <LogIn size={15}/>
+                                    <Link href="">Login</Link>
+                                </button>
+                            </div>
+                        </OptionWrapper>
+                        </>)}
                     </div>
                 </>)}
                 <Theme/>
