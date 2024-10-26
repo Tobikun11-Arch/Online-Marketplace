@@ -88,12 +88,3 @@ export const Signout = axios.create({
   },
 });
 Signout.defaults.withCredentials = true;
-
-const getToken = 'http://localhost:5000/GetToken'; 
-export const validateToken = axios.create({
-  baseURL: getToken,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-validateToken.defaults.withCredentials = true;

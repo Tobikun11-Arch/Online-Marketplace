@@ -1,10 +1,11 @@
 "use client"
 import React, { useCallback, useState } from 'react'
 import NavMenu from './ui/NavMenu'
-import { User} from 'lucide-react'
+import { User } from 'lucide-react'
 import MenuProps from '../Components/ui/Menu'
 import { useOpen } from '../State Handlers/StateHnadler'
 import Theme from './ui/Theme'
+import { useTokenValidation } from '../../userData/TokenValidation'
 
 const NavBar = () => {
     const { isOpen, setOpen }= useOpen()
@@ -12,8 +13,7 @@ const NavBar = () => {
     const toggleMenu = useCallback(()=> {
         setOpen(!isOpen)
     }, [isOpen])
-
-    const token = undefined
+    const { isToken } = useTokenValidation()
 
     return (
         <div className='h-20 flex justify-end md:justify-between items-center px-4 md:px-12 cursor-default'>
@@ -31,7 +31,7 @@ const NavBar = () => {
                     <div className='fixed bg-white h-12 w-10 mt-20'>
                         {/**if the token exist === tommorow*/}
                         
-                        {token ? (<><p className='text-black'>True</p></>):(<><p className='text-black'>False</p></>)}
+                        {isToken ? (<><p className='text-black'>True</p></>):(<><p className='text-black'>False</p></>)}
                     </div>
                 </>)}
                 <Theme/>

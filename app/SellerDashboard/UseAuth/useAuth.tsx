@@ -24,7 +24,6 @@ const useAuth = () => {
                             (refreshError.response.status === 401 || refreshError.response.status === 403)
                         ) {
                             router.push('/');
-                            
                         }
                     }
                 }
