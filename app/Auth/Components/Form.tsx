@@ -10,13 +10,13 @@
     import { leapfrog } from 'ldrs'
     import { useDetails } from '../../userData/UserData'
 
-    const Form = () => {
+const Form = () => {
         const { isForm, setForm, Email, setEmail, Password, setPassword } = useForm()
         const { isPasswordVisible, emailSent, sentMail } = useNewUser()
         const [ Error , seterror ] = useState<boolean>(false)
         const [ loading, setLoading ] = useState<boolean>(false)
         const [ messageLogin, setmessageLogin ] = useState<boolean>(false)
-        const { setuserDetails } = useDetails()
+        const { setuserDetails, usersdata } = useDetails()
         const router = useRouter()
 
         const Form_Set = useCallback(()=> {
@@ -35,7 +35,6 @@
                 seterror(true)
                 return;
             }
-
             seterror(false)
             setLoading(true)
 
@@ -46,7 +45,7 @@
 
                     if (response.data.message === 'Login successful') {
                         const { user } = response.data;
-                        setuserDetails(user)
+                        localStorage.setItem('user', JSON.stringify(user))
                         if (user.Role === 'buyer') {
                             router.push('/Client/ClientDashboard');
                             setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
@@ -55,9 +54,7 @@
                             router.push('/SellerDashboard/Home');
                             setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                         }
-                    }
-
-                    else {
+                    } else {
                         console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
                     }
                 } 
