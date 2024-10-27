@@ -7,8 +7,8 @@ import { useDetails } from '../../userData/UserData'
 
 const HomePageUi = () => {
     const router = useRouter()
-    const userString = localStorage.getItem('user');
-    console.log(userString);
+    // const userString = localStorage.getItem('user');
+    // console.log(userString);
 
     return (
         <PageWrapper>

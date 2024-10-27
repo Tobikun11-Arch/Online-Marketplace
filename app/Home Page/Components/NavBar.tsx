@@ -71,8 +71,10 @@ const NavBar = () => {
             <h1 className='text-gray-500 font-medium text-2xl hidden md:block pb-1 dark:text-white'>Saju<span className='text-blue-800'>Baz</span>aar</h1>
             <div className="flex items-center gap-6">
                 <User size={20} strokeWidth={1.5} onClick={()=> setUser(!isUser)} className='z-50'/>
-                {isUser && (<>
-                    <div className='h-auto bg-transparent w-auto z-10 absolute'>
+                <Theme/>
+            </div>
+            {isUser && (<>
+                    <div className='h-auto bg-transparent w-24 z-10 fixed md:right-10'>
                         {isToken ? (
                             <OptionWrapper>
                                 <button className='bg-blue-800 text-white font-semibold px-2 py-2 rounded-md text-sm flex items-center justify-center gap-1 mt-16' onClick={handleSignOut}>
@@ -83,7 +85,7 @@ const NavBar = () => {
                         ):
                         (
                         <OptionWrapper>
-                            <div className='gap-1 flex flex-col mt-24 md:mt-28'>
+                            <div className='gap-1 flex flex-col mt-24 sm:mt-28'>
                                 <button className='bg-blue-800 text-white font-semibold px-2 py-1 rounded-md text-sm sm:px-3 sm:py-2 flex items-center justify-center gap-1' onClick={()=> handleOption('SignUp')}>
                                     <UserPlus  size={15}/>
                                     <p>Sign up</p> 
@@ -97,8 +99,6 @@ const NavBar = () => {
                         )}
                     </div>
                 </>)}
-                <Theme/>
-            </div>
 
             {/* {isOpen && (
                 <>
