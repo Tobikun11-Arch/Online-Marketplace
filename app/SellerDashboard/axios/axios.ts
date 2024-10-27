@@ -88,3 +88,11 @@ export const Signout = axios.create({
   },
 });
 Signout.defaults.withCredentials = true;
+
+export const CheckUser = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_CHECKUSER,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+CheckUser.defaults.withCredentials = true;

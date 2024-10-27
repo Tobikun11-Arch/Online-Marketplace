@@ -1,15 +1,35 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import PageWrapper from './ui/PageWrapper'
 import { useRouter } from 'next/navigation'
-import { useDetails } from '../../userData/UserData'
+import _ from 'lodash'
+import { CheckUser } from '../../SellerDashboard/axios/axios'
 
 const HomePageUi = () => {
     const router = useRouter()
 
-    const handleUser = () => {
-            const userString = localStorage.getItem('user');
+    const handleUser = async () => {
+        const userString = localStorage.getItem('user');
+
+        if (userString) {
+            const userObject = JSON.parse(userString);  
+            const selectedData = _.pick(userObject, "Email"); 
+            try {
+                const response = await CheckUser.post('', { Email: selectedData.Email }, { withCredentials: true })
+                const { Role } = response.data
+                if(Role === 'Seller') {
+                    router.push('/SellerDashboard')
+                }
+                else {
+                    router.push('/BuyerDashboard')
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        } else {
+            router.push('/Auth')
+        }
     }
 
     return (
