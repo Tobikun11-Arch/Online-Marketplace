@@ -62,11 +62,11 @@ export default function NavBar() {
 
   const handleSignOut = async () => {
     try {
-      console.log("Signout");
       const response = await Signout.post('', {}, { withCredentials: true });
       const { message } = response.data;
       if(message === 'Signed out successfully!'){ 
         router.push('/')
+        localStorage.clear();
       }
   } catch (error) {
       console.error("Error during signout:", error);

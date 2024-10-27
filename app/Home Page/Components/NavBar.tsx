@@ -48,6 +48,7 @@ const NavBar = () => {
             const response = await Signout.post('', {}, { withCredentials: true });
             const { message } = response.data;
             if(message === 'Signed out successfully!'){ 
+                localStorage.clear();
                 setToken(false)
                 setLoading(false)
             }
