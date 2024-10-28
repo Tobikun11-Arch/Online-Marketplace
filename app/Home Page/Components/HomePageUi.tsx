@@ -19,9 +19,9 @@ const HomePageUi = () => {
                 const response = await CheckUser.post('', { Email: selectedData.Email }, { withCredentials: true })
                 const { Role } = response.data
                 if(Role === 'Seller') {
-                    router.push('/SellerDashboard')
+                    router.push('./SellerDashboard')
                 }
-                else {
+                else if(Role === 'Buyer') {
                     router.push('/BuyerDashboard')
                 }
             } catch (error) {
