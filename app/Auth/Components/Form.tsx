@@ -71,7 +71,7 @@ const Form = () => {
             <div className="h-screen w-screen flex justify-center items-center sm:h-full sm:w-full">
                 <div className='py-5 cursor-default w-3/4 sm:w-full'>
                     <div className="flex gap-1 items-center">
-                        <div className={`w-8 h-8 rounded-full bg-gray-400 bg-[url('https://marketplace.canva.com/EAFvDRwEHHg/1/0/1600w/canva-colorful-abstract-online-shop-free-logo-cpI8ixEpis8.jpg')] bg-cover bg-center`}></div>
+                        <div className={`w-8 h-8 rounded-full bg-gray-400 bg-[url('/assets/sajuBazaarLogo.webp')] bg-cover bg-center`}></div>
                         <h1 className='text-blue-800 font-bold'>SajuBazaar</h1>
                     </div>
 

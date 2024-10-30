@@ -25,7 +25,7 @@ const HomePageUi = () => {
                     router.push('/BuyerDashboard')
                 }
             } catch (error) {
-                console.error(error)
+                router.push('/Auth')
             }
         } else {
             router.push('/Auth')

@@ -76,7 +76,7 @@ const RegistrationForm = () => {
         <div className="h-screen w-screen flex justify-center items-center sm:h-full sm:w-full">
         <div className='py-5 cursor-default w-3/4 sm:w-full '>
             <div className="flex gap-1 items-center">
-                <div className={`w-8 h-8 rounded-full bg-gray-400 bg-[url('https://marketplace.canva.com/EAFvDRwEHHg/1/0/1600w/canva-colorful-abstract-online-shop-free-logo-cpI8ixEpis8.jpg')] bg-cover bg-center`}></div>
+                <div className={`w-8 h-8 rounded-full bg-gray-400 bg-[url('/assets/sajuBazaarLogo.webp')] bg-cover bg-center`}></div>
                 <h1 className='text-blue-800 font-bold'>SajuBazaar</h1>
             </div>
 
@@ -141,17 +141,17 @@ const RegistrationForm = () => {
 
             <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3' onClick={RegisterAccount}>
                 {loading ? (<>
-                <div className="flex items-center gap-2">
-                <span className='text-xs font-bold text-gray-200 hover:text-white'>Signing Up</span>
-                <l-leapfrog
-                size="25"
-                speed="2.5" 
-                color="white" 
-                ></l-leapfrog>
-                </div>
+                    <div className="flex items-center gap-2">
+                    <span className='text-xs font-bold text-gray-200 hover:text-white'>Signing Up</span>
+                    <l-leapfrog
+                    size="25"
+                    speed="2.5" 
+                    color="white" 
+                    ></l-leapfrog>
+                    </div>
                 </>):
                 (<>
-                <span className='text-xs font-bold text-gray-200 hover:text-white'>Sign Up</span>
+                    <span className='text-xs font-bold text-gray-200 hover:text-white'>Sign Up</span>
                 </>)}
             </button>
 

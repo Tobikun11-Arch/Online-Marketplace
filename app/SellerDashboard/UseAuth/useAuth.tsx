@@ -11,6 +11,7 @@ const useAuth = () => {
             try {
                 const response = await auth.get('', { withCredentials: true });
                 if (response.data.verToken === false) {
+                    localStorage.clear()
                     router.push('/');
                 }
             } catch (error: any) {
@@ -23,6 +24,7 @@ const useAuth = () => {
                             refreshError.response &&
                             (refreshError.response.status === 401 || refreshError.response.status === 403)
                         ) {
+                            localStorage.clear()
                             router.push('/');
                         }
                     }
