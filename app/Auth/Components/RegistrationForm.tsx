@@ -155,24 +155,7 @@ const RegistrationForm = () => {
                 </>)}
             </button>
 
-        
-
-            <div className="flex mt-3 gap-2 sm:gap-4">
-                <button
-                    onClick={() => handleRoleSelection('seller')}
-                    className={`${Role === 'seller' ? 'bg-blue-600 text-white' : 'bg-white text-black'
-                    } ${ButtonStyle}`}>
-                    Become a Seller
-                </button>
-
-                <button
-                    onClick={() => handleRoleSelection('buyer')}
-                    className={`${Role === 'buyer' ? 'bg-blue-600 text-white' : 'bg-white text-black'
-                    } ${ButtonStyle}`}
-                    value={Role}>
-                    Become a Buyer
-                </button>
-            </div>
+            {/**Deleted the role picker and need to adjust database schema for it*/}
             <p className='text-gray-500 text-xs font-semibold mt-3 flex gap-1 justify-center'>Already have an account?<span className='text-blue-700' onClick={Form_Set}>Log in</span></p>
 
         </div>
