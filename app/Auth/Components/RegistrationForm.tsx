@@ -23,10 +23,6 @@ const RegistrationForm = () => {
         }
     }, []);
 
-    const handleRoleSelection = (role: string) => {
-        setRole(role)
-    }
-
     const RegisterAccount = async () => {
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
@@ -81,7 +77,7 @@ const RegistrationForm = () => {
             </div>
 
             <h1 className='text-gray-950 font-bold mt-4 text-2xl'>Sign Up for <span className='text-blue-900'>SajuBazaar</span></h1>  
-            <p className='text-xs text-gray-400'>Join as buyer/seller</p>
+            <p className='text-xs text-gray-400'>Join as seller</p>
 
             <AuthOnline/>
             <p className='text-gray-400 text-sm flex justify-center mt-3'>or sign up with</p>

@@ -18,7 +18,7 @@ export default function page() {
     </g>
     </svg>
   
-  <button className='text-white mt-5 bg-green-600 px-6 py-1'><a href="https://online-marketplace-beta.vercel.app">Login</a></button>
+  <button className='text-white mt-5 bg-green-600 px-6 py-1'><a href="https://sajuu-bazaar.vercel.app/">Login</a></button>
 
 </div>
 
