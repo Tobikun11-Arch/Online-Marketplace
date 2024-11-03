@@ -59,7 +59,7 @@ const RegistrationForm = () => {
                 setExistedEmail('Email is already registered'); // Handle client-side error (bad request)
             } 
             else {
-                    setExistedEmail('An error occurred, please try again.'); // Handle other errors
+                setExistedEmail('An error occurred, please try again.'); // Handle other errors
             }
         }
     }   
@@ -151,7 +151,6 @@ const RegistrationForm = () => {
                 </>)}
             </button>
 
-            {/**Deleted the role picker and need to adjust database schema for it*/}
             <p className='text-gray-500 text-xs font-semibold mt-3 flex gap-1 justify-center'>Already have an account?<span className='text-blue-700' onClick={Form_Set}>Log in</span></p>
 
         </div>
