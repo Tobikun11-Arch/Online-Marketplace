@@ -6,6 +6,6 @@ interface SidebarProps {
 }
 
 export const useToggle = create<SidebarProps>((set)=> ({
-    isToggle: true, //change it to false if done in sidebar mobile view
+    isToggle: false, 
     setToggle: (isToggle: boolean) => set(() => ({ isToggle }))
 }))
