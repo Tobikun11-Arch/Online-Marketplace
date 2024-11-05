@@ -1,7 +1,6 @@
 import React from 'react'
 import { X, Search } from 'lucide-react'
 import Input from '../common/Input'
-import { useToggle } from '../../store/useToggle'
 
 interface SidebarProps {
     isOpen: boolean
@@ -23,8 +22,6 @@ const Sidebar = ({ isOpen, onClose } : SidebarProps) => {
                 <h2>All products</h2>
                 <h2>Popular</h2>
                 <h2>Shop</h2>
-
-
             </div>
         </div>
     )
