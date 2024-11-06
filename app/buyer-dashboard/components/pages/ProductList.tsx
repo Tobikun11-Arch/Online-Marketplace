@@ -1,0 +1,1 @@
+//Structure of all product card mobile to desktop view

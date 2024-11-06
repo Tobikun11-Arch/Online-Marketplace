@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import { userData } from '../../axios/dataStore'
-import ProductCard from '../Container/ProductCard'
+import MainShopProduct from '../Container/MainShopProduct'
 import { Products } from '../../entities/entities'
 import { useToggle } from '../../store/useToggle'
 
@@ -27,7 +27,7 @@ const MainLayout = () => {
         <>
             <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717] pb-5'>
                 <Header/>
-                <ProductCard products={product} isOpen={isCart || isToggle}/>
+                <MainShopProduct products={product} isOpen={isCart || isToggle}/>
             </div>  
         </>
     )
