@@ -4,9 +4,11 @@ import Header from './Header'
 import { userData } from '../../axios/dataStore'
 import ProductCard from '../Container/ProductCard'
 import { Products } from '../../entities/entities'
+import { useToggle } from '../../store/useToggle'
 
 const MainLayout = () => {
     const [ product, setProduct ] = useState<Products[] | []>([])
+    const { isCart, isToggle } = useToggle()
 
     useEffect(() => {
         const fetchData = async() => {
@@ -21,17 +23,11 @@ const MainLayout = () => {
         fetchData()
     }, [])
 
-    useEffect(()=> {
-        console.log("Products: ", product)
-    }, [product])
-
     return (
         <>
-            <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
+            <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717] pb-5'>
                 <Header/>
-
-                {/* Remove this later if we already have product list  */}
-                <ProductCard product={product}/>
+                <ProductCard products={product} isOpen={isCart || isToggle}/>
             </div>  
         </>
     )
