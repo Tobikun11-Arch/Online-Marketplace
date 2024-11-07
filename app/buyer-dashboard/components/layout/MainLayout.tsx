@@ -5,10 +5,12 @@ import { userData } from '../../axios/dataStore'
 import MainShopProduct from '../Container/MainShopProduct'
 import { Products } from '../../entities/entities'
 import { useToggle } from '../../store/useToggle'
+import { useProuctDetails } from '../../store/storeProduct'
 
 const MainLayout = () => {
     const [ product, setProduct ] = useState<Products[] | []>([])
     const { isCart, isToggle } = useToggle()
+    const { setUrl } = useProuctDetails()
 
     useEffect(() => {
         const fetchData = async() => {
@@ -23,11 +25,16 @@ const MainLayout = () => {
         fetchData()
     }, [])
 
+    useEffect(()=> {
+        const images = product?.map((product)=> product.images[0])
+        setUrl(images)
+    }, [product])
+
     return (
         <>
             <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717] pb-5'>
                 <Header/>
-                <MainShopProduct products={product} isOpen={isCart || isToggle}/>
+                <MainShopProduct isOpen={isCart || isToggle}/>
             </div>  
         </>
     )
