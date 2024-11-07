@@ -7,6 +7,14 @@ import Button from '../Common/Button'
 import Cropper from 'react-easy-crop'
 import { getCroppedImg } from './CropUtils' 
 
+interface PixelCrop {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
+
 export default function ProductImages() {
     const {
         productImages,
@@ -25,41 +33,80 @@ export default function ProductImages() {
         setCroppedAreaPixels(croppedAreaPixels);
     };
 
+    async function getCroppedImg(imageSrc: string, pixelCrop: PixelCrop): Promise<Blob | null> {
+        const image = new Image();
+        image.src = imageSrc;
+    
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+    
+        // Set canvas dimensions based on the cropped area
+        canvas.width = pixelCrop.width;
+        canvas.height = pixelCrop.height;
+    
+        // Wait for the image to load
+        await new Promise<void>((resolve) => {
+            image.onload = () => resolve();
+        });
+    
+        // Draw the cropped image onto the canvas
+        ctx?.drawImage(
+            image,
+            pixelCrop.x,
+            pixelCrop.y,
+            pixelCrop.width,
+            pixelCrop.height,
+            0,
+            0,
+            pixelCrop.width,
+            pixelCrop.height
+        );
+    
+        // Export the canvas as a PNG with transparency
+        return new Promise<Blob | null>((resolve) => {
+            canvas.toBlob((blob) => {
+                resolve(blob);
+            }, 'image/png');
+        });
+    }
+
     const handleCrop = async () => {
         if (croppingImage && croppedAreaPixels) {
-            const croppedImage = await getCroppedImg(croppingImage, croppedAreaPixels);
-            const croppedFile = new File([croppedImage], 'croppedImage.jpg', { type: 'image/jpeg' });
-        
-            setProductImages([...productImages, croppedFile]);
-            setPreviewImages([...previewImages, URL.createObjectURL(croppedFile)]);
-            setCroppingImage(null); // close cropping modal
+            const croppedImageBlob = await getCroppedImg(croppingImage, croppedAreaPixels);
+    
+            if (croppedImageBlob) {
+                const croppedFile = new File([croppedImageBlob], 'croppedImage.png', { type: 'image/png' });
+    
+                setProductImages([...productImages, croppedFile]);
+                setPreviewImages([...previewImages, URL.createObjectURL(croppedFile)]);
+                setCroppingImage(null); // Close cropping modal
+            } else {
+                console.error('Failed to create cropped image blob');
+            }
         }
     };
-
     const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const filesArray = Array.from(e.target.files); 
-            const newImagePreviews = filesArray.map((file) => {
+            filesArray.forEach((file) => {
                 const img = new Image();
                 img.src = URL.createObjectURL(file);
-                
+
                 img.onload = () => {
                     if (img.width === 1380 && img.height === 1500) {
-                        // Only add images with the specific or correct size
+                        // Add images with correct dimensions directly to the productImages
                         setProductImages([...productImages, file]);
                         setPreviewImages([...previewImages, img.src]);
-                    } 
-
-                    else {
-                        setCroppingImage(img.src); 
+                    } else {
+                        // Set the image for cropping if dimensions are incorrect
+                        setCroppingImage(img.src);
                     }
                 };
-                return img.src;
             });
         }
     };
 
-    //Remove bg integration
+    //Remove bg integration for later integration
     // const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     //     if (e.target.files) {
     //         const filesArray = Array.from(e.target.files); // Convert FileList to array
@@ -98,15 +145,19 @@ export default function ProductImages() {
         setPreviewImages(updatedPreviewImages);
     };
 
+    // Opens a new tab to preview the selected image in full size
     const previewImage = (urlImage: string) => {
         window.open(urlImage, "_blank");
     };
 
-    const urlImage = previewImages.map((image) => image)
+    // Get URLs of preview images to use in UI
+    const urlImage = previewImages.map((image) => image);
 
+    // Handles setting which image is currently viewed
     const handleView = (index: number) => {
-        setView(index)
-    }
+        setView(index);
+    };
+
 
   return (
    <>
@@ -240,7 +291,6 @@ export default function ProductImages() {
                         </div>
                         </>
                     ) : ''}
-
             </div>
 
         </div>

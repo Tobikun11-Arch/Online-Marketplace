@@ -16,6 +16,7 @@ const RegistrationForm = () => {
     const ButtonStyle = 'font-semibold rounded-md w-full border text-xs py-1 transition duration-200 hover:bg-blue-600 hover:text-white'
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ existedEmail, setExistedEmail ] = useState<string>('')
+    
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
