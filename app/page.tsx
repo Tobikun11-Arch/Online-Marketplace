@@ -4,11 +4,7 @@ import Dashboard from './buyer-dashboard/page'
 
 const Page = () => {
 
-  return (
-    <div className="w-full h-screen">
-      <Dashboard />
-    </div>
-  )
+  return <Dashboard />
 }
 
 export default Page 

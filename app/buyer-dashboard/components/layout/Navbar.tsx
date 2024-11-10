@@ -21,7 +21,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                     </div>
                 </div>
                 <div className={`md:w-2/5 ${isOpen ? '' : 'relative'}`}>
-                    <Input type='search' className='bg-white border w-full rounded-md h-10 text-sm pl-2 pr-7 text-gray-800 dark:text-white outline-none' placeholder='Search for products...'/>
+                    <Input type='search' className='bg-transparent border w-full rounded-md h-10 text-sm pl-2 pr-7 text-gray-800 dark:text-white outline-none' placeholder='Search for products...'/>
                     <div className={`inset-y-0 right-0 flex items-center pr-3 ${isOpen ? 'hidden' : 'absolute'}`}>
                     <Search strokeWidth={1.4} color='gray' size={15}/>
                     </div>

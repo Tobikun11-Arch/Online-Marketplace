@@ -1,8 +1,42 @@
-import React from 'react'
-import MainLayout from './components/layout/MainLayout'
+"use client"
+import React, { useEffect, useState } from 'react'
+import Header from './components/layout/Header'
+import { userData, AllProducts } from './axios/dataStore'
+import MainShopProduct from './components/Container/MainShopProduct'
+import { Products } from './entities/entities'
+import { useToggle } from './store/useToggle'
+import { useProuctDetails } from './store/storeProduct'
 
-const Page = () => {
-    return <MainLayout/>
+const MainLayout = () => {
+    const [ product, setProduct ] = useState<Products[] | []>([])
+    const { isCart, isToggle } = useToggle()
+    const { setUrl } = useProuctDetails()
+
+    useEffect(() => {
+        const fetchData = async() => {
+            try {
+                const response = await userData.get('')
+                setProduct(response.data.product)
+            } 
+            catch (error) {
+                console.error("Fetch error: ", error)
+            }
+        }
+        fetchData()
+    }, [])
+
+    useEffect(()=> {
+        const images = product?.map((product)=> product.images[0])
+        setUrl(images)
+    }, [product])
+
+    return (
+        <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
+            <Header/>
+            <MainShopProduct isOpen={isCart || isToggle}/>
+            {/* <h1>Footer</h1> */}
+        </div>
+    )
 }
 
-export default Page
+export default MainLayout
