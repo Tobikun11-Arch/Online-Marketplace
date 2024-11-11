@@ -5,5 +5,5 @@ export const userData = axios.create({
 })
 
 export const AllProducts = axios.create({
-    baseURL: 'http://localhost:5000/api/users/AllProducts'  //deployment: process.env.NEXT_PUBLIC_MAINSHOP
+    baseURL: 'http://localhost:5000/api/users/AllProducts'  //deployment: process.env.NEXT_PUBLIC_ALLPRODUCTS
 })

@@ -6,8 +6,9 @@ import MainShopProduct from './components/Container/MainShopProduct'
 import { Products } from './entities/entities'
 import { useToggle } from './store/useToggle'
 import { useProuctDetails } from './store/storeProduct'
+import { fetchUserData } from '../buyer-dashboard/@actions/getUsersData'
 
-const MainLayout = () => {
+const Page = () => {
     const [ product, setProduct ] = useState<Products[] | []>([])
     const { isCart, isToggle } = useToggle()
     const { setUrl } = useProuctDetails()
@@ -15,8 +16,8 @@ const MainLayout = () => {
     useEffect(() => {
         const fetchData = async() => {
             try {
-                const response = await userData.get('')
-                setProduct(response.data.product)
+                const response = await fetchUserData()
+                setProduct(response)
             } 
             catch (error) {
                 console.error("Fetch error: ", error)
@@ -39,4 +40,4 @@ const MainLayout = () => {
     )
 }
 
-export default MainLayout
+export default Page
