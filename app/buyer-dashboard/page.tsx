@@ -6,7 +6,8 @@ import { Products } from './entities/entities'
 import { useToggle } from './store/useToggle'
 import { useProuctDetails, useProductData } from './store/storeProduct'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { userData } from '../buyer-dashboard/axios/dataStore'
+import { MainShop, AllProducts } from '../buyer-dashboard/axios/dataStore'
+import { lineSpinner } from 'ldrs'
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -17,51 +18,64 @@ export default function Page() {
     )
 }
 
+interface ProductResponse {
+    MainShopProducts: Products[]
+    SellerProducts: Products[]
+}
+
 const BuyerDashboard = () => {
-    const [ productList, setProductList ] = useState<Products[] | []>([])
     const { isCart, isToggle } = useToggle()
     const { setUrl } = useProuctDetails()
-    const { setProduct, product } = useProductData()
+    const { setProduct } = useProductData()
 
-    const { isLoading, error, data: products } = useQuery<Products[] | []>({
+    const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
         queryKey: ['product'],
         queryFn: async () => {
-        const response = await userData.get('');
-        return response.data.product;
+            const response = await MainShop.get(''); //Main shop
+            const { MainShopProducts, SellerProducts } = response.data 
+            return { MainShopProducts, SellerProducts }
         },
-    });
+    })
 
     useEffect(() => {
-        if (products) {
-            setProduct(products);
-            setUrl(product?.map((product)=> product.images[0]))
+        if (typeof window !== 'undefined') {
+            lineSpinner.register()
         }
-    }, [products, setProduct, setUrl, product])
+    }, [])
 
-    if(isLoading) return <h1>Loading</h1>
-    if(error) return <h1>Error displaying</h1>
+    useEffect(() => {
+        if (ProductResponse) {
+            const images = ProductResponse.MainShopProducts.map((product)=> product.images[0])
+            setUrl(images)
+            setProduct(ProductResponse.SellerProducts)
+        }
+    }, [ProductResponse, setUrl])
 
-    // useEffect(() => {       
-    //     const fetchData = async() => {
-    //         const product = await fetchProduct()
-    //         const ProductList = await fetchProducts()
-    //         setProduct(product)
-    //         setProductList(ProductList)
-    //     }
-    //     fetchData()
-    // }, [])
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-[#171717] dark:bg-[#171717]">
+                <l-line-spinner
+                size="70"
+                bg-opacity="0.1"
+                speed="1.75" 
+                color="white" 
+                ></l-line-spinner>
+            </div>
+        )
+    }
 
-    // useEffect(()=> {
-    //     const images = product?.map((product)=> product.images[0])
-    //     setUrl(images)
-    //     console.log(productList)
-    // }, [product, productList])
+    if(error) {
+        return (
+            <div className="flex items-center justify-center h-screen bg-[#171717] dark:bg-[#171717]">
+                <h1 className='text-2xl text-red-800'>Error Fetching</h1>
+            </div>
+        )
+    }
 
     return (
         <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
             <Header/>
             <MainShopProduct isOpen={isCart || isToggle}/>
-            {/* Footer  */}
         </div>
     )
 }

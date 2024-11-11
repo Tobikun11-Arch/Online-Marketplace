@@ -1,16 +1,14 @@
-import React from 'react'
-import { Products } from '../../entities/entities'
+import React, { useEffect } from 'react'
+import { useProductData } from '../../store/storeProduct'
 
-interface productImage {
-    products: Products[]
-}
+const ProductCard = () => {
+    const { product } = useProductData()
 
-const ProductCard = ({ products }: productImage) => {
     return (
         <>
-            {products.map((product)=> (
-                <div key={product._id}>
-                    <h1>{product.images}</h1>
+            {product.map((prodTest) => (
+                <div key={prodTest._id}>
+                    <h1>Product Card: {prodTest.productName}</h1>
                 </div>
             ))}
         </>

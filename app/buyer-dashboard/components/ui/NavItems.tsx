@@ -7,7 +7,7 @@ interface navProps {
 
 const NavItems = ({ className }: navProps) => {
     const router = useRouter()
-    const hover = 'hover:underline hover:text-white'
+    const hover = 'hover:underline hover:text-white cursor-default'
 
     return (
         <div className={className}>

@@ -15,7 +15,6 @@ import { useDelete} from '../../hooks/DeleteProduct';
 import { Delete_Product } from '../../axios/axios';
 import { square } from 'ldrs'
 import SquareLoading from './Loading/SquareLoading';
-import useAuth from '../../UseAuth/useAuth';
 
 interface Products {
     ProductLists: Product[];

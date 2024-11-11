@@ -16,10 +16,10 @@ const MainShopProduct = ({ isOpen } : productProps) => {
         <div className={`${isOpen && 'z-10'} px-5 pb-5 md:flex md:gap-5`}>
                     <div className={`${imgParent} mb-5 lg:w-3/5`}>
                         <div className={imgSubParent}>
-                            {productImageUrl[0] && (
+                            {productImageUrl[2] && (
                                 <Image
                                     fill
-                                    src={productImageUrl[0]}
+                                    src={productImageUrl[2]}
                                     alt={`image 1`}
                                     className="object-contain object-center"
                                     placeholder = 'blur' 
@@ -47,10 +47,10 @@ const MainShopProduct = ({ isOpen } : productProps) => {
 
                         <div className={`${imgParent}`}>
                             <div className={imgSubParent}>
-                                {productImageUrl[2] && (
+                                {productImageUrl[0] && (
                                     <Image
                                         fill
-                                        src={productImageUrl[2]}
+                                        src={productImageUrl[0]}
                                         alt={`top products 3`}
                                         className="object-contain object-center"
                                         placeholder = 'blur' // "empty" | "blur" | "data:image/..."
