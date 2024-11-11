@@ -1,9 +1,14 @@
 import React from 'react'
+import { Products } from '../../entities/entities'
 
-const ProductCard = () => {
+interface productImage {
+    product: Products[]
+}
+
+const ProductCard = ({ product }: productImage) => {
     return (
         <>
-            
+            <h1>test</h1>
         </>
     )
 }

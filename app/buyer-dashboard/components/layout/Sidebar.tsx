@@ -1,6 +1,7 @@
 import React from 'react'
 import { X, Search } from 'lucide-react'
 import Input from '../common/Input'
+import NavItems from '../ui/NavItems'
 
 interface SidebarProps {
     isOpen: boolean
@@ -8,9 +9,6 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onClose } : SidebarProps) => { 
-    const handleAllProducts = () => {
-        console.log("All products")
-    }
 
     return (
         <div className={`h-screen bg-white z-50 fixed top-0 left-0 w-full transition-transform transform text-black p-4 flex flex-col gap-2 dark:bg-black dark:text-white ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -20,11 +18,7 @@ const Sidebar = ({ isOpen, onClose } : SidebarProps) => {
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                     <Search strokeWidth={1.4} color='gray' size={15}/>
                 </div>
-            </div>
-            <div className="navItems cursor-default">
-                <h2 onClick={handleAllProducts}>All products</h2>
-                <h2>Popular</h2>
-                <h2>Shop</h2>
+                <NavItems className='"navItems cursor-default"'/>
             </div>
         </div>
     )

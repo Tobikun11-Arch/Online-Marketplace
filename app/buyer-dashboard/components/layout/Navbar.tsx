@@ -1,6 +1,7 @@
 import React from 'react'
 import Input from '../common/Input'
 import { Search } from 'lucide-react'
+import NavItems from '../ui/NavItems'
 
 interface NavbarProps {
     className?: string
@@ -14,11 +15,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
             <div className='flex items-center md:gap-16 xl:gap-32'>
                 <div className='flex gap-5'>
                     <h1>Saju<span className='text-blue-800'>Baz</span>aar</h1>
-                    <div className="navItems flex gap-3 items-center text-sm text-gray-500">
-                        <h2>All</h2>
-                        <h2>Popular</h2>
-                        <h2>Shop</h2>
-                    </div>
+                        <NavItems className="cursor-default flex gap-3 items-center text-sm text-gray-500"/>
                 </div>
                 <div className={`md:w-2/5 ${isOpen ? '' : 'relative'}`}>
                     <Input type='search' className='bg-transparent border w-full rounded-md h-10 text-sm pl-2 pr-7 text-gray-800 dark:text-white outline-none' placeholder='Search for products...'/>

@@ -1,1 +1,11 @@
-//Structure of all product card mobile to desktop view
+import React from 'react'
+
+const ProductList = () => {
+    return (
+        <div className=''>
+        
+        </div>
+    )
+}
+
+export default ProductList
