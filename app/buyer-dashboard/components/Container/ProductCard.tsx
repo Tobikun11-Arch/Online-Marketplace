@@ -9,7 +9,9 @@ const ProductCard = ({ products }: productImage) => {
     return (
         <>
             {products.map((product)=> (
-                <h1>{product.images}</h1>
+                <div key={product._id}>
+                    <h1>{product.images}</h1>
+                </div>
             ))}
         </>
     )
