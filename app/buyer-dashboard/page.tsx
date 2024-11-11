@@ -6,7 +6,7 @@ import { Products } from './entities/entities'
 import { useToggle } from './store/useToggle'
 import { useProuctDetails, useProductData } from './store/storeProduct'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { MainShop, AllProducts } from '../buyer-dashboard/axios/dataStore'
+import { MainShop } from '../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 
 const queryClient = new QueryClient()
@@ -20,20 +20,18 @@ export default function Page() {
 
 interface ProductResponse {
     MainShopProducts: Products[]
-    SellerProducts: Products[]
 }
 
 const BuyerDashboard = () => {
     const { isCart, isToggle } = useToggle()
     const { setUrl } = useProuctDetails()
-    const { setProduct } = useProductData()
 
     const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
         queryKey: ['product'],
         queryFn: async () => {
             const response = await MainShop.get(''); //Main shop
-            const { MainShopProducts, SellerProducts } = response.data 
-            return { MainShopProducts, SellerProducts }
+            const { MainShopProducts } = response.data 
+            return { MainShopProducts }
         },
     })
 
@@ -47,7 +45,6 @@ const BuyerDashboard = () => {
         if (ProductResponse) {
             const images = ProductResponse.MainShopProducts.map((product)=> product.images[0])
             setUrl(images)
-            setProduct(ProductResponse.SellerProducts)
         }
     }, [ProductResponse, setUrl])
 
