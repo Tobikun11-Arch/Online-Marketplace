@@ -22,7 +22,7 @@ const MainShopProduct = ({ isOpen } : productProps) => {
                                     src={productImageUrl[0]}
                                     alt={`image 1`}
                                     className="object-contain object-center"
-                                    placeholder = 'blur' // "empty" | "blur" | "data:image/..."
+                                    placeholder = 'blur' 
                                     blurDataURL='add new url later'
                                 />
                             )}

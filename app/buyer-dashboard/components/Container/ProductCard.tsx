@@ -2,13 +2,15 @@ import React from 'react'
 import { Products } from '../../entities/entities'
 
 interface productImage {
-    product: Products[]
+    products: Products[]
 }
 
-const ProductCard = ({ product }: productImage) => {
+const ProductCard = ({ products }: productImage) => {
     return (
         <>
-            <h1>test</h1>
+            {products.map((product)=> (
+                <h1>{product.images}</h1>
+            ))}
         </>
     )
 }
