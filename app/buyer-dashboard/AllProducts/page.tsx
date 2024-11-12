@@ -5,7 +5,7 @@ import { useProductData } from '../store/storeProduct'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { AllProducts, MainShop } from '../../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
-import ProductCard from '../components/Container/ProductCard';
+import ProductLists from '../components/pages/ProductList';
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -68,7 +68,7 @@ export default function Page() {
 
         return (
             <div className='min-h-screen bg-white dark:bg-[#171717] p-5'>
-                <h1>All products</h1>
+                <ProductLists product={product}/>
             </div>
         )
 }
