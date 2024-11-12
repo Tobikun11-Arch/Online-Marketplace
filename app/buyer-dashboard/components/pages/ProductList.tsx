@@ -8,7 +8,7 @@ interface products {
 
 const ProductList = ({ product }: products) => {
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4 pb-4'>
             <ProductCard product={product}/>
         </div>
     )

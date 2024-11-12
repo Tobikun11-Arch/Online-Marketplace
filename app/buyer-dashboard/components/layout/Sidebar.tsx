@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { X, Search } from 'lucide-react'
 import Input from '../common/Input'
 import NavItems from '../ui/NavItems'
@@ -9,6 +9,17 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onClose } : SidebarProps) => { 
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden'; // Disable scrolling
+        } else {
+            document.body.style.overflow = 'unset'; // Enable scrolling
+        }
+        
+        return () => {
+            document.body.style.overflow = 'unset'; // Cleanup on unmount
+        };
+    }, [isOpen]);
 
     return (
         <div className={`h-screen  bg-white z-50 fixed top-0 left-0 w-full transition-transform transform text-black p-4 flex flex-col gap-2 dark:bg-black dark:text-white ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>

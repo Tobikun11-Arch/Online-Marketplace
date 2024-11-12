@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 import { AllProducts, MainShop } from '../../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
+import Header from '../components/layout/Header';
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -67,7 +68,8 @@ export default function Page() {
         }
 
         return (
-            <div className='min-h-screen bg-white dark:bg-[#171717] p-5'>
+            <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
+                <Header/>
                 <ProductLists product={product}/>
             </div>
         )
