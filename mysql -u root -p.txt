@@ -1,0 +1,148 @@
+mysql -u root -p
+
+USE TestInfo;
+
+SELECT * FROM user;
+
+MariaDB [(none)]> CREATE DATABASE database_name;
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [(none)]> USE database_name;
+Database changed
+MariaDB [database_name]> USE TestInfo;
+Database changed
+MariaDB [TestInfo]> show databases
+    -> \c
+MariaDB [TestInfo]>
+
+
+CREATE TABLE user (
+    id INT(10) AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20) NOT NULL,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO user (name, username, password) 
+VALUES ('Joenel', 'Joenel22', 'Joenel2468');
+
+select * from user;
+
+SELECT * FROM user;
+
+
+DELETE FROM Registered WHERE id = 1;
+
+CREATE TABLE LibrarianRegisteredAccount (
+id INT AUTO_INCREMENT PRIMARY KEY,
+    firstname VARCHAR(50),
+    lastname VARCHAR(50),
+    username VARCHAR(50),
+    IdNumber VARCHAR(20),
+    password VARCHAR(50)
+);
+
+
+try and catch connection in database 
+
+ try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TestInfo", "root", "");
+            // Perform operations with the connection
+            con.close(); // Remember to close the connection when done
+        } 
+       
+       catch (ClassNotFoundException e) {
+            System.out.println("Error loading MySQL JDBC driver: " + e.getMessage());
+        } 
+       
+       catch (SQLException e) {
+            System.out.println("Error connecting to the database: " + e.getMessage());
+        }
+
+
+
+
+CREATE TABLE RenewedBooks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    Author VARCHAR(100),
+    Title VARCHAR(100),
+    Copyright VARCHAR(100)
+);
+
+CREATE TABLE issuebook (
+id INT AUTO_INCREMENT PRIMARY KEY,
+    studentid VARCHAR(100),
+    access VARCHAR(100),
+    issue_date VARCHAR(100),
+    return_date VARCHAR(100),
+    status VARCHAR(100)
+);
+CREATE TABLE CatalogBook (
+    isbn VARCHAR(100),
+    accesionnumber VARCHAR(100),
+    callnumber VARCHAR(100),
+    title VARCHAR(100),
+    author VARCHAR(100),
+    edition VARCHAR(100),
+    volume VARCHAR(100),
+    pages VARCHAR(100),
+    copyright VARCHAR(100),
+    sourceoffund VARCHAR(100),
+    publisher VARCHAR(100),
+    placeofpublication VARCHAR(100),
+    classification VARCHAR(100),
+    librarycopies VARCHAR(100),
+    remarks VARCHAR(100)
+);
+
+
+
+ pstmt.close();
+        conn.close();
+
+
+Catalog dashboard = new Catalog();
+        dashboard.setVisible(true);
+        this.dispose();
+
+			this.dispose();
+                        Librariandashboard newDashboard = new Librariandashboard();
+                        newDashboard.setVisible(true);
+                        newDashboard.log();
+
+CREATE TABLE attendancerecords (
+    id_number VARCHAR(100),
+    timein VARCHAR(100),
+    timeout VARCHAR(100),
+    date VARCHAR(100)
+);
+
+
+CREATE TABLE employeedetails (
+   employeenumber VARCHAR(100),
+    firstname VARCHAR(100),
+    lastname VARCHAR(100),
+	employeeid VARCHAR(100)
+);
+
+ pst.setString(1, Firstname);
+             pst.setString(2, Lastname);
+              pst.setString(3, Email);
+
+
+CREATE TABLE returned (
+    studentid VARCHAR(100),
+    access VARCHAR(100),
+    issue_date VARCHAR(100),
+    return_date VARCHAR(100),
+    status VARCHAR(100)
+);
+
+
+	
+
+
+
+
+

@@ -2,22 +2,22 @@ import React, { useEffect } from 'react'
 import { X, Search } from 'lucide-react'
 import Input from '../common/Input'
 import NavItems from '../ui/NavItems'
-
 interface SidebarProps {
     isOpen: boolean
     onClose: () => void
 }
 
 const Sidebar = ({ isOpen, onClose } : SidebarProps) => { 
+
     useEffect(() => {
         if (isOpen) {
-            document.body.style.overflow = 'hidden'; // Disable scrolling
+            document.body.style.overflow = 'hidden'; 
         } else {
-            document.body.style.overflow = 'unset'; // Enable scrolling
+            document.body.style.overflow = 'unset'; 
         }
         
         return () => {
-            document.body.style.overflow = 'unset'; // Cleanup on unmount
+            document.body.style.overflow = 'unset';
         };
     }, [isOpen]);
 

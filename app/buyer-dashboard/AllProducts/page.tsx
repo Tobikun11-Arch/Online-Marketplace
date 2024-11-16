@@ -7,13 +7,14 @@ import { AllProducts, MainShop } from '../../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
+import Category from './Category';
 
 const queryClient = new QueryClient()
 export default function Page() {
-    return (
-        <QueryClientProvider client={queryClient}>
-        <ProductList />
-        </QueryClientProvider>
+        return (
+            <QueryClientProvider client={queryClient}>
+                <ProductList />
+            </QueryClientProvider>
         )
     }
 
@@ -23,7 +24,6 @@ export default function Page() {
 
     const ProductList = () => {
         const { setProduct, product } = useProductData()
-
         const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
             queryKey: ['product'],
             queryFn: async () => {
@@ -70,7 +70,10 @@ export default function Page() {
         return (
             <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
                 <Header/>
-                <ProductLists product={product}/>
+                <div className="px-4 flex flex-col gap-4">
+                    <Category/>
+                    <ProductLists product={product}/>
+                </div>
             </div>
         )
-}
+    }
