@@ -71,7 +71,11 @@ export default function Page() {
             <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
                 <Header/>
                 <div className="px-4 flex flex-col gap-4">
+                    <div className='flex gap-2'>
                     <Category/>
+                    {/* change this to Filtered later */}
+                    <Category/> 
+                    </div>
                     <ProductLists product={product}/>
                 </div>
             </div>

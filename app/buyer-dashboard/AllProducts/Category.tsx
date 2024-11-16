@@ -16,7 +16,7 @@ const Category = () => {
                 <SelectValue placeholder="Select a fruit" className='text-black dark:text-white'/>
             </SelectTrigger>
             <SelectContent>
-                <SelectGroup>
+                <SelectGroup className='w-full py-2 pl-2 pr-16'>
                 <SelectItem value="apple">Apple</SelectItem>
                 <SelectItem value="banana">Banana</SelectItem>
                 <SelectItem value="blueberry">Blueberry</SelectItem>
