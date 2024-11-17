@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation'
 import React from 'react'
 
-const page = () => {
+const Page = () => {
     const { id } = useParams()
     if(id) return <h1>Id exist</h1>
 
@@ -13,4 +13,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
