@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Products } from '../../entities/entities'
 import Image from 'next/image'
-
+import Link from 'next/link'
 interface products {
     product: Products[]
 }
@@ -10,8 +10,8 @@ const ProductCard = ({ product }: products) => {
 
     return (
         <>
-            {product.map((prodTest) => (
-                <div key={prodTest._id}>
+            {product.map((prodTest, index) => (
+                <Link href={`/buyer-dashboard/product/${prodTest._id}`} passHref key={index}>
                     <div className='relative w-full h-80 flex flex-col justify-center items-center md:mb-0 bg-white dark:bg-black hover:border-blue-500 rounded-lg border'>
                         <div className='relative w-3/4 h-3/4 aspect-w-1 aspect-h-1 hover:scale-105'>
                             <Image
@@ -24,8 +24,8 @@ const ProductCard = ({ product }: products) => {
                             />
                         </div>
                     </div>
-                </div>
-            ))}
+                </Link>
+            ))} 
         </>
     )
 }

@@ -73,7 +73,7 @@ export default function Page() {
                 <div className="px-4 flex flex-col gap-4">
                     <div className='flex gap-2'>
                     <Category/>
-                    {/* change this to Filtered later */}
+                    {/* change this to Filtered category later */}
                     <Category/> 
                     </div>
                     <ProductLists product={product}/>
