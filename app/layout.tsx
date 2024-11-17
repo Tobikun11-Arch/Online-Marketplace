@@ -1,4 +1,4 @@
-
+import QueryProvider from './QueryProvider';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -24,7 +24,9 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
-          {children}
+        <QueryProvider>
+        {children}
+        </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
