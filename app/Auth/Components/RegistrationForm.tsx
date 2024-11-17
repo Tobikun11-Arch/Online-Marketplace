@@ -12,11 +12,10 @@ const RegistrationForm = () => {
     const { isForm, setForm } = useForm()
     const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole, sentMail} = useNewUser()
     const [ Error , seterror ] = useState<boolean>(false)
-    const adjectives = ['Dab', 'Sunny', 'Clever', 'Swift', 'Bright', 'Cool', 'Witty', 'Brave'];
-    const ButtonStyle = 'font-semibold rounded-md w-full border text-xs py-1 transition duration-200 hover:bg-blue-600 hover:text-white'
+    const adjectives = ['pokwang', 'kririn', 'pikolo', 'golem', 'gokuu', 'renejay', 'yawi', 'david'];
+    const [ joinSeller, setJoin ] = useState<boolean>(false)
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ existedEmail, setExistedEmail ] = useState<string>('')
-    
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -26,7 +25,7 @@ const RegistrationForm = () => {
 
     const RegisterAccount = async () => {
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-
+        {joinSeller ? `${setRole('seller')}` : `${setRole('buyer')}`}
         if(!Email || !Role || !Password || !ConfirmPassword || !Email.includes('@') || !passwordPattern.test(Password)) {
             seterror(true)
             return;
@@ -44,7 +43,6 @@ const RegistrationForm = () => {
             const userDetails = {
                 FirstName, LastName, Email, Password, Role, Username: generatedUsername
             }
-
             await newRegister.post('', userDetails)
             setLoading(false)
             sentMail(true)
@@ -69,6 +67,10 @@ const RegistrationForm = () => {
         setForm(false)
     }, [isForm])
 
+    const toggleJoin = () => {
+        setJoin(!joinSeller)
+    }
+
     return (
         <div className="h-screen w-screen flex justify-center items-center sm:h-full sm:w-full">
         <div className='py-5 cursor-default w-3/4 sm:w-full '>
@@ -78,7 +80,7 @@ const RegistrationForm = () => {
             </div>
 
             <h1 className='text-gray-950 font-bold mt-4 text-2xl'>Sign Up for <span className='text-blue-900'>SajuBazaar</span></h1>  
-            <p className='text-xs text-gray-400'>Join as seller</p>
+            <p className='text-xs text-gray-400' onClick={toggleJoin}>Join as <span className='text-blue-600 font-bold'>{joinSeller ? 'buyer?' : 'seller?'}</span></p>
 
             <AuthOnline/>
             <p className='text-gray-400 text-sm flex justify-center mt-3'>or sign up with</p>

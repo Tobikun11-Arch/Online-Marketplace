@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { X } from 'lucide-react'
+import { useForm } from '../../../Auth/StateHandlers/Form'
+import { useRouter } from 'next/navigation'
 
 interface CartProps {
     isOpen: boolean
@@ -7,6 +9,8 @@ interface CartProps {
 }
 
 const UserAuth = ({ isOpen, onClose } : CartProps) => {
+    const { setForm } = useForm()
+    const router = useRouter()
     const buttonAuth = 'w-32 py-2 border dark:border-white border-black'
     useEffect(() => {
         if (isOpen) {
@@ -20,6 +24,17 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
         };
     }, [isOpen]);
 
+    const handleOption = (Option: string) => {
+        if(Option === 'SignUp') {
+            setForm(true)
+            router.push('/Auth')
+        }
+        else {
+            setForm(false)
+            router.push('/Auth')
+        }
+    }
+
     return (
         <div className={`h-screen z-50 bg-gray-200 bg-opacity-65 dark:bg-opacity-90 md:backdrop-blur-sm md:border dark:border-black border-white border-opacity-18 fixed top-0 right-0 w-full md:w-[350px] transition-transform transform text-black p-4 flex flex-col gap-2 dark:bg-black dark:text-white ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
             <div className="flex justify-between items-center">
@@ -28,9 +43,9 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
             </div>
 
             <div className='flex-grow flex flex-col justify-center items-center'>
-                <button className={buttonAuth}>Sign in</button>
+                <button className={buttonAuth} onClick={()=> handleOption('Signin')}>Sign in</button>
                 <h3>or</h3>
-                <button className={buttonAuth}>Sign up</button>
+                <button className={buttonAuth} onClick={()=> handleOption('SignUp')}>Sign up</button>
             </div>
         </div>
     )

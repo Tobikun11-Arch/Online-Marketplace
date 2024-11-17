@@ -16,7 +16,6 @@ const Form = () => {
         const [ Error , seterror ] = useState<boolean>(false)
         const [ loading, setLoading ] = useState<boolean>(false)
         const [ messageLogin, setmessageLogin ] = useState<boolean>(false)
-        const { setuserDetails, usersdata } = useDetails()
         const router = useRouter()
 
         const Form_Set = useCallback(()=> {
@@ -47,7 +46,7 @@ const Form = () => {
                         const { user } = response.data;
                         localStorage.setItem('user', JSON.stringify(user))
                         if (user.Role === 'buyer') {
-                            router.push('/Client/ClientDashboard');
+                            router.push('/');
                             setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                         } else {
                             localStorage.removeItem('activeItem')

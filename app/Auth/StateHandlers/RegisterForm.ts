@@ -30,7 +30,7 @@ export const useNewUser = create<NewUser>((set) => ({
     Password: '',
     ConfirmPassword: '',
     isPasswordVisible: false,
-    Role: 'Seller',
+    Role: '',
     emailSent: false,
     setFirstName: (FirstName: string) => set(()=> ({ FirstName })), 
     setLastName: (LastName: string) => set(()=> ({ LastName })), 
