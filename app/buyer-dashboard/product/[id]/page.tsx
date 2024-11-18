@@ -3,31 +3,29 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import React from 'react'
 import { AllProducts } from '../../axios/dataStore'
+import { productId } from '../../axios/dataStore'
+
+const fetchDataId = async (id: string) => {
+    const response = await productId.get(`${id}`);
+    return response.data.productId;
+};
 
 const Page = () => {
     const { id } = useParams()
-    if(id) return <h2>{id}</h2>
-    //Tommorrow fix the display of products just like this in the cine app
-    // useEffect(() => {
-    //     if (id) {
-    //         fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=d92de49cc045b7079ff263d81acb9db2`)
-    //             .then((response) => response.json())
-    //             .then((data) => {
-    //                 setMovie(data);
-    //                 setLoading(false);
-    //             })
-    //             .catch((error) => {
-    //                 console.error('Error fetching movie details:', error);
-    //                 setLoading(false); 
-    //             });
-    //     }
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['productId', id],
+        queryFn: () => fetchDataId(id as string),
+        enabled: !!id, 
+    });
 
-    // }, [id]);
-    return (
-        <div>
-        
-        </div>
-    )
+    if (isLoading) return <p>Loading product details...</p>;
+
+    // Handle error state
+    if (isError) return <p>Failed to load product details.</p>;
+
+    console.log(data)
+
+    return <h2>{data}</h2>
 }
 
 export default Page
