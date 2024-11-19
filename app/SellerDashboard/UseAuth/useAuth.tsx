@@ -2,16 +2,20 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 import { auth, refresh } from '../axios/axios';
+import { useAuthIdentifier } from '../../buyer-dashboard/store/Auth'
 
 const useAuth = () => {
     const router = useRouter();
+    const { setAuth } = useAuthIdentifier()
 
     useEffect(() => {
         const verifyAccessToken = async () => {
             try {
                 const response = await auth.get('', { withCredentials: true });
+                setAuth(true)
                 if (response.data.verToken === false) {
                     localStorage.clear()
+                    setAuth(false)
                     router.push('/');
                 }
             } catch (error: any) {
@@ -26,6 +30,7 @@ const useAuth = () => {
                         ) {
                             localStorage.clear()
                             router.push('/');
+                            setAuth(false)
                         }
                     }
                 }

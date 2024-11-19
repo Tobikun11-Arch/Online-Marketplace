@@ -23,3 +23,11 @@ export const productId = axios.create({
         'Content-Type': 'application/json',
     }
   })
+
+export const userAuth = axios.create({
+    baseURL: 'http://localhost:5000/api/users/product/',  //deployment: process.env.NEXT_PUBLIC_PRODUCTID
+    headers: {
+        'Content-Type': 'application/json',
+    }
+})
+userAuth.defaults.withCredentials = true;

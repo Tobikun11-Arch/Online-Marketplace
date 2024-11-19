@@ -55,18 +55,39 @@ const Page = () => {
         )
     }
 
+    const OrigPrice = products.map((product)=> {
+        return parseInt(product.productPrice) + parseInt(product.productDiscount)
+    })
+
+    const prodSize = 'text-sm inline-block mt-1 rounded-3xl py-1 px-3 bg-gray-800 border'
+
     return (
-        <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
+        <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717] pb-3 cursor-default'>
             <Header/>
                 {products.map((product, index)=> (
                     <div className="px-4 md:px-5" key={index}>
-                        <div className='bg-white border-2 dark:bg-black flex flex-col md:flex-row'>
-                            <div className='w-full md:w-3/5 Image-layout p-2'>
+                        <div className='bg-white border-2 py-10 dark:bg-black flex flex-col lg:flex-row'>
+                            <div className='w-full lg:w-3/5 Image-layout p-2'>
                                 <IdImages products={products}/>
                             </div>
 
-                            <div className='w-full md:w-2/5 bg-white dark:bg-black py-10'>
-                                <h1 className='text-3xl font-bold'>{product.productName}</h1>
+                            <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-black py-10'>
+                                <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
+                                <div className='flex items-center gap-2 mt-1'>
+                                    <h2 className='inline-block text-white rounded-full py-3 px-5 bg-blue-700'>₱{product.productPrice} Php</h2>
+                                    <h2 className={`inline-block text-white rounded-full py-3 px-5 bg-blue-700 ${product.productDiscount ? 'block' : 'hidden'}`}>₱{product?.productDiscount} Discount price</h2>
+                                </div>
+                                <hr className='mt-5 xl:w-3/4'/>
+                                <h1 className='mt-5'>Size</h1>
+                                <div className="flex gap-2">
+                                    <h2 className={`${prodSize}`}>B {product?.productSize.breadth}</h2>
+                                    <h2 className={`${prodSize}`}>L {product?.productSize.length}</h2>
+                                    <h2 className={`${prodSize}`}>W {product?.productSize.width}</h2>
+                                </div>
+                                <h1 className='mt-3'>Product description:</h1>
+                                <h2 className='text-gray-300 text-sm'>{product.productDescription}</h2>
+                                <p className='mt-7 text-sm text-gray-500'>This item originally retailed for ₱{OrigPrice}</p>
+                                <button className='w-full xl:w-3/4 mt-2 rounded-2xl py-3 bg-blue-600'>Add to cart</button>             
                             </div>
                         </div>
                     </div>

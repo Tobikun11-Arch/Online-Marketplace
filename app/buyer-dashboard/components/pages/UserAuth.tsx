@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import { useForm } from '../../../Auth/StateHandlers/Form'
 import { useRouter } from 'next/navigation'
+import useAuth from '../../../SellerDashboard/UseAuth/useAuth'
+import { useAuthIdentifier } from '../../store/Auth'
 
 interface CartProps {
     isOpen: boolean
@@ -10,6 +13,9 @@ interface CartProps {
 
 const UserAuth = ({ isOpen, onClose } : CartProps) => {
     const { setForm } = useForm()
+    const [ isBuyer, setUser ] = useState<boolean>(false)
+    useAuth()
+    const { Auth } = useAuthIdentifier()
     const router = useRouter()
     const buttonAuth = 'w-32 py-2 border dark:border-white border-black'
     useEffect(() => {
@@ -23,6 +29,19 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
             document.body.style.overflow = 'unset'; // Cleanup on unmount
         };
     }, [isOpen]);
+
+    useEffect(()=> {
+        const users = localStorage.getItem('user')
+
+        if(users){
+            const user = JSON.parse(users)
+            if(user.Role === 'buyer') {
+                setUser(true)
+            } else {
+                setUser(false)
+            }
+        }
+    })
 
     const handleOption = (Option: string) => {
         if(Option === 'SignUp') {
@@ -43,9 +62,17 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
             </div>
 
             <div className='flex-grow flex flex-col justify-center items-center'>
-                <button className={buttonAuth} onClick={()=> handleOption('Signin')}>Sign in</button>
-                <h3>or</h3>
-                <button className={buttonAuth} onClick={()=> handleOption('SignUp')}>Sign up</button>
+                {isBuyer && Auth ? (
+                    <>
+                        <h1>Buyer and token is true</h1>
+                    </>
+                ) : (
+                    <>
+                        <button className={buttonAuth} onClick={()=> handleOption('Signin')}>Sign in</button>
+                        <h3>or</h3>
+                        <button className={buttonAuth} onClick={()=> handleOption('SignUp')}>Sign up</button>
+                    </>
+                )}
             </div>
         </div>
     )
