@@ -52,7 +52,7 @@ const BuyerDashboard = () => {
         return (
             <div className="flex items-center justify-center min-h-screen bg-[#171717] dark:bg-[#171717]">
                 <l-line-spinner
-                size="70"
+                size="50"
                 bg-opacity="0.1"
                 speed="1.75" 
                 color="white" 
