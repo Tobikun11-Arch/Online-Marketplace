@@ -94,10 +94,10 @@ useEffect(() => {
                 setModalOpen(false)
                 setLoadingPublish(false)
                 setError(false)
-
             }
 
             catch (error) {
+                setLoadingPublish(false)
                 console.error('Error making request:', error);
             }
         }

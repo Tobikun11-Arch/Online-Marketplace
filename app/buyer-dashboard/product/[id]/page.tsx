@@ -6,6 +6,7 @@ import { lineSpinner } from 'ldrs'
 import { Products } from '../../entities/entities'
 import { productId } from '../../axios/dataStore'
 import Header from '../../components/layout/Header'
+import IdImages from './IdImages'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
@@ -59,9 +60,14 @@ const Page = () => {
             <Header/>
                 {products.map((product, index)=> (
                     <div className="px-4 md:px-5" key={index}>
-                        <div className='bg-black flex'>
-                            <div className='w-3/5 bg-white'></div>
-                            <div className='w-2/5 bg-blue-700'> <h1>{product.Featured}</h1></div>
+                        <div className='bg-white border-2 dark:bg-black flex flex-col md:flex-row'>
+                            <div className='w-full md:w-3/5 Image-layout p-2'>
+                                <IdImages products={products}/>
+                            </div>
+
+                            <div className='w-full md:w-2/5 bg-white dark:bg-black py-10'>
+                                <h1 className='text-3xl font-bold'>{product.productName}</h1>
+                            </div>
                         </div>
                     </div>
                 ))}
