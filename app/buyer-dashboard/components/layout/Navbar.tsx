@@ -3,7 +3,6 @@ import Input from '../common/Input'
 import { Search } from 'lucide-react'
 import NavItems from '../ui/NavItems'
 import { useRouter } from 'next/navigation'
-
 interface NavbarProps {
     className?: string
     isOpen: boolean
@@ -17,7 +16,6 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
         <nav className={className}>
             <div className='flex items-center md:gap-16 xl:gap-32 cursor-default'>
                 <div className='flex gap-5'>
-                    <h1 onClick={()=> router.push('/')}>Saju<span className='text-blue-800'>Baz</span>aar</h1>
                         <NavItems className="cursor-default flex gap-3 items-center text-sm text-gray-500"/>
                 </div>
                 <div className={`md:w-2/5 ${isOpen ? '' : 'relative'}`}>

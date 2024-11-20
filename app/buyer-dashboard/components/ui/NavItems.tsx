@@ -8,7 +8,7 @@ interface navProps {
 const NavItems = ({ className }: navProps) => {
     const router = useRouter()
     const { setToggle } = useToggle()
-    const hover = 'hover:underline hover:text-white cursor-default'
+    const hover = 'hover:underline dark:hover:text-white cursor-default text-black dark:text-white'
 
     const Items = (item: string) => {
         switch (item) {

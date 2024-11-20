@@ -8,6 +8,7 @@ import { useProuctDetails, useProductData } from './store/storeProduct'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { MainShop } from '../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
+import { useProductList } from './store/products'
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -25,6 +26,7 @@ interface ProductResponse {
 const BuyerDashboard = () => {
     const { isCart, isToggle } = useToggle()
     const { setUrl } = useProuctDetails()
+    const { setmainShopProducts } = useProductList()
 
     const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
         queryKey: ['product'],
@@ -45,6 +47,7 @@ const BuyerDashboard = () => {
         if (ProductResponse) {
             const images = ProductResponse.MainShopProducts.map((product)=> product.images[0])
             setUrl(images)
+            setmainShopProducts(ProductResponse.MainShopProducts)
         }
     }, [ProductResponse, setUrl])
 

@@ -22,7 +22,7 @@ const useAuth = () => {
                 if (error.response && error.response.status === 401) {
                     try {
                         await refresh.post('', {}, { withCredentials: true });
-                        const newResponse = await auth.get('', { withCredentials: true });
+                        await auth.get('', { withCredentials: true });
                     } catch (refreshError: any) {
                         if (
                             refreshError.response &&

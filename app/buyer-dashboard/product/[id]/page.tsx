@@ -59,7 +59,7 @@ const Page = () => {
         return parseInt(product.productPrice) + parseInt(product.productDiscount)
     })
 
-    const prodSize = 'text-sm inline-block mt-1 rounded-3xl py-1 px-3 bg-gray-800 border'
+    const prodSize = 'text-sm inline-block mt-1 rounded-3xl py-2 px-4 dark:bg-gray-800 border bg-gray-500 text-white'
 
     return (
         <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717] pb-3 cursor-default'>
@@ -78,16 +78,16 @@ const Page = () => {
                                     <h2 className={`inline-block text-white rounded-full py-3 px-5 bg-blue-700 ${product.productDiscount ? 'block' : 'hidden'}`}>₱{product?.productDiscount} Discount price</h2>
                                 </div>
                                 <hr className='mt-5 xl:w-3/4'/>
-                                <h1 className='mt-5'>Size</h1>
+                                <h1 className='mt-5 font-bold'>Size</h1>
                                 <div className="flex gap-2">
                                     <h2 className={`${prodSize}`}>B {product?.productSize.breadth}</h2>
                                     <h2 className={`${prodSize}`}>L {product?.productSize.length}</h2>
                                     <h2 className={`${prodSize}`}>W {product?.productSize.width}</h2>
                                 </div>
                                 <h1 className='mt-3'>Product description:</h1>
-                                <h2 className='text-gray-300 text-sm'>{product.productDescription}</h2>
-                                <p className='mt-7 text-sm text-gray-500'>This item originally retailed for ₱{OrigPrice}</p>
-                                <button className='w-full xl:w-3/4 mt-2 rounded-2xl py-3 bg-blue-600'>Add to cart</button>             
+                                <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
+                                <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ₱{OrigPrice}</p>
+                                <button className='w-full xl:w-3/4 mt-2 rounded-2xl text-white py-3 bg-blue-600'>Add to cart</button>             
                             </div>
                         </div>
                     </div>
