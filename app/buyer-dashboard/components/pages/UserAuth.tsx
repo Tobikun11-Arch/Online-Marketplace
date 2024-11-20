@@ -14,7 +14,6 @@ interface CartProps {
 const UserAuth = ({ isOpen, onClose } : CartProps) => {
     const { setForm } = useForm()
     const [ isBuyer, setUser ] = useState<boolean>(false)
-    useAuth()
     const { Auth } = useAuthIdentifier()
     const router = useRouter()
     const buttonAuth = 'w-32 py-2 border dark:border-white border-black'
