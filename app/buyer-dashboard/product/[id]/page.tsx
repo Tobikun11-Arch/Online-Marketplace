@@ -10,7 +10,8 @@ import IdImages from './IdImages'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
-    return response.data.product;
+    const { product, mainproduct } = response.data
+    return { product, mainproduct };
 };
 
 const Page = () => {
@@ -29,8 +30,9 @@ const Page = () => {
     }, [])
 
     useEffect(()=> {
-        if(data) {
-            setProducts((prev)=> [...prev,data])
+        if (data) {
+            const productData = data.product || data.mainproduct;
+            setProducts((prev) => [...prev, productData]);
         }
     }, [data])
 
@@ -55,10 +57,11 @@ const Page = () => {
         )
     }
 
+    console.log("Products: ", products)
+
     const OrigPrice = products.map((product)=> {
         return parseInt(product.productPrice) + parseInt(product.productDiscount)
     })
-
     const prodSize = 'text-sm inline-block mt-1 rounded-3xl py-2 px-4 dark:bg-gray-800 border bg-gray-500 text-white'
 
     return (
