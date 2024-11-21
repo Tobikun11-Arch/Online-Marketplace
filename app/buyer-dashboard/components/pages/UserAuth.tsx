@@ -4,8 +4,8 @@ import { X } from 'lucide-react'
 import { useForm } from '../../../Auth/StateHandlers/Form'
 import { useRouter } from 'next/navigation'
 import { lineSpinner } from 'ldrs'
-import CheckAuth from '../../Authentication/CheckAuth'
 import UserProfile from './UserProfile'
+import IsAuth from '../../IsAuth'
 
 interface CartProps {
     isOpen: boolean
@@ -30,7 +30,7 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
     const [ isBuyer, setBuyer ] = useState<boolean>(false)
     const [user, setUser] = useState<User | null>(null);
     const router = useRouter()
-    CheckAuth()
+    IsAuth()
 
     useEffect(() => {
         if (isOpen) {
