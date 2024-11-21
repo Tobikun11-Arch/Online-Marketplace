@@ -7,16 +7,18 @@ import { Products } from '../../entities/entities'
 import { productId } from '../../axios/dataStore'
 import Header from '../../components/layout/Header'
 import IdImages from './IdImages'
+import SimilarProducts from './SimilarProducts'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
-    const { product, mainproduct } = response.data
-    return { product, mainproduct };
+    const { product, mainproduct, similar } = response.data
+    return { product, mainproduct, similar };
 };
 
 const Page = () => {
     const { id } = useParams()
     const [ products, setProducts ] = useState<Products[] | []>([])
+    const [ SimilarProduct, setSimilar ] = useState<Products[] | []>([])
     const { data, isLoading, isError } = useQuery({
         queryKey: ['productId', id],
         queryFn: () => fetchDataId(id as string),
@@ -33,6 +35,7 @@ const Page = () => {
         if (data) {
             const productData = data.product || data.mainproduct;
             setProducts((prev) => [...prev, productData]);
+            setSimilar(data.similar)
         }
     }, [data])
 
@@ -57,8 +60,6 @@ const Page = () => {
         )
     }
 
-    console.log("Products: ", products)
-
     const OrigPrice = products.map((product)=> {
         return parseInt(product.productPrice) + parseInt(product.productDiscount)
     })
@@ -67,34 +68,35 @@ const Page = () => {
     return (
         <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717] pb-3 cursor-default'>
             <Header/>
-                {products.map((product, index)=> (
-                    <div className="px-4 md:px-5" key={index}>
-                        <div className='bg-white border-2 py-10 dark:bg-black flex flex-col lg:flex-row'>
-                            <div className='w-full lg:w-3/5 Image-layout p-2'>
-                                <IdImages products={products}/>
-                            </div>
+            {products.map((product, index)=> (
+                <div className="px-4 md:px-5" key={index}>
+                    <div className='bg-white border-2 py-5 dark:bg-black flex flex-col lg:flex-row'>
+                        <div className='w-full lg:w-3/5 Image-layout p-2'>
+                            <IdImages products={products}/>
+                        </div>
 
-                            <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-black py-10'>
-                                <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
-                                <div className='flex items-center gap-2 mt-1'>
-                                    <h2 className='inline-block text-white rounded-full py-3 px-5 bg-blue-700'>₱{product.productPrice} Php</h2>
-                                    <h2 className={`inline-block text-white rounded-full py-3 px-5 bg-blue-700 ${product.productDiscount ? 'block' : 'hidden'}`}>₱{product?.productDiscount} Discount price</h2>
-                                </div>
-                                <hr className='mt-5 xl:w-3/4'/>
-                                <h1 className='mt-5 font-bold'>Size</h1>
-                                <div className="flex gap-2">
-                                    <h2 className={`${prodSize}`}>B {product?.productSize.breadth}</h2>
-                                    <h2 className={`${prodSize}`}>L {product?.productSize.length}</h2>
-                                    <h2 className={`${prodSize}`}>W {product?.productSize.width}</h2>
-                                </div>
-                                <h1 className='mt-3'>Product description:</h1>
-                                <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
-                                <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ₱{OrigPrice}</p>
-                                <button className='w-full xl:w-3/4 mt-2 rounded-2xl text-white py-3 bg-blue-600'>Add to cart</button>             
+                        <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-black lg:py-10 py-5'>
+                            <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
+                            <div className='flex items-center gap-2 mt-1'>
+                                <h2 className='inline-block text-white rounded-full py-3 px-5 bg-blue-700'>₱{product.productPrice} Php</h2>
+                                <h2 className={`inline-block text-white rounded-full py-3 px-5 bg-blue-700 ${product.productDiscount ? 'block' : 'hidden'}`}>₱{product?.productDiscount} Discount price</h2>
                             </div>
+                            <hr className='mt-5 xl:w-3/4 border-black border'/>
+                            <h1 className='mt-5 font-bold'>Size</h1>
+                            <div className="flex gap-2">
+                                <h2 className={`${prodSize}`}>B {product?.productSize.breadth}</h2>
+                                <h2 className={`${prodSize}`}>L {product?.productSize.length}</h2>
+                                <h2 className={`${prodSize}`}>W {product?.productSize.width}</h2>
+                            </div>
+                            <h1 className='mt-3'>Product description:</h1>
+                            <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
+                            <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ₱{OrigPrice}</p>
+                            <button className='w-full xl:w-3/4 mt-2 rounded-2xl text-white py-3 bg-blue-600'>Add to cart</button>             
                         </div>
                     </div>
-                ))}
+                </div>
+            ))}
+            <SimilarProducts products={SimilarProduct}/>
         </div>
     )
 }
