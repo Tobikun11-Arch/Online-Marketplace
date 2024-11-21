@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import { useForm } from '../../../Auth/StateHandlers/Form'
 import { useRouter } from 'next/navigation'
-import { useAuthIdentifier } from '../../store/Auth'
 import { lineSpinner } from 'ldrs'
+import checkAuth from '../../Authentication/checkAuth'
 
 interface CartProps {
     isOpen: boolean
@@ -14,8 +14,8 @@ interface CartProps {
 const UserAuth = ({ isOpen, onClose } : CartProps) => {
     const { setForm } = useForm()
     const [ isBuyer, setUser ] = useState<boolean>(false)
-    const { Auth } = useAuthIdentifier()
     const router = useRouter()
+    checkAuth()
     const buttonAuth = 'w-32 py-2 border dark:border-white border-black'
 
     useEffect(() => {
@@ -67,9 +67,9 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
             </div>
 
             <div className='flex-grow flex flex-col justify-center items-center'>
-                {isBuyer && Auth ? (
+                {isBuyer ? (
                     <>
-                        <h1>Buyer and token is true</h1>
+                        <h1>Welcome buyer</h1>
                     </>
                 ) : (
                     <>

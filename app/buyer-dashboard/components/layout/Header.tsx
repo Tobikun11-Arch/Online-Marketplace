@@ -10,14 +10,6 @@ import useAuth from '../../../SellerDashboard/UseAuth/useAuth'
 const Header = () => {
     const { setToggle, isCart, isToggle, setCart, setAuth, isAuth,  } = useToggle()
     const icon = 'p-2.5 border rounded-lg'
-    const isLoading = useAuth()
-
-    const useAuthentication = () => {
-        setAuth(true)
-        if(isLoading){
-            console.log("Loading...")
-        }
-    }
 
     return (
         <>
@@ -29,7 +21,7 @@ const Header = () => {
                 <Menu className={`${icon} md:hidden`} strokeWidth={1.4} size={40} onClick={()=> setToggle(true)}/>
                 <div className='flex gap-2'>
                     <ShoppingCart className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setCart(true)}/>
-                    <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={useAuthentication}/>
+                    <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(true)}/>
                 </div>
             </div>
         </>

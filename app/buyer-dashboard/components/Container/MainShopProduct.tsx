@@ -4,6 +4,7 @@ import ProductInfoCard from '../ui/ProductInfoCard'
 import { useProuctDetails } from '../../store/storeProduct'
 import { useProductList } from '../../store/products'
 import Link from 'next/link'
+import TrendingProduct from './TrendingProduct'
 interface productProps {
     isOpen: boolean
 }
@@ -15,7 +16,8 @@ const MainShopProduct = ({ isOpen } : productProps) => {
     const { mainShopProducts } = useProductList()
 
     return (
-        <div className={`${isOpen && 'z-10'} px-5 pb-5 md:flex md:gap-5`}>
+        <>
+            <div className={`${isOpen && 'z-10'} px-5 pb-5 md:flex md:gap-5`}>
                         <div className={`${imgParent} mb-5 lg:w-3/5`}>
                             <div className={imgSubParent}>
                                 <Link href={`/buyer-dashboard/product/${mainShopProducts[2]?._id}`} passHref>
@@ -71,7 +73,11 @@ const MainShopProduct = ({ isOpen } : productProps) => {
                             <ProductInfoCard dataProduct={{ productName: mainShopProducts[0]?.productName, OriginalPrice: parseInt(mainShopProducts[0]?.productPrice) }}/>
                         </div>
                     </div>
+                    
         </div>
+        {/* Add trending products tommorow */}
+        <TrendingProduct/> 
+        </>
     )
 }
 

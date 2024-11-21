@@ -1,18 +1,17 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; 
-import { auth, refresh } from '../axios/axios';
+import { auth, refresh } from   '../../SellerDashboard/axios/axios'
 
-const useAuth = () => {
-    const router = useRouter()
+const checkAuth = () => {
 
     useEffect(() => {
         const verifyAccessToken = async () => {
             try {
                 const response = await auth.get('', { withCredentials: true })
+                console.log(true)
                 if (response.data.verToken === false) {
                     localStorage.clear()
-                    router.push('/');
+                    console.log(false)
                 }
             } catch (error: any) {
                 if (error.response && error.response.status === 401) {
@@ -25,7 +24,7 @@ const useAuth = () => {
                             (refreshError.response.status === 401 || refreshError.response.status === 403)
                         ) {
                             localStorage.clear()
-                            router.push('/');
+                            console.log(false)
                         }
                     }
                 }
@@ -34,7 +33,7 @@ const useAuth = () => {
         };
 
         verifyAccessToken();
-    }, [router]);
+    }, []);
 };
 
-export default useAuth;
+export default checkAuth;
