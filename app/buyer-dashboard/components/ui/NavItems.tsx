@@ -12,16 +12,11 @@ const NavItems = ({ className }: navProps) => {
 
     const Items = (item: string) => {
         switch (item) {
-            case 'Home':
-                router.push('/')
-                setToggle(false)
-            break;
 
-
-            case 'All products':
-                router.push('/buyer-dashboard/AllProducts')
-                setToggle(false)
-            break;
+            // case 'All products':
+            //     router.push('/buyer-dashboard/AllProducts')
+            //     setToggle(false)
+            // break; will be add to trending products
 
             case 'Popular':
                 router.push('/buyer-dashboard/Popular')
@@ -40,8 +35,6 @@ const NavItems = ({ className }: navProps) => {
 
     return (
         <div className={className}>
-            <h2 onClick={()=> Items('Home')} className={hover}>Home</h2>
-            <h2 onClick={()=> Items('All products')} className={hover}>All products</h2>
             <h2 onClick={()=> Items('Popular')} className={hover}>Popular</h2>
             <h2 onClick={()=> Items('Shop')} className={hover}>Shop</h2>
         </div>
