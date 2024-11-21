@@ -1,12 +1,13 @@
 "use client"
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 import { auth, refresh } from '../axios/axios';
 import { useAuthIdentifier } from '../../buyer-dashboard/store/Auth'
 
 const useAuth = () => {
-    const router = useRouter();
+    const router = useRouter()
     const { setAuth } = useAuthIdentifier()
+    const [ isLoading, setLoading ] = useState<boolean>(true)
 
     useEffect(() => {
         const verifyAccessToken = async () => {
@@ -35,10 +36,16 @@ const useAuth = () => {
                     }
                 }
             }
+
+            finally {
+                setLoading(false)
+            }
         };
 
         verifyAccessToken();
     }, [router]);
+
+    return isLoading
 };
 
 export default useAuth;

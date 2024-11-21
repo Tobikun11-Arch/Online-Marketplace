@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import { useForm } from '../../../Auth/StateHandlers/Form'
 import { useRouter } from 'next/navigation'
-import useAuth from '../../../SellerDashboard/UseAuth/useAuth'
 import { useAuthIdentifier } from '../../store/Auth'
+import { lineSpinner } from 'ldrs'
 
 interface CartProps {
     isOpen: boolean
@@ -14,10 +14,10 @@ interface CartProps {
 const UserAuth = ({ isOpen, onClose } : CartProps) => {
     const { setForm } = useForm()
     const [ isBuyer, setUser ] = useState<boolean>(false)
-    useAuth()
     const { Auth } = useAuthIdentifier()
     const router = useRouter()
     const buttonAuth = 'w-32 py-2 border dark:border-white border-black'
+
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden'; // Disable scrolling
@@ -32,7 +32,6 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
 
     useEffect(()=> {
         const users = localStorage.getItem('user')
-
         if(users){
             const user = JSON.parse(users)
             if(user.Role === 'buyer') {
@@ -53,6 +52,12 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
             router.push('/Auth')
         }
     }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            lineSpinner.register()
+        }
+    }, [])
 
     return (
         <div className={`h-screen z-50 bg-gray-200 bg-opacity-65 dark:bg-opacity-90 md:backdrop-blur-sm md:border dark:border-black border-white border-opacity-18 fixed top-0 right-0 w-full md:w-[350px] transition-transform transform text-black p-4 flex flex-col gap-2 dark:bg-black dark:text-white ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
