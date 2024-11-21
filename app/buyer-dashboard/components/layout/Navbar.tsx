@@ -2,14 +2,12 @@ import React from 'react'
 import Input from '../common/Input'
 import { Search } from 'lucide-react'
 import NavItems from '../ui/NavItems'
-import { useRouter } from 'next/navigation'
 interface NavbarProps {
     className?: string
     isOpen: boolean
 }
 
 const Navbar = ({ className, isOpen }: NavbarProps) => {
-    const router = useRouter()
     
     return (
         <>

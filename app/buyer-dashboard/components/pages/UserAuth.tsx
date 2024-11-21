@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { lineSpinner } from 'ldrs'
 import UserProfile from './UserProfile'
 import IsAuth from '../../IsAuth'
-
 interface CartProps {
     isOpen: boolean
     onClose: () => void
@@ -48,14 +47,14 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
         const users = localStorage.getItem('user')
         if(users){
             const user = JSON.parse(users)
-            setUser(JSON.parse(users))
+            setUser(user)
             if(user.Role === 'buyer') {
                 setBuyer(true)
             } else {
                 setBuyer(false)
             }
         }
-    })
+    }, [isOpen])
 
     const handleOption = (Option: string) => {
         if(Option === 'SignUp') {

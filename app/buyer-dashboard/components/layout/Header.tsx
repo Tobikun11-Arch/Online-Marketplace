@@ -5,7 +5,6 @@ import Sidebar from './Sidebar'
 import CartComponent from '../pages/CartComponent'
 import Navbar from './Navbar'
 import UserAuth from '../pages/UserAuth'
-import useAuth from '../../../SellerDashboard/UseAuth/useAuth'
 
 const Header = () => {
     const { setToggle, isCart, isToggle, setCart, setAuth, isAuth,  } = useToggle()
