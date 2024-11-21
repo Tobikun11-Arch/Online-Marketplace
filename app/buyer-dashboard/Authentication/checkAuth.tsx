@@ -2,16 +2,14 @@
 import { useEffect, useState } from 'react';
 import { auth, refresh } from   '../../SellerDashboard/axios/axios'
 
-const checkAuth = () => {
+const CheckAuth = () => {
 
     useEffect(() => {
         const verifyAccessToken = async () => {
             try {
                 const response = await auth.get('', { withCredentials: true })
-                console.log(true)
                 if (response.data.verToken === false) {
                     localStorage.clear()
-                    console.log(false)
                 }
             } catch (error: any) {
                 if (error.response && error.response.status === 401) {
@@ -24,7 +22,6 @@ const checkAuth = () => {
                             (refreshError.response.status === 401 || refreshError.response.status === 403)
                         ) {
                             localStorage.clear()
-                            console.log(false)
                         }
                     }
                 }
@@ -36,4 +33,4 @@ const checkAuth = () => {
     }, []);
 };
 
-export default checkAuth;
+export default CheckAuth;

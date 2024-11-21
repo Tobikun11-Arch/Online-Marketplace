@@ -75,7 +75,7 @@ const MainShopProduct = ({ isOpen } : productProps) => {
                     </div>
                     
         </div>
-        {/* Add trending products tommorow */}
+        {/* Add trending products tommorow inspi in this https://skateshop.sadmn.com/ look for his featured products */}
         <TrendingProduct/> 
         </>
     )

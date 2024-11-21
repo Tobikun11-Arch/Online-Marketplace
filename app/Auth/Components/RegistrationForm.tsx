@@ -80,7 +80,11 @@ const RegistrationForm = () => {
             </div>
 
             <h1 className='text-gray-950 font-bold mt-4 text-2xl'>Sign Up for <span className='text-blue-900'>SajuBazaar</span></h1>  
-            <p className='text-xs text-gray-400' onClick={toggleJoin}>Join as <span className='text-blue-600 font-bold'>{joinSeller ? 'buyer?' : 'seller?'}</span></p>
+            <p className="text-xs text-gray-400" onClick={toggleJoin}>
+            Join as a <span className="text-blue-600 font-semibold">
+                {joinSeller ? 'Seller' : 'Buyer'}
+            </span>. <span>Not a {joinSeller ? 'Seller' : 'Buyer'}? <span className='text-red-700'>Switch roles.</span></span>
+            </p>
 
             <AuthOnline/>
             <p className='text-gray-400 text-sm flex justify-center mt-3'>or sign up with</p>
