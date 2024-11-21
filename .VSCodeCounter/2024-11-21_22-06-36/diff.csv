@@ -1,0 +1,109 @@
+"filename", "language", "TypeScript", "TypeScript JSX", "JavaScript", "JSON", "CSS", "Markdown", "comment", "blank", "total"
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\@\components\ui\label.tsx", "TypeScript JSX", 0, 21, 0, 0, 0, 0, 0, 6, 27
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\@\components\ui\radio-group.tsx", "TypeScript JSX", 0, 39, 0, 0, 0, 0, 0, 6, 45
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\@\components\ui\select.tsx", "TypeScript JSX", 0, 146, 0, 0, 0, 0, 0, 15, 161
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\Improvement.md", "Markdown", 0, 0, 0, 0, 0, -47, 0, -18, -65
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\__mocks__\FileMock.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 1, 1, 4
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\__tests__\page.test.tsx", "TypeScript JSX", 0, 8, 0, 0, 0, 0, 3, 4, 15
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\__tests__\snapshot.js", "JavaScript", 0, 0, 6, 0, 0, 0, 0, 1, 7
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\AuthCheck.tsx", "TypeScript JSX", 0, 6, 0, 0, 0, 0, 0, 1, 7
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Components\Form.tsx", "TypeScript JSX", 0, 127, 0, 0, 0, 0, 0, 14, 141
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Components\LoginImage.tsx", "TypeScript JSX", 0, 20, 0, 0, 0, 0, 0, 3, 23
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Components\RegistrationForm.tsx", "TypeScript JSX", 0, 149, 0, 0, 0, 0, 0, 20, 169
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Components\ui\AuthOnline.tsx", "TypeScript JSX", 0, 17, 0, 0, 0, 0, 0, 4, 21
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Components\ui\AuthStyle.tsx", "TypeScript JSX", 0, 12, 0, 0, 0, 0, 0, 3, 15
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Components\ui\IconSide.tsx", "TypeScript JSX", 0, 42, 0, 0, 0, 0, 0, 8, 50
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Components\ui\Input.tsx", "TypeScript JSX", 0, 17, 0, 0, 0, 0, 0, 4, 21
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Components\ui\LoginWrapper.tsx", "TypeScript JSX", 0, 26, 0, 0, 0, 0, 0, 3, 29
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\Login\Login_Form.tsx", "TypeScript JSX", 0, 19, 0, 0, 0, 0, 0, 2, 21
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\SignUp\SignUp_Form.tsx", "TypeScript JSX", 0, 17, 0, 0, 0, 0, 0, 3, 20
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\StateHandlers\Form.ts", "TypeScript", 17, 0, 0, 0, 0, 0, 0, 2, 19
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\StateHandlers\RegisterForm.ts", "TypeScript", 44, 0, 0, 0, 0, 0, 0, 3, 47
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Auth\page.tsx", "TypeScript JSX", 0, 20, 0, 0, 0, 0, 2, 4, 26
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Client\SendEmail\Mailpop.tsx", "TypeScript JSX", 0, -20, 0, 0, 0, 0, 0, -4, -24
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Client\SendEmail\mail.css", "CSS", 0, 0, 0, 0, -72, 0, -1, -11, -84
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Client\auth\Css\Animation.css", "CSS", 0, 0, 0, 0, -22, 0, 0, -5, -27
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Client\auth\Css\Background.css", "CSS", 0, 0, 0, 0, -85, 0, 0, -49, -134
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Client\auth\Css\load.css", "CSS", 0, 0, 0, 0, -34, 0, -1, -5, -40
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Client\auth\LoginForm.tsx", "TypeScript JSX", 0, -213, 0, 0, 0, 0, -2, -105, -320
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Client\auth\page.tsx", "TypeScript JSX", 0, -9, 0, 0, 0, 0, 0, -6, -15
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Client\hooks\useForm.ts", "TypeScript", -15, 0, 0, 0, 0, 0, 0, -7, -22
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Home Page\Components\HomePageUi.tsx", "TypeScript JSX", 0, 25, 0, 0, 0, 0, 0, 3, 28
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Home Page\Components\NavBar.tsx", "TypeScript JSX", 0, 57, 0, 0, 0, 0, 13, 3, 73
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Home Page\Components\ui\OptionWrapper.tsx", "TypeScript JSX", 0, 26, 0, 0, 0, 0, 0, 3, 29
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Home Page\Components\ui\PageWrapper.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, -8, -2, -10
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Home Page\Components\ui\Profile.tsx", "TypeScript JSX", 0, 39, 0, 0, 0, 0, 0, 5, 44
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Home Page\HeroSection.tsx", "TypeScript JSX", 0, 18, 0, 0, 0, 0, -1, 2, 19
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\Home Page\page.tsx", "TypeScript JSX", 0, 1, 0, 0, 0, 0, 1, -1, 1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\QueryProvider.tsx", "TypeScript JSX", 0, 11, 0, 0, 0, 0, 1, 4, 16
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\Components\Common\NavBar.tsx", "TypeScript JSX", 0, 23, 0, 0, 0, 0, 0, 2, 25
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\Components\Home\HomePage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, -1, -1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\Components\Product Management\ManageProducts.tsx", "TypeScript JSX", 0, -19, 0, 0, 0, 0, 0, -3, -22
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\Components\Product Management\ProductImages.tsx", "TypeScript JSX", 0, 35, 0, 0, 0, 0, 8, 7, 50
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\Components\Product Management\ProductTable.tsx", "TypeScript JSX", 0, -13, 0, 0, 0, 0, 0, -5, -18
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\Components\Product Management\ServerSide\accessToken.ts", "TypeScript", 12, 0, 0, 0, 0, 0, 0, 2, 14
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\Components\Product Management\newProduct.tsx", "TypeScript JSX", 0, -11, 0, 0, 0, 0, 0, -1, -12
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\Edit_Product\Edit_ProductInformation.tsx", "TypeScript JSX", 0, -9, 0, 0, 0, 0, -1, -4, -14
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\UseAuth\useAuth.tsx", "TypeScript JSX", 0, 35, 0, 0, 0, 0, 0, 5, 40
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\axios\axios.ts", "TypeScript", 52, 0, 0, 0, 0, 0, 7, 3, 62
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\SellerDashboard\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, -3, -3
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\AllProducts\Category.tsx", "TypeScript JSX", 0, 29, 0, 0, 0, 0, 0, 3, 32
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\AllProducts\page.tsx", "TypeScript JSX", 0, 74, 0, 0, 0, 0, 1, 8, 83
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\Authentication\CheckAuth.tsx", "TypeScript JSX", 0, 31, 0, 0, 0, 0, 0, 5, 36
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\Popular\page.tsx", "TypeScript JSX", 0, 9, 0, 0, 0, 0, 0, 3, 12
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\Shop\page.tsx", "TypeScript JSX", 0, 9, 0, 0, 0, 0, 0, 3, 12
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\animations\Later.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\axios\dataStore.ts", "TypeScript", 28, 0, 0, 0, 0, 0, 0, 5, 33
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\Container\MainShopProduct.tsx", "TypeScript JSX", 0, 77, 0, 0, 0, 0, 1, 7, 85
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\Container\ProductCard.tsx", "TypeScript JSX", 0, 32, 0, 0, 0, 0, 0, 4, 36
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\Container\TrendingProduct.tsx", "TypeScript JSX", 0, 9, 0, 0, 0, 0, 0, 3, 12
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\common\Button.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\common\Input.tsx", "TypeScript JSX", 0, 13, 0, 0, 0, 0, 0, 3, 16
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\index.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 3, 1, 4
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\layout\Footer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\layout\Header.tsx", "TypeScript JSX", 0, 28, 0, 0, 0, 0, 0, 4, 32
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\layout\Navbar.tsx", "TypeScript JSX", 0, 30, 0, 0, 0, 0, 0, 4, 34
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\layout\Sidebar.tsx", "TypeScript JSX", 0, 33, 0, 0, 0, 0, 0, 6, 39
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\pages\CartComponent.tsx", "TypeScript JSX", 0, 28, 0, 0, 0, 0, 0, 7, 35
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\pages\ProductList.tsx", "TypeScript JSX", 0, 14, 0, 0, 0, 0, 0, 3, 17
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\pages\UserAuth.tsx", "TypeScript JSX", 0, 93, 0, 0, 0, 0, 0, 12, 105
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\pages\UserProfile.tsx", "TypeScript JSX", 0, 9, 0, 0, 0, 0, 0, 3, 12
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\ui\NavItems.tsx", "TypeScript JSX", 0, 42, 0, 0, 0, 0, 0, 9, 51
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\components\ui\ProductInfoCard.tsx", "TypeScript JSX", 0, 18, 0, 0, 0, 0, 0, 4, 22
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\entities\entities.ts", "TypeScript", 30, 0, 0, 0, 0, 0, 0, 0, 30
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\page.tsx", "TypeScript JSX", 0, 72, 0, 0, 0, 0, 0, 9, 81
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\product\[id]\IdImages.tsx", "TypeScript JSX", 0, 58, 0, 0, 0, 0, 3, 10, 71
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\product\[id]\SimilarProducts.tsx", "TypeScript JSX", 0, 35, 0, 0, 0, 0, 0, 5, 40
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\product\[id]\page.tsx", "TypeScript JSX", 0, 94, 0, 0, 0, 0, 0, 11, 105
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\store\products.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 0, 4, 18
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\store\storeProduct.ts", "TypeScript", 18, 0, 0, 0, 0, 0, 0, 4, 22
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\buyer-dashboard\store\useToggle.ts", "TypeScript", 17, 0, 0, 0, 0, 0, 0, 7, 24
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\globals.css", "CSS", 0, 0, 0, 0, 11, 0, 0, 4, 15
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\layout.tsx", "TypeScript JSX", 0, 4, 0, 0, 0, 0, 0, -1, 3
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\middleware.ts", "TypeScript", 8, 0, 0, 0, 0, 0, 2, 2, 12
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\page.tsx", "TypeScript JSX", 0, -5, 0, 0, 0, 0, 1, 1, -3
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\userData\TokenValidation.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 0, 2, 11
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\app\userData\UserData.ts", "TypeScript", 23, 0, 0, 0, 0, 0, 0, 4, 27
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\jest.config.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 2, 4, 19
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\next.config.mjs", "JavaScript", 0, 0, 1, 0, 0, 0, 0, 0, 1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\package-lock.json", "JSON", 0, 0, 0, 5165, 0, 0, 0, 0, 5165
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\package.json", "JSON", 0, 0, 0, 19, 0, 0, 0, 0, 19
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\api\index.ts", "TypeScript", -30, 0, 0, 0, 0, 0, 0, -10, -40
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\config\config.ts", "TypeScript", -1, 0, 0, 0, 0, 0, 0, 0, -1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\config\db.ts", "TypeScript", -21, 0, 0, 0, 0, 0, -1, -5, -27
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\controllers\userController.ts", "TypeScript", -66, 0, 0, 0, 0, 0, -1, -39, -106
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\express.d.ts", "TypeScript", -11, 0, 0, 0, 0, 0, 0, -1, -12
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\middleware\AuthenticatedJWT.ts", "TypeScript", -8, 0, 0, 0, 0, 0, 0, -9, -17
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\middleware\authMiddleware.ts", "TypeScript", -25, 0, 0, 0, 0, 0, 0, -18, -43
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\models\product.ts", "TypeScript", -65, 0, 0, 0, 0, 0, 0, -5, -70
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\models\user.ts", "TypeScript", -27, 0, 0, 0, 0, 0, 0, -6, -33
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\package-lock.json", "JSON", 0, 0, 0, -2326, 0, 0, 0, -1, -2327
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\package.json", "JSON", 0, 0, 0, -37, 0, 0, 0, -1, -38
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\routes\protectedRoutes.ts", "TypeScript", -145, 0, 0, 0, 0, 0, 0, -36, -181
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\routes\userRoutes.ts", "TypeScript", -9, 0, 0, 0, 0, 0, 0, -2, -11
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\routes\verificationRoutes.ts", "TypeScript", -24, 0, 0, 0, 0, 0, 0, -17, -41
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\services\sendMail.ts", "TypeScript", -40, 0, 0, 0, 0, 0, 0, -6, -46
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\server\vercel.json", "JSON", 0, 0, 0, -1, 0, 0, 0, 0, -1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\tailwind.config.js", "JavaScript", 0, 0, 1, 0, 0, 0, 0, 0, 1
+"c:\Users\joene\OneDrive\Desktop\Tobi File\With Tobi Projects\online-marketplace\tailwind.config.ts", "TypeScript", 3, 0, 0, 0, 0, 0, 0, 0, 3
+"Total", "-", -197, 1498, 8, 2820, -202, -47, 33, -74, 3839

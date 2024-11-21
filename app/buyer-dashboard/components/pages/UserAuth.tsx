@@ -5,6 +5,7 @@ import { useForm } from '../../../Auth/StateHandlers/Form'
 import { useRouter } from 'next/navigation'
 import { lineSpinner } from 'ldrs'
 import CheckAuth from '../../Authentication/CheckAuth'
+import UserProfile from './UserProfile'
 
 interface CartProps {
     isOpen: boolean
@@ -84,10 +85,7 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
 
             <div className='flex-grow flex flex-col justify-center items-center'>
                 {isBuyer ? (
-                    <>
-                        <h2>Profile</h2>
-                        
-                    </>
+                    <UserProfile/>
                 ) : (
                     <>
                         <h1 className='text-2xl font-bold'>Foundation for Your Marketplace Platform</h1>
