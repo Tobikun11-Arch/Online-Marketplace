@@ -78,11 +78,11 @@ const Page = () => {
                         <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-black lg:py-10 py-5'>
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
                             <div className='flex items-center gap-2 mt-1'>
-                                <h2 className='inline-block text-white rounded-full py-3 px-5 bg-blue-700'>₱{product.productPrice} Php</h2>
-                                <h2 className={`inline-block text-white rounded-full py-3 px-5 bg-blue-700 ${product.productDiscount ? 'block' : 'hidden'}`}>₱{product?.productDiscount} Discount price</h2>
+                                <h2 className='inline-block text-white rounded-full py-2 px-5 bg-blue-700'>₱{product.productPrice} php</h2>
+                                <h2 className={`inline-block text-white rounded-full py-2 px-5 bg-blue-700 ${product.productDiscount ? 'block' : 'hidden'}`}>₱{product?.productDiscount} Discount price</h2>
                             </div>
                             <hr className='mt-5 xl:w-3/4 border-black border'/>
-                            <h1 className='mt-5 font-bold'>Size</h1>
+                            <h1 className='mt-3 font-bold'>Size</h1>
                             <div className="flex gap-2">
                                 <h2 className={`${prodSize}`}>B {product?.productSize.breadth}</h2>
                                 <h2 className={`${prodSize}`}>L {product?.productSize.length}</h2>

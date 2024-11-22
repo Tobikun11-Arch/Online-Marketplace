@@ -36,7 +36,7 @@ const NavItems = ({ className }: navProps) => {
     return (
         <div className={className}>
             <h2 onClick={()=> Items('Popular')} className={hover}>Popular</h2>
-            <h2 onClick={()=> Items('Shop')} className={hover}>Shop</h2>
+            <h2 onClick={()=> Items('Shop')} className={hover}>Shops</h2>
         </div>
     )
 }
