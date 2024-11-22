@@ -2,6 +2,7 @@ import React from 'react'
 import { ArrowRight } from 'lucide-react';
 import { useToggle } from '../../store/useToggle';
 import { useRouter } from 'next/navigation';
+import AllproductCard from '../ui/AllproductCard';
 
 const TrendingProduct = () => {
     const router = useRouter()
@@ -23,7 +24,9 @@ const TrendingProduct = () => {
                 </div>
             </div>
             {/* add more changes here later */}
-            <h1>Test</h1> 
+            <div className='mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4'>
+                <AllproductCard/>
+            </div>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Products } from '../entities/entities'
 import { useProductData } from '../store/storeProduct'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { AllProducts, MainShop } from '../../buyer-dashboard/axios/dataStore'
+import { AllProducts } from '../../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';

@@ -11,8 +11,8 @@ import SimilarProducts from './SimilarProducts'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
-    const { product, mainproduct, similar } = response.data
-    return { product, mainproduct, similar };
+    const { product, mainproduct, similar, trendingproduct } = response.data
+    return { product, mainproduct, similar, trendingproduct };
 };
 
 const Page = () => {
@@ -33,7 +33,7 @@ const Page = () => {
 
     useEffect(()=> {
         if (data) {
-            const productData = data.product || data.mainproduct;
+            const productData = data.product || data.mainproduct || data.trendingproduct;
             setProducts((prev) => [...prev, productData]);
             setSimilar(data.similar)
         }
