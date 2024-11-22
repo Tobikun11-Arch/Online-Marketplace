@@ -19,12 +19,12 @@ const UserProfile = () => {
     }
 
     return (
-        <div className='cursor-default flex flex-col gap-2'>
-            <h2 >Profile</h2>
-            <h2>Orders</h2>
-            <h2>Wishlist</h2>
-            <h2>Account <br /> Settings</h2>
-            <h2 onClick={handleSignOut}>Sign Out</h2>
+        <div className='cursor-default flex flex-col gap-3 text-xl'>
+            <h2 className='hover:underline'>Profile</h2>
+            <h2 className='hover:underline'>Orders</h2>
+            <h2 className='hover:underline'>Wishlist</h2>
+            <h2 className='hover:underline'>Account <br /> Settings</h2>
+            <h2 className='hover:underline' onClick={handleSignOut}>Sign Out</h2>
         </div>
     )
 }

@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
 
-const CustomSelect = () => {
+const Filtered = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<string | null>(null);
-    const options = [
-        "Electronics",
-        "Home & Kitchen",
-        "Fashion",
-        "Health & Beauty",
-        "Sports & Outdoors",
-        "Toys & Games",
-        "Automotive",
-        "Office Supplies",
-        "Books & Media",
-        "Food & Beverages",
-        "Pet Supplies",
-        "Garden & Outdoor",
-        "Crafts & Hobbies",
-    ];
+
+    const options = ["Price range", "Ratings", "New arrivals", "DIscounts"];
 
     const handleSelect = (value: string) => {
         setSelectedItem(value);
@@ -31,7 +18,7 @@ const CustomSelect = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-full bg-transparent text-white py-2 px-4 rounded-md border outline-none border-gray-600 flex justify-between items-center"
             >
-                <span>{selectedItem || "Category"}</span>
+                <span>{selectedItem || "Filtered"}</span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className={`h-5 w-5 transform transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
@@ -61,4 +48,4 @@ const CustomSelect = () => {
     );
 };
 
-export default CustomSelect;
+export default Filtered;

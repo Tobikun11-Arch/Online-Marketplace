@@ -8,6 +8,7 @@ import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
 import Category from './Category';
+import Filtered from './Filtered';
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -73,8 +74,7 @@ export default function Page() {
                 <div className="px-4 flex flex-col gap-4">
                     <div className='flex gap-2'>
                     <Category/>
-                    {/* change this to Filtered category later */}
-                    <Category/> 
+                    <Filtered/>
                     </div>
                     <ProductLists product={product}/>
                 </div>
