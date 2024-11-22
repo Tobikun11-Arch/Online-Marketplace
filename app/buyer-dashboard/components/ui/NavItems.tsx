@@ -12,12 +12,6 @@ const NavItems = ({ className }: navProps) => {
 
     const Items = (item: string) => {
         switch (item) {
-
-            // case 'All products':
-            //     router.push('/buyer-dashboard/AllProducts')
-            //     setToggle(false)
-            // break; will be add to trending products
-
             case 'Popular':
                 router.push('/buyer-dashboard/Popular')
                 setToggle(false)
