@@ -2,12 +2,14 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
-import { lineSpinner } from 'ldrs'
+import { lineSpinner, ripples } from 'ldrs'
 import { Products } from '../../entities/entities'
-import { productId } from '../../axios/dataStore'
+import { productId, useCart } from '../../axios/dataStore'
 import Header from '../../components/layout/Header'
 import IdImages from './IdImages'
 import SimilarProducts from './SimilarProducts'
+import { AddToCartPayload } from '../../Interface/CartItem'
+import { useUser } from '../../store/User'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
@@ -15,10 +17,17 @@ const fetchDataId = async (id: string) => {
     return { product, mainproduct, similar, trendingproduct };
 };
 
+const addtoCartRequest = async(payload: AddToCartPayload) => {
+    const response = await useCart.post('', payload)
+    return response.data
+}
+
 const Page = () => {
     const { id } = useParams()
     const [ products, setProducts ] = useState<Products[] | []>([])
     const [ SimilarProduct, setSimilar ] = useState<Products[] | []>([])
+    const [ addCart, setAdd ] = useState<boolean>(false)
+    const { user } = useUser()
     const { data, isLoading, isError } = useQuery({
         queryKey: ['productId', id],
         queryFn: () => fetchDataId(id as string),
@@ -28,6 +37,7 @@ const Page = () => {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             lineSpinner.register()
+            ripples.register()
         }
     }, [])
 
@@ -61,7 +71,22 @@ const Page = () => {
     }
 
     const handleCart = async(products: Products) => {
-        console.log("Products added to card: ", products)
+        setAdd(true)
+        if(!user) { console.log("No user") }
+        else {
+            try {
+                const dataProduct: AddToCartPayload = {
+                    userId: user._id,
+                    productId: products._id,
+                    quantity: 1,
+                }
+                await addtoCartRequest(dataProduct);
+                setAdd(false)
+            } catch (error: any) {
+                console.error("Error adding product to cart:", error.message);
+                setAdd(false)
+            }
+        }
     }
 
     const OrigPrice = products.map((product)=> {
@@ -94,9 +119,19 @@ const Page = () => {
                             <h1 className='mt-3'>Product description:</h1>
                             <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
                             <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ₱{OrigPrice}</p>
-                            <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2">
-                                <button className='mt-2 w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-black'>Buy</button> 
-                                <button className='mt-2 w-full rounded-lg py-3 dark:text-white text-black border border-[#333333] bg-transparent' onClick={()=> handleCart(product)}>Add to cart</button>             
+                            <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2 mt-3">
+                                <button className='w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-black'>Buy</button> 
+                                <button className='w-full rounded-lg py-3 dark:text-white text-black border border-[#333333] bg-transparent min-h-[48px]' onClick={()=> handleCart(product)}>{addCart ? (
+                                    <div className='flex items-center justify-center'>
+                                        <p>Adding</p>
+                                        <l-ripples
+                                        size="25"
+                                        bg-opacity="0.1"
+                                        speed="1.75" 
+                                        color="blue" 
+                                        ></l-ripples>
+                                    </div>
+                                ) : 'Add to cart'}</button>             
                             </div>
                         </div>
                     </div>

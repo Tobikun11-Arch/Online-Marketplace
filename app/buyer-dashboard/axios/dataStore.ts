@@ -38,3 +38,11 @@ export const userAuth = axios.create({
     }
 })
 userAuth.defaults.withCredentials = true;
+
+export const useCart = axios.create({
+    baseURL: 'http://localhost:5000/api/users/product/cart',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+useCart.defaults.withCredentials = true;

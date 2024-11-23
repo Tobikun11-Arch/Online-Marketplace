@@ -6,28 +6,16 @@ import { useRouter } from 'next/navigation'
 import { lineSpinner } from 'ldrs'
 import UserProfile from './UserProfile'
 import IsAuth from '../../IsAuth'
+import { useUser } from '../../store/User'
 interface CartProps {
     isOpen: boolean
     onClose: () => void
 }
 
-interface User {
-    _id: string;
-    FirstName: string;
-    LastName: string;
-    Email: string;
-    Password: string;
-    Role: string;
-    Username: string;
-    isVerifiedEmail: boolean;
-    refreshToken: string;
-    __v: number;
-  }
-
 const UserAuth = ({ isOpen, onClose } : CartProps) => {
     const { setForm } = useForm()
     const [ isBuyer, setBuyer ] = useState<boolean>(false)
-    const [user, setUser] = useState<User | null>(null);
+    const { setuser, user } = useUser()
     const router = useRouter()
     IsAuth()
 
@@ -47,7 +35,7 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
         const users = localStorage.getItem('user')
         if(users){
             const user = JSON.parse(users)
-            setUser(user)
+            setuser(user)
             if(user.Role === 'buyer') {
                 setBuyer(true)
             } else {
