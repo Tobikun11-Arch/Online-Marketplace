@@ -60,6 +60,10 @@ const Page = () => {
         )
     }
 
+    const handleCart = async(products: Products) => {
+        console.log("Products added to card: ", products)
+    }
+
     const OrigPrice = products.map((product)=> {
         return parseInt(product.productPrice) + parseInt(product.productDiscount)
     })
@@ -79,7 +83,6 @@ const Page = () => {
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
                             <div className='flex items-center gap-2 mt-1'>
                                 <h2 className='inline-block text-white rounded-full py-2 px-5 bg-blue-700'>₱{product.productPrice} php</h2>
-                                <h2 className={`inline-block text-white rounded-full py-2 px-5 bg-blue-700 ${product.productDiscount ? 'block' : 'hidden'}`}>₱{product?.productDiscount} Discount price</h2>
                             </div>
                             <hr className='mt-5 xl:w-3/4 border-black border'/>
                             <h1 className='mt-3 font-bold'>Size</h1>
@@ -91,7 +94,10 @@ const Page = () => {
                             <h1 className='mt-3'>Product description:</h1>
                             <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
                             <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ₱{OrigPrice}</p>
-                            <button className='w-full xl:w-3/4 mt-2 rounded-2xl text-white py-3 bg-blue-600'>Add to cart</button>             
+                            <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2">
+                                <button className='mt-2 w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-black'>Buy</button> 
+                                <button className='mt-2 w-full rounded-lg py-3 dark:text-white text-black border border-[#333333] bg-transparent' onClick={()=> handleCart(product)}>Add to cart</button>             
+                            </div>
                         </div>
                     </div>
                 </div>
