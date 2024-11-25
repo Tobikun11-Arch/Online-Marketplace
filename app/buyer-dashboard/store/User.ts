@@ -13,6 +13,7 @@ interface User {
     __v: number;
   }
 
+
 interface userProps {
     user: User | null
     setuser: (user: User | null) => void

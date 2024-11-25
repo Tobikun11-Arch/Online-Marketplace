@@ -72,11 +72,13 @@ const Page = () => {
 
     const handleCart = async(products: Products) => {
         setAdd(true)
+        console.log("Product cart: ", products)
         if(!user) { console.log("No user") }
         else {
             try {
                 const dataProduct: AddToCartPayload = {
                     userId: user._id,
+                    images: products.images,
                     productId: products._id,
                     quantity: 1,
                 }
