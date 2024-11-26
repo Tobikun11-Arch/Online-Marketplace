@@ -3,7 +3,8 @@ import { X, ShoppingCart } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { myCart } from '../../axios/dataStore'
 import { useUser } from '../../store/User'
-import { ICartItem } from '../../Interface/CartItem'
+import { ICartItem, AddToCartPayload } from '../../Interface/CartItem'
+import UserCart from '../Container/UserCart'
 
 interface CartProps {
     isOpen: boolean
@@ -40,19 +41,7 @@ const CartComponent = ({ isOpen, onClose } : CartProps) => {
                 <h2 className='text-lg font-bold'>My Cart</h2>
                 <X className='p-2 border rounded-lg' strokeWidth={1.7} size={40} onClick={onClose}/>
             </div>
-            {data ? (
-                    <>
-                        {data?.user.cart.map((cart, index)=> (
-                            <div key={index}>
-                                <h1>{cart.price}</h1>
-                            </div>
-                        ))}
-                    </>
-                ):
-                (
-                    <h1>Cart is empty</h1>
-                )
-            }
+            <UserCart Cart={data}/>
         </div>
     )
 }

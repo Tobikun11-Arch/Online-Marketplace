@@ -10,6 +10,7 @@ import IdImages from './IdImages'
 import SimilarProducts from './SimilarProducts'
 import { AddToCartPayload } from '../../Interface/CartItem'
 import { useUser } from '../../store/User'
+import { useProductCart } from '../../store/productCart'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
@@ -26,6 +27,7 @@ const Page = () => {
     const { id } = useParams()
     const [ products, setProducts ] = useState<Products[] | []>([])
     const [ SimilarProduct, setSimilar ] = useState<Products[] | []>([])
+    const { setCart } = useProductCart()
     const [ addCart, setAdd ] = useState<boolean>(false)
     const { user } = useUser()
     const { data, isLoading, isError } = useQuery({
@@ -72,16 +74,18 @@ const Page = () => {
 
     const handleCart = async(products: Products) => {
         setAdd(true)
-        console.log("Product cart: ", products)
         if(!user) { console.log("No user") }
         else {
-            try {
-                const dataProduct: AddToCartPayload = {
-                    userId: user._id,
-                    images: products.images,
-                    productId: products._id,
-                    quantity: 1,
-                }
+            const dataProduct: AddToCartPayload = {
+                userId: user._id,
+                productName: products.productName,
+                images: products.images,
+                productId: products._id,
+                productPrice: products.productPrice,
+                quantity: 1,
+            }
+            setCart((prevCart: AddToCartPayload[]) => [...prevCart, dataProduct]);
+            try{
                 await addtoCartRequest(dataProduct);
                 setAdd(false)
             } catch (error: any) {

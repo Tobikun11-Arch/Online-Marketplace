@@ -10,19 +10,21 @@ export interface Product {
 export interface ICartItem {
     user: {
         cart: {
-            productId: Types.ObjectId;
+            productId?: Types.ObjectId;
+            productName: string
             images: string[];
             quantity: number;
             price: number;
-            addedAt: Date;
+            addedAt?: Date;
         }[]
     }
 }
 
 export interface AddToCartPayload {
     userId: string;
+    productName: string
     images: string[];
     productId: string;
+    productPrice: string
     quantity: number;
 }
-
