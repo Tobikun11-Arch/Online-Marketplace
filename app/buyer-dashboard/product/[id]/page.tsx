@@ -11,6 +11,8 @@ import SimilarProducts from './SimilarProducts'
 import { AddToCartPayload } from '../../Interface/CartItem'
 import { useUser } from '../../store/User'
 import { useProductCart } from '../../store/productCart'
+import { useToast } from "../../../../@/hooks/use-toast"
+import { Button } from '../../../../@/components/ui/button'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
@@ -35,6 +37,7 @@ const Page = () => {
         queryFn: () => fetchDataId(id as string),
         enabled: !!id, 
     });
+    const { toast } = useToast()
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -72,7 +75,7 @@ const Page = () => {
         )
     }
 
-    const handleCart = async(products: Products) => {
+    const handleCart = async(products: Products) => { 
         setAdd(true)
         if(!user) { console.log("No user") }
         else {
@@ -87,6 +90,9 @@ const Page = () => {
             setCart((prevCart: AddToCartPayload[]) => [...prevCart, dataProduct]);
             try{
                 await addtoCartRequest(dataProduct);
+                toast({
+                    description: "Successfully added to cart.",
+                })
                 setAdd(false)
             } catch (error: any) {
                 console.error("Error adding product to cart:", error.message);
@@ -137,7 +143,7 @@ const Page = () => {
                                         color="blue" 
                                         ></l-ripples>
                                     </div>
-                                ) : 'Add to cart'}</button>             
+                                ) : 'Add to cart'}</button>  
                             </div>
                         </div>
                     </div>
