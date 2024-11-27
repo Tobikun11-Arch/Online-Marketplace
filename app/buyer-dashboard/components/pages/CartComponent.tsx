@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { X, ShoppingCart } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { myCart } from '../../axios/dataStore'
 import { useUser } from '../../store/User'
-import { ICartItem, AddToCartPayload } from '../../Interface/CartItem'
+import { ICartItem } from '../../Interface/CartItem'
 import UserCart from '../Container/UserCart'
 
 interface CartProps {

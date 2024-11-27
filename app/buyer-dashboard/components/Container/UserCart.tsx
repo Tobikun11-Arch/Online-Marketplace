@@ -1,19 +1,50 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { ICartItem } from '../../Interface/CartItem'
 import { useProductCart } from '../../store/productCart'
 import Image from 'next/image'
+import { useUser } from '../../store/User'
 import { X, Minus, Plus } from 'lucide-react'
 interface cartProps {
     Cart: ICartItem | undefined
 }
 
+// const fetchQuantity = async() => {
+//     const response = await //wait
+// }
+
 const UserCart:FC<cartProps> = ({ Cart }) => {
     const { cart: localCart } = useProductCart()
-    const [ newQuantity, setNewQuantity ] = useState(1)
+    const { user } = useUser()
+    const [ newQuantity, setNewQuantity ] = useState<{ [key: string]: number }> (
+        Cart?.user.cart.reduce((acc, item)=> {
+            acc[item.productId as any] = item.quantity
+            return acc
+        },
+        {} as { [key: string]: number }) || {}
+    )
+
+    console.log("User: ", user?._id)
+
+    const UpdateQuantity = (productId: string, Crement: string) => {
+        if(Crement === "Add") {
+            setNewQuantity((prev)=> ({
+                ...prev,
+                [productId]: Math.max(1, (prev[productId] || 1) + 1)
+            }))
+        }
+
+        else {
+            setNewQuantity((prev)=> ({
+                ...prev,
+                [productId]: Math.max(1, (prev[productId] || 1) - 1)
+            }))
+        }
+    }
 
     return (
-        <div className='cursor-default'>
-            {Cart?.user.cart && Cart.user.cart.length > 0 ? (
+        <div className='cursor-default h-full flex flex-col justify-between'>
+            <div>
+                {Cart?.user.cart && Cart.user.cart.length > 0 ? (
                 Cart.user.cart.map((cartItem, index) => (
                     <>
                         <div key={index} className='flex gap-3 mt-4'>
@@ -36,11 +67,11 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                         </div>
                         <div className='flex items-end'>
                             <div className='flex gap-2 border border-[#333333] rounded-xl py-1 px-4 items-center'>
-                                <Minus size={15} color='gray'/>
-                                <p>{cartItem.quantity}</p>
-                                <Plus size={15} color='gray'/>
+                                <Minus onClick={()=> UpdateQuantity(cartItem.productId as any, "Subtract")} size={15} color='gray'/>
+                                <h2>{newQuantity[cartItem.productId as any] ? newQuantity[cartItem.productId as any] : cartItem.quantity}</h2>
+                                <Plus onClick={()=> UpdateQuantity(cartItem.productId as any, "Add")} size={15} color='gray'/>
                             </div>
-                        </div>
+                        </div>  
                     </div>
 
                     </div>
@@ -76,12 +107,12 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                         <div className='flex flex-col'>
                             <h1 className='font-semibold'>{local.productName}</h1>
                             <h1>₱{local.productPrice}</h1>
-                        </div>
+                        </div>   
                         <div className='flex items-end'>
                             <div className='flex gap-2 border border-[#333333] rounded-xl py-1 px-4 items-center'>
-                                <Minus size={15} color='gray'/>
-                                <p>{local.quantity}</p>
-                                <Plus size={15} color='gray'/>
+                                <Minus onClick={()=> UpdateQuantity(local.productId as any, "Subtract")} size={15} color='gray'/>
+                                <h2>{newQuantity[local.productId as any] ? newQuantity[local.productId as any] : local.quantity}</h2>
+                                <Plus onClick={()=> UpdateQuantity(local.productId as any, "Add")} size={15} color='gray'/>
                             </div>
                         </div>
                     </div>
@@ -89,6 +120,11 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                 <hr className='mt-3'/>
                 </>
             ))}
+            </div>
+            <button
+            className='dark:bg-white rounded-lg py-2 dark:text-black bg-black text-white font-bold'>
+                Buy
+            </button>
         </div>
     );
 }
