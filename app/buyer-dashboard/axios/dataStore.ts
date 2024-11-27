@@ -55,10 +55,10 @@ export const myCart = axios.create({
 })
 myCart.defaults.withCredentials = true;
 
-export const addQuantity = axios.create({
-    baseURL: 'http://localhost:5000/api/users/product/addQuantity',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+export const updateQuantity = axios.create({
+    baseURL: 'http://localhost:5000/api/users/product/updateQuantity',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
     headers: {
         'Content-Type': 'application/json',
     },
 })
-addQuantity.defaults.withCredentials = true;
+updateQuantity.defaults.withCredentials = true;

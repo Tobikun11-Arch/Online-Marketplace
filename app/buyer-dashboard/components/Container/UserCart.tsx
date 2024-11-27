@@ -1,16 +1,13 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { ICartItem } from '../../Interface/CartItem'
 import { useProductCart } from '../../store/productCart'
 import Image from 'next/image'
 import { useUser } from '../../store/User'
 import { X, Minus, Plus } from 'lucide-react'
+import { updateQuantity } from '../../axios/dataStore'
 interface cartProps {
     Cart: ICartItem | undefined
 }
-
-// const fetchQuantity = async() => {
-//     const response = await //wait
-// }
 
 const UserCart:FC<cartProps> = ({ Cart }) => {
     const { cart: localCart } = useProductCart()
@@ -19,27 +16,31 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
         Cart?.user.cart.reduce((acc, item)=> {
             acc[item.productId as any] = item.quantity
             return acc
-        },
-        {} as { [key: string]: number }) || {}
+        }, {} as { [key: string]: number }) || {}
     )
 
-    console.log("User: ", user?._id)
+    const UpdateQuantity = useCallback(async (productId: string, Crement: string, current: number) => {
+        let updatedQuantity =  Crement === 'Add' ? current + 1 : Math.max(1, current - 1)
 
-    const UpdateQuantity = (productId: string, Crement: string) => {
-        if(Crement === "Add") {
-            setNewQuantity((prev)=> ({
-                ...prev,
-                [productId]: Math.max(1, (prev[productId] || 1) + 1)
-            }))
+        setNewQuantity((prev)=> ({
+            ...prev,
+            [productId]: updatedQuantity
+        }))
+
+        const userDetails = {
+            userId: user?._id,
+            productId,
+            quantity: updatedQuantity
         }
 
-        else {
-            setNewQuantity((prev)=> ({
-                ...prev,
-                [productId]: Math.max(1, (prev[productId] || 1) - 1)
-            }))
+        console.log("userDetails: ", userDetails)
+        try {
+            const response = await updateQuantity.put('',  userDetails, { withCredentials: true })
+            console.log("success! ", response.data)
+        } catch (error) {
+            console.error("Fetching error: ", error)
         }
-    }
+    }, [user])
 
     return (
         <div className='cursor-default h-full flex flex-col justify-between'>
@@ -67,9 +68,9 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                         </div>
                         <div className='flex items-end'>
                             <div className='flex gap-2 border border-[#333333] rounded-xl py-1 px-4 items-center'>
-                                <Minus onClick={()=> UpdateQuantity(cartItem.productId as any, "Subtract")} size={15} color='gray'/>
+                                <Minus onClick={()=> UpdateQuantity(cartItem.productId as any, "Subtract", newQuantity[cartItem.productId as any] || cartItem.quantity)} size={15} color='gray'/>
                                 <h2>{newQuantity[cartItem.productId as any] ? newQuantity[cartItem.productId as any] : cartItem.quantity}</h2>
-                                <Plus onClick={()=> UpdateQuantity(cartItem.productId as any, "Add")} size={15} color='gray'/>
+                                <Plus onClick={()=> UpdateQuantity(cartItem.productId as any, "Add", newQuantity[cartItem.productId as any] || cartItem.quantity)} size={15} color='gray'/>
                             </div>
                         </div>  
                     </div>
@@ -110,9 +111,9 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                         </div>   
                         <div className='flex items-end'>
                             <div className='flex gap-2 border border-[#333333] rounded-xl py-1 px-4 items-center'>
-                                <Minus onClick={()=> UpdateQuantity(local.productId as any, "Subtract")} size={15} color='gray'/>
+                                <Minus onClick={()=> UpdateQuantity(local.productId as any, "Subtract", newQuantity[local.productId as any])} size={15} color='gray'/>
                                 <h2>{newQuantity[local.productId as any] ? newQuantity[local.productId as any] : local.quantity}</h2>
-                                <Plus onClick={()=> UpdateQuantity(local.productId as any, "Add")} size={15} color='gray'/>
+                                <Plus onClick={()=> UpdateQuantity(local.productId as any, "Add", newQuantity[local.productId as any])} size={15} color='gray'/>
                             </div>
                         </div>
                     </div>
