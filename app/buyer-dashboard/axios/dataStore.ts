@@ -62,3 +62,11 @@ export const updateQuantity = axios.create({
     },
 })
 updateQuantity.defaults.withCredentials = true;
+
+export const deleteProduct = axios.create({
+    baseURL: 'http://localhost:5000/api/users/product/deleteProduct',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+deleteProduct.defaults.withCredentials = true;
