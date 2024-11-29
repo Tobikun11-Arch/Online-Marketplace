@@ -23,3 +23,13 @@ export const useUser = create<userProps>((set)=> ({
     user: null,
     setuser: (user: User | null) => set(()=> ({ user }))
 }))
+
+interface CartProps {
+    CartLength: number
+    setCartLength: (CartLength: number) => void
+}   
+
+export const useUserCart = create<CartProps>((set)=> ({
+    CartLength: 0,
+    setCartLength: (CartLength: number) => set(()=> ({ CartLength }))
+}))

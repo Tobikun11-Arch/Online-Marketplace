@@ -12,7 +12,6 @@ import { AddToCartPayload } from '../../Interface/CartItem'
 import { useUser } from '../../store/User'
 import { useProductCart } from '../../store/productCart'
 import { useToast } from "../../../../@/hooks/use-toast"
-import { Button } from '../../../../@/components/ui/button'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
