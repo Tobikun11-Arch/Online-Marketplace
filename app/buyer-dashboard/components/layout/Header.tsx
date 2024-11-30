@@ -23,9 +23,13 @@ const Header = () => {
                 <div className='flex gap-2'>
                     <div className="relative">
                         <ShoppingCart className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setCart(true)}/>
-                        <div className='absolute -top-3 -right-2 bg-blue-800 p-1 rounded-sm text-xs'>
+                        {CartLength > 0 ? (
+                            <div className='absolute -top-3 -right-2 bg-blue-800 p-1 rounded-sm text-xs'>
                             {CartLength}
-                        </div>
+                            </div>
+                        ) : (
+                            ''
+                        )}
                     </div>
                     <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(true)}/>
                 </div>

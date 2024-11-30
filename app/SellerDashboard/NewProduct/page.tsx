@@ -8,7 +8,7 @@ export default function Page() {
      <div className='w-full min-h-screen bg-white'>
      <NavBar/>
       <NewProduct />
-     </div>
+     </div> 
    </>
   )
 }
