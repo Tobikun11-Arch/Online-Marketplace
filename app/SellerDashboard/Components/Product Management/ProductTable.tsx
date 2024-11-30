@@ -140,7 +140,7 @@ export default function ProductTable() {
                                 </div>
                             </td>
                             <td className="pl-4 pr-16 py-2 cursor-default font-abc font-bold text-sm text-gray-800">₱{product.productPrice}</td>
-                            <td className="pl-4 pr-10 cursor-default font-abc font-bold text-sm text-gray-800">{product.productQuantity < '20' ? 'Out of stock' : 'In stock'}</td>
+                            <td className="pl-4 pr-10 cursor-default font-abc font-bold text-sm text-gray-800">{product.productQuantity <= '0' ? 'Sold out' : product.productQuantity}</td>
                             <td className="px-4 py-2 cursor-default font-abc font-bold text-sm text-gray-800">{product.productStatus}</td>
                             <td className="px-4 py-2 cursor-default font-abc font-bold text-gray-500 text-sm" onClick={()=> handleDetails(product)}>{product.productStatus === 'Published' ? 'View Analystics' : 'Edit Listing'}</td>
                         </tr>

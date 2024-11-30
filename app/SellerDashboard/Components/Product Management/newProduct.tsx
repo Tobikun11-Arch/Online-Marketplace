@@ -30,7 +30,7 @@ export default function NewProduct() {
     setProductSize, setProductPrice, setProductDiscount 
   } = UseProductStore();
 
-  const { setLoadingPublish, setLoadingDiscard, setLoadingSchedule, isLoadingSchedule, isError, setError } = useLoading()
+  const { setLoadingPublish, setLoadingDiscard, setLoadingSchedule, isError, setError } = useLoading()
   const { setSchedule, isSchedule, DateSchedule, TimeSchedule, setTime, setDate } = useSchedule()
   const [ featured, setFeature ] = useState<boolean>(false)
 
@@ -59,11 +59,10 @@ export default function NewProduct() {
     // If validation fails, log the error
     setError(true)
     return;
-  } 
-  
+  }
+
   else {
     // If all validations pass, log the product details
-
         if (type === 'publish') {
           setLoadingPublish(true);
         } 
@@ -166,7 +165,6 @@ export default function NewProduct() {
       <AuthCheck className='px-3 pb-3 pt-12 md:pt-12 xl:pt-0 dark:text-black'>
 
         <Pinwheel/>
-
           {isSchedule ?
         (<>
         <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0 z-50 px-5 sm:px-0">

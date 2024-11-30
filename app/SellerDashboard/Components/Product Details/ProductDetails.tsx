@@ -24,7 +24,6 @@ return (
                             />
                         </div>
                         <ProductImages/>
-                        <Ratings/> 
                         <Size/>
 
                         <div className="flex flex-wrap justify-center items-center gap-3 mt-4">
