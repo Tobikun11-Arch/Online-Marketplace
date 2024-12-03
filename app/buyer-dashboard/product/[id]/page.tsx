@@ -12,6 +12,7 @@ import { AddToCartPayload } from '../../Interface/CartItem'
 import { useUser } from '../../store/User'
 import { useProductCart } from '../../store/productCart'
 import { useToast } from "../../../../@/hooks/use-toast"
+import { useToggle } from '../../store/useToggle'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
@@ -25,6 +26,7 @@ const addtoCartRequest = async(payload: AddToCartPayload) => {
 }
 
 const Page = () => {
+    const { setAuth } = useToggle()
     const { id } = useParams()
     const [ products, setProducts ] = useState<Products[] | []>([])
     const [ SimilarProduct, setSimilar ] = useState<Products[] | []>([])
@@ -76,7 +78,7 @@ const Page = () => {
 
     const handleCart = async(products: Products) => { 
         setAdd(true)
-        if(!user) { console.log("No user") }
+        if(!user) { setAdd(false), setAuth(true) }
         else {
             const dataProduct: AddToCartPayload = {
                 userId: user._id,
