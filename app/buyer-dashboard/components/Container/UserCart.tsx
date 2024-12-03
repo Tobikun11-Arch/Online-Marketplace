@@ -95,7 +95,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
     return (    
         <div className='cursor-default h-full flex flex-col justify-between'>
                 <div>
-                {Cart?.user.cart && Cart.user.cart.length > 0 ? (
+                {user && Cart?.user.cart && Cart.user.cart.length > 0 ? (
                     Cart.user.cart.map((cartItem, index) => (
                         <>
                             <div key={index} className='flex gap-3 mt-4'>
@@ -175,7 +175,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
             <div className='flex flex-col gap-1 mt-5'>
                 <div className="flex justify-between">
                     <h3>Total</h3>
-                    <h3>₱{price}</h3>
+                    <h3>₱{user ? `${price}` : '0'}</h3>
                 </div>
                 <hr color='gray' className='mb-3'/>
                 <button
