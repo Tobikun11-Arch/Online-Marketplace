@@ -86,10 +86,10 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
 
     useEffect(()=> {
         setPrice(totalPrice) 
-        const LocalLength = localCart.filter((item, index, self) =>
-            index === self.findIndex((i)=> i.productId === item.productId)
-        );
-        setCartLength(Cart?.user.cart.length!  + LocalLength.length)
+        const UniqueCart = localCart.filter(
+            (localItem)=> !Cart?.user.cart.some((cartItem)=> cartItem.productId as any === localItem.productId)
+        ) //Include the localCart productId that doesnt exist on Cart.user or from fetch
+        setCartLength(Cart?.user.cart.length!  + UniqueCart.length)
     }, [totalPrice])
 
     return (    
@@ -188,4 +188,3 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
 }
 
 export default UserCart
-
