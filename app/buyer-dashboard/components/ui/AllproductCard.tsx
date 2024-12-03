@@ -26,7 +26,7 @@ const AllproductCard = () => {
             {data?.map((datas, index)=> (
                     <div className='relative' key={index}>
                         <Link href={`/buyer-dashboard/product/${datas._id}`} passHref>
-                            <div className="relative w-full hover:bg-gray-600 dark:hover:bg-gray-600 h-96 border rounded-lg cursor-default mt-3 bg-white dark:bg-transparent dark:border-[#333333]">
+                            <div className="relative w-full hover:bg-muted/100 dark:hover:bg-muted/25 h-96 border rounded-lg cursor-default mt-3 bg-white dark:bg-transparent dark:border-[#333333]">
                                 <Image
                                     fill
                                     src={datas.images[0]}
