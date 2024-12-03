@@ -2,9 +2,11 @@
 import React, { useEffect } from 'react'
 import { lineSpinner } from 'ldrs'
 import { useRouter } from 'next/navigation'
+import { useUser } from '../store/User'
 
 const Page = () => {
     const router = useRouter()
+    const { setuser } = useUser()
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -12,6 +14,8 @@ const Page = () => {
         }
 
         const timeout = setTimeout(() => {
+            localStorage.clear();
+            setuser(null)
             router.push('/');
         }, 2000);
 

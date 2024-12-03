@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ShoppingCart, User, Menu } from 'lucide-react'
 import { useToggle } from '../../store/useToggle'
 import Sidebar from './Sidebar'
-import { useUserCart } from '../../store/User'
+import { useUser, useUserCart } from '../../store/User'
 import CartComponent from '../pages/CartComponent'
 import Navbar from './Navbar'
 import UserAuth from '../pages/UserAuth'
@@ -11,6 +11,7 @@ const Header = () => {
     const { setToggle, isCart, isToggle, setCart, setAuth, isAuth,  } = useToggle()
     const icon = 'p-2.5 border rounded-lg'
     const { CartLength } = useUserCart()
+    const { user } = useUser()
 
     return (
         <>
@@ -23,12 +24,10 @@ const Header = () => {
                 <div className='flex gap-2'>
                     <div className="relative">
                         <ShoppingCart className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setCart(true)}/>
-                        {CartLength > 0 ? (
-                            <div className='absolute -top-3 -right-2 bg-blue-800 p-1 rounded-sm text-xs'>
-                            {CartLength}
+                        {user && CartLength > 0 && (
+                            <div className="absolute -top-3 -right-2 bg-blue-800 p-1 rounded-sm text-xs">
+                                {CartLength}
                             </div>
-                        ) : (
-                            ''
                         )}
                     </div>
                     <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(true)}/>

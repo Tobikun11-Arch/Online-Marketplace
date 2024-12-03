@@ -10,7 +10,6 @@ const UserProfile = () => {
             const response = await Signout.post('', {}, { withCredentials: true });
             const { message } = response.data;
             if(message === 'Signed out successfully!'){ 
-                localStorage.clear();
                 router.push('/buyer-dashboard/SigningOut')
             }
         } catch (error) {
