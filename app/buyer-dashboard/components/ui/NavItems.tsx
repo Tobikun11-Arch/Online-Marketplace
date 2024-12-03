@@ -17,8 +17,8 @@ const NavItems = ({ className }: navProps) => {
                 setToggle(false)
             break;
 
-            case 'Shop':
-                router.push('/buyer-dashboard/Shop')
+            case 'All':
+                router.push('/buyer-dashboard/AllProducts')
                 setToggle(false)
             break;
         
@@ -30,7 +30,7 @@ const NavItems = ({ className }: navProps) => {
     return (
         <div className={className}>
             <h2 onClick={()=> Items('Popular')} className={hover}>Popular</h2>
-            <h2 onClick={()=> Items('Shop')} className={hover}>Shops</h2>
+            <h2 onClick={()=> Items('All')} className={hover}>All products</h2>
         </div>
     )
 }
