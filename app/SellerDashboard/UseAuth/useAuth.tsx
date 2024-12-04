@@ -12,7 +12,7 @@ const useAuth = () => {
                 const response = await auth.get('', { withCredentials: true })
                 if (response.data.verToken === false) {
                     localStorage.clear()
-                    router.push('/');
+                    router.push('/Auth');
                 }
             } catch (error: any) {
                 if (error.response && error.response.status === 401) {
@@ -25,7 +25,7 @@ const useAuth = () => {
                             (refreshError.response.status === 401 || refreshError.response.status === 403)
                         ) {
                             localStorage.clear()
-                            router.push('/');
+                            router.push('/Auth');
                         }
                     }
                 }
