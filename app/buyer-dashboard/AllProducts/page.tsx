@@ -8,6 +8,7 @@ import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
 import { List, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
+import Category from '../../SellerDashboard/Components/Common/Category';
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -41,6 +42,7 @@ export default function Page() {
     const ProductList = () => {
         const { setProduct, product } = useProductData()
         const [ sort, sortAlpha ] = useState<boolean>(false)
+        const [ view, setView ] = useState<boolean>(false)
         const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
             queryKey: ['product'],
             queryFn: async () => {
@@ -90,16 +92,31 @@ export default function Page() {
             setProduct(productSorted)
         };
     
-        const viewAsList = () => {
-            // Logic for displaying as a list
-            console.log("Viewing as a list!");
+        const handleToggle = () => {
+            setView(!view)
         };
 
+        const handleCategory = (category: string) => {
+            console.log(category)
+        }
+
         return (
-            <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
+            <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717] cursor-default'>
                 <Header/>
                 <div className="flex gap-3 px-5 w-full justify-between">
-                    <List color='gray'/>
+                    <div className='flex gap-1'>
+                        <List color='gray' onClick={handleToggle}/>
+                        <h1 className='text-xs text-gray-600'>Sort products into categories</h1>
+                    </div>
+                    {view && (
+                        <div className="absolute dark:bg-opacity-90 dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black top-28 w-44 h-96 z-50 dark:bg-black dark:text-white font-bold flex flex-col overflow-y-scroll">
+                            {categories.map((list, index) => (
+                                <ul key={index}>
+                                    <li className="p-2 text-sm hover:bg-[#3333]" onClick={()=> handleCategory(list)}>{list}</li>
+                                </ul>
+                            ))}
+                        </div>
+                    )}
                     <div className='flex gap-1'>
                         <h1 className='text-xs text-gray-600'>Sort products: </h1>
                         {sort ?  <ArrowDownAZ color='gray' onClick={sortAlphabetically}/> :  <ArrowDownZA color='gray' onClick={sortAlphabetically}/>}
