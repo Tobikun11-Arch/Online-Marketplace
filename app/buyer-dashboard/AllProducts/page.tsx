@@ -7,7 +7,7 @@ import { AllProducts } from '../../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
-import { List, ArrowDownAZ  } from "lucide-react";
+import { List, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -40,6 +40,7 @@ export default function Page() {
 
     const ProductList = () => {
         const { setProduct, product } = useProductData()
+        const [ sort, sortAlpha ] = useState<boolean>(false)
         const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
             queryKey: ['product'],
             queryFn: async () => {
@@ -57,7 +58,7 @@ export default function Page() {
 
         useEffect(() => {
             if (ProductResponse) {
-                setProduct(ProductResponse.SellerProducts)
+                setProduct(ProductResponse.SellerProducts.sort((a, b)=> a.productName.localeCompare(b.productName)))
             }
         }, [ProductResponse])
 
@@ -83,8 +84,10 @@ export default function Page() {
         }
 
         const sortAlphabetically = () => {
-            // Sorting logic
-            console.log("Sorted alphabetically!");
+            sortAlpha(!sort)
+            const productSorted = [...product].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
+            b.productName.localeCompare(a.productName))
+            setProduct(productSorted)
         };
     
         const viewAsList = () => {
@@ -97,7 +100,10 @@ export default function Page() {
                 <Header/>
                 <div className="flex gap-3 px-5 w-full justify-between">
                     <List color='gray'/>
-                    <ArrowDownAZ color='gray' onClick={sortAlphabetically}/>
+                    <div className='flex gap-1'>
+                        <h1 className='text-xs text-gray-600'>Sort products: </h1>
+                        {sort ?  <ArrowDownAZ color='gray' onClick={sortAlphabetically}/> :  <ArrowDownZA color='gray' onClick={sortAlphabetically}/>}
+                    </div>
                 </div>
                 <div className="px-4 flex flex-col gap-4">
                     <div className='flex gap-2'>
