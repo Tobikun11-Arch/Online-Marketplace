@@ -7,8 +7,7 @@ import { AllProducts } from '../../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
-import Category from './Category';
-import Filtered from './Filtered';
+import { List, ArrowDownAZ  } from "lucide-react";
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -22,6 +21,22 @@ export default function Page() {
     interface ProductResponse {
         SellerProducts: Products[]
     }
+
+    const categories = [
+        "Electronics",
+        "Home & Kitchen",
+        "Fashion",
+        "Health & Beauty",
+        "Sports & Outdoors",
+        "Toys & Games",
+        "Automotive",
+        "Office Supplies",
+        "Books & Media",
+        "Food & Beverages",
+        "Pet Supplies",
+        "Garden & Outdoor",
+        "Crafts & Hobbies",
+    ];
 
     const ProductList = () => {
         const { setProduct, product } = useProductData()
@@ -43,7 +58,6 @@ export default function Page() {
         useEffect(() => {
             if (ProductResponse) {
                 setProduct(ProductResponse.SellerProducts)
-                console.log("Product List: ", ProductResponse.SellerProducts)
             }
         }, [ProductResponse])
 
@@ -68,13 +82,25 @@ export default function Page() {
             )
         }
 
+        const sortAlphabetically = () => {
+            // Sorting logic
+            console.log("Sorted alphabetically!");
+        };
+    
+        const viewAsList = () => {
+            // Logic for displaying as a list
+            console.log("Viewing as a list!");
+        };
+
         return (
             <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
                 <Header/>
+                <div className="flex gap-3 px-5 w-full justify-between">
+                    <List color='gray'/>
+                    <ArrowDownAZ color='gray' onClick={sortAlphabetically}/>
+                </div>
                 <div className="px-4 flex flex-col gap-4">
                     <div className='flex gap-2'>
-                    <Category/>
-                    <Filtered/>
                     </div>
                     <ProductLists product={product}/>
                 </div>
