@@ -8,7 +8,6 @@ import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
 import { List, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
-import Category from '../../SellerDashboard/Components/Common/Category';
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -24,6 +23,7 @@ export default function Page() {
     }
 
     const categories = [
+        "All",
         "Electronics",
         "Home & Kitchen",
         "Fashion",
@@ -41,6 +41,7 @@ export default function Page() {
 
     const ProductList = () => {
         const { setProduct, product } = useProductData()
+        const [ handler, setHandler ] = useState<Products[] | []>([])
         const [ sort, sortAlpha ] = useState<boolean>(false)
         const [ view, setView ] = useState<boolean>(false)
         const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
@@ -89,15 +90,26 @@ export default function Page() {
             sortAlpha(!sort)
             const productSorted = [...product].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
             b.productName.localeCompare(a.productName))
-            setProduct(productSorted)
+            const handlerSorted = [...handler].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
+            b.productName.localeCompare(a.productName))
+            if(handler.length > 0){
+                setHandler(handlerSorted)
+            }
+            else {
+                setHandler(productSorted)
+            }
         };
-    
+
         const handleToggle = () => {
             setView(!view)
         };
 
         const handleCategory = (category: string) => {
-            console.log(category)
+            if(category === 'All'){
+                setHandler([])
+            }
+            setView(false)
+            setHandler(product.filter(item => item.productCategory === category))
         }
 
         return (
@@ -125,7 +137,7 @@ export default function Page() {
                 <div className="px-4 flex flex-col gap-4">
                     <div className='flex gap-2'>
                     </div>
-                    <ProductLists product={product}/>
+                    <ProductLists product={handler.length > 0 ? handler : product}/>
                 </div>
             </div>
         )

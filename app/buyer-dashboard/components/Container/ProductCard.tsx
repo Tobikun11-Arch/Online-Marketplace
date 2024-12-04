@@ -12,8 +12,8 @@ const ProductCard = ({ product }: products) => {
         <>
             {product.map((prodTest, index) => (
                 <Link href={`/buyer-dashboard/product/${prodTest._id}`} passHref key={index}>
-                    {parseInt(prodTest.productQuantity) > 0  ? (
-                        <div className='relative w-full h-80 flex flex-col cursor-default justify-center items-center md:mb-0 bg-white dark:bg-black hover:border-blue-500 rounded-lg border'>
+                    {parseInt(prodTest.productQuantity) > 0  && (
+                        <div className='relative w-full h-80 flex flex-col cursor-default justify-center items-center md:mb-0 bg-white dark:bg-transparent dark:border-[#333333] hover:border-blue-500 rounded-lg border'>
                             <div className='relative w-3/4 h-3/4 aspect-w-1 aspect-h-1 hover:scale-105'>
                                 <Image
                                     fill
@@ -26,7 +26,7 @@ const ProductCard = ({ product }: products) => {
                             </div>
                             <ProductInfoCard dataProduct={{ productName: prodTest.productName, OriginalPrice: parseInt(prodTest.productPrice) }}/>
                         </div>
-                    ) : ''}
+                    )}
                 </Link>
             ))}
         </>
