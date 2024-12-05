@@ -121,6 +121,7 @@ const Page = () => {
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
                             <div className='flex items-center gap-2 mt-1'>
                                 <h2 className='inline-block text-white rounded-full py-2 px-5 bg-blue-700'>₱{product.productPrice} php</h2>
+                                <h2 className='inline-block text-white rounded-full py-2 px-5 bg-blue-700'>{product.productQuantity} Quantity</h2>
                             </div>
                             <hr className='mt-5 xl:w-3/4 border-black border'/>
                             <h1 className='mt-3 font-bold'>Size</h1>
