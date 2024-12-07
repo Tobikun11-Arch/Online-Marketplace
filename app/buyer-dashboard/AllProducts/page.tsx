@@ -7,7 +7,7 @@ import { AllProducts } from '../../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
-import { List, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
+import { LayoutList, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -117,8 +117,8 @@ export default function Page() {
                 <Header/>
                 <div className="flex gap-3 px-5 w-full justify-between">
                     <div className='flex gap-1'>
-                        <List color='gray' onClick={handleToggle}/>
-                        <h1 className='text-xs text-gray-600'>Sort products into categories</h1>
+                        <LayoutList className="text-gray-800 dark:text-gray-400" onClick={handleToggle}/>
+                        <h1 className='text-xs text-gray-600'>Choose a category to filter products</h1>
                     </div>
                     {view && (
                         <div className="absolute dark:bg-opacity-90 dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black top-28 w-44 h-96 z-50 dark:bg-black dark:text-white font-bold flex flex-col overflow-y-scroll">
@@ -130,8 +130,8 @@ export default function Page() {
                         </div>
                     )}
                     <div className='flex gap-1'>
-                        <h1 className='text-xs text-gray-600'>Sort products: </h1>
-                        {sort ?  <ArrowDownAZ color='gray' onClick={sortAlphabetically}/> :  <ArrowDownZA color='gray' onClick={sortAlphabetically}/>}
+                        <h1 className='text-xs text-gray-600'>Sort</h1>
+                        {sort ?  <ArrowDownAZ className="text-gray-800 dark:text-gray-400" onClick={sortAlphabetically}/> :  <ArrowDownZA className="text-gray-800 dark:text-gray-400" onClick={sortAlphabetically}/>}
                     </div>
                 </div>
                 <div className="px-4 flex flex-col gap-4">

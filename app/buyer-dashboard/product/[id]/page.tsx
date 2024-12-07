@@ -120,7 +120,7 @@ const Page = () => {
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
                             <h2 className='inline-block text-black font-semibold dark:text-white'>₱{product.productPrice}</h2>
                             <h1 className='mt-3 font-bold'>Product size</h1>
-                            <div className="flex flex-col text-sm text-gray-700">
+                            <div className="flex flex-col text-sm text-gray-700 dark:text-gray-400">
                                 <h2>- Breadth (B): {product?.productSize.breadth} cm</h2>
                                 <h2>- Length (L): {product?.productSize.length} cm</h2>
                                 <h2>- Width (W): {product?.productSize.width} cm</h2>

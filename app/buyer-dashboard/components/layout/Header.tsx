@@ -25,8 +25,8 @@ const Header = () => {
                     <div className="relative">
                         <ShoppingCart className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setCart(true)}/>
                         {user && CartLength > 0 && (
-                            <div className="absolute -top-3 -right-2 bg-blue-800 p-1 rounded-sm text-xs text-white">
-                                {CartLength}
+                            <div className={`absolute -top-3 -right-2 bg-blue-800 ${CartLength > 10 ? 'p-1' : 'px-2 py-1'} rounded-sm text-xs text-white`}>
+                                {CartLength}    
                             </div>
                         )}
                     </div>
