@@ -140,7 +140,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                     }).map((local, index) => (
                         <>
                     <div key={index} className='flex gap-3 mt-4'> 
-                        <div className='relative w-24 h-24 flex flex-col cursor-default justify-center items-center md:mb-0 bg-white dark:bg-black rounded-lg border border-[#333333]'>
+                        <div className='relative w-24 h-24 flex flex-col cursor-default justify-center items-center md:mb-0 bg-white dark:bg-[#333333] rounded-lg border border-[#333333]'>
                                 <Image
                                     fill
                                     src={local.images[0]}

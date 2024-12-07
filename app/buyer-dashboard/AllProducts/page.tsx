@@ -61,7 +61,8 @@ export default function Page() {
 
         useEffect(() => {
             if (ProductResponse) {
-                setProduct(ProductResponse.SellerProducts.sort((a, b)=> a.productName.localeCompare(b.productName)))
+                setProduct(ProductResponse.SellerProducts.filter(product => parseInt(product.productQuantity) > 0).
+                sort((a, b)=> a.productName.localeCompare(b.productName)))
             }
         }, [ProductResponse])
 

@@ -118,7 +118,10 @@ const Page = () => {
 
                         <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-[#171717] lg:py-10 py-5'>
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
-                            <h2 className='inline-block text-black font-semibold dark:text-white'>₱{product.productPrice}</h2>
+                            <div className='flex gap-2'>
+                                <h2 className='inline-block text-black font-semibold dark:text-white'>₱{product.productPrice}</h2>
+                                <h2 className='inline-block text-black font-semibold dark:text-white'>Stock: {parseInt(product.productQuantity) > 0 ? product.productQuantity : 'Out of stock'}</h2>
+                            </div>
                             <h1 className='mt-3 font-bold'>Product size</h1>
                             <div className="flex flex-col text-sm text-gray-700 dark:text-gray-400">
                                 <h2>- Breadth (B): {product?.productSize.breadth} cm</h2>
