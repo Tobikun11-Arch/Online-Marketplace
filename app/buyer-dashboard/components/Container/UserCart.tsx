@@ -98,7 +98,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                 {user && Cart?.user.cart && Cart.user.cart.length > 0 ? (
                     Cart.user.cart.map((cartItem, index) => (
                         <>
-                            <div key={index} className='flex gap-3 mt-4'>
+                            <div key={index} className='flex gap-3 mt-4 border-b-2 border-[#4444] pb-2'>
                             <div className='relative w-24 h-24 flex flex-col cursor-default justify-center items-center md:mb-0 bg-white dark:bg-[#333333] rounded-lg border border-[#333333]'>
                                 <Image
                                     fill
@@ -124,9 +124,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                                 </div>
                             </div>  
                         </div>
-    
                         </div>
-                        <hr className='mt-3'/>
                         </>
                     ))
                 ) : (
@@ -168,7 +166,6 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                             </div>
                         </div>
                     </div>
-                    <hr className='mt-3'/>
                     </>
                 ))}
                 </div>

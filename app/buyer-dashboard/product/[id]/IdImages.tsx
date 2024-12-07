@@ -34,7 +34,7 @@ const ProductImageSwapper: FC<ProductImageSwapperProps> = ({ images }) => {
     };
 
     return (
-        <div className="relative w-full h-[600px] flex flex-col justify-center items-center md:mb-0 bg-white dark:bg-black">
+        <div className="relative w-full h-[600px] flex flex-col justify-center items-center md:mb-0 bg-white dark:bg-[#171717]">
             {/* Main Image */}
             <div className="relative w-3/4 h-2/3 aspect-w-1 aspect-h-1 hover:scale-105">
                 <Image
