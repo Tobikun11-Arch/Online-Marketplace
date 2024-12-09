@@ -70,7 +70,7 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
                 <X className='p-2 border rounded-lg' strokeWidth={1.7} size={40} onClick={onClose}/>
             </div>
 
-            <div className='flex-grow flex flex-col justify-center items-center'>
+            <div className='flex-grow flex flex-col items-center pt-24'>
                 {isBuyer ? (
                     <UserProfile/>
                 ) : (

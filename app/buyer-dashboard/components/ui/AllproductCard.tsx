@@ -31,7 +31,7 @@ const AllproductCard = () => {
                                     blurDataURL="add new url later"
                                 />
                             </div>
-                        <div className='absolute bottom-0 rounded-b-lg font-semibold text-white bg-gray-800 dark:bg-black w-full flex flex-col pr-3 pl-3 py-3 mt-4'>
+                        <div className='absolute bottom-0 rounded-b-lg font-semibold text-white bg-black bg-opacity-65 backdrop-blur-md  dark:bg-black w-full flex flex-col pr-3 pl-3 py-3 mt-4'>
                             <h1>{datas.productName}</h1>
                             <h1 className='text-gray-400'>₱{datas.productPrice}</h1>
                             <Link href={`/buyer-dashboard/product/${datas._id}`} passHref>

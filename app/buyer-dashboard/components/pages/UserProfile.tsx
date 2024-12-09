@@ -17,13 +17,15 @@ const UserProfile = () => {
         }
     }
 
+    const profile = 'p-2'
+
     return (
-        <div className='cursor-default flex flex-col gap-3 text-xl'>
-            <h2 className='hover:underline'>Profile</h2>
-            <h2 className='hover:underline'>Orders</h2>
-            <h2 className='hover:underline'>Wishlist</h2>
-            <h2 className='hover:underline'>Account <br /> Settings</h2>
-            <h2 className='hover:underline' onClick={handleSignOut}>Sign Out</h2>
+        <div className='cursor-default flex flex-col gap-3 text-xl w-full'>
+            <h2 className={`${profile}`}>Profile</h2>
+            <h2 className={`${profile}`}>Orders</h2>
+            <h2 className={`${profile}`}>Wishlist</h2>
+            <h2 className={`${profile}`}>Account settings</h2>
+            <h2 className={`${profile}`} onClick={handleSignOut}>Sign Out</h2>
         </div>
     )
 }
