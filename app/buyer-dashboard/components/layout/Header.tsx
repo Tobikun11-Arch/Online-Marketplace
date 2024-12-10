@@ -62,7 +62,7 @@ const Header = () => {
                                 <MenuItem>
                                     <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="" onClick={()=> setEdit(true)}>
                                         <UserPen size={20}/>
-                                        Edit Profile
+                                        Profile
                                     </Link>
                                 </MenuItem>
                                 <MenuItem>

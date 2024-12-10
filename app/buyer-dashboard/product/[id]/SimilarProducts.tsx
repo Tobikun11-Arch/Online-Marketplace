@@ -16,7 +16,7 @@ const SimilarProducts: FC<similarProps> = ({ products }) => {
                 {products.map((product, index)=> (
                     <Link href={`/buyer-dashboard/product/${product._id}`} passHref key={index}>
                         <div className='relative'>
-                            <div className="relative min-w-[18rem] w-72 h-96 sm:w-80 border rounded-lg cursor-pointer mt-3 bg-white dark:bg-black">
+                            <div className="relative min-w-[18rem] w-72 h-96 sm:w-80 border rounded-lg cursor-pointer mt-3 bg-white dark:bg-[#3333]">
                                 <Image
                                     fill
                                     src={product.images[0]}
