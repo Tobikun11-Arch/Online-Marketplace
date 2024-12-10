@@ -1,5 +1,5 @@
 import React from 'react'
-import { ShoppingCart, User, AlignJustify, UserPen, Truck, Settings, LogOut } from 'lucide-react'
+import { ShoppingCart, User, AlignJustify, UserPen, Truck, LogOut } from 'lucide-react'
 import { useToggle } from '../../store/useToggle'
 import Sidebar from './Sidebar'
 import { useUser, useUserCart, useBuyer } from '../../store/User'
@@ -10,6 +10,8 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Signout } from '../../../SellerDashboard/axios/axios'
+import { useUserForms } from '../../store/User'
+import EditProfileForm from '../../user/EditProfileForm'
 
 const Header = () => {
     const { setToggle, isCart, isToggle, setCart, setAuth, isAuth,  } = useToggle()
@@ -18,6 +20,7 @@ const Header = () => {
     const { user } = useUser()
     const { isBuyer, setBuyer } = useBuyer()
     const router = useRouter()
+    const { setEdit } = useUserForms()
 
     const handleSignOut = async () => {
         try {
@@ -34,6 +37,7 @@ const Header = () => {
 
     return (
         <>
+            <EditProfileForm/>
             <Sidebar isOpen={isToggle} onClose={() => setToggle(false)}/>
             <UserAuth isOpen={isAuth} onClose={() => setAuth(false)}/>
             <CartComponent isOpen={isCart} onClose={() => setCart(false)}/>
@@ -51,26 +55,14 @@ const Header = () => {
                     </div>
                     <Menu>  
                         <MenuButton>
-                        <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(true)}/> 
+                        <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(!isAuth)}/> 
                         </MenuButton>
                         {isBuyer && (
-                            <MenuItems anchor="bottom" className=" dark:bg-opacity-90 dark:backdrop-blur-sm text-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white p-2 -ml-5 rounded-lg w-40">
+                            <MenuItems anchor="bottom" className=" dark:bg-opacity-90 dark:backdrop-blur-sm text-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white p-2 mt-1 -ml-5 rounded-lg w-40">
                                 <MenuItem>
-                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="/">
+                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="" onClick={()=> setEdit(true)}>
                                         <UserPen size={20}/>
                                         Edit Profile
-                                    </Link>
-                                </MenuItem>
-                                <MenuItem>
-                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="/">
-                                        <Truck size={20}/>
-                                        Orders
-                                    </Link>
-                                </MenuItem>
-                                <MenuItem>
-                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="/">
-                                        <Settings size={20}/>
-                                        Settings
                                     </Link>
                                 </MenuItem>
                                 <MenuItem>
