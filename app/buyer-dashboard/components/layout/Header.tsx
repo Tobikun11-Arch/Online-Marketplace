@@ -8,13 +8,29 @@ import Navbar from './Navbar'
 import UserAuth from '../pages/UserAuth'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { Signout } from '../../../SellerDashboard/axios/axios'
 
 const Header = () => {
     const { setToggle, isCart, isToggle, setCart, setAuth, isAuth,  } = useToggle()
     const icon = 'p-2.5 border rounded-lg'
     const { CartLength } = useUserCart()
     const { user } = useUser()
-    const { isBuyer } = useBuyer()
+    const { isBuyer, setBuyer } = useBuyer()
+    const router = useRouter()
+
+    const handleSignOut = async () => {
+        try {
+            const response = await Signout.post('', {}, { withCredentials: true });
+            const { message } = response.data;
+            if(message === 'Signed out successfully!'){ 
+                router.push('/buyer-dashboard/SigningOut')
+                setBuyer(false)
+            }
+        } catch (error) {
+            console.error("Error during signout:", error);
+        }
+    }
 
     return (
         <>
@@ -38,27 +54,27 @@ const Header = () => {
                         <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(true)}/> 
                         </MenuButton>
                         {isBuyer && (
-                            <MenuItems anchor="bottom" className="bg-white text-sm text-black p-2 -ml-5 rounded-lg w-44">
+                            <MenuItems anchor="bottom" className=" dark:bg-opacity-90 dark:backdrop-blur-sm text-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white p-2 -ml-5 rounded-lg w-40">
                                 <MenuItem>
-                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-300 rounded-lg" href="/">
+                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="/">
                                         <UserPen size={20}/>
                                         Edit Profile
                                     </Link>
                                 </MenuItem>
                                 <MenuItem>
-                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-300 rounded-lg" href="/">
+                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="/">
                                         <Truck size={20}/>
                                         Orders
                                     </Link>
                                 </MenuItem>
                                 <MenuItem>
-                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-300 rounded-lg" href="/">
+                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="/">
                                         <Settings size={20}/>
                                         Settings
                                     </Link>
                                 </MenuItem>
                                 <MenuItem>
-                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-300 rounded-lg" href="/">
+                                    <Link onClick={handleSignOut} className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="/">
                                         <LogOut size={20}/>
                                         Log out
                                     </Link>
