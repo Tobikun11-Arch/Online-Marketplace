@@ -33,3 +33,17 @@ export const useUserCart = create<CartProps>((set)=> ({
     CartLength: 0,
     setCartLength: (CartLength: number) => set(()=> ({ CartLength }))
 }))
+
+
+
+//isBuyer 
+
+interface isBuyerProps {
+    isBuyer: boolean
+    setBuyer: (isBuyer: boolean) => void
+}
+
+export const useBuyer = create<isBuyerProps>((set)=> ({
+    isBuyer: false,
+    setBuyer: (isBuyer: boolean) => set(()=> ({ isBuyer }))
+}))

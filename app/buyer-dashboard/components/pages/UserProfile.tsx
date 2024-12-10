@@ -21,11 +21,11 @@ const UserProfile = () => {
 
     return (
         <div className='cursor-default flex flex-col gap-3 text-xl w-full'>
-            <h2 className={`${profile}`}>Profile</h2>
+            {/* <h2 className={`${profile}`}>Profile</h2>
             <h2 className={`${profile}`}>Orders</h2>
             <h2 className={`${profile}`}>Wishlist</h2>
             <h2 className={`${profile}`}>Account settings</h2>
-            <h2 className={`${profile}`} onClick={handleSignOut}>Sign Out</h2>
+            <h2 className={`${profile}`} onClick={handleSignOut}>Sign Out</h2> */}
         </div>
     )
 }
