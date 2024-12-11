@@ -4,6 +4,8 @@ interface User {
     _id: string;
     FirstName: string;
     LastName: string;
+    PhoneNumber: string;
+    PetName: string;
     Email: string;
     Password: string;
     Role: string;

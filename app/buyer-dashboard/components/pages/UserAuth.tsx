@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { X } from 'lucide-react'
 import { useForm } from '../../../Auth/StateHandlers/Form'
 import { useRouter } from 'next/navigation'

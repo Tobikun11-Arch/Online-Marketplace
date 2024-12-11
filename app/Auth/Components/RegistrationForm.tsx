@@ -10,7 +10,7 @@ import { leapfrog } from 'ldrs'
 
 const RegistrationForm = () => {
     const { isForm, setForm } = useForm()
-    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole, sentMail} = useNewUser()
+    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, PhoneNumber, PetName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole, sentMail} = useNewUser()
     const [ Error , seterror ] = useState<boolean>(false)
     const adjectives = ['pokwang', 'kririn', 'pikolo', 'golem', 'gokuu', 'renejay', 'yawi', 'david'];
     const [ joinSeller, setJoin ] = useState<boolean>(false)
@@ -41,7 +41,7 @@ const RegistrationForm = () => {
 
         try {
             const userDetails = {
-                FirstName, LastName, Email, Password, Role, Username: generatedUsername
+                FirstName, LastName, PhoneNumber, PetName, Email, Password, Role, Username: generatedUsername
             }
             await newRegister.post('', userDetails)
             setLoading(false)
