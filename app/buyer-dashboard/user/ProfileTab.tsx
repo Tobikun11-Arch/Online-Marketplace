@@ -47,7 +47,8 @@ const ProfileTab = () => {
                     </div>
                     <div className='flex flex-col w-full'>
                         <label htmlFor="petname">Pet Name</label>
-                        <input type="text" id='petname' name='petname' className={`${Input}`}/>
+                        <input type="text" id='petname' name='petname' className={`${Input}`}
+                        value={user?.PetName}/>
                     </div>
                 </div>
 
