@@ -7,11 +7,12 @@ const ProfileTab = () => {
     const { user, setuser } = useUser()
     const Input = 'h-12 rounded-md outline-none p-2 dark:bg-[#333] bg-gray-200'
     const { setEmail, setFirstName, setLastName, setUsername, setPhoneNumber, setPetName, FirstName, LastName, Email, PhoneNumber, PetName, Username } = UpdateProfile()
+    const [ update, setUpdate ] = useState<boolean>(false)
     const [ message, setMessage ] = useState<string>('')
 
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
+        setUpdate(true)
         if(user){
             setuser({
                 ...user,
@@ -37,11 +38,11 @@ const ProfileTab = () => {
         try {
             const response = await UpdateProfiles.put('', newProfile, { withCredentials: true })
             const { message } = response.data
+            setUpdate(false)
             setMessage(message)
         } catch (error) {
             console.error("Failed to update: ", error)
         }
-
     }
 
     return (
@@ -92,7 +93,7 @@ const ProfileTab = () => {
                 </div>
 
                 <div className='flex self-end gap-2 mt-3'>
-                    <button type='submit' className='py-2 px-4 bg-black dark:bg-white rounded-md text-white dark:text-black'>Update profile</button>
+                    <button type='submit' className='py-2 px-4 bg-black dark:bg-white rounded-md text-white dark:text-black'>{update ? 'Updating...' : 'Update profile'}</button>
                 </div>
             </form>
         </div>
