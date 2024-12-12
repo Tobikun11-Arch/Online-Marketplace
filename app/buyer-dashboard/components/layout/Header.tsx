@@ -60,13 +60,13 @@ const Header = () => {
                         {isBuyer && (
                             <MenuItems anchor="bottom" className=" dark:bg-opacity-90 dark:backdrop-blur-sm text-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white p-2 mt-1 -ml-5 rounded-lg w-40">
                                 <MenuItem>
-                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="" onClick={()=> setEdit(true)}>
+                                    <Link className="flex items-center gap-2 p-2 hover:bg-gray-300 dark:hover:bg-[#3333] rounded-lg" href="" onClick={()=> setEdit(true)}>
                                         <UserPen size={20}/>
                                         Profile
                                     </Link>
                                 </MenuItem>
                                 <MenuItem>
-                                    <Link onClick={handleSignOut} className="flex items-center gap-2 p-2 hover:bg-gray-400 dark:hover:bg-[#3333] rounded-lg" href="/">
+                                    <Link onClick={handleSignOut} className="flex items-center gap-2 p-2 hover:bg-gray-300 dark:hover:bg-[#3333] rounded-lg" href="/">
                                         <LogOut size={20}/>
                                         Log out
                                     </Link>
