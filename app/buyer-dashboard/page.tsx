@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 import { MainShop } from '../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 import { useProductList } from './store/products'
-import { useTheme } from '../buyer-dashboard/store/Theme'
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -25,7 +24,6 @@ interface ProductResponse {
 }
 
 const BuyerDashboard = () => {
-    const { theme } = useTheme() //check later
     const { isCart, isToggle } = useToggle()
     const { setUrl } = useProuctDetails()
     const { setmainShopProducts } = useProductList()
@@ -75,7 +73,7 @@ const BuyerDashboard = () => {
     }
 
     return (
-        <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717]'>
+        <div className={`min-h-screen bg-[#FAFAFA] dark:bg-[#171717]`}>
             <Header/>
             <MainShopProduct isOpen={isCart || isToggle}/>
         </div>
