@@ -34,7 +34,7 @@ const EditProfileForm = () => {
                                 {activeTab === 'Profile' && <ProfileTab/>}
                             </div>
                             <div className='absolute top-2 right-2 md:-top-2 md:-right-2'>
-                                <X color='white' size={25} strokeWidth={2.5} onClick={()=> setEdit(false)}/>
+                                <X className='text-black p-1 bg-white rounded-full font-bold' size={25} strokeWidth={5} onClick={()=> setEdit(false)}/>
                             </div>
                         </DialogPanel>
                     </div>

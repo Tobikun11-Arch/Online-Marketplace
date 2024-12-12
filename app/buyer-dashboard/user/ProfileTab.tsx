@@ -48,7 +48,7 @@ const ProfileTab = () => {
     return (
         <div className='w-full'>
             <div className='flex justify-between items-center'>
-                <h2 className='text-xl'>Personal Information</h2>
+                <h2 className='text-xl font-bold'>Personal Information</h2>
                 <h2>Dashboard/<span className='text-blue-800 font-bold font-abc'>Profile</span></h2>
             </div>
 
@@ -93,7 +93,7 @@ const ProfileTab = () => {
                 </div>
 
                 <div className='flex self-end gap-2 mt-3'>
-                    <button type='submit' className='py-2 px-4 bg-black dark:bg-white rounded-md text-white dark:text-black'>{update ? 'Updating...' : 'Update profile'}</button>
+                    <button type='submit' className='py-2 px-4 font-semibold text-sm bg-black dark:bg-white rounded-md text-white dark:text-black'>{update ? 'Updating...' : 'Update profile'}</button>
                 </div>
             </form>
         </div>

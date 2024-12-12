@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Header from './components/layout/Header'
 import MainShopProduct from './components/Container/MainShopProduct'
 import { Products } from './entities/entities'
@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 import { MainShop } from '../buyer-dashboard/axios/dataStore'
 import { lineSpinner } from 'ldrs'
 import { useProductList } from './store/products'
+import { useTheme } from '../buyer-dashboard/store/Theme'
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -24,6 +25,7 @@ interface ProductResponse {
 }
 
 const BuyerDashboard = () => {
+    const { theme } = useTheme() //check later
     const { isCart, isToggle } = useToggle()
     const { setUrl } = useProuctDetails()
     const { setmainShopProducts } = useProductList()
