@@ -8,7 +8,7 @@ const ProfileTab = () => {
     const Input = 'h-12 rounded-md outline-none p-2 dark:bg-[#333] bg-gray-200'
     const { setEmail, setFirstName, setLastName, setUsername, setPhoneNumber, setPetName, FirstName, LastName, Email, PhoneNumber, PetName, Username } = UpdateProfile()
     const [ update, setUpdate ] = useState<boolean>(false)
-    const [ message, setMessage ] = useState<string>('')
+    const [ message, setMessage ] = useState<string>('') //message that if it was successful, not used.
 
     const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()

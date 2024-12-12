@@ -1,8 +1,9 @@
-import {  Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import {  Dialog, DialogPanel } from '@headlessui/react'
 import React, { useEffect, useState } from 'react'
 import { useUserForms } from '../store/User'
 import AppearanceTab from './AppearanceTab'
 import ProfileTab from './ProfileTab'
+import { X } from 'lucide-react';
 import OrdersTab from './OrdersTab'
 
 const EditProfileForm = () => {
@@ -32,10 +33,14 @@ const EditProfileForm = () => {
                                 {activeTab === 'Orders' && <OrdersTab/>}
                                 {activeTab === 'Profile' && <ProfileTab/>}
                             </div>
+                            <div className='absolute top-2 right-2 md:-top-2 md:-right-2'>
+                                <X color='white' size={25} strokeWidth={2.5} onClick={()=> setEdit(false)}/>
+                            </div>
                         </DialogPanel>
                     </div>
                 </div>
             </Dialog>
+            
         </>
     )
 }
