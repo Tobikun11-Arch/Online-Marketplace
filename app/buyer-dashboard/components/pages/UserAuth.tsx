@@ -43,6 +43,12 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
         }
     }, [isOpen])
 
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+    }, [user]);
+
     const handleOption = (Option: string) => {
         if(Option === 'SignUp') {
             setForm(true)

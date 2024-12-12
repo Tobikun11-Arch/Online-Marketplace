@@ -128,7 +128,7 @@ useEffect(() => {
                 value={productName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setProductName(e.target.value)}
                 />
-                
+
                 <p className='text-sm mt-2 text-gray-400'>Product Quality</p>
                 <Condition
                 className= 'border-slate-300 border text-sm text-black h-8 pl-1 bg-white w-full'

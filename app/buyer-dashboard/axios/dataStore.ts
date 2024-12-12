@@ -70,3 +70,11 @@ export const deleteProduct = axios.create({
     },
 })
 deleteProduct.defaults.withCredentials = true;
+
+export const UpdateProfiles = axios.create({
+    baseURL: 'http://localhost:5000/api/users/UpdateProfile',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+UpdateProfiles.defaults.withCredentials = true;
