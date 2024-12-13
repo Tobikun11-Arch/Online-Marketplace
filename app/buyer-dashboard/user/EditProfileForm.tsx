@@ -11,8 +11,13 @@ const EditProfileForm = () => {
     const [ activeTab, setActiveTab ] = useState<string>('Profile')
 
     useEffect(()=> {
-        setActiveTab(activeTab)
-    }, [activeTab])
+        setActiveTab(activeTab) 
+        if (opEditProfile) {
+            document.body.style.overflow = 'hidden'; 
+        } else {
+            document.body.style.overflow = 'auto'; 
+        }
+    }, [activeTab, opEditProfile])
 
     return (
         <>
@@ -34,7 +39,7 @@ const EditProfileForm = () => {
                                 {activeTab === 'Profile' && <ProfileTab/>}
                             </div>
                             <div className='absolute top-2 right-2 md:-top-2 md:-right-2'>
-                                <X className='text-black p-1 bg-white rounded-full font-bold' size={25} strokeWidth={5} onClick={()=> setEdit(false)}/>
+                                <X className='text-black p-1 bg-white rounded-full font-bold' size={25} strokeWidth={5} onClick={()=> setEdit(!opEditProfile)}/>
                             </div>
                         </DialogPanel>
                     </div>

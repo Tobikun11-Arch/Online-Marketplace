@@ -1,18 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
-
-const getDeviceTheme = (): 'light' | 'dark' => {
-    if (typeof window !== 'undefined') {
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-        return prefersDarkScheme.matches ? 'dark' : 'light';
-    }
-    return "light"; 
-};
-    const currentTheme: 'light' | 'dark'  = getDeviceTheme();
 
 const AppearanceTab = () => {
     const { setTheme, theme } = useTheme()
-    const [ selectedTheme, setSelected ] = useState<string>(theme || currentTheme)
+    const [ selectedTheme, setSelected ] = useState<string>(theme || 'dark')
 
     const handleTheme = (theme: string) => {
         setTheme(theme)
