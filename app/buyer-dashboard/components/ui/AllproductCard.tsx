@@ -21,7 +21,7 @@ const AllproductCard = () => {
         <>
             {data?.map((datas, index)=> (
                     <div className='relative' key={index}>
-                            <div className="relative w-full hover:bg-muted/100 dark:hover:bg-muted/25 h-96 border rounded-lg cursor-default mt-3 bg-white dark:bg-transparent dark:border-[#333333]">
+                            <div className="relative w-full hover:bg-muted/100 dark:hover:bg-muted/25 h-96 border-2 border-[#3333] rounded-lg cursor-default mt-3 bg-white dark:bg-transparent dark:border-[#333333]">
                                 <Image
                                     fill
                                     src={datas.images[0]}
@@ -31,9 +31,9 @@ const AllproductCard = () => {
                                     blurDataURL="add new url later"
                                 />
                             </div>
-                        <div className='absolute bottom-0 rounded-b-lg font-semibold text-white bg-black bg-opacity-65 backdrop-blur-md  dark:bg-black w-full flex flex-col pr-3 pl-3 py-3 mt-4'>
+                        <div className='absolute bottom-0 rounded-b-lg font-semibold text-white bg-[#4CAF50] dark:bg-[#2E2E2E] w-full flex flex-col pr-3 pl-3 py-3 mt-4'>
                             <h1>{datas.productName}</h1>
-                            <h1 className='text-gray-400'>₱{datas.productPrice}</h1>
+                            <h1 className='text-white'>₱{datas.productPrice}</h1>
                             <Link href={`/buyer-dashboard/product/${datas._id}`} passHref>
                                 <button className='bg-white mt-3 py-2 rounded-lg w-full text-black'>Buy</button>
                             </Link>

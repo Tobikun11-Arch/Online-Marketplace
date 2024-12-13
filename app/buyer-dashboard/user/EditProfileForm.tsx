@@ -7,7 +7,7 @@ import { X } from 'lucide-react';
 import OrdersTab from './OrdersTab'
 
 const EditProfileForm = () => {
-    const { opEditProfile, setEdit } = useUserForms() //setEdit(!opEditProfile) later
+    const { opEditProfile, setEdit } = useUserForms() 
     const [ activeTab, setActiveTab ] = useState<string>('Profile')
 
     useEffect(()=> {
