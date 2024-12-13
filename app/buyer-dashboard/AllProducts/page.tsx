@@ -8,6 +8,7 @@ import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
 import { LayoutList, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
+import { useCategory } from '../store/BestCategory'
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -40,6 +41,7 @@ export default function Page() {
     ];
 
     const ProductList = () => {
+        const { bestcategory } = useCategory()
         const { setProduct, product } = useProductData()
         const [ handler, setHandler ] = useState<Products[] | []>([])
         const [ sort, sortAlpha ] = useState<boolean>(false)
@@ -63,6 +65,11 @@ export default function Page() {
             if (ProductResponse) {
                 setProduct(ProductResponse.SellerProducts.filter(product => parseInt(product.productQuantity) > 0).
                 sort((a, b)=> a.productName.localeCompare(b.productName)))
+            }
+            if(bestcategory){
+                console.log(bestcategory, " have a value ")
+                setView(false)
+                setHandler(product.filter(item => item.productCategory ===  bestcategory))
             }
         }, [ProductResponse])
 
@@ -105,12 +112,12 @@ export default function Page() {
             setView(!view)
         };
 
-        const handleCategory = (category: string) => {
+        const handleCategory = (category: string) => { //make a condition here later that if bestcategory have value it will filter
             if(category === 'All'){
                 setHandler([])
             }
             setView(false)
-            setHandler(product.filter(item => item.productCategory === category))
+            setHandler(product.filter(item => item.productCategory ===  category))
         }
 
         return (
