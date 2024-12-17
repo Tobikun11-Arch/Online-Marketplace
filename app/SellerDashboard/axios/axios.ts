@@ -84,7 +84,7 @@ const SignoutApi = process.env.NEXT_PUBLIC_SIGNOUT;
 export const Signout = axios.create({
   baseURL: SignoutApi,
   headers: {
-  'Content-Type': 'application/json',
+    'Content-Type': 'application/json',
   },
 });
 Signout.defaults.withCredentials = true;

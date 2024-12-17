@@ -1,5 +1,5 @@
 import React from 'react'
-import { ShoppingCart, User, AlignJustify, UserPen, Truck, LogOut } from 'lucide-react'
+import { ShoppingCart, User, AlignJustify, UserPen, LogOut } from 'lucide-react'
 import { useToggle } from '../../store/useToggle'
 import Sidebar from './Sidebar'
 import { useUser, useUserCart, useBuyer } from '../../store/User'
@@ -30,8 +30,9 @@ const Header = () => {
                 router.push('/buyer-dashboard/SigningOut')
                 setBuyer(false)
             }
-        } catch (error) {
-            console.error("Error during signout:", error);
+        } 
+        catch (error) {
+            console.error("Error during signout: ", error);
         }
     }
 
@@ -43,19 +44,19 @@ const Header = () => {
             <CartComponent isOpen={isCart} onClose={() => setCart(false)}/>
             <div className='flex justify-between p-4 md:p-5'>
                 <Navbar className='hidden md:block w-full' isOpen={isCart}/>
-                <AlignJustify  className={`${icon} md:hidden`} strokeWidth={1.4} size={40} onClick={()=> setToggle(true)}/>
+                <AlignJustify className={`${icon} md:hidden`} strokeWidth={1.4} size={40} onClick={()=> setToggle(true)}/>
                 <div className='flex gap-2'>
                     <div className="relative">
                         <ShoppingCart className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setCart(true)}/>
                         {user && CartLength > 0 && (
                             <div className={`absolute -top-3 -right-2 bg-blue-800 ${CartLength > 10 ? 'p-1' : 'px-2 py-1'} rounded-sm text-xs text-white`}>
-                                {CartLength}    
+                                {CartLength}
                             </div>
                         )}
                     </div>
                     <Menu>  
                         <MenuButton>
-                        <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(!isAuth)}/> 
+                        <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(!isAuth)}/>
                         </MenuButton>
                         {isBuyer && (
                             <MenuItems anchor="bottom" className=" dark:bg-opacity-90 dark:backdrop-blur-sm text-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white p-2 mt-1 -ml-5 rounded-lg w-40">
@@ -69,7 +70,7 @@ const Header = () => {
                                     <Link onClick={handleSignOut} className="flex items-center gap-2 p-2 hover:bg-gray-300 dark:hover:bg-[#3333] rounded-lg" href="/">
                                         <LogOut size={20}/>
                                         Log out
-                                    </Link>
+                                    </Link>  
                                 </MenuItem>
                             </MenuItems>
                         )}
@@ -78,7 +79,6 @@ const Header = () => {
             </div>
         </>
     )
-
 }
 
 export default Header

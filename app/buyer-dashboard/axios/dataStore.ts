@@ -55,6 +55,7 @@ export const myCart = axios.create({
 })
 myCart.defaults.withCredentials = true;
 
+
 export const updateQuantity = axios.create({
     baseURL: 'http://localhost:5000/api/users/product/updateQuantity',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
     headers: {
@@ -62,6 +63,7 @@ export const updateQuantity = axios.create({
     },
 })
 updateQuantity.defaults.withCredentials = true;
+
 
 export const deleteProduct = axios.create({
     baseURL: 'http://localhost:5000/api/users/product/deleteProduct',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
@@ -71,6 +73,7 @@ export const deleteProduct = axios.create({
 })
 deleteProduct.defaults.withCredentials = true;
 
+
 export const UpdateProfiles = axios.create({
     baseURL: 'http://localhost:5000/api/users/UpdateProfile',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
     headers: {
@@ -78,3 +81,12 @@ export const UpdateProfiles = axios.create({
     },
 })
 UpdateProfiles.defaults.withCredentials = true;
+
+
+export const searchData = axios.create({
+    baseURL: 'http://localhost:5000/api/users/searchProduct',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+searchData.defaults.withCredentials = true;

@@ -1,16 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../common/Input'
 import { Search } from 'lucide-react'
 import NavItems from '../ui/NavItems'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { searchData } from '../../axios/dataStore'
+import { useUser } from '../../store/User'
 interface NavbarProps {
     className?: string
     isOpen: boolean
-}
+} 
 
 const Navbar = ({ className, isOpen }: NavbarProps) => {
+    const [ search, setSearch ] = useState('')
+    const { user } = useUser()
     const router = useRouter()
+
+    const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const details = {
+                userId: user?._id,
+                search
+            }
+            await searchData.put('', details, { withCredentials: true })
+            setSearch('');
+        }
+    };
 
     return (
         <>
@@ -27,7 +42,6 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                             blurDataURL='data:image/svg+xml;base64,...'
                             className='h-full w-full block dark:hidden'
                         />
-
                         <Image
                             alt='Whitelogo Image'
                             width={40}
@@ -42,7 +56,11 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                     <NavItems className="cursor-default flex gap-3 items-center text-sm text-gray-500"/>
                 </div>
                 <div className={`md:w-2/5 ${isOpen ? '' : 'relative'}`}>
-                    <Input type='search' className='bg-transparent border w-full rounded-md h-10 text-sm pl-2 pr-7 text-gray-800 dark:text-white outline-none' placeholder='Search for products...'/>
+                    <Input type='search'
+                    value={search}
+                    KeyEnter={handleKeyDown}
+                    onChange={(e)=> setSearch(e.target.value)}
+                    className='bg-transparent border w-full rounded-md h-10 text-sm pl-2 pr-7 text-gray-800 dark:text-white outline-none' placeholder='Search for products...'/>
                     <div className={`inset-y-0 right-0 flex items-center pr-3 ${isOpen ? 'hidden' : 'absolute'}`}>
                     <Search strokeWidth={1.4} color='gray' size={15}/>
                     </div>

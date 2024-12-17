@@ -7,10 +7,12 @@ interface InputProps {
     onChange?: React.ChangeEventHandler<HTMLInputElement>
     className?: string
     placeholder?: string
+    value?: string
+    KeyEnter?: React.KeyboardEventHandler<HTMLInputElement> | undefined
 }
 
-const Input = ({ type, name, id, onChange, className, placeholder }: InputProps) => {
-    return <input type={type} name={name} id={id} onChange={onChange} className={className} placeholder={placeholder}/>
+const Input = ({ type, name, id, onChange, className, placeholder, value, KeyEnter }: InputProps) => {
+    return <input value={value} type={type} onKeyDown={KeyEnter} name={name} id={id} onChange={onChange} className={className} placeholder={placeholder}/>
 }
 
 export default Input
