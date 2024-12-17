@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Input from '../common/Input'
 import { Search } from 'lucide-react'
 import NavItems from '../ui/NavItems'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { searchData } from '../../axios/dataStore'
+import { searchData, searchList } from '../../axios/dataStore'
 import { useUser } from '../../store/User'
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { Popover } from '@headlessui/react'
+import { useQuery } from '@tanstack/react-query'
 
 interface NavbarProps {
     className?: string
@@ -18,6 +18,13 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
     const { user } = useUser()
     const router = useRouter()
     const [ open, setOpen ] = useState(false)
+    const SearchHover = 'text-sm py-1 font-semibold px-2 rounded hover:bg-[#3333]'
+
+    const fetchSearchHistory = async() => {
+        const userId = user?._id
+        const response = await searchList.get('', { params: {userId} })
+        return response.data
+    } 
 
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -30,7 +37,14 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
         }
     };
 
-    const SearchHover = 'text-sm py-1 font-semibold px-2 rounded hover:bg-[#3333]' 
+    const { data } = useQuery({
+        queryKey: ['SearchHistory'],
+        queryFn: fetchSearchHistory
+    })
+
+    useEffect(()=> {
+        console.log(data)
+    }, [])
 
     return (
         <>
@@ -81,7 +95,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                         </div>
                         {open && (
                             <Popover.Panel
-                            className="absolute z-10 mt-1 w-full dark:bg-opacity-90 dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white rounded-md shadow-lg"
+                            className="absolute z-10 mt-1 w-full dark:bg-opacity-90 dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white rounded-md shadow-lg text-gray-500"
                             static
                             >
                                 <div className="flex flex-col p-2">
