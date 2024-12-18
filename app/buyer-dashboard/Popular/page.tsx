@@ -7,7 +7,7 @@ const Page = () => {
     const { product } = useProductData()
 
     //:Products in database must have sold and connected to buyer if there a buy method na
-    // Set the product data in popular page to filter the value products sold in Products kung sino mas marami nasold naproducts
+// Set the product data in popular page to filter the value products sold in Products kung sino mas marami nasold naproducts
 
     return (
         <div className='min-h-screen bg-white dark:bg-[#171717]'>

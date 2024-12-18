@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { ShoppingCart, User, AlignJustify, UserPen, LogOut } from 'lucide-react'
 import { useToggle } from '../../store/useToggle'
