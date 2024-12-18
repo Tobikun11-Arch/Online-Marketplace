@@ -15,7 +15,7 @@ const Page = () => {
             <div className="px-5">
                 <h1 className='text-2xl font-semibold'>Popular Products Today</h1>
                 <p className='mb-3 text-xs text-gray-400'>Discover the most loved products this week.</p>
-                <ProductLists product={product}/>
+                <ProductLists product={product}/> FIXED THIS SOON 
             </div> */}
             <h1>Removed the error</h1>
         </div>

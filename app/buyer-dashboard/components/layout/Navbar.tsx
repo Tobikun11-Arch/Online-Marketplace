@@ -3,10 +3,9 @@ import { Search } from 'lucide-react'
 import NavItems from '../ui/NavItems'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { searchData, searchList } from '../../axios/dataStore'
+import { searchData } from '../../axios/dataStore'
 import { useUser } from '../../store/User'
 import { Popover } from '@headlessui/react'
-import { useQuery } from '@tanstack/react-query'
 
 interface NavbarProps {
     className?: string
@@ -16,15 +15,10 @@ interface NavbarProps {
 const Navbar = ({ className, isOpen }: NavbarProps) => {
     const [ search, setSearch ] = useState('')
     const { user } = useUser()
+    const [ history, setHistory ] = useState<string[]>([])
     const router = useRouter()
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const SearchHover = 'text-sm py-1 font-semibold px-2 rounded hover:bg-[#3333]'
-
-    const fetchSearchHistory = async() => {
-        const userId = user?._id
-        const response = await searchList.get('', { params: {userId} })
-        return response.data
-    } 
 
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -37,14 +31,11 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
         }
     };
 
-    const { data } = useQuery({
-        queryKey: ['SearchHistory'],
-        queryFn: fetchSearchHistory
-    })
-
     useEffect(()=> {
-        console.log(data)
-    }, [])
+        if (user?.SearchData) {
+            setHistory(user.SearchData);
+        }
+    }, [user])
 
     return (
         <>
@@ -98,7 +89,11 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                             >
                                 <div className="flex flex-col p-2">
                                     {user?.Role === 'buyer' ? (
-                                        <h2 className={SearchHover}>user exist</h2>
+                                        <>
+                                            {history.map((history)=> (
+                                                <h2 className={SearchHover}>{history}</h2>
+                                            ))}
+                                        </>
                                     ) : (
                                         <>
                                             <h2 className={SearchHover}>Air Jordan 4 Retro 'White Thunder'</h2>

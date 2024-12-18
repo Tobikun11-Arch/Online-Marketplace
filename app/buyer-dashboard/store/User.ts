@@ -6,6 +6,7 @@ interface User {
     LastName: string;
     PhoneNumber: string;
     PetName: string;
+    SearchData: string[];
     Email: string;
     Password: string;
     Role: string;

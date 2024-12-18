@@ -89,12 +89,3 @@ export const searchData = axios.create({
     },
 })
 searchData.defaults.withCredentials = true;
-
-
-export const searchList = axios.create({
-    baseURL: 'http://localhost:5000/api/users/ViewList',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
-searchList.defaults.withCredentials = true;
