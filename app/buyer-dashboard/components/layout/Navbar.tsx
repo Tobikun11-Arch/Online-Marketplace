@@ -33,7 +33,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
 
     useEffect(()=> {
         if (user?.SearchData) {
-            setHistory(user.SearchData);
+            setHistory(user.SearchData); //add the function later that will add to the local storage the new search data so it can show without fetching
         }
     }, [user])
 
@@ -90,8 +90,8 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                                 <div className="flex flex-col p-2">
                                     {user?.Role === 'buyer' ? (
                                         <>
-                                            {history.map((history)=> (
-                                                <h2 className={SearchHover}>{history}</h2>
+                                            {history.map((history, index) => (
+                                                <h2 key={index} className={SearchHover}>{history}</h2>
                                             ))}
                                         </>
                                     ) : (
