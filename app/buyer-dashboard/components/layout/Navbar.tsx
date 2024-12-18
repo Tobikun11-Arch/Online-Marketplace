@@ -17,7 +17,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
     const [ search, setSearch ] = useState('')
     const { user } = useUser()
     const router = useRouter()
-    const [ open, setOpen ] = useState(false)
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const SearchHover = 'text-sm py-1 font-semibold px-2 rounded hover:bg-[#3333]'
 
     const fetchSearchHistory = async() => {
@@ -80,8 +80,8 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                             <input
                             type="search"
                             value={search}
-                            onFocus={() => setOpen(true)}
-                            onBlur={() => setTimeout(() => setOpen(false), 10)}
+                            onFocus={() => setIsPopoverOpen(true)}
+                            onBlur={() => setTimeout(() => setIsPopoverOpen(false), 10)}
                             onKeyDown={handleKeyDown}
                             onChange={(e) => setSearch(e.target.value)}
                             className="bg-transparent border w-full rounded-md h-10 text-sm pl-2 pr-7 text-gray-800 dark:text-white outline-none"
@@ -91,7 +91,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                                 <Search strokeWidth={1.4} color="gray" size={15} />
                             </div>
                         </div>
-                        {open && (
+                        {isPopoverOpen && (
                             <Popover.Panel
                             className="absolute z-10 mt-1 w-full dark:bg-opacity-90 dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white rounded-md shadow-lg text-gray-500"
                             static
