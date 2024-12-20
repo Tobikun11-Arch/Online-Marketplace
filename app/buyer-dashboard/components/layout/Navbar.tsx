@@ -14,7 +14,7 @@ interface NavbarProps {
 
 const Navbar = ({ className, isOpen }: NavbarProps) => {
     const [ search, setSearch ] = useState('')
-    const { user } = useUser()
+    const { user, setuser } = useUser()
     const [ history, setHistory ] = useState<string[]>([])
     const router = useRouter()
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -22,20 +22,50 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
 
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            const details = {
-                userId: user?._id,
-                search
+            if(search === "") {
+                console.log("No message")
             }
-            await searchData.put('', details, { withCredentials: true })
-            setSearch('');
+            else {
+                const details = {
+                    userId: user?._id,
+                    search
+                }
+                await searchData.put('', details, { withCredentials: true }) //add new search on database
+                if(user){
+                    setuser({
+                        ...user,
+                        SearchData: [...user.SearchData, search]  //add new search on local storage to show
+                    });
+                }
+                setSearch('');
+            }
         }
     };
 
     useEffect(()=> {
         if (user?.SearchData) {
-            setHistory(user.SearchData); //add the function later that will add to the local storage the new search data so it can show without fetching
+            if(user?.SearchData.length > 8) {
+                const search_filter = user?.SearchData.length <= 10 ? user.SearchData : user.SearchData.slice(user.SearchData.length - 10)
+                setHistory(search_filter)
+            }
+            else {
+                setHistory(user.SearchData); //add the function later that will add to the local storage the new search data so it can show without fetching
+            }
         }
     }, [user])
+
+    const defaultHistory = [
+        "Air Jordan 4 Retro 'White Thunder'",
+        "Adidas Samba",
+        "New Balance 9060",
+        "Nike Zoom Vomero 5",
+        "Veja Campo",
+        "Levi's 501 Original Jeans",
+        "Hoka One One Bondi 8",
+        "Carhartt WIP Detroit Jacket",
+        "Patagonia Better Sweater Fleece Jacket",
+        "Zara Satin Slip Dresses",
+    ];
 
     return (
         <>
@@ -84,28 +114,31 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                         </div>
                         {isPopoverOpen && (
                             <Popover.Panel
-                            className="absolute z-10 mt-1 w-full dark:bg-opacity-90 dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white rounded-md shadow-lg text-gray-500"
+                            className="absolute z-10 mt-1 w-full dark:bg-opacity-90 bg-white dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white rounded-md shadow-lg text-gray-500"
                             static
                             >
                                 <div className="flex flex-col p-2">
                                     {user?.Role === 'buyer' ? (
                                         <>
-                                            {history.map((history, index) => (
-                                                <h2 key={index} className={SearchHover}>{history}</h2>
-                                            ))}
+                                            {history.length > 0 ? (
+                                            [...history].reverse().map((history, index) => (
+                                                <h2 key={index} className={SearchHover}>
+                                                    {history}
+                                                </h2>
+                                            ))
+                                            ) : (
+                                                <>
+                                                    {defaultHistory.map((dafault, index)=> (
+                                                        <h2 key={index} className={SearchHover}>{dafault}</h2>
+                                                    ))}
+                                                </>
+                                            )}
                                         </>
                                     ) : (
                                         <>
-                                            <h2 className={SearchHover}>Air Jordan 4 Retro 'White Thunder'</h2>
-                                            <h2 className={SearchHover}>Adidas Samba</h2>
-                                            <h2 className={SearchHover}>New Balance 9060</h2>
-                                            <h2 className={SearchHover}>Nike Zoom Vomero 5</h2>
-                                            <h2 className={SearchHover}>Veja Campo</h2>
-                                            <h2 className={SearchHover}>Levi's 501 Original Jeans</h2>
-                                            <h2 className={SearchHover}>Hoka One One Bondi 8</h2>
-                                            <h2 className={SearchHover}>Carhartt WIP Detroit Jacket</h2>
-                                            <h2 className={SearchHover}>Patagonia Better Sweater Fleece Jacket</h2>
-                                            <h2 className={SearchHover}>Zara Satin Slip Dresses</h2>
+                                            {defaultHistory.map((dafault, index)=> (
+                                                <h2 key={index} className={SearchHover}>{dafault}</h2>
+                                            ))}
                                         </>
                                     )}
                                 </div>
