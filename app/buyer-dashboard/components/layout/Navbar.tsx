@@ -30,7 +30,6 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                     userId: user?._id,
                     search
                 }
-                
                 await searchData.put('', details, { withCredentials: true }) //add new search on database
                 if(user) {
                     setuser({
@@ -39,6 +38,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                     });
                 }
                 setSearch('');
+                router.push('/buyer-dashboard/AllProducts')
             }
         }
     };
