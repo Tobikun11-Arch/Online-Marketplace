@@ -63,15 +63,26 @@ export default function Page() {
 
         useEffect(() => {
             if (ProductResponse) {
-                setProduct(ProductResponse.SellerProducts.filter(product => parseInt(product.productQuantity) > 0).
-                sort((a, b)=> a.productName.localeCompare(b.productName)))
+                console.log("1st useEffect")
+                const updatedProducts = ProductResponse.SellerProducts.filter(
+                    product => parseInt(product.productQuantity) > 0
+                ).sort((a, b) => a.productName.localeCompare(b.productName));
+                setProduct(updatedProducts); // Update the product state
             }
-            if(bestcategory){
-                console.log(bestcategory, " have a value ")
-                setView(false)
-                setHandler(product.filter(item => item.productCategory ===  bestcategory))
+        }, [ProductResponse]);
+        
+        useEffect(() => {
+            if (bestcategory && product.length > 0) {
+                console.log("2nd useEffect")
+                const filteredProducts = product.filter(item => item.productCategory === bestcategory);
+                setHandler(filteredProducts);
+                setView(false);
             }
-        }, [ProductResponse])
+        }, [bestcategory, product]);
+
+        console.log("Handler: ", handler)
+        console.log("Product: ", product)
+        console.log(handler.length > 0 ? 'true' : 'false')
 
         if (isLoading) {
             return (

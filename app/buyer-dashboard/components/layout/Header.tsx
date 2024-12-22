@@ -55,7 +55,7 @@ const Header = () => {
                             </div>
                         )}
                     </div>
-                    <Menu>  
+                    <Menu>
                         <MenuButton>
                         <User className={`${icon}`} strokeWidth={1.4} size={40} onClick={()=> setAuth(!isAuth)}/>
                         </MenuButton>

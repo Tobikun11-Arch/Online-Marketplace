@@ -30,8 +30,9 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                     userId: user?._id,
                     search
                 }
+                
                 await searchData.put('', details, { withCredentials: true }) //add new search on database
-                if(user){
+                if(user) {
                     setuser({
                         ...user,
                         SearchData: [...user.SearchData, search]  //add new search on local storage to show
@@ -143,7 +144,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                                     )}
                                 </div>
                             </Popover.Panel>
-                        )}
+                        )} 
                     </>
                 </Popover>
             </div>
