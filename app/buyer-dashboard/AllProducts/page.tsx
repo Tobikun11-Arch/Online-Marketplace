@@ -37,6 +37,10 @@ const Page = () => {
                 setHandler(filteredProducts);
                 setView(false);
             }   
+            else {
+                setHandler([])
+            }
+            setView(false);
         }, [bestcategory, product]);
 
         useEffect(()=> {
@@ -50,10 +54,11 @@ const Page = () => {
 
         const sortAlphabetically = () => {
             sortAlpha(!sort)
-            const productSorted = [...product].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
-            b.productName.localeCompare(a.productName))
-            const handlerSorted = [...handler].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
-            b.productName.localeCompare(a.productName))
+            const productSorted = product.length > 0 ? [...product].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
+            b.productName.localeCompare(a.productName)) : [];
+
+            const handlerSorted = handler.length > 0 ? [...handler].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
+            b.productName.localeCompare(a.productName)) : [];
             if(handler.length > 0){
                 setHandler(handlerSorted)
             }
@@ -67,11 +72,18 @@ const Page = () => {
         };
 
         const handleCategory = (category: string) => { //make a condition here later that if bestcategory have value it will filter
-            if(category === 'All'){
-                setHandler([])
+            if (!product || product.length === 0) {
+                setHandler([]);
+                return;
             }
+
+            if(category === 'All'){
+                setHandler(product)
+            }
+
             setView(false)
-            setHandler(product.filter(item => item.productCategory ===  category))
+            const handler_filtered = product.filter(item => item.productCategory ===  category)
+            setHandler(handler_filtered.length > 0 ? handler_filtered : [])
         }
 
         return (
@@ -99,7 +111,7 @@ const Page = () => {
                 <div className="px-4 flex flex-col gap-4">
                     <div className='flex gap-2'>
                     </div>
-                    <ProductLists product={handler.length > 0 ? handler : product}/>
+                    <ProductLists product={handler.length > 0 ? handler : product.length > 0 ? product : []}/>
                 </div>
             </div>
         )
