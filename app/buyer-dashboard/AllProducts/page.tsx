@@ -24,7 +24,7 @@ import { useSearch } from '../store/userSearch';
         "Crafts & Hobbies",
     ];
 
-    const ProductList = () => {
+const Page = () => {
         const { setSearch } = useSearch()
         const { bestcategory } = useCategory()
         const { product, handler, setHandler } = useProductData()
@@ -105,4 +105,4 @@ import { useSearch } from '../store/userSearch';
         )
     }
 
-export default ProductList
+export default Page
