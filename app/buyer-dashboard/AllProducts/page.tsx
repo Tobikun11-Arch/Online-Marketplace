@@ -5,6 +5,7 @@ import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
 import { LayoutList, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
 import { useCategory } from '../store/BestCategory'
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useSearch } from '../store/userSearch';
 
     const categories = [
@@ -24,7 +25,16 @@ import { useSearch } from '../store/userSearch';
         "Crafts & Hobbies",
     ];
 
-const Page = () => {
+    const queryClient = new QueryClient()
+    export default function Page() {
+        return (
+            <QueryClientProvider client={queryClient}>
+                <ProductList />
+            </QueryClientProvider>
+        )
+    }
+
+const ProductList = () => {
         const { setSearch } = useSearch()
         const { bestcategory } = useCategory()
         const { product, handler, setHandler } = useProductData()
@@ -117,4 +127,3 @@ const Page = () => {
         )
     }
 
-export default Page
