@@ -5,7 +5,6 @@ import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
 import { LayoutList, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
 import { useCategory } from '../store/BestCategory'
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { useSearch } from '../store/userSearch';
 
     const categories = [
@@ -25,15 +24,6 @@ import { useSearch } from '../store/userSearch';
         "Crafts & Hobbies",
     ];
 
-    const queryClient = new QueryClient()
-    export default function Page() {
-        return (
-            <QueryClientProvider client={queryClient}>
-                <ProductList />
-            </QueryClientProvider>
-        )
-    }
-
 const ProductList = () => {
         const { setSearch } = useSearch()
         const { bestcategory } = useCategory()
@@ -47,10 +37,6 @@ const ProductList = () => {
                 setHandler(filteredProducts);
                 setView(false);
             }   
-            else {
-                setHandler([])
-            }
-            setView(false);
         }, [bestcategory, product]);
 
         useEffect(()=> {
@@ -64,11 +50,10 @@ const ProductList = () => {
 
         const sortAlphabetically = () => {
             sortAlpha(!sort)
-            const productSorted = product.length > 0 ? [...product].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
-            b.productName.localeCompare(a.productName)) : [];
-
-            const handlerSorted = handler.length > 0 ? [...handler].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
-            b.productName.localeCompare(a.productName)) : [];
+            const productSorted = [...product].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
+            b.productName.localeCompare(a.productName))
+            const handlerSorted = [...handler].sort((a, b)=> sort ? a.productName.localeCompare(b.productName) :
+            b.productName.localeCompare(a.productName))
             if(handler.length > 0){
                 setHandler(handlerSorted)
             }
@@ -82,18 +67,11 @@ const ProductList = () => {
         };
 
         const handleCategory = (category: string) => { //make a condition here later that if bestcategory have value it will filter
-            if (!product || product.length === 0) {
-                setHandler([]);
-                return;
-            }
-
             if(category === 'All'){
-                setHandler(product)
+                setHandler([])
             }
-
             setView(false)
-            const handler_filtered = product.filter(item => item.productCategory ===  category)
-            setHandler(handler_filtered.length > 0 ? handler_filtered : [])
+            setHandler(product.filter(item => item.productCategory ===  category))
         }
 
         return (
@@ -121,9 +99,10 @@ const ProductList = () => {
                 <div className="px-4 flex flex-col gap-4">
                     <div className='flex gap-2'>
                     </div>
-                    <ProductLists product={handler.length > 0 ? handler : product.length > 0 ? product : []}/>
+                    <ProductLists product={handler.length > 0 ? handler : product}/>
                 </div>
             </div>
         )
     }
 
+export default ProductList
