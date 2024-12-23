@@ -9,10 +9,18 @@ import { Popover } from '@headlessui/react'
 import { useSearch } from '../../store/userSearch'
 import { useProductData } from '../../store/storeProduct'
 const fuzz = require('fuzzball');
+import { Products } from '../../entities/entities'
+import { AllProducts } from '../../axios/dataStore'
+import { useQuery } from '@tanstack/react-query'
+import { lineSpinner } from 'ldrs'
 
 interface NavbarProps {
     className?: string
     isOpen: boolean
+}
+
+interface ProductResponse {
+    SellerProducts: Products[]
 }
 
 const Navbar = ({ className, isOpen }: NavbarProps) => {
@@ -20,11 +28,44 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
     const { user, setuser } = useUser()
     const [ history, setHistory ] = useState<string[]>([])
     const router = useRouter()
-     const { product, setHandler } = useProductData()
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const { product, setHandler, handler, setProduct } = useProductData()
     const SearchHover = 'text-sm py-1 font-semibold px-2 rounded hover:bg-[#3333]'
 
+    //Fetch the products 
+    const { error, data: ProductResponse } = useQuery<ProductResponse>({
+        queryKey: ['product'],
+        queryFn: async () => {
+            const response = await AllProducts.get(''); //All products fetch from all seller
+            return response.data
+        },  
+    })
+
+    useEffect(() => {
+        if (ProductResponse?.SellerProducts) {
+            const updatedProducts = ProductResponse.SellerProducts.filter(
+                product => parseInt(product.productQuantity) > 0
+            ).sort((a, b) => a.productName.localeCompare(b.productName));
+            setProduct(updatedProducts); // Update the product state
+        }
+    }, [ProductResponse?.SellerProducts, setProduct]);
+
+    useEffect(()=> {
+        if (user?.SearchData) {
+            if(user?.SearchData.length > 8) {
+                const search_filter = user?.SearchData.length <= 10 ? user.SearchData : user.SearchData.slice(user.SearchData.length - 10)
+                setHistory(search_filter)
+            } else {
+                setHistory(user.SearchData); //add the function later that will add to the local storage the new search data so it can show without fetching
+            }
+        }
+    }, [user, handler])
+
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (typeof window !== 'undefined') {
+            lineSpinner.register()
+        }
+
         if (e.key === 'Enter') {
             if(search === "") {
                 console.log("No message")
@@ -41,32 +82,28 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                         SearchData: [...user.SearchData, search]
                     });
                 }
-
                 //return the products that have same value of user search
-                if (search) {
-                    const product_search = product.map(product => ({
-                        product,
-                        search_similarity: fuzz.ratio(product.productName, search), 
-                    }));
+                const product_search = product.map(product => ({
+                    product,
+                    search_similarity: fuzz.ratio(product.productName, search), 
+                }));
 
-                    const filter_average = product_search.filter(item  => item.search_similarity > 70)
-                    setHandler(filter_average.map(item => item.product))
-                    router.push('/buyer-dashboard/AllProducts')
-                }
-            }
+                const filter_average = product_search.filter(item  => item.search_similarity > 70)
+                const product_data = filter_average.map(item => item.product)
+                //send the product data to page tsx of all  products
+                router.push('/buyer-dashboard/AllProducts')
+                setHandler(product_data)
+            }   
         }
     };
 
-    useEffect(()=> {
-        if (user?.SearchData) {
-            if(user?.SearchData.length > 8) {
-                const search_filter = user?.SearchData.length <= 10 ? user.SearchData : user.SearchData.slice(user.SearchData.length - 10)
-                setHistory(search_filter)
-            } else {
-                setHistory(user.SearchData); //add the function later that will add to the local storage the new search data so it can show without fetching
-            }
-        }
-    }, [user])
+    if(error) {
+        return (
+            <div className="flex items-center justify-center h-screen bg-[#171717] dark:bg-[#171717]">
+                <h1 className='text-2xl text-red-800'>Error Fetching</h1>
+            </div>
+        )
+    }
 
     const defaultHistory = [
         "Air Jordan 4 Retro 'White Thunder'",
