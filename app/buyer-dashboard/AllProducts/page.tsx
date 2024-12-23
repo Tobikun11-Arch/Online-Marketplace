@@ -9,6 +9,7 @@ import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
 import { LayoutList, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
 import { useCategory } from '../store/BestCategory'
+import { useSearch } from '../store/userSearch';
 
 const queryClient = new QueryClient()
 export default function Page() {
@@ -41,16 +42,17 @@ export default function Page() {
     ];
 
     const ProductList = () => {
+        const { setSearch } = useSearch()
         const { bestcategory } = useCategory()
-        const { setProduct, product } = useProductData()
-        const [ handler, setHandler ] = useState<Products[] | []>([])
+        const { setProduct, product, handler, setHandler } = useProductData()
         const [ sort, sortAlpha ] = useState<boolean>(false)
         const [ view, setView ] = useState<boolean>(false)
+
         const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
             queryKey: ['product'],
             queryFn: async () => {
                 const response = await AllProducts.get(''); //Main shop
-                const { SellerProducts } = response.data 
+                const { SellerProducts } = response.data
                 return { SellerProducts }
             },
         })
@@ -62,27 +64,31 @@ export default function Page() {
         }, [])
 
         useEffect(() => {
+            console.log(handler)
             if (ProductResponse) {
-                console.log("1st useEffect")
                 const updatedProducts = ProductResponse.SellerProducts.filter(
                     product => parseInt(product.productQuantity) > 0
                 ).sort((a, b) => a.productName.localeCompare(b.productName));
                 setProduct(updatedProducts); // Update the product state
             }
         }, [ProductResponse]);
-        
+
         useEffect(() => {
             if (bestcategory && product.length > 0) {
-                console.log("2nd useEffect")
                 const filteredProducts = product.filter(item => item.productCategory === bestcategory);
                 setHandler(filteredProducts);
                 setView(false);
-            }
+            } 
         }, [bestcategory, product]);
 
-        console.log("Handler: ", handler)
-        console.log("Product: ", product)
-        console.log(handler.length > 0 ? 'true' : 'false')
+        useEffect(()=> {
+            return () => {
+                if (!handler) {
+                    setHandler([]);
+                }
+                setSearch('')
+            }
+        }, [handler])
 
         if (isLoading) {
             return (
@@ -104,6 +110,8 @@ export default function Page() {
                 </div>
             )
         }
+
+        console.log(handler.length > 0 ? 'true' : 'false') //Remove later
 
         const sortAlphabetically = () => {
             sortAlpha(!sort)

@@ -3,7 +3,10 @@ import { Products } from '../entities/entities'
 
 interface productProps {
     product: Products[]
+    handler: Products[]
+
     setProduct: (product: Products[]) => void
+    setHandler: (handler: Products[]) => void
 }
 
 interface productDetails {
@@ -13,7 +16,10 @@ interface productDetails {
 
 export const useProductData = create<productProps>((set)=> ({
     product: [],
-    setProduct: (product: Products[]) => set(()=> ({ product }))
+    handler: [],
+
+    setProduct: (product: Products[]) => set(()=> ({ product })),
+    setHandler: (handler: Products[]) => set(()=> ({ handler }))
 }))
 
 export const useProuctDetails = create<productDetails>((set)=> ({

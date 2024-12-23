@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation'
 import { searchData } from '../../axios/dataStore'
 import { useUser } from '../../store/User'
 import { Popover } from '@headlessui/react'
+import { useSearch } from '../../store/userSearch'
+import { useProductData } from '../../store/storeProduct'
+const fuzz = require('fuzzball');
 
 interface NavbarProps {
     className?: string
@@ -13,10 +16,11 @@ interface NavbarProps {
 }
 
 const Navbar = ({ className, isOpen }: NavbarProps) => {
-    const [ search, setSearch ] = useState('')
+    const { setSearch, search } = useSearch()
     const { user, setuser } = useUser()
     const [ history, setHistory ] = useState<string[]>([])
     const router = useRouter()
+     const { product, setHandler } = useProductData()
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const SearchHover = 'text-sm py-1 font-semibold px-2 rounded hover:bg-[#3333]'
 
@@ -34,11 +38,21 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                 if(user) {
                     setuser({
                         ...user,
-                        SearchData: [...user.SearchData, search]  //add new search on local storage to show
+                        SearchData: [...user.SearchData, search]
                     });
                 }
-                setSearch('');
-                router.push('/buyer-dashboard/AllProducts')
+
+                //return the products that have same value of user search
+                if (search) {
+                    const product_search = product.map(product => ({
+                        product,
+                        search_similarity: fuzz.ratio(product.productName, search), 
+                    }));
+
+                    const filter_average = product_search.filter(item  => item.search_similarity > 70)
+                    setHandler(filter_average.map(item => item.product))
+                    router.push('/buyer-dashboard/AllProducts')
+                }
             }
         }
     };
@@ -48,8 +62,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
             if(user?.SearchData.length > 8) {
                 const search_filter = user?.SearchData.length <= 10 ? user.SearchData : user.SearchData.slice(user.SearchData.length - 10)
                 setHistory(search_filter)
-            }
-            else {
+            } else {
                 setHistory(user.SearchData); //add the function later that will add to the local storage the new search data so it can show without fetching
             }
         }
