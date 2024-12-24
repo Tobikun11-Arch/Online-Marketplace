@@ -1,11 +1,28 @@
 "use client"
 import React, { useEffect, useState } from 'react'
+import { Products } from '../entities/entities'
 import { useProductData } from '../store/storeProduct'
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { AllProducts } from '../../buyer-dashboard/axios/dataStore'
+import { lineSpinner } from 'ldrs'
 import ProductLists from '../components/pages/ProductList';
 import Header from '../components/layout/Header';
 import { LayoutList, ArrowDownAZ, ArrowDownZA  } from "lucide-react";
 import { useCategory } from '../store/BestCategory'
 import { useSearch } from '../store/userSearch';
+
+const queryClient = new QueryClient()
+export default function Page() {
+        return (
+            <QueryClientProvider client={queryClient}>
+                <ProductList />
+            </QueryClientProvider>
+        )
+    }
+
+    interface ProductResponse {
+        SellerProducts: Products[]
+    }
 
     const categories = [
         "All",
@@ -24,19 +41,44 @@ import { useSearch } from '../store/userSearch';
         "Crafts & Hobbies",
     ];
 
-const ProductList = () => {
+    const ProductList = () => {
         const { setSearch } = useSearch()
         const { bestcategory } = useCategory()
-        const { product, handler, setHandler } = useProductData()
+        const { setProduct, product, handler, setHandler } = useProductData()
         const [ sort, sortAlpha ] = useState<boolean>(false)
         const [ view, setView ] = useState<boolean>(false)
+
+        const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
+            queryKey: ['product'],
+            queryFn: async () => {
+                const response = await AllProducts.get(''); //Main shop
+                const { SellerProducts } = response.data
+                return { SellerProducts }
+            },
+        })
+
+        useEffect(() => {
+            if (typeof window !== 'undefined') {
+                lineSpinner.register()
+            }
+        }, [])
+
+        useEffect(() => {
+            console.log(handler)
+            if (ProductResponse) {
+                const updatedProducts = ProductResponse.SellerProducts.filter(
+                    product => parseInt(product.productQuantity) > 0
+                ).sort((a, b) => a.productName.localeCompare(b.productName));
+                setProduct(updatedProducts); // Update the product state
+            }
+        }, [ProductResponse]);
 
         useEffect(() => {
             if (bestcategory && product.length > 0) {
                 const filteredProducts = product.filter(item => item.productCategory === bestcategory);
                 setHandler(filteredProducts);
                 setView(false);
-            }   
+            } 
         }, [bestcategory, product]);
 
         useEffect(()=> {
@@ -47,6 +89,29 @@ const ProductList = () => {
                 setSearch('')
             }
         }, [handler])
+
+        if (isLoading) {
+            return (
+                <div className="flex items-center justify-center min-h-screen bg-[#171717] dark:bg-[#171717]">
+                    <l-line-spinner
+                    size="50"
+                    bg-opacity="0.1"
+                    speed="1.75" 
+                    color="white" 
+                    ></l-line-spinner>
+                </div>
+            )
+        }
+
+        if(error) {
+            return (
+                <div className="flex items-center justify-center h-screen bg-[#171717] dark:bg-[#171717]">
+                    <h1 className='text-2xl text-red-800'>Error Fetching</h1>
+                </div>
+            )
+        }
+
+        console.log(handler.length > 0 ? 'true' : 'false') //Remove later
 
         const sortAlphabetically = () => {
             sortAlpha(!sort)
@@ -104,5 +169,3 @@ const ProductList = () => {
             </div>
         )
     }
-
-export default ProductList
