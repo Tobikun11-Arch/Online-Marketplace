@@ -31,7 +31,6 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
     const router = useRouter()
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const { product, setHandler, handler, setProduct } = useProductData()
-    const [ show, set_show ] = useState(false)
     const SearchHover = 'text-sm py-1 font-semibold px-2 rounded hover:bg-[#3333]'
 
     //Fetch the products 
@@ -54,17 +53,13 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
 
     useEffect(()=> {
         if (user?.SearchData) {
-            if(show) {
-                setHistory(user.SearchData)
-            }
-            else if(user?.SearchData.length > 8) {
+            if(user?.SearchData.length > 8) {
                 const search_filter = user?.SearchData.length <= 10 ? user.SearchData : user.SearchData.slice(user.SearchData.length - 10)
                 setHistory(search_filter)
             } else {
                 setHistory(user.SearchData); //add the function later that will add to the local storage the new search data so it can show without fetching
             }
         }
-        console.log("Logs: ", user?.SearchData) //Test
     }, [user, handler])
 
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -168,12 +163,10 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                         </div>
                         {isPopoverOpen && (
                             <Popover.Panel
-                            className="absolute z-10 mt-1 w-full dark:bg-opacity-90 bg-white dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white rounded-md shadow-lg text-gray-500"
-                            static>
+                            className="absolute z-10 mt-1 w-full dark:bg-opacity-90 bg-white dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black dark:bg-black dark:text-white rounded-md shadow-lg text-gray-500" static>
                                 <div className="flex flex-col p-2">
                                     {user?.Role === 'buyer' ? (
                                         <>
-                                        <h2 className='flex fixed self-end text-sm py-1 font-semibold px-2 underline' onClick={()=> set_show(true)}>Show search history</h2>
                                             {history.length > 0 ? (
                                             [...history].reverse().map((history, index) => (
                                                 <>
