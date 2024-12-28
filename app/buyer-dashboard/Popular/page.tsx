@@ -17,7 +17,7 @@ const Page = () => {
 
     return (
         <div className='min-h-screen bg-white dark:bg-[#171717]'>
-            <Header/>
+            {/* <Header/> */}
             <div className="px-5">
                 <h1 className='text-2xl font-semibold'>Popular Products Today</h1>
                 <p className='mb-3 text-xs text-gray-400'>Discover the most loved products this week.</p>
