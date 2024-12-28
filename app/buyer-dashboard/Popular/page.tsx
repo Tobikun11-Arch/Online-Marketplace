@@ -7,8 +7,10 @@ import ProductLists from '../components/pages/ProductList';
 const Page = () => {
     const { product } = useProductData()
     useEffect(() => {
-        console.log(product)
-    },[])
+        if(product) {
+            console.log("checking")
+        }
+    }, [product])
 
     //:Products in database must have sold and connected to buyer if there a buy method na
     // Set the product data in popular page to filter the value products sold in Products kung sino mas marami nasold naproducts
