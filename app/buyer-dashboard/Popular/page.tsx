@@ -1,11 +1,14 @@
-"use server"
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import Header from '../components/layout/Header'
 import { useProductData } from '../store/storeProduct'
 import ProductLists from '../components/pages/ProductList';
 
 const Page = () => {
     const { product } = useProductData()
+    useEffect(() => {
+        console.log(product)
+    },[])
 
     //:Products in database must have sold and connected to buyer if there a buy method na
     // Set the product data in popular page to filter the value products sold in Products kung sino mas marami nasold naproducts
