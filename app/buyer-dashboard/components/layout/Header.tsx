@@ -15,7 +15,7 @@ import { useUserForms } from '../../store/User'
 import EditProfileForm from '../../user/EditProfileForm'
 
 const Header = () => {
-    const { setToggle, isCart, isToggle, setCart, setAuth, isAuth,  } = useToggle()
+    const { setToggle, isCart, isToggle, setCart, setAuth, isAuth } = useToggle()
     const icon = 'p-2.5 border rounded-lg'
     const { CartLength } = useUserCart()
     const { user } = useUser()
@@ -81,5 +81,6 @@ const Header = () => {
         </>
     )
 }
+
 
 export default Header
