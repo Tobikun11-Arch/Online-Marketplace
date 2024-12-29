@@ -9,11 +9,12 @@ import { useUser } from '../../store/User'
 import { Popover } from '@headlessui/react'
 import { useSearch } from '../../store/userSearch'
 import { useProductData } from '../../store/storeProduct'
-const fuzz = require('fuzzball');
+import { X } from 'lucide-react';
 import { Products } from '../../entities/entities'
 import { AllProducts } from '../../axios/dataStore'
 import { useQuery } from '@tanstack/react-query'
 import { lineSpinner } from 'ldrs'
+const fuzz = require('fuzzball');
 
 interface NavbarProps {
     className?: string
@@ -68,7 +69,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
         }
         if (e.key === 'Enter') {
             if(search === "") {
-                console.log("No message")
+                console.log("No data search")
             }
             else {
                 const details = {
@@ -85,7 +86,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                 //return the products that have same value of user search
                 const product_search = product.map(product => ({
                     product,
-                    search_similarity: fuzz.ratio(product.productName, search), 
+                    search_similarity: fuzz.ratio(product.productName, search),
                 }));
                 const filter_average = product_search.filter(item  => item.search_similarity > 70)
                 const product_data = filter_average.map(item => item.product)
@@ -115,6 +116,33 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
         "Patagonia Better Sweater Fleece Jacket",
         "Zara Satin Slip Dresses",
     ];
+
+    const handleRecentHistory = (searchItem: string) => {
+        const product_search = product.map(product => ({
+            product,
+            search_similarity: fuzz.ratio(product.productName, searchItem), 
+        }));
+        const filter_average = product_search.filter(item  => item.search_similarity > 70)
+        const product_data = filter_average.map(item => item.product)
+        router.push('/buyer-dashboard/AllProducts')
+        setHandler(product_data)
+    }
+
+    const handleDeleteHistory = async(deleteItem: string) => {
+        if(user) {
+            const updatedHistory = user.SearchData.filter(item => item !== deleteItem)
+            setuser({
+                ...user,
+                SearchData: updatedHistory
+            }) 
+            const details = {
+                userId: user._id,
+                deleteItem
+            }
+            await searchData.put('', details, { withCredentials: true })
+        }
+        console.log(user)
+    }
 
     return (
         <>
@@ -170,9 +198,12 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                                             {history.length > 0 ? (
                                             [...history].reverse().map((history, index) => (
                                                 <>
-                                                    <h2 key={index} className={SearchHover}>
+                                                    <div className={`flex justify-between items-center ${SearchHover}`}>
+                                                    <h2 key={index} onClick={()=> handleRecentHistory(history)} className='w-4/5'>
                                                         {history}
                                                     </h2>
+                                                    <X size={15} className='hover:bg-white hover:rounded-full hover:text-black' onClick={()=> handleDeleteHistory(history)}/>
+                                                    </div>
                                                 </>
                                             ))
                                             ) : (
