@@ -8,6 +8,7 @@ interface products {
 }
 
 const ProductCard = ({ product }: products) => {
+
     return (
         <>
             {product.map((prodTest, index) => (
