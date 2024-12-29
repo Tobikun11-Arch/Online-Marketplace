@@ -184,7 +184,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                             placeholder="Search for products..."
                             />
                             <div className={`absolute inset-y-0 right-3 flex items-center ${isOpen ? 'hidden' : 'absolute'}`}>
-                                <Search strokeWidth={2} color="white" size={15}/>
+                                <Search strokeWidth={2} className='text-black dark:text-white' size={15}/>
                             </div>
                         </div>
                         {isPopoverOpen && (
