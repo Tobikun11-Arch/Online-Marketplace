@@ -72,18 +72,17 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                 console.log("No data search")
             }
             else {
-                const details = {
-                    userId: user?._id,
-                    search
-                }
-                await searchData.put('', details, { withCredentials: true }) //add new search on database
                 if(user) {
+                    const details = {
+                        userId: user?._id,
+                        search
+                    }
+                    await searchData.put('', details, { withCredentials: true }) //add new search on database
                     setuser({
                         ...user,
                         SearchData: [...user.SearchData, search]
                     });
-                }
-                //return the products that have same value of user search
+                }   
                 const product_search = product.map(product => ({
                     product,
                     search_similarity: fuzz.ratio(product.productName, search),
@@ -141,7 +140,6 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
             }
             await searchData.put('', details, { withCredentials: true })
         }
-        console.log(user)
     }
 
     return (
@@ -179,14 +177,14 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                             type="search"
                             value={search}
                             onFocus={() => setIsPopoverOpen(true)}
-                            onBlur={() => setTimeout(() => setIsPopoverOpen(false), 10)}
+                            onBlur={() => setTimeout(() => setIsPopoverOpen(false), 100)}
                             onKeyDown={handleKeyDown}
                             onChange={(e) => setSearch(e.target.value)}
                             className="bg-transparent border w-full rounded-md h-10 text-sm pl-2 pr-7 text-gray-800 dark:text-white outline-none"
                             placeholder="Search for products..."
                             />
                             <div className={`absolute inset-y-0 right-3 flex items-center ${isOpen ? 'hidden' : 'absolute'}`}>
-                                <Search strokeWidth={1.4} color="gray" size={15} />
+                                <Search strokeWidth={2} color="white" size={15}/>
                             </div>
                         </div>
                         {isPopoverOpen && (
