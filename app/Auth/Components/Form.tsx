@@ -8,7 +8,7 @@
     import { userLog } from '../../SellerDashboard/axios/axios'
     import { useRouter } from 'next/navigation'
     import { leapfrog } from 'ldrs'
-    import { useDetails } from '../../userData/UserData'
+
 
 const Form = () => {
         const { isForm, setForm, Email, setEmail, Password, setPassword } = useForm()

@@ -89,3 +89,11 @@ export const searchData = axios.create({
     },
 })
 searchData.defaults.withCredentials = true;
+
+export const StripePayment = axios.create({
+    baseURL: 'http://localhost:5000/api/users/StripePayment',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+StripePayment.defaults.withCredentials = true;
