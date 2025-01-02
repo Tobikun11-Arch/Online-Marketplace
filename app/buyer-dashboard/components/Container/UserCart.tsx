@@ -86,18 +86,22 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
         return ServerPrice! + LocalPrice
     }, [Cart, localCart, newQuantity])
 
+    const LocalCart = localCart.filter(
+        (localItem)=> !Cart?.user.cart.some((cartItem)=> cartItem.productId as any === localItem.productId)
+    )
     useEffect(()=> {
         setPrice(totalPrice) 
         const UniqueCart = localCart.filter(
             (localItem)=> !Cart?.user.cart.some((cartItem)=> cartItem.productId as any === localItem.productId)
         ) //Include the localCart productId that doesnt exist on Cart.user or from fetch
         setCartLength(Cart?.user.cart.length!  + UniqueCart.length)
+        console.log("Logs: ", LocalCart)
     }, [totalPrice])
 
     const handleCheckout = async () => {
         setCheckout(true)
         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPEAPI!)
-        const response = await StripePayment.post('', {products: Cart?.user.cart, userId: user?._id}, {withCredentials: true})
+        const response = await StripePayment.post('', {products: Cart?.user.cart ? Cart?.user.cart : LocalCart, userId: user?._id}, {withCredentials: true})
         stripe!.redirectToCheckout({
             sessionId: response.data.id
         })
@@ -157,7 +161,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                     }).map((local, index) => (
                         <>
                     <div key={index} className='flex gap-3 mt-4'> 
-                        <div className='relative w-24 h-24 flex flex-col cursor-default justify-center items-center md:mb-0 bg-white dark:bg-[#333333] rounded-lg border border-[#333333]'>
+                        <div className='relative w-24 h-24 flex flex-col cursor-default justify-center items-center md:mb-0 bg-white dark:bg-[#a79e9e] rounded-lg border border-[#333333]'>
                                 <Image
                                     fill
                                     src={local.images[0]}

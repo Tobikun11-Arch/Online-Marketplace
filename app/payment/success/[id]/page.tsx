@@ -18,10 +18,10 @@ const Page = () => {
                 userId,
                 cartProducts: allProducts
             }
-            console.log(product.cartProducts)
-            console.log(product.userId)
             const response = await Orders.put('', product, {withCredentials: true})
-            console.log(response.data)
+            if(response.data.message === "Update success") {
+                router.push('/')
+            }
         }
     }
 
