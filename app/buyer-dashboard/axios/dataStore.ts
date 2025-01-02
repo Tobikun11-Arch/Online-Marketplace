@@ -97,3 +97,11 @@ export const StripePayment = axios.create({
     },
 })
 StripePayment.defaults.withCredentials = true;
+
+export const Orders = axios.create({
+    baseURL: 'http://localhost:5000/api/users/Orders',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+Orders.defaults.withCredentials = true;

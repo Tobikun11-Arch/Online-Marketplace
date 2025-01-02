@@ -121,7 +121,7 @@ const Page = () => {
                         <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-[#171717] lg:py-10 py-5'>
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
                             <div className='flex gap-2'>
-                                <h2 className='inline-block text-black font-semibold dark:text-white'>₱{product.productPrice}</h2>
+                                <h2 className='inline-block text-black font-semibold dark:text-white'>${product.productPrice}</h2>
                                 <h2 className='inline-block text-black font-semibold dark:text-white'>Stock: {parseInt(product.productQuantity) > 0 ? product.productQuantity : 'Out of stock'}</h2>
                             </div>
                             <h1 className='mt-3 font-bold'>Product size</h1>
@@ -132,7 +132,7 @@ const Page = () => {
                             </div>
                             <h1 className='mt-3 font-semibold'>Product description:</h1>
                             <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
-                            <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ₱{OrigPrice}</p>
+                            <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ${OrigPrice}</p>
                             <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2 mt-3">
                                 <button className='w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-[#171717]'>Buy</button> 
                                 <button className='w-full rounded-lg py-3 dark:text-white text-black border border-[#333333] bg-transparent min-h-[48px]' onClick={()=> handleCart(product)}>{addCart ? (

@@ -128,11 +128,10 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                                     />
                                 <X className='absolute -top-3 -left-2 flex items-center pr-3 font-bold' size={30} onClick={()=> deleteProducts(cartItem.productId as any)}/>
                                 </div>
-        
                                 <div className="w-full flex justify-between">
                                     <div className='flex flex-col'>
                                         <h1 className='font-semibold'>{cartItem.productName}</h1>
-                                        <h1>₱{cartItem.price}</h1>
+                                        <h1>${cartItem.price}</h1>
                                     </div>
                                     <div className='flex items-end'>
                                         <div className='flex gap-2 border border-[#333333] rounded-xl py-1 px-4 items-center'>
@@ -169,11 +168,10 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                                 />
                             <X className='absolute -top-3 -left-2 flex items-center pr-3 font-bold' size={30} onClick={()=> deleteProducts(local.productId as any)}/>
                         </div>
-    
                         <div className="w-full flex justify-between">
                             <div className='flex flex-col'>
                                 <h1 className='font-semibold'>{local.productName}</h1>
-                                <h1>₱{local.productPrice}</h1>
+                                <h1>${local.productPrice}</h1>
                             </div>   
                             <div className='flex items-end'>
                                 <div className='flex gap-2 border border-[#333333] rounded-xl py-1 px-4 items-center'>
@@ -190,7 +188,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
             <div className='flex flex-col gap-1 mt-5'>
                 <div className="flex justify-between">
                     <h3>Total</h3>
-                    <h3>₱{user ? `${price}` : '0'}</h3>
+                    <h3>${user ? `${price}` : '0'}</h3>
                 </div>
                 <hr color='gray' className='mb-3'/>
                 <button
@@ -204,7 +202,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                                 stroke-length="0.25"
                                 bg-opacity="0.1"
                                 speed="0.5" 
-                                color="black">
+                                color="blue">
                             </l-ring-2>
                         </div>
                     ): 'Checkout'}

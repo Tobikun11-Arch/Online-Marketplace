@@ -33,7 +33,7 @@ const AllproductCard = () => {
                             </div>
                         <div className='absolute bottom-0 rounded-b-lg font-semibold text-white bg-[#4CAF50] dark:bg-[#2E2E2E] w-full flex flex-col pr-3 pl-3 py-3 mt-4'>
                             <h1>{datas.productName}</h1>
-                            <h1 className='text-white'>₱{datas.productPrice}</h1>
+                            <h1 className='text-white'>${datas.productPrice}</h1>
                             <Link href={`/buyer-dashboard/product/${datas._id}`} passHref>
                                 <button className='bg-white mt-3 py-2 rounded-lg w-full text-black'>Buy</button>
                             </Link>

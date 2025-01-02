@@ -2,22 +2,27 @@
 import React, { useEffect } from 'react'
 import Image from 'next/image'
 import { Check } from 'lucide-react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { Orders } from '../../../buyer-dashboard/axios/dataStore';
 
-    const Page = () => {
+const Page = () => {
     const router = useRouter();
-    const { id } = useParams()
+    const params = useParams()
+    const userId = params.id
     const search_params = useSearchParams()
 
-    useEffect(()=> {
+    const handleOrders = async() => {
         const allProducts = JSON.parse(decodeURIComponent(search_params.get('ids') || '[]'))
-        console.log("First Product: ", id)
-        console.log("All: ", allProducts)
-    }, [])
- 
-    const handleremove = () => {
-        // console.log('Product id removed: ', productId)
-        // router.push('/')
+        if(allProducts) {
+            const product = {
+                userId,
+                cartProducts: allProducts
+            }
+            console.log(product.cartProducts)
+            console.log(product.userId)
+            const response = await Orders.put('', product, {withCredentials: true})
+            console.log(response.data)
+        }
     }
 
     return (
@@ -44,8 +49,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
                 </div>
                 <h3 className='text-black'>Payment Done Successfully</h3>
             </div>
-
-            <button className='bg-[#38E08B] mt-10 py-2 px-4 text-xs font-semibold' onClick={handleremove}>Take me to my Profile</button>
+            <button className='bg-[#38E08B] mt-10 py-2 px-4 text-xs font-semibold' onClick={handleOrders}>Take me to my Profile</button>
         </div>
     )
 }
