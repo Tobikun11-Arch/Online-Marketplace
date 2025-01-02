@@ -64,7 +64,6 @@ export default function Page() {
         }, [])
 
         useEffect(() => {
-            console.log(handler)
             if (ProductResponse) {
                 const updatedProducts = ProductResponse.SellerProducts.filter(
                     product => parseInt(product.productQuantity) > 0
@@ -111,7 +110,6 @@ export default function Page() {
             )
         }
 
-        console.log(handler.length > 0 ? 'true' : 'false') //Remove later
 
         const sortAlphabetically = () => {
             sortAlpha(!sort)

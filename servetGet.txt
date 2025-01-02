@@ -49,7 +49,6 @@ type Account = Users[];
       const data = await response.json()
       setdata(data as Account)
 
-      console.log("this is data: ", data)
 
       }
 

@@ -105,3 +105,11 @@ export const Orders = axios.create({
     },
 })
 Orders.defaults.withCredentials = true;
+
+export const getOrderHistory = axios.create({
+    baseURL: 'http://localhost:5000/api/users/',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+getOrderHistory.defaults.withCredentials = true;

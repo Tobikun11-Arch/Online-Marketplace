@@ -102,7 +102,6 @@ const Page = () => {
         }
     }
 
-    console.log("Product information: ", products)
 
     const OrigPrice = products.map((product)=> {
         return parseInt(product.productPrice) + parseInt(product.productDiscount)

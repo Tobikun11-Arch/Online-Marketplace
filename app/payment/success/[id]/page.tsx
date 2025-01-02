@@ -49,7 +49,7 @@ const Page = () => {
                 </div>
                 <h3 className='text-black'>Payment Done Successfully</h3>
             </div>
-            <button className='bg-[#38E08B] mt-10 py-2 px-4 text-xs font-semibold' onClick={handleOrders}>Take me to my Profile</button>
+            <button className='bg-[#38E08B] text-white mt-10 py-2 px-4 text-xs font-semibold' onClick={handleOrders}>Take me to my Profile</button>
         </div>
     )
 }
