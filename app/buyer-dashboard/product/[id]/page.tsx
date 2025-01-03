@@ -107,8 +107,8 @@ const Page = () => {
     }
 
     const handle_DirectBuy = async(products: Products[]) => {
-        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPEAPI!)
         setBuy(true)
+        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPEAPI!)
         try {
             const response = await StripePayment.post('', {products, userId: user?._id}, {withCredentials: true})
             stripe!.redirectToCheckout({
