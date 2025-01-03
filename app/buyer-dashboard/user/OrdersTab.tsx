@@ -22,12 +22,12 @@ const OrdersTab = () => {
     })
 
     return (
-        <div className='overflow-y-scroll w-full pr-2'>
+        <div className='overflow-y-auto w-full pr-2'>
             <h1 className='text-xl font-bold'>Order History</h1>
             {data && data.Order_Items.length > 1 ? (
                 <>
                     {data.Order_Items.map((item, index) => (
-                        <div key={index} className='flex items-center text-sm justify-between border-gray-300 py-2'>
+                        <div key={index} className='flex items-start text-sm justify-between border-gray-300 py-2'>
                             <div className='flex gap-3'>
                                 <div className='w-20 h-20 bg-gray-400 relative rounded-md'>
                                     <Image
@@ -39,11 +39,11 @@ const OrdersTab = () => {
                                 </div>
                                 <div className='Porduct main details'>
                                     <h1 className='text-gray-800 dark:text-white font-semibold text-base'>{item.productName}</h1>
-                                    <h1 className='text-xs text-gray-400'>{item.productId.toString()}</h1>
+                                    <h1 className='text-xs text-gray-400'>{item.productId?.toString()}</h1>
                                 </div>
                             </div>
                             <div className='Minor details text-end'>
-                                <h1 className='font-semibold'>${item.price}</h1>
+                                {item.quantity > 1 ? <h1 className='font-semibold'>${item.price * item.quantity}</h1> : <h1 className='font-semibold'>${item.price}</h1>}
                                 <h2 className='text-gray-400 text-sm'>Qty: {item.quantity}</h2>
                             </div>
                         </div>

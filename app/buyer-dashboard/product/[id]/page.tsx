@@ -13,6 +13,8 @@ import { useUser } from '../../store/User'
 import { useProductCart } from '../../store/productCart'
 import { useToast } from "../../../../@/hooks/use-toast"
 import { useToggle } from '../../store/useToggle'
+import { loadStripe } from '@stripe/stripe-js';
+import { StripePayment } from '../../axios/dataStore'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
@@ -102,6 +104,20 @@ const Page = () => {
         }
     }
 
+    const handle_DirectBuy = async(products: Products[]) => {
+        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPEAPI!)
+        try {
+            const response = await StripePayment.post('', {products, userId: user?._id}, {withCredentials: true})
+            stripe!.redirectToCheckout({
+                sessionId: response.data.id
+            })
+            console.log(response.data)
+            console.log("Products: ", products)
+        } catch (error) {
+            console.error("Failed to fetch: ", error)
+        }
+    }
+
 
     const OrigPrice = products.map((product)=> {
         return parseInt(product.productPrice) + parseInt(product.productDiscount)
@@ -116,7 +132,6 @@ const Page = () => {
                         <div className='w-full lg:w-3/5 Image-layout p-2'>
                             <IdImages products={products}/>
                         </div>
-
                         <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-[#171717] lg:py-10 py-5'>
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
                             <div className='flex gap-2'>
@@ -133,16 +148,16 @@ const Page = () => {
                             <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
                             <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ${OrigPrice}</p>
                             <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2 mt-3">
-                                <button className='w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-[#171717]'>Buy</button> 
+                                <button className='w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-[#171717]' onClick={()=> handle_DirectBuy(products)}>Buy</button> {/**add functionalities here for direct buy in stripe */}
                                 <button className='w-full rounded-lg py-3 dark:text-white text-black border border-[#333333] bg-transparent min-h-[48px]' onClick={()=> handleCart(product)}>{addCart ? (
                                     <div className='flex items-center justify-center'>
                                         <p>Adding</p>
                                         <l-ripples
                                         size="25"
                                         bg-opacity="0.1"
-                                        speed="1.75" 
-                                        color="blue" 
-                                        ></l-ripples>
+                                        speed="1.75"
+                                        color="blue">
+                                        </l-ripples>
                                     </div>
                                 ) : 'Add to cart'}</button>  
                             </div>

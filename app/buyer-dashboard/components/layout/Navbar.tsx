@@ -87,7 +87,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                     product,
                     search_similarity: fuzz.ratio(product.productName, search),
                 }));
-                const filter_average = product_search.filter(item  => item.search_similarity > 70)
+                const filter_average = product_search.filter(item  => item.search_similarity > 50)
                 const product_data = filter_average.map(item => item.product)
                 router.push('/buyer-dashboard/AllProducts')
                 setHandler(product_data)
