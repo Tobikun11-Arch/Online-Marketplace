@@ -1,9 +1,11 @@
 "use client"
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getOrderHistory } from '../axios/dataStore'
 import { useUser } from '../store/User'
 import { Order_History } from '../Interface/OrderItems'
+import Image from 'next/image'
+
 
 const getHistory = async (user: any) => {
     const response = await getOrderHistory.get('getOrderHistory', {
@@ -25,22 +27,31 @@ const OrdersTab = () => {
             {data && data.Order_Items.length > 1 ? (
                 <>
                     {data.Order_Items.map((item, index) => (
-                        <div key={index} className='flex items-center text-sm justify-between border-b-2 border-gray-300 py-2'>
-                            <div>
-                                <h2>{item.productName}</h2>
-                                <p>Quantity: {item.quantity}</p>
-                                <div className='flex gap-3'>
-                                    <p>Price: {item.price}</p>
-                                    {item.quantity > 1 && <p>Total: {item.price * item.quantity}</p>}
+                        <div key={index} className='flex items-center text-sm justify-between border-gray-300 py-2'>
+                            <div className='flex gap-3'>
+                                <div className='w-20 h-20 bg-gray-400 relative rounded-md'>
+                                    <Image
+                                    fill
+                                    alt='product history img'
+                                    src={item.images[0]}
+                                    className='object-contain object-center p-2'
+                                    />
+                                </div>
+                                <div className='Porduct main details'>
+                                    <h1 className='text-gray-800 dark:text-white font-semibold text-base'>{item.productName}</h1>
+                                    <h1 className='text-xs text-gray-400'>{item.productId.toString()}</h1>
                                 </div>
                             </div>
-                            <img src={item.images[0]} alt={item.productName} className='w-20 h-20 object-cover'/>
+                            <div className='Minor details text-end'>
+                                <h1 className='font-semibold'>${item.price}</h1>
+                                <h2 className='text-gray-400 text-sm'>Qty: {item.quantity}</h2>
+                            </div>
                         </div>
                     ))}
                 </>
             ) : (
                 <>
-                    <h2 className='text-white'>Start shopping now!</h2>
+                    <h2 className='text-black dark:text-white'>Start shopping now!</h2>
                 </>
             )}
         </div>

@@ -3,7 +3,7 @@ import { useTheme } from 'next-themes'
 
 const AppearanceTab = () => {
     const { setTheme, theme } = useTheme()
-    const [ selectedTheme, setSelected ] = useState<string>(theme || 'dark')
+    const [ selectedTheme, setSelected ] = useState<string>('white')
 
     const handleTheme = (theme: string) => {
         setTheme(theme)
