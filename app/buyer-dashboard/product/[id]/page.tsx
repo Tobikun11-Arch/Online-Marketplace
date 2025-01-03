@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
-import { lineSpinner, ripples } from 'ldrs'
+import { lineSpinner, ripples, ring2 } from 'ldrs'
 import { Products } from '../../entities/entities'
 import { productId, useCart } from '../../axios/dataStore'
 import Header from '../../components/layout/Header'
@@ -29,6 +29,7 @@ const addtoCartRequest = async(payload: AddToCartPayload) => {
 
 const Page = () => {
     const { setAuth } = useToggle()
+    const [ isBuy, setBuy ] = useState<boolean>(false)  
     const { id } = useParams()
     const [ products, setProducts ] = useState<Products[] | []>([])
     const [ SimilarProduct, setSimilar ] = useState<Products[] | []>([])
@@ -46,6 +47,7 @@ const Page = () => {
         if (typeof window !== 'undefined') {
             lineSpinner.register()
             ripples.register()
+            ring2.register()
         }
     }, [])
 
@@ -106,18 +108,17 @@ const Page = () => {
 
     const handle_DirectBuy = async(products: Products[]) => {
         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPEAPI!)
+        setBuy(true)
         try {
             const response = await StripePayment.post('', {products, userId: user?._id}, {withCredentials: true})
             stripe!.redirectToCheckout({
                 sessionId: response.data.id
             })
-            console.log(response.data)
-            console.log("Products: ", products)
+            setBuy(false)
         } catch (error) {
             console.error("Failed to fetch: ", error)
         }
     }
-
 
     const OrigPrice = products.map((product)=> {
         return parseInt(product.productPrice) + parseInt(product.productDiscount)
@@ -148,7 +149,21 @@ const Page = () => {
                             <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
                             <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ${OrigPrice}</p>
                             <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2 mt-3">
-                                <button className='w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-[#171717]' onClick={()=> handle_DirectBuy(products)}>Buy</button> {/**add functionalities here for direct buy in stripe */}
+                                <button className='w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-[#171717]' onClick={()=> handle_DirectBuy(products)}>
+                                {isBuy ? (
+                                    <div className='flex gap-1 items-center justify-center'>
+                                        <p>Processing</p>
+                                        <l-ring-2
+                                            size="15"
+                                            stroke="5"
+                                            stroke-length="0.25"
+                                            bg-opacity="0.1"
+                                            speed="0.5" 
+                                            color="blue">
+                                        </l-ring-2>
+                                    </div>
+                                ): 'Buy'}
+                                </button>
                                 <button className='w-full rounded-lg py-3 dark:text-white text-black border border-[#333333] bg-transparent min-h-[48px]' onClick={()=> handleCart(product)}>{addCart ? (
                                     <div className='flex items-center justify-center'>
                                         <p>Adding</p>
