@@ -35,8 +35,8 @@ const Form = () => {
             const SignUpAction = async()=> {
                 const session = await RegisterAuth()  
                 if(!session) { console.log("No Registration working") }
-                const userRole = localStorage.getItem('Role')
                 if(session) {
+                    const userRole = localStorage.getItem('Role')
                     const usernameParts = session.email?.split('@') || []
                     const developer = "TobiNejiKai" 
                     const fullName = session.name?.split(" ") || []
@@ -96,10 +96,10 @@ const Form = () => {
             }
 
             const SignInAction = async() => {
-                setLoading(true)
                 const session = await LoginAuth()
                 if(!session) { console.log("No Login working") }
-                else {
+                if(session) {
+                    setLoading(true)
                     try {
                         const usernameParts = session.email?.split('@') || []
                         const userDetails = {

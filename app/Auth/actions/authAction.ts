@@ -17,4 +17,4 @@ export async function RegisterAuth() {
 export async function LoginAuth() {
     const session = await auth()
     return session?.user
-}
+}   
