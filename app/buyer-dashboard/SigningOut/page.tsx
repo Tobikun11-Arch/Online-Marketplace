@@ -23,12 +23,12 @@ const Page = () => {
     }, [router]);
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-[#171717] dark:bg-[#171717]">
+        <div className="flex items-center justify-center min-h-screen bg-white dark:bg-[#171717]">
             <l-line-spinner
-            size="50"
+            size="30"
             bg-opacity="0.1"
             speed="1.75" 
-            color="white" 
+            color="blue" 
             ></l-line-spinner>
         </div>
     )

@@ -8,11 +8,13 @@
     import { userLog } from '../../SellerDashboard/axios/axios'
     import { useRouter } from 'next/navigation'
     import { leapfrog } from 'ldrs'
-
+    import { RegisterAuth, LoginAuth } from '../actions/authAction'
+    import adjectives from './ui/adjectives'
+    import { newRegister } from '../../SellerDashboard/axios/axios'
 
 const Form = () => {
         const { isForm, setForm, Email, setEmail, Password, setPassword } = useForm()
-        const { isPasswordVisible, emailSent, sentMail } = useNewUser()
+        const { isPasswordVisible, emailSent, sentMail, PhoneNumber, setRole, Role, PetName, setUsername, setExistedEmail, joinSeller } = useNewUser()
         const [ Error , seterror ] = useState<boolean>(false)
         const [ loading, setLoading ] = useState<boolean>(false)
         const [ messageLogin, setmessageLogin ] = useState<boolean>(false)
@@ -29,6 +31,111 @@ const Form = () => {
             }
         }, []);
 
+        useEffect(()=> {
+            const SignUpAction = async()=> {
+                const session = await RegisterAuth()  
+                if(!session) { console.log("No Registration working") }
+                const userRole = localStorage.getItem('Role')
+                if(session) {
+                    const usernameParts = session.email?.split('@') || []
+                    const developer = "TobiNejiKai" 
+                    const fullName = session.name?.split(" ") || []
+                    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+                    const noun = developer[Math.floor(Math.random() * developer.length)];
+                    const number = Math.floor(Math.random() * 1000);    
+                    const generatedUsername = `${adjective}${noun}${number}`; //set a random username
+                    setUsername(generatedUsername);   
+                    {joinSeller ? setRole('seller') : setRole('buyer')}
+                    try {
+                        setLoading(true)
+                        const userDetails = {
+                            FirstName: fullName[0], LastName: fullName[1], PhoneNumber, PetName, Email: session.email, Password: usernameParts[0], Role: userRole, Username: generatedUsername
+                        }
+                        const response = await newRegister.post('', userDetails)
+                        console.log(response)
+                        if(response.status === 201) {   
+                            try {
+                                const userDetails = {
+                                    Email: session.email, 
+                                    Password: usernameParts[0] 
+                                }
+                                const response =  await userLog.post('', userDetails, {withCredentials: true})
+                                setLoading(false)
+                                if (response.data.message === 'Login successful') {
+                                    const { user } = response.data;
+                                    localStorage.setItem('user', JSON.stringify(user))
+                                    if (userRole === 'buyer') {
+                                        router.push('/');
+                                        setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
+                                    } else {
+                                        localStorage.removeItem('activeItem')
+                                        router.push('/SellerDashboard/Home');
+                                        setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
+                                    }
+                                } else {
+                                    console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
+                                }
+                            } catch (error) {
+                                seterror(true)
+                                setmessageLogin(true)
+                                setLoading(false);
+                                console.log('Error: ', error)
+                            }
+                        }
+                    } catch (error: any) {
+                        console.error(error)
+                        setLoading(false)
+                        if (error.response) {
+                            setExistedEmail('Email is already registered'); // Handle client-side error (bad request)
+                        } 
+                        else {
+                            setExistedEmail('An error occurred, please try again.'); // Handle other errors
+                        }
+                    }
+                }
+            }
+
+            const SignInAction = async() => {
+                setLoading(true)
+                const session = await LoginAuth()
+                if(!session) { console.log("No Login working") }
+                else {
+                    try {
+                        const usernameParts = session.email?.split('@') || []
+                        const userDetails = {
+                            Email: session.email, 
+                            Password: usernameParts[0] 
+                        }
+                        const response =  await userLog.post('', userDetails, {withCredentials: true})
+                        setLoading(false)
+                        if (response.data.message === 'Login successful') {
+                            const { user } = response.data;
+                            localStorage.setItem('user', JSON.stringify(user))
+                            if (user.Role === 'buyer') {
+                                router.push('/');
+                                setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
+                            } else {
+                                localStorage.removeItem('activeItem')
+                                router.push('/SellerDashboard/Home');
+                                setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
+                            }
+                        } else {
+                            console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
+                        }
+                    } catch (error) {
+                        seterror(true)
+                        setmessageLogin(true)
+                        setLoading(false);
+                        console.log('Error: ', error)
+                    }
+                }
+            }
+
+            //Run the function
+            SignInAction()
+            SignUpAction()
+        }, [joinSeller, PhoneNumber, PetName, Role])
+
         const handleSubmit = async () => {
             if(!Email || !Password) {
                 seterror(true)
@@ -37,34 +144,34 @@ const Form = () => {
             seterror(false)
             setLoading(true)
 
-                try {
-                    const userDetails = { Email, Password }
-                    const response =  await userLog.post('', userDetails, {withCredentials: true})
-                    setLoading(false)
+            try {
+                const userDetails = { Email, Password }
+                const response =  await userLog.post('', userDetails, {withCredentials: true})
+                setLoading(false)
 
-                    if (response.data.message === 'Login successful') {
-                        const { user } = response.data;
-                        localStorage.setItem('user', JSON.stringify(user))
-                        if (user.Role === 'buyer') {
-                            router.push('/');
-                            setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
-                        } else {
-                            localStorage.removeItem('activeItem')
-                            router.push('/SellerDashboard/Home');
-                            setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
-                        }
+                if (response.data.message === 'Login successful') {
+                    const { user } = response.data;
+                    localStorage.setItem('user', JSON.stringify(user))
+                    if (user.Role === 'buyer') {
+                        router.push('/');
+                        setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                     } else {
-                        console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
+                        localStorage.removeItem('activeItem')
+                        router.push('/SellerDashboard/Home');
+                        setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                     }
-                } 
-
-                catch (error) {
-                    seterror(true)
-                    setmessageLogin(true)
-                    setLoading(false);
-                    console.log('Error: ', error)
+                } else {
+                    console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
                 }
+            } 
+
+            catch (error) {
+                seterror(true)
+                setmessageLogin(true)
+                setLoading(false);
+                console.log('Error: ', error)
             }
+        }
 
         return (
             <div className="h-screen w-screen flex justify-center items-center sm:h-full sm:w-full">

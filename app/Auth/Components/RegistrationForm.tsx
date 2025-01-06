@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import AuthOnline from './ui/AuthOnline'
+import RegisterSocMed from './ui/RegisterSocMed'
 import Input, { LoginInput, SingUpInput } from './ui/Input'
 import IconSide, { PasswordInput } from './ui/IconSide'
 import { Mail, LockKeyhole } from 'lucide-react'
@@ -7,25 +7,33 @@ import { useForm } from '../StateHandlers/Form'
 import { useNewUser } from '../StateHandlers/RegisterForm'
 import { newRegister } from '../../SellerDashboard/axios/axios'
 import { leapfrog } from 'ldrs'
+import adjectives from './ui/adjectives'
 
 const RegistrationForm = () => {
     const { isForm, setForm } = useForm()
-    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, PhoneNumber, PetName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole, sentMail} = useNewUser()
+    const { setEmail, setPassword, setUsername, Username, Password, FirstName , LastName, PhoneNumber, PetName, Email, setConfirmPassword, ConfirmPassword, isPasswordVisible, Role, setRole, sentMail, existedEmail, setExistedEmail, setJoin, joinSeller } = useNewUser()
     const [ Error , seterror ] = useState<boolean>(false)
-    const adjectives = ['pokwang', 'kririn', 'pikolo', 'golem', 'gokuu', 'renejay', 'yawi', 'david'];
-    const [ joinSeller, setJoin ] = useState<boolean>(false)
+
     const [ loading, setLoading ] = useState<boolean>(false)
-    const [ existedEmail, setExistedEmail ] = useState<string>('')
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             leapfrog.register()
         }
-    }, []);
+        if (joinSeller) {
+            setRole('seller')
+            const userRole = "seller"
+            localStorage.setItem('Role', userRole)
+        } else {
+            setRole('buyer');
+            const userRole = "buyer"
+            localStorage.setItem('Role', userRole)
+        }
+    }, [joinSeller]);
 
     const RegisterAccount = async () => {
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
         {joinSeller ? `${setRole('seller')}` : `${setRole('buyer')}`}
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
         if(!Email || !Role || !Password || !ConfirmPassword || !Email.includes('@') || !passwordPattern.test(Password)) {
             seterror(true)
             return;
@@ -86,7 +94,7 @@ const RegistrationForm = () => {
             </span>. <span>Not a {joinSeller ? 'Seller' : 'Buyer'}? <span className='text-red-700'>Switch roles.</span></span>
             </p>
 
-            <AuthOnline/>
+            <RegisterSocMed/>
             <p className='text-gray-400 text-sm flex justify-center mt-3'>or sign up with</p>
 
             <div className="flex flex-col mt-3">

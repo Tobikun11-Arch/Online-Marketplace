@@ -12,6 +12,8 @@ interface NewUser {
     isPasswordVisible: boolean;
     Role: string;
     emailSent: boolean;
+    existedEmail: string;
+    joinSeller: boolean
 
     setFirstName: (FirstName: string) => void;
     setLastName: (LastName: string) => void;
@@ -24,6 +26,8 @@ interface NewUser {
     setIsPasswordVisible: (value: boolean | ((prevState: boolean) => boolean)) => void;
     setRole: (Role: string) => void;
     sentMail: (emailSent: boolean) => void;
+    setExistedEmail: (existedEmail: string) => void
+    setJoin: (joinSeller: boolean) => void
 }
 
 export const useNewUser = create<NewUser>((set) => ({
@@ -38,6 +42,8 @@ export const useNewUser = create<NewUser>((set) => ({
     isPasswordVisible: false,
     Role: '',
     emailSent: false,
+    existedEmail: '', 
+    joinSeller: false,
     setFirstName: (FirstName: string) => set(()=> ({ FirstName })), 
     setLastName: (LastName: string) => set(()=> ({ LastName })), 
     setPhoneNumber: (PhoneNumber: string) => set(()=> ({ PhoneNumber })),
@@ -52,4 +58,6 @@ export const useNewUser = create<NewUser>((set) => ({
         })),
         setRole: (Role: string) => set(()=> ({ Role })),
     sentMail: (emailSent: boolean) => set(()=> ({ emailSent })), 
+    setExistedEmail: (existedEmail: string) => set({ existedEmail }),
+    setJoin: (joinSeller: boolean) => set({ joinSeller })
 }))
