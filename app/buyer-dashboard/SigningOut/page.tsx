@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { lineSpinner } from 'ldrs'
 import { useRouter } from 'next/navigation'
 import { useUser } from '../store/User'
+import { SignOut } from '../../Auth/actions/authAction'
 
 const Page = () => {
     const router = useRouter()
@@ -12,6 +13,8 @@ const Page = () => {
         if (typeof window !== 'undefined') {
             lineSpinner.register();
         }
+
+        SignOut()
 
         const timeout = setTimeout(() => {
             localStorage.clear();
