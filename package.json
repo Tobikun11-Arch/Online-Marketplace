@@ -58,6 +58,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-easy-crop": "^5.0.8",
+    "react-tooltip": "^5.28.0",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",

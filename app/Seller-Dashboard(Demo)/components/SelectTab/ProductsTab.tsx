@@ -5,19 +5,21 @@ import TabItem from '../TabItem'
 import UseScreenSize from '../UseScreenSize'
 
 const ProductsTab = () => {
-    const { activeTab, setActiveTab } = useSideBarState()
+    const { activeTab, setActiveTab, setMainTab, mainTab } = useSideBarState()
     const [ isOpen, setOpen ] = useState<boolean>(false)
     const { width } = UseScreenSize();
     const isLargeScreen = width >= 1024; 
+    const isSmallScreen = width <= 639
 
     const handeOpen = () => {
         setActiveTab('Products')
+        setMainTab('Products')
         setOpen(!isOpen)
     }
 
     return (
         <>
-            <div className={`flex justify-between tooltip tooltip-right items-center rounded-md hover:bg-blue-600 pl-3 py-2 pr-2 hover:text-white ${activeTab === 'Products' && 'bg-blue-600 text-white'}`} onClick={handeOpen} data-tip={!isLargeScreen ? "Products" : ""}>
+            <div className={`flex tooltip tooltip-right items-center rounded-md hover:bg-blue-600 lg:justify-between justify-center lg:pl-3 lg:pr-2 py-2 hover:text-white px-2 ${activeTab === 'Products' && 'bg-blue-600 text-white'}`} onClick={handeOpen} data-tip={!isLargeScreen ? "Products" : ""}>
                 <div className="flex items-center gap-2">
                     <ShoppingCart size={20}/>
                     <h2 className='hidden lg:block'>Products</h2>
@@ -28,12 +30,12 @@ const ProductsTab = () => {
                     <ChevronDown size={20} className='hidden lg:block'/>
                 )}
             </div>
-            <div className='lg:pl-2 flex flex-col gap-1 text-sm'>
-                {isOpen && (
+            <div className={`lg:pl-2 flex ${isSmallScreen ? 'flex-row' : 'flex-col'} gap-1 text-sm`}>
+                {isOpen && mainTab === 'Products' && (
                     <>
                         <TabItem
                         icon={PackagePlus}
-                        label='Add New Product'
+                        label='Add New Product' 
                         isActive={activeTab === 'Add New Product'}
                         onClick={() => setActiveTab('Add New Product')}
                         tooltip='Add New Product'
