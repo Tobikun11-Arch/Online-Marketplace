@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { ShoppingCart, ChevronDown, ChevronUp, PackagePlus, Package, Settings2 } from 'lucide-react'
 import { useSideBarState } from '../../state/Sidebar'
 import TabItem from '../TabItem'
-import UseScreenSize from '../UseScreenSize'
 
 const ProductsTab = () => {
     const { activeTab, setActiveTab, setMainTab, mainTab } = useSideBarState()
     const [ isOpen, setOpen ] = useState<boolean>(false)
-    const { width } = UseScreenSize();
-    const isLargeScreen = width >= 1024; 
 
     const handeOpen = () => {
         setMainTab('Products')
@@ -23,9 +20,11 @@ const ProductsTab = () => {
 
     return (
         <>
-            <div className={`flex tooltip tooltip-right items-center rounded-md hover:bg-blue-600 lg:justify-between justify-center lg:pl-3 lg:pr-2 py-2 hover:text-white px-2`} onClick={handeOpen} data-tip={!isLargeScreen ? "Products" : ""}>
+            <div className={`flex items-center rounded-md hover:bg-blue-600 lg:justify-between justify-center lg:pl-3 lg:pr-2 py-2 hover:text-white px-2`} onClick={handeOpen}>
                 <div className="flex items-center gap-2">
-                    <ShoppingCart size={20}/>
+                    <div className="tooltip sm:tooltip-right" data-tip="Products">
+                        <ShoppingCart size={20} />
+                    </div>
                     <h2 className='hidden lg:block'>Products</h2>
                 </div>
                 {isOpen ? (

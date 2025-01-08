@@ -14,7 +14,7 @@ const Sidebar = () => {
     }, [activeTab])
 
     return (
-        <div className='lg:px-5 py-5 bg-[#1B2130] lg:bg-inherit rounded-2xl px-2 ml-1'>
+        <div className='lg:px-5 py-5 bg-[#1B2130] lg:bg-inherit rounded-2xl px-2 ml-1 z-999'>
             <div className='items-center gap-1 hidden lg:flex'>
                 <Image
                 width={50}

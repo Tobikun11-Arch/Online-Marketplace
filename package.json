@@ -33,6 +33,7 @@
     "@stripe/stripe-js": "^5.4.0",
     "@tabler/icons-react": "^3.14.0",
     "@tanstack/react-query": "^5.54.1",
+    "@tippyjs/react": "^4.2.6",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
@@ -62,6 +63,7 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "tippy.js": "^6.3.7",
     "universal-cookie": "^7.2.0",
     "zustand": "^5.0.0-rc.2"
   },
