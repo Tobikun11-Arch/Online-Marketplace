@@ -21,6 +21,3 @@ const Page = () => {
 }
 
 export default Page
-
-//<Login_Form/>
-//<SignUp_Form/>

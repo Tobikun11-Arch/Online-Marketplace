@@ -1,4 +1,4 @@
-
+import React from 'react';
 import useAuth from '../../UseAuth/useAuth';
 import BoxItem from '../Common/BoxItem'               
 import AddProduct from './AddProduct'

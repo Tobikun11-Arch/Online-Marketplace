@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 import { auth, refresh } from '../axios/axios';
 
@@ -30,7 +30,6 @@ const useAuth = () => {
                     }
                 }
             }
-
         };
 
         verifyAccessToken();

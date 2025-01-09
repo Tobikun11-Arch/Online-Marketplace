@@ -20,5 +20,6 @@ export async function LoginAuth() {
 } 
 
 export async function SignOut() {
-    await signOut()
+    const session = await signOut()
+    return session
 }

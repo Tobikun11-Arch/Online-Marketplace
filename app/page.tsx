@@ -10,7 +10,7 @@ const Page = () => {
 
     useEffect(()=> {
         if(user?.Role === 'seller') {
-          router.push('/SellerDashboard/Home')
+          router.push('/seller')
         }
     }, [user])
 

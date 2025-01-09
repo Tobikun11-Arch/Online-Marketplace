@@ -1,16 +1,17 @@
-    import React, { useCallback, useState, useEffect } from 'react'
-    import AuthOnline from './ui/AuthOnline'
-    import Input, { LoginInput, SingUpInput } from './ui/Input'
-    import IconSide, { PasswordInput } from './ui/IconSide'
-    import { Mail, LockKeyhole } from 'lucide-react'
-    import { useForm } from '../StateHandlers/Form'
-    import { useNewUser } from '../StateHandlers/RegisterForm'
-    import { userLog } from '../../SellerDashboard/axios/axios'
-    import { useRouter } from 'next/navigation'
-    import { leapfrog } from 'ldrs'
-    import { RegisterAuth, LoginAuth } from '../actions/authAction'
-    import adjectives from './ui/adjectives'
-    import { newRegister } from '../../SellerDashboard/axios/axios'
+import React, { useCallback, useState, useEffect } from 'react'
+import AuthOnline from './ui/AuthOnline'
+import Input, { LoginInput, SingUpInput } from './ui/Input'
+import IconSide, { PasswordInput } from './ui/IconSide'
+import { Mail, LockKeyhole } from 'lucide-react'
+import { useForm } from '../StateHandlers/Form'
+import { useNewUser } from '../StateHandlers/RegisterForm'
+import { userLog } from '../../SellerDashboard/axios/axios'
+import { useRouter } from 'next/navigation'
+import { leapfrog } from 'ldrs'
+import { RegisterAuth, LoginAuth } from '../actions/authAction'
+import adjectives from './ui/adjectives'
+import { newRegister } from '../../SellerDashboard/axios/axios'
+import axios, { AxiosError } from 'axios'; 
 
 const Form = () => {
         const { isForm, setForm, Email, setEmail, Password, setPassword } = useForm()
@@ -18,6 +19,7 @@ const Form = () => {
         const [ Error , seterror ] = useState<boolean>(false)
         const [ loading, setLoading ] = useState<boolean>(false)
         const [ messageLogin, setmessageLogin ] = useState<boolean>(false)
+        const [ isStart, setStart ] = useState<boolean>(false)
         const router = useRouter()
 
         const Form_Set = useCallback(()=> {
@@ -33,108 +35,85 @@ const Form = () => {
 
         useEffect(()=> {
             const SignUpAction = async()=> {
-                const session = await RegisterAuth()  
-                if(!session) { console.log("No Registration working") }
-                if(session) {
+                const session_register = await RegisterAuth()  
+                if(!session_register) { console.log("No Registration working") }
+                if(session_register) {
                     const userRole = localStorage.getItem('Role')
-                    const usernameParts = session.email?.split('@') || []
-                    const developer = "TobiNejiKai" 
-                    const fullName = session.name?.split(" ") || []
-                    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-                    const noun = developer[Math.floor(Math.random() * developer.length)];
-                    const number = Math.floor(Math.random() * 1000);    
-                    const generatedUsername = `${adjective}${noun}${number}`; //set a random username
-                    setUsername(generatedUsername);   
-                    {joinSeller ? setRole('seller') : setRole('buyer')}
-                    try {
-                        setLoading(true)
-                        const userDetails = {
-                            FirstName: fullName[0], LastName: fullName[1], PhoneNumber, PetName, Email: session.email, Password: usernameParts[0], Role: userRole, Username: generatedUsername
-                        }
-                        const response = await newRegister.post('', userDetails)
-                        console.log(response)
-                        if(response.status === 201) {   
-                            try {
-                                const userDetails = {
-                                    Email: session.email, 
-                                    Password: usernameParts[0] 
-                                }
-                                const response =  await userLog.post('', userDetails, {withCredentials: true})
-                                setLoading(false)
-                                if (response.data.message === 'Login successful') {
-                                    const { user } = response.data;
-                                    localStorage.setItem('user', JSON.stringify(user))
-                                    if (userRole === 'buyer') {
-                                        router.push('/');
-                                        setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
-                                    } else {
-                                        localStorage.removeItem('activeItem')
-                                        router.push('/SellerDashboard/Home');
-                                        setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
-                                    }
+                    console.log('userRole: ', userRole)
+                        const usernameParts = session_register.email?.split('@') || []
+                        const developer = "TobiNejiKai" 
+                        const fullName = session_register.name?.split(" ") || []
+                        const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+                        const noun = developer[Math.floor(Math.random() * developer.length)];
+                        const number = Math.floor(Math.random() * 1000);    
+                        const generatedUsername = `${adjective}${noun}${number}`; //set a random username
+                        setUsername(generatedUsername);   
+                        {joinSeller ? setRole('seller') : setRole('buyer')}
+                        try {
+                            setLoading(true)
+                            const userDetails = {
+                                FirstName: fullName[0], LastName: fullName[1], PhoneNumber, PetName, Email: session_register.email, Password: usernameParts[0], Role: userRole, Username: generatedUsername
+                            }
+                            const response = await newRegister.post('', userDetails)
+                            if(response.data.message === "success register(socmed)") {
+                                setStart(true)
+                            }
+                        } catch (error: any) {
+                            setLoading(false);
+                
+                            // Check if the error is an AxiosError
+                            if (axios.isAxiosError(error)) {
+                                const axiosError = error as AxiosError;
+                
+                                // Log the 400 status error explicitly
+                                if (axiosError.response?.status === 400) {
+                                    setStart(true)
                                 } else {
-                                    console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
+                                    console.error("Axios Error:", axiosError.message);
                                 }
-                            } catch (error) {
-                                seterror(true)
-                                setmessageLogin(true)
-                                setLoading(false);
-                                console.log('Error: ', error)
+                            } else {
+                                // Handle non-Axios errors
+                                console.error("Unexpected Error:", error);
                             }
                         }
-                    } catch (error: any) {
-                        console.error(error)
-                        setLoading(false)
-                        if (error.response) {
-                            setExistedEmail('Email is already registered'); // Handle client-side error (bad request)
-                        } 
-                        else {
-                            setExistedEmail('An error occurred, please try again.'); // Handle other errors
-                        }
-                    }
                 }
             }
 
             const SignInAction = async() => {
-                const session = await LoginAuth()
-                if(!session) { console.log("No Login working") }
-                if(session) {
+                const session_login = await LoginAuth()
+                if(!session_login) { console.log("No Login working") }
+                if(session_login) {
                     setLoading(true)
-                    try {
-                        const usernameParts = session.email?.split('@') || []
-                        const userDetails = {
-                            Email: session.email, 
-                            Password: usernameParts[0] 
-                        }
-                        const response =  await userLog.post('', userDetails, {withCredentials: true})
-                        setLoading(false)
-                        if (response.data.message === 'Login successful') {
-                            const { user } = response.data;
-                            localStorage.setItem('user', JSON.stringify(user))
-                            if (user.Role === 'buyer') {
-                                router.push('/');
-                                setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
-                            } else {
-                                localStorage.removeItem('activeItem')
-                                router.push('/SellerDashboard/Home');
-                                setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
-                            }
+                    const usernameParts = session_login.email?.split('@') || []
+                    const userDetails = {
+                        Email: session_login.email, 
+                        Password: usernameParts[0] 
+                    }
+                    const response =  await userLog.post('', userDetails, {withCredentials: true})
+                    if (response.data.message === 'Login successful') {
+                        const { user } = response.data;
+                        localStorage.setItem('user', JSON.stringify(user))
+                        if (user.Role === 'buyer') {
+                            router.push('/');
+                            setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                         } else {
-                            console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
+                            localStorage.removeItem('activeItem')
+                            router.push('/seller');
+                            setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                         }
-                    } catch (error) {
-                        seterror(true)
-                        setmessageLogin(true)
-                        setLoading(false);
-                        console.log('Error: ', error)
+                        setLoading(false)
+                    } else {
+                        console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
                     }
                 }
             }
 
-            //Run the function
-            SignInAction()
+            // SignInAction()
             SignUpAction()
-        }, [joinSeller, PhoneNumber, PetName, Role])
+            if(isStart) {
+                SignInAction()
+            }
+        }, [joinSeller, PhoneNumber, PetName, Role, isStart])
 
         const handleSubmit = async () => {
             if(!Email || !Password) {
@@ -148,7 +127,6 @@ const Form = () => {
                 const userDetails = { Email, Password }
                 const response =  await userLog.post('', userDetails, {withCredentials: true})
                 setLoading(false)
-
                 if (response.data.message === 'Login successful') {
                     const { user } = response.data;
                     localStorage.setItem('user', JSON.stringify(user))
@@ -157,7 +135,8 @@ const Form = () => {
                         setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                     } else {
                         localStorage.removeItem('activeItem')
-                        router.push('/SellerDashboard/Home');
+                        console.log("user: ", user)
+                        router.push('/seller');
                         setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                     }
                 } else {
@@ -225,18 +204,18 @@ const Form = () => {
 
                     <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3' onClick={handleSubmit}>
                     {loading ? (<>
-                <div className="flex items-center gap-2">
-                <span className='text-xs font-bold text-gray-200 hover:text-white'>Logging in</span>
-                <l-leapfrog
-                size="25"
-                speed="2.5" 
-                color="white" 
-                ></l-leapfrog>
-                </div>
-                </>):
-                (<>
-                <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
-                </>)}
+                        <div className="flex items-center gap-2">
+                            <span className='text-xs font-bold text-gray-200 hover:text-white'>Logging in</span>
+                            <l-leapfrog
+                            size="25"
+                            speed="2.5" 
+                            color="white" 
+                            ></l-leapfrog>
+                        </div>
+                    </>):
+                    (<>
+                        <span className='text-xs font-bold text-gray-200 hover:text-white'>Log in</span>
+                    </>)}
                     </button>
                     <p className='text-gray-500 text-xs font-semibold mt-6 flex gap-1 justify-center'>Don't have an account? <span className='text-blue-700' onClick={Form_Set}>Create an account</span></p>
                 </div>

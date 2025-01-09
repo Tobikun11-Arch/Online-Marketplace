@@ -1,7 +1,9 @@
-import { useEffect } from 'react'
 import { SignUpGoogle, SignUpGithub } from '../../../Auth/actions/authAction'
 
 const AuthOnline = () => {
+    const handleLogin = () => {
+        console.log()
+    }
 
     return (
         <div className='w-full h-11 flex mt-5 gap-2'>
