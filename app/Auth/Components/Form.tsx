@@ -40,42 +40,41 @@ const Form = () => {
                 if(session_register) {
                     const userRole = localStorage.getItem('Role')
                     console.log('userRole: ', userRole)
-                        const usernameParts = session_register.email?.split('@') || []
-                        const developer = "TobiNejiKai" 
-                        const fullName = session_register.name?.split(" ") || []
-                        const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-                        const noun = developer[Math.floor(Math.random() * developer.length)];
-                        const number = Math.floor(Math.random() * 1000);    
-                        const generatedUsername = `${adjective}${noun}${number}`; //set a random username
-                        setUsername(generatedUsername);   
-                        {joinSeller ? setRole('seller') : setRole('buyer')}
-                        try {
-                            setLoading(true)
-                            const userDetails = {
-                                FirstName: fullName[0], LastName: fullName[1], PhoneNumber, PetName, Email: session_register.email, Password: usernameParts[0], Role: userRole, Username: generatedUsername
-                            }
-                            const response = await newRegister.post('', userDetails)
-                            if(response.data.message === "success register(socmed)") {
-                                setStart(true)
-                            }
-                        } catch (error: any) {
-                            setLoading(false);
-                
-                            // Check if the error is an AxiosError
-                            if (axios.isAxiosError(error)) {
-                                const axiosError = error as AxiosError;
-                
-                                // Log the 400 status error explicitly
-                                if (axiosError.response?.status === 400) {
-                                    setStart(true)
-                                } else {
-                                    console.error("Axios Error:", axiosError.message);
-                                }
-                            } else {
-                                // Handle non-Axios errors
-                                console.error("Unexpected Error:", error);
-                            }
+                    const usernameParts = session_register.email?.split('@') || []
+                    const developer = "TobiNejiKai" 
+                    const fullName = session_register.name?.split(" ") || []
+                    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+                    const noun = developer[Math.floor(Math.random() * developer.length)];
+                    const number = Math.floor(Math.random() * 1000);    
+                    const generatedUsername = `${adjective}${noun}${number}`; //set a random username
+                    setUsername(generatedUsername);   
+                    {joinSeller ? setRole('seller') : setRole('buyer')}
+                    try {
+                        setLoading(true)
+                        const userDetails = {
+                            FirstName: fullName[0], LastName: fullName[1], PhoneNumber, PetName, Email: session_register.email, Password: usernameParts[0], Role: userRole, Username: generatedUsername
                         }
+                        const response = await newRegister.post('', userDetails)
+                        if(response.data.message === "success register(socmed)") {
+                            setStart(true)
+                        }
+                    } catch (error: any) {
+                        setLoading(false);
+                        // Check if the error is an AxiosError
+                        if (axios.isAxiosError(error)) {
+                            const axiosError = error as AxiosError;
+                            // Log the 400 status error explicitly
+                            if (axiosError.response?.status === 400) {
+                                setStart(true)
+                            } else {
+                                seterror(true)
+                                setmessageLogin(true)
+                            }
+                        } else {
+                            // Handle non-Axios errors
+                            console.error("Unexpected Error:", error);
+                        }
+                    }
                 }
             }
 
@@ -203,7 +202,8 @@ const Form = () => {
                     </div>
 
                     <button className='w-full bg-[#065AD7] py-2 rounded-md flex items-center justify-center mt-3' onClick={handleSubmit}>
-                    {loading ? (<>
+                    {loading ? (
+                    <>
                         <div className="flex items-center gap-2">
                             <span className='text-xs font-bold text-gray-200 hover:text-white'>Logging in</span>
                             <l-leapfrog

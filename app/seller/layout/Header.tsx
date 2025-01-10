@@ -6,15 +6,14 @@ import { useSideBarState } from '../state/Sidebar'
 import NavList from '../components/NavList'
 import Notifications from '../components/Notifications'
 import Messages from '../components/Messages'
-import { Signout } from '../services/axios/UserAuthentication'
-import { useRouter } from 'next/navigation'
+import LoadingTimerPage from '../loading/LoadingTimer'
 
 const Header = () => {
     const [ userOpen, setUserOpen ] = useState<boolean>(false)
     const [ isNotify, setNotify ] = useState<boolean>(false)
     const [ isMessage, setMessage ] = useState<boolean>(false)
     const { setActiveTab } = useSideBarState()
-    const router = useRouter()
+    const [ isLogout, setLogout ] = useState<boolean>(false)
 
     const dropdownRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
@@ -29,17 +28,9 @@ const Header = () => {
             document.removeEventListener('mousedown', handleClickOutside)
         }
     }, [userOpen]) 
-
-    const handleSellerLogout = async () => {
-        try {
-            const response = await Signout.post('', {}, { withCredentials: true })
-            if(response.data.message === 'Signed out successfully!') {
-                router.push('/')
-                localStorage.clear();
-            }
-        } catch (error) {
-            console.error("Error during signout: ", error);
-        }
+    
+    if(isLogout) {
+        return <LoadingTimerPage/>
     }
 
     return (
@@ -93,7 +84,7 @@ const Header = () => {
                                     onClick={()=> setActiveTab("Calendar")}
                                 />
                                 <hr className='-mr-14 -ml-4 border-t border-gray-500'/>
-                                <div className='flex items-center gap-2 hover:text-blue-700 text-sm' onClick={handleSellerLogout}>
+                                <div className='flex items-center gap-2 hover:text-blue-700 text-sm' onClick={()=> setLogout(true)}>
                                     <LogOut size={20}/>
                                     <h2>Log out</h2>
                                 </div>

@@ -13,9 +13,7 @@ const Page = () => {
         if (typeof window !== 'undefined') {
             lineSpinner.register();
         }
-        console.log("Signing outtt")
-        const response = SignOut()
-        console.log(response)
+        SignOut()
 
         const timeout = setTimeout(() => {
             localStorage.clear();
