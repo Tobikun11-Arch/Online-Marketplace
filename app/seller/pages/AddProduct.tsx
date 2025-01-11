@@ -1,36 +1,220 @@
-import React, { useRef } from 'react' 
+import React, { useRef, useState } from 'react' 
 import { Store, Check, Save, Plus } from 'lucide-react'
 import SizeUi from '../components/add-product-components/SizeUi'
 import QualityComponents from '../components/add-product-components/Quality'
-import { productDetails } from '../state/add-product-state/ProductDetails'
+import ProductCategory from '../components/add-product-components/ProductCategory'
+import { productDetails, useImages, useCategory } from '../state/add-product-state/ProductDetails'
 import { useSize } from '../state/add-product-state/Size'
 import Image from 'next/image'
 import SubImage from '../components/add-product-components/SubImage'
-import { useImages } from '../state/add-product-state/ProductDetails'
+import { CloudinaryConnection } from '../services/axios/Connection'
+import { useUser } from '../state/User'
+import { fetchPostData, FetchDraft } from '../services/axios-instance/PostInstance'
+import { useToast } from "../../../@/hooks/use-toast"
+import ProcessLoading from '../loading/ProcessLoading'
 
 export default function AddProduct() {
-    const { setisProductName, isProductName, setDescription, isDescription, setSku, isSku, setPrice, isPrice, setStock, isStock, setDiscount, isDiscount, isQuality } = productDetails()
-    const { isSubImage_01, isSubImage_02, isSubImage_03, setSubImage_01, setSubImage_02, setSubImage_03 } = useImages();
-    const { isSize } = useSize()
+    const { setisProductName, isProductName, setDescription, isDescription, setSku, isSku, setPrice, isPrice, setStock, isStock, setDiscount, isDiscount, isQuality, setQuality } = productDetails()
+    const { isSubImage_01, isSubImage_02, isSubImage_03, setSubImage_01, setSubImage_02, setSubImage_03, setSelected, isSelected } = useImages();
+    const { isCategory, setCategory } = useCategory()
+    const { isSize, setSize } = useSize()
     const imgParent = 'relative w-full h-96 mt-2 md:h-[300px] flex flex-col justify-center items-center md:mb-0 bg-[#EFEFEF] rounded-md'
     const imgSubParent = 'relative w-3/4 h-3/4 aspect-w-1 aspect-h-1'
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const { user } = useUser()
+    const [ isLoading, setLoading ] = useState<boolean>(false)
+    const { toast } = useToast()
+    const [ isProcess, setProcess ] = useState<string>('')
 
-    const handleAddProduct = () => {
-        const product_details = {
-            product_name: isProductName,
-            status: "Published",
-            description: isDescription,
-            sku: isSku,
-            price: isPrice,
-            stock: isStock,
-            discount: isDiscount,
-            quality: isQuality,
-            size: isSize,
+    const handleAddProduct = async (process: string) => {
+        const productImages: string[] = [ isSubImage_01, isSubImage_02, isSubImage_03 ].filter(Boolean)
+        let publicIds: string[] = [];
+        setProcess(process)
+
+        const resetFormState = () => {
+            setisProductName('');
+            setDescription('');
+            setSku('');
+            setPrice(0);
+            setStock(0); 
+            setDiscount(0);
+            setQuality(''); 
+            setSize('XS')
+            // Reset images
+            setSubImage_01('');
+            setSubImage_02('');
+            setSubImage_03('');
+            setCategory(''); 
         };
-    
-        console.log(product_details); 
-    };
+
+        if(!isProductName || !isDescription || !isSku || isPrice === 0 || isStock === 0 || isDiscount === 0 || !isQuality || !isSize || !isSubImage_01 || !isSubImage_02 || !isSubImage_03 || !isCategory) {
+            toast({
+                description: "Please fill all fields",
+            })
+            return
+        }
+        setLoading(true)
+        try {
+            const uploadPromises = productImages.map(async (image: string, index) => {
+                // Convert base64 string to a Blob or File object
+                const blob = await fetch(image).then((res) => res.blob());
+                const file = new File([blob], `image_${index + 1}.png`, { type: 'image/png' });
+                
+                // Prepare FormData for Cloudinary upload
+                const imgData = new FormData();
+                imgData.append('file', file);
+                imgData.append('upload_preset', 'Onlinemarket');
+                
+                // Upload to Cloudinary
+                const response = await CloudinaryConnection.post('', imgData);
+                const data = response.data;
+                return { secure_url: data.secure_url, public_id: data.public_id };
+            });
+            // Wait for all uploads to complete
+            const cloudinaryResults = await Promise.all(uploadPromises);
+            const cloudinaryUrls = cloudinaryResults.map((result) => result.secure_url);
+            publicIds = cloudinaryResults.map((result) => result.public_id);
+            const product_details = {
+                userId: user?._id,
+                productName: isProductName,
+                status: "Published",
+                productDescription: isDescription,
+                productCategory: isCategory,
+                Sku: isSku,
+                productPrice: isPrice,
+                productStock: isStock,
+                productDiscount: isDiscount,
+                productQuality: isQuality,
+                productSize: isSize,
+                images: cloudinaryUrls
+            };
+
+            try {
+                const response = await fetchPostData(product_details)
+                if(response) {
+                    resetFormState()
+                    toast({
+                        description: "Product added successfully!",
+                    })
+                    setLoading(false)
+                }
+            } catch (error) {
+                console.error(error)
+                setLoading(false)
+                toast({
+                    description: "Failed to add product. Please try again.",
+                })
+                const deletePromises = publicIds.map(async (publicId) => {
+                    try {
+                        await CloudinaryConnection.post('/destroy', { public_id: publicId });
+                        console.log(`Deleted image with public_id: ${publicId}`);
+                    } catch (deleteError) {
+                        console.error(`Failed to delete image with public_id: ${publicId}`, deleteError);
+                        setLoading(false)
+                    }
+                })
+                await Promise.all(deletePromises);
+            }
+        } catch (error) {
+            console.error(error)
+            setLoading(false)
+            toast({
+                description: "Failed to add product. Please try again.",
+            })
+        }
+    } 
+
+    const handleDraft = async (process: string) => {
+        const productImages: string[] = [ isSubImage_01, isSubImage_02, isSubImage_03 ].filter(Boolean)
+        let publicIds: string[] = [];
+        setProcess(process)
+
+        const resetFormState = () => {
+            setisProductName('');
+            setDescription('');
+            setSku('');
+            setPrice(0);
+            setStock(0); 
+            setDiscount(0);
+            setQuality(''); 
+            setSize('XS')
+            // Reset images
+            setSubImage_01('');
+            setSubImage_02('');
+            setSubImage_03('');
+            setCategory(''); 
+        }
+
+        setLoading(true)
+        try {
+            const uploadPromises = productImages.map(async (image: string, index) => {
+                // Convert base64 string to a Blob or File object
+                const blob = await fetch(image).then((res) => res.blob());
+                const file = new File([blob], `image_${index + 1}.png`, { type: 'image/png' });
+                
+                // Prepare FormData for Cloudinary upload
+                const imgData = new FormData();
+                imgData.append('file', file);
+                imgData.append('upload_preset', 'Onlinemarket');
+                
+                // Upload to Cloudinary
+                const response = await CloudinaryConnection.post('', imgData);
+                const data = response.data;
+                return { secure_url: data.secure_url, public_id: data.public_id };
+            });
+            // Wait for all uploads to complete
+            const cloudinaryResults = await Promise.all(uploadPromises);
+            const cloudinaryUrls = cloudinaryResults.map((result) => result.secure_url);
+            publicIds = cloudinaryResults.map((result) => result.public_id);
+            const product_details = {
+                userId: user?._id,
+                productName: isProductName,
+                status: "Published",
+                productDescription: isDescription,
+                productCategory: isCategory,
+                Sku: isSku,
+                productPrice: isPrice,
+                productStock: isStock,
+                productDiscount: isDiscount,
+                productQuality: isQuality,
+                productSize: isSize,
+                images: cloudinaryUrls
+            };
+
+            try {
+                const response = await FetchDraft(product_details)
+                if(response) {
+                    resetFormState()
+                    toast({
+                        description: "Product added successfully!",
+                    })
+                    setLoading(false)
+                }
+            } catch (error) {
+                console.error(error)
+                setLoading(false)
+                toast({
+                    description: "Failed to add product. Please try again.",
+                })
+                const deletePromises = publicIds.map(async (publicId) => {
+                    try {
+                        await CloudinaryConnection.post('/destroy', { public_id: publicId });
+                        console.log(`Deleted image with public_id: ${publicId}`);
+                    } catch (deleteError) {
+                        console.error(`Failed to delete image with public_id: ${publicId}`, deleteError);
+                        setLoading(false)
+                    }
+                })
+                await Promise.all(deletePromises);
+            }
+        } catch (error) {
+            console.error(error)
+            setLoading(false)
+            toast({
+                description: "Failed to add product. Please try again.",
+            })
+        }
+    }
 
     const handleDivClick = () => {
         fileInputRef.current?.click();
@@ -42,7 +226,6 @@ export default function AddProduct() {
             const reader = new FileReader();
             reader.onload = () => {
                 const base64String = reader.result as string; 
-
                 if (!isSubImage_01) {
                     setSubImage_01(base64String);
                 } else if (!isSubImage_02) {
@@ -58,25 +241,30 @@ export default function AddProduct() {
     };
 
     return (
-        <div className='px-2 py-5 sm:pl-16 sm:pr-4 lg:px-10 xl:px-12'>
+        <>
+            {isLoading ? (
+                    <ProcessLoading label={isProcess}/>
+            ) : (
+                <>
+                    <div className='px-6 sm:px-2 sm:py-5 pt-5 pb-16 sm:pl-16 sm:pr-4 lg:px-5 xl:px-12'>
             <div className='flex justify-end sm:justify-between items-center'>
                 <div className='hidden sm:flex gap-1 items-center'>
                     <Store/>
                     <h1 className='font-semibold text-[#45984d]'>Add New Product</h1>
                 </div>
                 <div className='flex gap-2'>
-                    <button className='shadow-md py-2 px-3 flex items-center gap-1 rounded-xl text-xs font-semibold'>
+                    <button className='shadow-md py-2 px-3 flex items-center gap-1 rounded-xl text-xs font-semibold' onClick={()=> handleDraft('Adding to draft')}>
                         <Save size={17}/>
                         Save Draft
                     </button>
-                    <button className='flex items-center gap-1 bg-[#A0EDA8] shadow-md py-2 text-xs px-3 rounded-xl font-semibold' onClick={handleAddProduct}>
+                    <button className='flex items-center gap-1 bg-[#A0EDA8] shadow-md py-2 text-xs px-3 rounded-xl font-semibold' onClick={()=> handleAddProduct('Adding product')}>
                         <Check size={17}/>
                         Add Product
                     </button>
                 </div>
             </div>
-            <div className='Group flex gap-8'>
-                <div className='first-box w-3/5 mt-10'>
+            <div className='Group md:flex gap-8 lg:gap-3 xl:gap-8'>
+                <div className='first-box w-full md:w-3/5 mt-5 sm:mt-10'>
                     <div className='bg-[#f7f6f6] rounded-lg p-4 shadow-md'>
                         <h1 className='font-semibold'>General Information</h1>
                         <h4 className='text-sm mt-3 font-normal'>Name Product</h4>
@@ -153,14 +341,14 @@ export default function AddProduct() {
                         </div>
                     </div>
                 </div>
-                <div className='second-box w-2/5 mt-10'>
+                <div className='second-box w-full xl:w-2/5 mt-10'>
                     <div className='bg-[#f7f6f6] rounded-lg p-4 shadow-md'>
                         <h1 className='font-semibold'>Upload Product</h1>
                         <div className={imgParent}>
                             <div className={imgSubParent}>
                                 <Image
                                 fill
-                                src={isSubImage_01 ? isSubImage_01 : '/assets/sub_img.png'}
+                                src={isSelected ? isSelected : isSubImage_01 ? isSubImage_01 : '/assets/sub_img.png'}
                                 alt='First Index'
                                 className="object-contain object-center"
                                 placeholder = 'blur'
@@ -172,14 +360,17 @@ export default function AddProduct() {
                             <SubImage
                             src={isSubImage_01}
                             alt='sum image 1'
+                            onClick={()=> setSelected(isSubImage_01)}
                             />
                             <SubImage
                             src={isSubImage_02}
                             alt='sum image 1'
+                            onClick={()=> setSelected(isSubImage_02)}
                             />
                             <SubImage
                             src={isSubImage_03}
                             alt='sum image 1'
+                            onClick={()=> setSelected(isSubImage_03)}
                             />
                             <div className="w-full h-28 flex justify-center items-center rounded-md border-4 border-dashed border-gray-500 mt-2" onClick={handleDivClick}>
                                 <div className='flex justify-center items-center rounded-full p-1 bg-[#37c242]'>
@@ -196,8 +387,18 @@ export default function AddProduct() {
                             </div>
                         </div>
                     </div>
+                    <div className='bg-[#f7f6f6] rounded-lg p-4 shadow-md mt-5'>
+                        <h1 className='font-semibold'>Category</h1>
+                        <div className='w-full'>
+                            <h4 className='text-sm font-normal'>Product Category</h4>
+                            <ProductCategory/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+                </>
+            )}
+        </>
     )
 }

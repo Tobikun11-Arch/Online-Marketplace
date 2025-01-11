@@ -1,12 +1,20 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Header, Sidebar, Footer } from './layout/index'
 import { useSideBarState } from './state/Sidebar';
 import { HelpSupportPage, OrdersPage, AddProduct, ManageProducts, InventoryPage, ProfilePage, PaymentPage, CustomerPage, SupportPage, MyAccount, Calendar } from './pages/index'
 import Overview from './pages/Overview';
+import { useUser } from './state/User'
 
 export default function SellerDashboardLayout() {
     const { activeTab } = useSideBarState()
+    const { setUser } = useUser()
+
+    useEffect(()=> {
+        const storedUser = localStorage.getItem('user');
+        const user = JSON.parse(storedUser!)
+        setUser(user)
+    }, [])
 
     return (
         <div className='h-screen text-black bg-[#FAFAFA] dark:bg-[#FAFAFA] cursor-default'>
