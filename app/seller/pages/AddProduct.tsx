@@ -94,6 +94,7 @@ export default function AddProduct() {
                     resetFormState()
                     toast({
                         description: "Product added successfully!",
+                        className: 'text-white'
                     })
                     setLoading(false)
                 }
@@ -102,6 +103,7 @@ export default function AddProduct() {
                 setLoading(false)
                 toast({
                     description: "Failed to add product. Please try again.",
+                    className: 'text-white'
                 })
             }
         } catch (error) {
@@ -109,6 +111,7 @@ export default function AddProduct() {
             setLoading(false)
             toast({
                 description: "Failed to add product. Please try again.",
+                className: 'text-white'
             })
         }
     } 
@@ -176,6 +179,7 @@ export default function AddProduct() {
                     resetFormState()
                     toast({
                         description: "Product added to draft!",
+                        className: 'text-white'
                     })
                     setLoading(false)
                 }
@@ -184,6 +188,7 @@ export default function AddProduct() {
                 setLoading(false)
                 toast({
                     description: "Failed to add product. Please try again.",
+                    className: 'text-white'
                 })
                 const deletePromises = publicIds.map(async (publicId) => {
                     try {
@@ -201,6 +206,7 @@ export default function AddProduct() {
             setLoading(false)
             toast({
                 description: "Failed to add product. Please try again.",
+                className: 'text-white'
             })
         }
     }
