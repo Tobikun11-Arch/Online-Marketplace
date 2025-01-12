@@ -190,16 +190,6 @@ export default function AddProduct() {
                     description: "Failed to add product. Please try again.",
                     className: 'text-white'
                 })
-                const deletePromises = publicIds.map(async (publicId) => {
-                    try {
-                        await CloudinaryConnection.post('/destroy', { public_id: publicId });
-                        console.log(`Deleted image with public_id: ${publicId}`);
-                    } catch (deleteError) {
-                        console.error(`Failed to delete image with public_id: ${publicId}`, deleteError);
-                        setLoading(false)
-                    }
-                })
-                await Promise.all(deletePromises);
             }
         } catch (error) {
             console.error(error)
