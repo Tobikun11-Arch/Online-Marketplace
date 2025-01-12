@@ -72,9 +72,7 @@ export default function AddProduct() {
                 return { secure_url: data.secure_url, public_id: data.public_id };
             });
             // Wait for all uploads to complete
-            const cloudinaryResults = await Promise.all(uploadPromises);
-            const cloudinaryUrls = cloudinaryResults.map((result) => result.secure_url);
-            publicIds = cloudinaryResults.map((result) => result.public_id);
+            const cloudinaryUrls = await Promise.all(uploadPromises);
             const product_details = {
                 userId: user?._id,
                 productName: isProductName,
@@ -105,16 +103,6 @@ export default function AddProduct() {
                 toast({
                     description: "Failed to add product. Please try again.",
                 })
-                const deletePromises = publicIds.map(async (publicId) => {
-                    try {
-                        await CloudinaryConnection.post('/destroy', { public_id: publicId });
-                        console.log(`Deleted image with public_id: ${publicId}`);
-                    } catch (deleteError) {
-                        console.error(`Failed to delete image with public_id: ${publicId}`, deleteError);
-                        setLoading(false)
-                    }
-                })
-                await Promise.all(deletePromises);
             }
         } catch (error) {
             console.error(error)
