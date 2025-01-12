@@ -69,10 +69,12 @@ export default function AddProduct() {
                 // Upload to Cloudinary
                 const response = await CloudinaryConnection.post('', imgData);
                 const data = response.data;
-                return { secure_url: data.secure_url};
+                return { secure_url: data.secure_url, public_id: data.public_id };
             });
             // Wait for all uploads to complete
-            const cloudinaryUrls = await Promise.all(uploadPromises);
+            const cloudinaryResults = await Promise.all(uploadPromises);
+            const cloudinaryUrls = cloudinaryResults.map((result) => result.secure_url);
+            publicIds = cloudinaryResults.map((result) => result.public_id);
             const product_details = {
                 userId: user?._id,
                 productName: isProductName,
@@ -152,10 +154,12 @@ export default function AddProduct() {
                 // Upload to Cloudinary
                 const response = await CloudinaryConnection.post('', imgData);
                 const data = response.data;
-                return { secure_url: data.secure_url};
+                return { secure_url: data.secure_url, public_id: data.public_id };
             });
             // Wait for all uploads to complete
-            const cloudinaryUrls = await Promise.all(uploadPromises);
+            const cloudinaryResults = await Promise.all(uploadPromises);
+            const cloudinaryUrls = cloudinaryResults.map((result) => result.secure_url);
+            publicIds = cloudinaryResults.map((result) => result.public_id);
             const product_details = {
                 userId: user?._id,
                 productName: isProductName,
