@@ -22,7 +22,7 @@ export default function MainDashboard() {
                         percentage={12.95}
                     />
                     <ProfileIncome 
-                        label='Profit'
+                        label='Customers'
                         data={12240}
                         percentage={-1.05}
                     />
@@ -32,7 +32,7 @@ export default function MainDashboard() {
                         percentage={5.23}
                     />
                     <ProfileIncome 
-                        label='Reveue'
+                        label='Total Discount'
                         data={35600}
                         percentage={0.46}
                     />

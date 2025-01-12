@@ -17,7 +17,7 @@ export default function ProcessLoading({ label }: ProcessProps) {
 
 
     return (
-        <div className='w-full h-screen bg-white flex flex-col items-center justify-center'>
+        <div className='w-full h-full bg-white flex flex-col items-center justify-center'>
             <div className="relative">
                 <div className='absolute -right-1'>
                     <l-ping

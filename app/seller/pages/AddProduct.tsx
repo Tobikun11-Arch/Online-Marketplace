@@ -47,9 +47,10 @@ export default function AddProduct() {
             setCategory(''); 
         };
 
-        if(!isProductName || !isDescription || !isSku || isPrice === 0 || isStock === 0 || isDiscount === 0 || !isQuality || !isSize || !isSubImage_01 || !isSubImage_02 || !isSubImage_03 || !isCategory) {
+        if(!isProductName || !isDescription || isPrice === 0 || isStock === 0 || !isQuality || !isSize || !isSubImage_01 || !isSubImage_02 || !isSubImage_03 || !isCategory) {
             toast({
                 description: "Please fill all fields",
+                className: 'text-white'
             })
             return
         }
@@ -169,7 +170,7 @@ export default function AddProduct() {
             const product_details = {
                 userId: user?._id,
                 productName: isProductName,
-                status: "Published",
+                status: "Draft",
                 productDescription: isDescription,
                 productCategory: isCategory,
                 Sku: isSku,
@@ -186,7 +187,7 @@ export default function AddProduct() {
                 if(response) {
                     resetFormState()
                     toast({
-                        description: "Product added successfully!",
+                        description: "Product added to draft!",
                     })
                     setLoading(false)
                 }

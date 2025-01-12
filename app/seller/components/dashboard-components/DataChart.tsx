@@ -7,7 +7,7 @@ export default function DataChart() {
 
             <div className='w-full xl:w-3/5 flex flex-col gap-2'>
                 <div className={`${DataBody_01}`}>
-                    <h2 className='font-semibold text-sm'>Total Buyers</h2>
+                    <h2 className='font-semibold text-sm'>Sales</h2>
                 </div>
                 <div className={`${DataBody_02}`}>
                     <h2 className='font-semibold text-sm'>Recent Activities</h2>
