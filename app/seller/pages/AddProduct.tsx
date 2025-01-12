@@ -47,7 +47,7 @@ export default function AddProduct() {
             setCategory(''); 
         };
 
-        if(!isProductName || !isDescription || isPrice === 0 || isStock === 0 || !isQuality || !isSize || !isSubImage_01 || !isSubImage_02 || !isSubImage_03 || !isCategory) {
+        if(!isProductName || !isDescription || isPrice === 0 || isStock === 0 || !isSize || !isSubImage_01 || !isSubImage_02 || !isSubImage_03) {
             toast({
                 description: "Please fill all fields",
                 className: 'text-white'
