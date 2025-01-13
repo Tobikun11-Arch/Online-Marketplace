@@ -335,6 +335,7 @@ export default function AddProduct() {
                             <div className={imgSubParent}>
                                 <Image
                                 fill
+                                key={isSelected || isSubImage_01}
                                 src={isSelected ? isSelected : isSubImage_01 ? isSubImage_01 : '/assets/sub_img.png'}
                                 alt='First Index'
                                 className="object-contain object-center"
