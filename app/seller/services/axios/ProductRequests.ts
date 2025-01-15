@@ -18,6 +18,20 @@ export const draft_product: AxiosInstance = axios.create({
     withCredentials: true,
 })
 
+
+export const seller_products: AxiosInstance = axios.create({
+    baseURL: 'http://localhost:5000/api/users/Demo',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+})
+
+
+
+
+
 //Add the axios instance here
 addInterceptors(add_product)
 addInterceptors(draft_product)
+addInterceptors(seller_products)

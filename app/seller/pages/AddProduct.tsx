@@ -233,7 +233,7 @@ export default function AddProduct() {
                     <ProcessLoading label={isProcess}/>
             ) : (
                 <>
-                    <div className='px-6 sm:px-2 sm:py-5 pt-5 pb-16 sm:pl-16 sm:pr-4 lg:px-5 xl:px-12'>
+        <div className='px-6 pt-5 pb-16 sm:px-2 sm:py-5 sm:pl-16 sm:pr-4 lg:px-5 xl:px-12'>
             <div className='flex justify-end sm:justify-between items-center'>
                 <div className='hidden sm:flex gap-1 items-center'>
                     <Store/>

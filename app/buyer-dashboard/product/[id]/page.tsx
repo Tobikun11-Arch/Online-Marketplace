@@ -107,6 +107,11 @@ const Page = () => {
     }
 
     const handle_DirectBuy = async(products: Products[]) => {
+        if(!user) { 
+            setAdd(false)
+            setAuth(true) 
+            return
+        }
         setBuy(true)
         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPEAPI!)
         try {

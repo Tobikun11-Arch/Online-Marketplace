@@ -1,32 +1,14 @@
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { bouncy, ping } from 'ldrs'
-import { Signout } from '../services/axios/UserAuthentication'
-import { useRouter } from 'next/navigation'
-import { SignOut } from '../../Auth/actions/authAction'
 
-export default function LoadingTimerPage() {
-    const router = useRouter()
+export default function TabsLoading() {
 
     useEffect(()=> {
         if (typeof window !== 'undefined') {
             bouncy.register()
             ping.register()
-        } 
-        const handleSellerLogout = async () => { //Signout from socmed any socmed and to clear token and storage
-            try {
-                SignOut()
-                const response = await Signout.post('', {}, { withCredentials: true })
-                console.log("Signout working")
-                if(response.data.message === 'Signed out successfully!') {
-                    router.push('/')
-                    localStorage.clear();
-                }
-            } catch (error) {
-                console.error("Error during signout: ", error);
-            }
-        }
-        handleSellerLogout()
+        }   
     }, [])
 
 

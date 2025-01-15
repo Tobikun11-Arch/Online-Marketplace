@@ -7,8 +7,10 @@ import NavList from '../components/NavList'
 import Notifications from '../components/Notifications'
 import Messages from '../components/Messages'
 import LoadingTimerPage from '../loading/LoadingTimer'
+import { useUser } from '../state/User'
 
 const Header = () => {
+    const { user } = useUser()
     const [ userOpen, setUserOpen ] = useState<boolean>(false)
     const [ isNotify, setNotify ] = useState<boolean>(false)
     const [ isMessage, setMessage ] = useState<boolean>(false)
@@ -60,7 +62,7 @@ const Header = () => {
                     )}
                     <div className='flex items-center gap-1'>
                         <div className='user-details hidden sm:block'>
-                            <h3 className='text-sm text-black font-medium'>Joenel Sevellejo</h3>
+                            <h3 className='text-sm text-black font-medium'>{user?.Username}</h3>
                             <h3 className='text-xs text-gray-500 flex justify-end'>Seller </h3>
                         </div>
                         <div className='p-0.3 bg-blue-600 rounded-full flex justify-center items-center' onClick={()=> setUserOpen(true)}>
@@ -72,7 +74,7 @@ const Header = () => {
                             />
                         </div>
                         {userOpen && (
-                            <div ref={dropdownRef} className='fixed bg-[#FAFAFA] shadow-md pl-4 pr-14 py-4 flex flex-col gap-4 top-16 right-5 text-gray-700'>
+                            <div ref={dropdownRef} className='fixed z-[9999] bg-white shadow-md pl-4 pr-14 py-4 flex flex-col gap-4 top-16 right-5 text-gray-700'>
                                 <NavList
                                     icon={UserPen}
                                     label='My Account'
