@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getOrderHistory } from '../axios/dataStore'
 import { useUser } from '../store/User'
@@ -24,7 +24,7 @@ const OrdersTab = () => {
     return (
         <div className='overflow-y-auto w-full pr-2'>
             <h1 className='text-xl font-bold'>Order History</h1>
-            {data && data.Order_Items.length > 1 ? (
+            {data && data.Order_Items.length >= 1 ? (
                 <>
                     {data.Order_Items.map((item, index) => (
                         <div key={index} className='flex items-start text-sm justify-between border-gray-300 py-2'>

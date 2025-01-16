@@ -59,7 +59,7 @@ export default function DashboardPage() {
         validateToken();
     }, [router]);
 
-    if(isLoading) { 
+    if(isLoading) {
         return <LogoLoading/>
     }
 

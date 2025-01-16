@@ -10,7 +10,7 @@ import TabsLoading from '../loading/TabsLoading'
 
 export default function ManageProducts() {
     const { setActiveTab } = useSideBarState()
-    const { setTableData, tableData } = useProductDetails()
+    const { setTableData } = useProductDetails()
     const [ isResult, setResult ] = useState<Product[] | []>([])
     const { isStatus } = usefilter()
 
@@ -52,7 +52,6 @@ export default function ManageProducts() {
                 StatusFunction(isResult, "Published");
                 return;
             }
-
             const simplifiedData = isResult.map((product) => ({
                 _id: product._id,
                 productName: product.productName,

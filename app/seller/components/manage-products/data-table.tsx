@@ -52,11 +52,8 @@ export default function DataTableComp() {
     const { tableData } = useProductDetails()
     const { setStatus } = usefilter()
     const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        []
-    )
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({})
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
     const { setActiveTab } = useSideBarState()
 
@@ -145,11 +142,10 @@ export default function DataTableComp() {
             enableHiding: false,
             cell: ({ row }) => {
             const payment = row.original
-    
             return (
                 <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
+                    <Button variant="ghost" className="h-8 w-8 p-0 text-black">
                     <span className="sr-only">Open menu</span>
                     <MoreHorizontal />
                     </Button>
@@ -206,7 +202,7 @@ export default function DataTableComp() {
             onChange={(event) =>
                 table.getColumn("productName")?.setFilterValue(event.target.value)
             }
-            className="w-56 sm:w-80 text-sm outline-none"
+            className="w-56 sm:w-80 text-sm outline-none shadow-md border border-none"
             />
             <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -234,11 +230,11 @@ export default function DataTableComp() {
             </DropdownMenuContent>
             </DropdownMenu>
         </div>
-        <div className="rounded-md border">
-            <Table>
+        <div className="rounded-md border dark:border-gray-200">
+            <Table className="border border-none">
             <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
+                <TableRow className="dark:border-gray-200" key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
                     return (
                         <TableHead key={header.id}>
@@ -260,6 +256,7 @@ export default function DataTableComp() {
                     <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    className="dark:border-gray-200"
                     >
                     {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
