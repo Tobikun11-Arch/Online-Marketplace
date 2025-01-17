@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { Header, Sidebar, Footer } from './layout/index'
 import { useSideBarState } from './state/Sidebar';
-import { HelpSupportPage, OrdersPage, AddProduct, ManageProducts, InventoryPage, ProfilePage, PaymentPage, CustomerPage, SupportPage, MyAccount, Calendar, Overview, ViewProduct } from './pages/index'
+import { HelpSupportPage, OrdersPage, AddProduct, ManageProducts, InventoryPage, ProfilePage, PaymentPage, CustomerPage, SupportPage, MyAccount, Calendar, Overview, ViewProduct, EditProduct } from './pages/index'
 import { useUser } from './state/User'
 
 export default function SellerDashboardLayout() {
@@ -32,7 +32,8 @@ export default function SellerDashboardLayout() {
         'Messages/Support': <SupportPage />,
         'My Account': <MyAccount />,
         'Calendar': <Calendar />,
-        'ViewProduct': <ViewProduct/>
+        'ViewProduct': <ViewProduct/>,
+        'EditProduct': <EditProduct/>
     };
 
     return (

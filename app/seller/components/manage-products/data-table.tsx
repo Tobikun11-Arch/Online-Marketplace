@@ -164,7 +164,10 @@ export default function DataTableComp() {
                         setActiveTab('ViewProduct')
                         setProductId(row.original._id)
                     }}>View product</DropdownMenuItem>
-                    <DropdownMenuItem>Edit product</DropdownMenuItem>
+                    <DropdownMenuItem onClick={()=> {
+                        setActiveTab('EditProduct')
+                        setProductId(row.original._id)
+                    }}>Edit product</DropdownMenuItem>
                 </DropdownMenuContent>
                 </DropdownMenu>
             )

@@ -9,7 +9,6 @@ import { useProducts } from '../../state/manage-products/Products'
 import { useProductId } from '../../state/manage-products/ViewProduct'
 import { Product } from '../../types/product'
 import { useImages } from '../../state/add-product-state/ProductDetails'
-import SizeComponents from '../../components/add-product-components/Size'
 
 export default function ViewProduct() {
     const [ isLoading, setLoading ] = useState<boolean>(false)
@@ -43,9 +42,9 @@ export default function ViewProduct() {
                                     <div className='bg-[#f7f6f6] rounded-lg p-4 shadow-md'>
                                         <h1 className='font-semibold'>General Information</h1>
                                         <h4 className='text-sm mt-3 font-normal'>Name Product</h4>
-                                        <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productName}/>
+                                        <input readOnly type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productName}/>
                                         <h4 className='text-sm mt-3 font-normal'>Product Description</h4>
-                                        <textarea name="" id="" className='w-full mt-1 px-2 rounded-md py-1 text-gray-500 text-sm h-36 resize-none bg-[#EFEFEF] outline-none' defaultValue={product.productDescription}></textarea>
+                                        <textarea readOnly name="" id="" className='w-full mt-1 px-2 rounded-md py-1 text-gray-500 text-sm h-36 resize-none bg-[#EFEFEF] outline-none' defaultValue={product.productDescription}></textarea>
                                         <div className='flex gap-2 mt-2'>
                                             <div className='w-full'>
                                                 <h1 className='text-sm font-normal'>Size</h1>
@@ -60,7 +59,7 @@ export default function ViewProduct() {
                                                     <h3 className='text-xs text-gray-400 font-medium'>(optional)</h3>
                                                 </div>
                                                 <h3 className='text-xs text-gray-400 font-medium'>SKU (Stock Keeping Unit)</h3>
-                                                <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.Sku}/>
+                                                <input readOnly type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.Sku}/>
                                             </div>
                                         </div>
                                     </div>
@@ -69,21 +68,21 @@ export default function ViewProduct() {
                                         <div className='flex gap-2 mt-3 w-full'>
                                             <div className='w-full'>
                                                 <h4 className='text-sm font-normal'>Price</h4>
-                                                <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productPrice}/>
+                                                <input readOnly type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productPrice}/>
                                             </div>
                                             <div className='w-full'>
                                                 <h4 className='text-sm font-normal'>Stock</h4>
-                                                <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productStock}/>
+                                                <input readOnly type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productStock}/>
                                             </div>
                                         </div>
                                         <div className='flex gap-2 mt-5 w-full'>
                                             <div className='w-full'>
                                                 <h4 className='text-sm font-normal'>Discount</h4>
-                                                <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productDiscount}/>
+                                                <input readOnly type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productDiscount}/>
                                             </div>
                                             <div className='w-full'>
                                                 <h4 className='text-sm font-normal'>Quality</h4>
-                                                <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productQuality}/>
+                                                <input readOnly type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productQuality}/>
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +124,7 @@ export default function ViewProduct() {
                                         <h1 className='font-semibold'>Category</h1>
                                         <div className='w-full'>
                                             <h4 className='text-sm font-normal'>Product Category</h4>
-                                            <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productCategory}/>
+                                            <input readOnly type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' defaultValue={product.productCategory}/>
                                         </div>
                                     </div>
                                 </div>
