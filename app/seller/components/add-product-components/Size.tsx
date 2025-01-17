@@ -3,7 +3,7 @@ import { useSize } from '../../state/add-product-state/Size'
 
 interface SizeProps {
     label: string
-    onClick: React.MouseEventHandler<HTMLDivElement> | undefined
+    onClick?: React.MouseEventHandler<HTMLDivElement> | undefined
 }
 
 export default function SizeComponents({ label, onClick }: SizeProps) {

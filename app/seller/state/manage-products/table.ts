@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { tableData } from '../../state/manage-products/product'
+import { tableData } from '../../types/product'
 
 interface ProductProps {
     tableData: tableData[]

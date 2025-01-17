@@ -20,7 +20,7 @@ export const draft_product: AxiosInstance = axios.create({
 
 
 export const seller_products: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/Demo',
+    baseURL: 'http://localhost:5000/api/users/get/product',
     headers: {
         'Content-Type': 'application/json',
     },

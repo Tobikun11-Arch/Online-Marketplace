@@ -17,7 +17,6 @@ export default function SellerDashboardLayout() {
         } else {
             console.log("No stored user found")
         }
-
     }, [])
 
     const tabComponents: Record<string, JSX.Element> = {

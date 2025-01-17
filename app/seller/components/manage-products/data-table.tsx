@@ -15,7 +15,7 @@ import {
 } from "@tanstack/react-table"
 import { ChevronsUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 import { useProductDetails, usefilter } from '../../state/manage-products/table'
-import { tableData } from '../../state/manage-products/product'
+import { tableData } from '../../types/product'
 
 import { Button } from "../../../../@/components/ui/button"
 import { Checkbox } from "../../../../@/components/ui/checkbox"
@@ -47,6 +47,7 @@ import {
 import Image from "next/image"
 import { generatePageItem } from "./PageItems" 
 import { useSideBarState } from "../../state/Sidebar"
+import { useProductId } from "../../state/manage-products/ViewProduct"
 
 export default function DataTableComp() {
     const { tableData } = useProductDetails()
@@ -56,6 +57,7 @@ export default function DataTableComp() {
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
     const { setActiveTab } = useSideBarState()
+    const { setProductId } = useProductId()
 
     const columns: ColumnDef<tableData>[] = [
         {
@@ -109,7 +111,7 @@ export default function DataTableComp() {
                 <div>Status</div>
             )
             },
-            cell: ({ row }) => <div className="lowercase">{row.getValue("status")}</div>,
+            cell: ({ row }) => <div className="lowercase">{row.original.status !== "draft" ? <span className="bg-[#B7F0B6] font-medium px-2 py-1 rounded-md">{row.getValue("status")}</span> : <span className="px-2 py-1 rounded-md bg-[#EFEFEE] font-medium">{row.getValue("status")}</span>}</div>,
         },
         {
             accessorKey: "productPrice",
@@ -150,7 +152,7 @@ export default function DataTableComp() {
                     <MoreHorizontal />
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-white outline-none">
+                <DropdownMenuContent align="end" className="bg-white outline-none dark:border-gray-200 dark:text-black">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuItem
                     onClick={() => navigator.clipboard.writeText(payment._id)}
@@ -160,7 +162,7 @@ export default function DataTableComp() {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={()=> {
                         setActiveTab('ViewProduct')
-                        console.log("Product_id: ", row.original._id)
+                        setProductId(row.original._id)
                     }}>View product</DropdownMenuItem>
                     <DropdownMenuItem>Edit product</DropdownMenuItem>
                 </DropdownMenuContent>
@@ -206,12 +208,12 @@ export default function DataTableComp() {
             />
             <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-1 outline-none">
+                <Button variant="outline" className="flex items-center gap-1 outline-none dark:border-gray-200">
                 Filter 
                 <ChevronDown size={15}/>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className=" bg-white">
+            <DropdownMenuContent className=" bg-white dark:border-gray-200 dark:text-black">
             <DropdownMenuCheckboxItem
             onClick={()=> setStatus("All")}
         >

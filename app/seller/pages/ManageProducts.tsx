@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Plus  } from 'lucide-react'
 import DataTableComp from '../components/manage-products/data-table'
 import { useSideBarState } from '../state/Sidebar'
 import { seller_products } from '../services/axios/ProductRequests'
 import { httpRequestGet } from '../services/axios-instance/GetInstance'
 import { useProductDetails, usefilter } from '../state/manage-products/table' 
-import { Product } from '../state/manage-products/product'
+import { Product } from '../types/product'
+import { useProducts } from '../state/manage-products/Products'
 import TabsLoading from '../loading/TabsLoading'
+import { useUser } from '../state/User'
 
 export default function ManageProducts() {
     const { setActiveTab } = useSideBarState()
     const { setTableData } = useProductDetails()
-    const [ isResult, setResult ] = useState<Product[] | []>([])
+    const { isResult, setResult } = useProducts()
     const { isStatus } = usefilter()
+    const { user } = useUser()
+
 
     function StatusFunction(statusdata: Product[], statusType: string) {
         const status = statusdata.filter((status)=> status.status === statusType)
@@ -29,7 +33,7 @@ export default function ManageProducts() {
     useEffect(()=> {
         const get_products = async() => {
             try {
-                const response = await httpRequestGet('', seller_products)
+                const response = await httpRequestGet('', seller_products, user?._id!)
                 if(response) {
                     setResult(response.user_data)
                 } else {
@@ -72,7 +76,7 @@ export default function ManageProducts() {
                     <div className='w-3 h-6 rounded-sm bg-[#C4BAF6]'></div>
                     <h1 className='text-2xl font-semibold'>Products</h1>
                 </div>
-                <button className='flex gap-1 bg-blue-600 rounded-md justify-center items-center text-white px-2 text-xs' onClick={()=> setActiveTab('Add New Product')}>
+                <button className='flex gap-1 shadow-md bg-blue-600 rounded-md justify-center items-center text-white px-2 text-xs' onClick={()=> setActiveTab('Add New Product')}>
                     <Plus size={20}/>
                     Add New
                 </button>

@@ -1,13 +1,17 @@
 import { AxiosError, AxiosResponse, AxiosInstance } from 'axios';
-import { Product } from '../../state/manage-products/product';
+import { Product } from '../../types/product';
 
 interface ResponseData {
     user_data: Product[]
 }
 
-export const httpRequestGet = async(url: string,getType: AxiosInstance): Promise<ResponseData | void> => {
+export const httpRequestGet = async(url: string,getType: AxiosInstance, userId: string): Promise<ResponseData | void> => {
     try {
-        const response: AxiosResponse<ResponseData> = await getType.get(url);
+        const response: AxiosResponse<ResponseData> = await getType.get(url, {
+            params: {
+                userId: userId
+            }
+        });
         return response.data
     } 
     catch (error) {
