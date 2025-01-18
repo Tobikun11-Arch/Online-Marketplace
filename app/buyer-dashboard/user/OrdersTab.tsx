@@ -26,7 +26,7 @@ const OrdersTab = () => {
             <h1 className='text-xl font-bold'>Order History</h1>
             {data && data.Order_Items.length >= 1 ? (
                 <>
-                    {data.Order_Items.map((item, index) => (
+                    {data.Order_Items.filter(item => item.productName).map((item, index) => (
                         <div key={index} className='flex items-start text-sm justify-between border-gray-300 py-2'>
                             <div className='flex gap-3'>
                                 <div className='w-20 h-20 bg-gray-400 relative rounded-md'>
