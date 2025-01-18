@@ -5,8 +5,9 @@ import { Product } from '../../types/product'
 import Image from 'next/image'
 import { useSideBarState } from "../../state/Sidebar"
 import { CircleChevronLeft, Save, Check } from 'lucide-react'
-import { useImages } from '../../state/add-product-state/ProductDetails'
+import { productDetails, useImages, useCategory } from '../../state/add-product-state/ProductDetails'
 import SubImage from '../../components/add-product-components/SubImage'
+import { useSize } from '../../state/add-product-state/Size'
 
 export default function EditProduct() {
     const { isResult } = useProducts()
@@ -15,7 +16,10 @@ export default function EditProduct() {
     const { setActiveTab } = useSideBarState()
     const imgParent = 'relative w-full h-96 mt-2 md:h-[300px] flex flex-col justify-center items-center md:mb-0 bg-[#EFEFEF] rounded-md'
     const imgSubParent = 'relative w-3/4 h-3/4 aspect-w-1 aspect-h-1'
-    const { isSelected, setSelected } = useImages()
+    const { isSubImage_01, isSubImage_02, isSubImage_03, setSubImage_01, setSubImage_02, setSubImage_03, setSelected, isSelected } = useImages();
+    const { isCategory, setCategory } = useCategory()
+    const { isSize, setSize } = useSize()
+    const { setisProductName, isProductName, setDescription, isDescription, setSku, isSku, setPrice, isPrice, setStock, isStock, setDiscount, isDiscount, isQuality, setQuality } = productDetails()
 
     useEffect(()=> {
         console.log("Id: ", product_id)

@@ -97,6 +97,7 @@ const Page = () => {
                 await addtoCartRequest(dataProduct);
                 toast({
                     description: "Successfully added to cart.",
+                    className: "text-white"
                 })
                 setAdd(false)
             } catch (error: any) {

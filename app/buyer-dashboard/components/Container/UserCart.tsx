@@ -8,6 +8,10 @@ import { updateQuantity, deleteProduct } from '../../axios/dataStore'
 import {loadStripe} from '@stripe/stripe-js';
 import { StripePayment } from '../../axios/dataStore'
 import { ring2 } from 'ldrs'
+import { AddToCartPayload } from '../../Interface/CartItem'
+import { myCart } from '../../axios/dataStore'
+import { useQuery } from '@tanstack/react-query'
+
 interface cartProps {
     Cart: ICartItem | undefined
 }
@@ -17,6 +21,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
     const { user } = useUser()
     const { setCartLength } = useUserCart()
     const [ isCheckout, setCheckout ] = useState<boolean>(false)    
+    const [ localproduct, setlocal ] = useState<AddToCartPayload[]>([])
     const [ price, setPrice ] = useState<number | undefined>(0)
     const [ newQuantity, setNewQuantity ] = useState<{ [key: string]: number }> (
         Cart?.user.cart.reduce((acc, item)=> {
@@ -24,6 +29,16 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
             return acc
         }, {} as { [key: string]: number }) || {}
     )
+
+    const fetchData = async (): Promise<ICartItem> => {
+        const response = await myCart.post('', { Email: user?.Email! }, { withCredentials: true });
+        return response.data;
+    };
+
+    const { data, refetch } = useQuery<ICartItem>({
+        queryKey: ['cartData'],
+        queryFn: fetchData
+    });
 
     const UpdateQuantity = useCallback(async (productId: string, Crement: string, current: number) => {
         let updatedQuantity =  Crement === 'Add' ? current + 1 : Math.max(1, current - 1)
@@ -41,10 +56,11 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
 
         try {
             await updateQuantity.put('',  userDetails, { withCredentials: true })
+            await refetch()
         } catch (error) {
             console.error("Fetching error: ", error)
         }
-    }, [user])
+    }, [user, newQuantity])
 
     const deleteProducts = async(productId: string) => {
         const userDetails = {
@@ -86,21 +102,23 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
         return ServerPrice! + LocalPrice
     }, [Cart, localCart, newQuantity])
 
-    const LocalCart = localCart.filter(
-        (localItem)=> !Cart?.user.cart.some((cartItem)=> cartItem.productId as any === localItem.productId)
-    )
     useEffect(()=> {
         setPrice(totalPrice) 
         const UniqueCart = localCart.filter(
             (localItem)=> !Cart?.user.cart.some((cartItem)=> cartItem.productId as any === localItem.productId)
         ) //Include the localCart productId that doesnt exist on Cart.user or from fetch
         setCartLength(Cart?.user.cart.length!  + UniqueCart.length)
-    }, [totalPrice])
+        const LocalCarts = localCart.filter(
+            (localItem)=> !Cart?.user.cart.some((cartItem)=> cartItem.productId as any === localItem.productId)
+        )
+        setlocal(LocalCarts)
+    }, [totalPrice, localCart])
 
     const handleCheckout = async () => {
+        const products_data = (Cart?.user.cart && Cart.user.cart.length >= 1) ? Cart.user.cart : localproduct;
         setCheckout(true)
         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPEAPI!)
-        const response = await StripePayment.post('', {products: Cart?.user.cart ? Cart?.user.cart : LocalCart, userId: user?._id}, {withCredentials: true})
+        const response = await StripePayment.post('', {products: products_data, userId: user?._id}, {withCredentials: true})
         stripe!.redirectToCheckout({
             sessionId: response.data.id
         })
