@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react' 
-import SizeUi from '../../components/add-product-components/SizeUi'
-import QualityComponents from '../../components/add-product-components/Quality'
-import ProductCategory from '../../components/add-product-components/ProductCategory'
+import { CircleChevronLeft } from 'lucide-react'
 import Image from 'next/image'
 import SubImage from '../../components/add-product-components/SubImage'
 import ProcessLoading from '../../loading/ProcessLoading'
@@ -9,11 +7,13 @@ import { useProducts } from '../../state/manage-products/Products'
 import { useProductId } from '../../state/manage-products/ViewProduct'
 import { Product } from '../../types/product'
 import { useImages } from '../../state/add-product-state/ProductDetails'
+import { useSideBarState } from "../../state/Sidebar"
 
 export default function ViewProduct() {
     const [ isLoading, setLoading ] = useState<boolean>(false)
     const [ isProcess, setProcess ] = useState<string>('Loading...')
     const { isSelected, setSelected } = useImages()
+    const { setActiveTab } = useSideBarState()
     const { isResult } = useProducts()
     const { product_id } = useProductId()
     const [ products, setproducts ] = useState<Product[]>([])
@@ -21,11 +21,8 @@ export default function ViewProduct() {
     const imgSubParent = 'relative w-3/4 h-3/4 aspect-w-1 aspect-h-1'
 
     useEffect(()=> {
-        console.log("Id: ", product_id)
-
         const filtered = isResult.filter((product)=> product._id === product_id)
         setproducts(filtered)
-        console.log("Filtered data: ", filtered)
     }, [isResult])
 
     return (
@@ -37,8 +34,12 @@ export default function ViewProduct() {
                     {
                         products.map((product, index)=> (
                             <div key={index} className='px-6 pt-5 pb-16 sm:px-2 sm:py-5 sm:pl-16 sm:pr-4 lg:px-5 xl:px-12'>
+                            <div className='flex gap-1 items-center' onClick={()=> setActiveTab('Manage Products')}>
+                                <CircleChevronLeft />
+                                <h1 className='font-semibold text-[#45984d]'>Back</h1>
+                            </div>
                             <div className='Group md:flex gap-8 lg:gap-3 xl:gap-8'>
-                                <div className='first-box w-full md:w-3/5 mt-5 sm:mt-10'>
+                                <div className='first-box w-full md:w-3/5 mt-5 sm:mt-6'>
                                     <div className='bg-[#f7f6f6] rounded-lg p-4 shadow-md'>
                                         <h1 className='font-semibold'>General Information</h1>
                                         <h4 className='text-sm mt-3 font-normal'>Name Product</h4>
