@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SizeComponents from './Size'
 import { useSize } from '../../state/add-product-state/Size'
 

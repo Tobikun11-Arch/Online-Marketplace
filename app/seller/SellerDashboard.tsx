@@ -4,10 +4,33 @@ import { Header, Sidebar, Footer } from './layout/index'
 import { useSideBarState } from './state/Sidebar';
 import { HelpSupportPage, OrdersPage, AddProduct, ManageProducts, InventoryPage, ProfilePage, PaymentPage, CustomerPage, SupportPage, MyAccount, Calendar, Overview, ViewProduct, EditProduct } from './pages/index'
 import { useUser } from './state/User'
+import { productDetails } from './state/add-product-state/ProductDetails';
+import { UpdateDetails, UpdatedImages } from './state/add-product-state/UpdateProduct';
+import { useSize } from './state/add-product-state/Size';
 
 export default function SellerDashboardLayout() {
     const { activeTab } = useSideBarState()
     const { setUser } = useUser()
+    const { setisProductName, setDescription, setSku, setPrice, setStock, setDiscount } = UpdateDetails()
+    const { setSubImage_01, setSubImage_02, setSubImage_03, setSelected, isSelected } = UpdatedImages();
+    const { setSize } = useSize()
+    const { setQuality } = productDetails()
+
+    const resetFormState = () => {
+        setisProductName('');
+        setDescription('');
+        setSku('');
+        setPrice(0);
+        setStock(0); 
+        setDiscount(0);
+        setQuality(''); 
+        setSize('XS')
+        // Reset images
+        setSelected('')
+        setSubImage_01('');
+        setSubImage_02('');
+        setSubImage_03(''); 
+    };
 
     useEffect(()=> {
         const storedUser = localStorage.getItem('user');
@@ -17,7 +40,10 @@ export default function SellerDashboardLayout() {
         } else {
             console.log("No stored user found")
         }
-    }, [])
+        if(activeTab === 'Manage Products') {
+            resetFormState()
+        }
+    }, [activeTab])
 
     const tabComponents: Record<string, JSX.Element> = {
         'Dashboard': <Overview />,

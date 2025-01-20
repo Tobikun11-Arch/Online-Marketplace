@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { useCategory } from '../../state/add-product-state/ProductDetails'
 
 export default function ProductCategory() {
-    const { setCategory } = useCategory()
+    const { setCategory, isCategory } = useCategory()
 
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedCategory = event.target.value; 
@@ -17,7 +17,7 @@ export default function ProductCategory() {
             <div className="relative bg-[#EFEFEF] mt-1 rounded-md">
             <Select
                 onChange={handleCategoryChange}
-                defaultValue="" // Optional: Set a default value
+                value={isCategory} // Optional: Set a default value
                 className={clsx(
                     'block w-full appearance-none rounded-md border-none bg-[#EFEFEF] py-1.5 px-3 text-sm/6 text-black',
                     'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',

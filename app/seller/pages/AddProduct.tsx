@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react' 
-import { Store, Check, Save, Plus } from 'lucide-react'
+import { Store, Check, Save, Plus, FileWarning } from 'lucide-react'
 import SizeUi from '../components/add-product-components/SizeUi'
 import QualityComponents from '../components/add-product-components/Quality'
 import ProductCategory from '../components/add-product-components/ProductCategory'
@@ -374,6 +374,10 @@ export default function AddProduct() {
                                 />
                             </div>
                         </div>
+                        <div className='flex gap-1 items-center'>
+                            <FileWarning size={16} color='gray'/>
+                            <h6 className='text-[10px] text-gray-500'>The product image cannot be empty. Please upload an image before saving to draft.</h6>
+                        </div>
                     </div>
                     <div className='bg-[#f7f6f6] rounded-lg p-4 shadow-md mt-5'>
                         <h1 className='font-semibold'>Category</h1>
@@ -384,7 +388,7 @@ export default function AddProduct() {
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
                 </>
             )}
         </>

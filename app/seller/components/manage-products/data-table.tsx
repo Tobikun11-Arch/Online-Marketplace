@@ -288,7 +288,7 @@ export default function DataTableComp() {
         </div>
         <div className="flex flex-col sm:flex sm:flex-row items-center justify-between space-x-2 py-4">
             <div className="text-sm hidden sm:block text-muted-foreground">
-                {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected.
+                {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} product(s).
             </div>
             <Pagination className="flex w-3/4 justify-center sm:justify-end">
             <PaginationContent>
