@@ -1,4 +1,5 @@
 import { Field, Select } from '@headlessui/react'
+import { ChangeEvent } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import clsx from 'clsx'
 import { productDetails } from '../../state/add-product-state/ProductDetails'
