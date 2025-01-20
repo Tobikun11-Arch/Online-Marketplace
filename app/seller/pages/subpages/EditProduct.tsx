@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useProducts } from '../../state/manage-products/Products'
 import { useProductId } from '../../state/manage-products/ViewProduct'
 import { Product } from '../../types/product'
@@ -12,6 +12,10 @@ import { useSize } from '../../state/add-product-state/Size'
 import SizeUi from '../../components/add-product-components/SizeUi'
 import QualityComponents from '../../components/add-product-components/Quality'
 import ProductCategory from '../../components/add-product-components/ProductCategory'
+import { useUser } from '../../state/User'
+import { update_products } from '../../services/axios/ProductRequests'
+import { httpRequestGet } from '../../services/axios-instance/PutInstance'
+import { isAsyncFunction } from 'node:util/types'
 
 export default function EditProduct() {
     const { isResult } = useProducts()
@@ -20,12 +24,12 @@ export default function EditProduct() {
     const { setActiveTab } = useSideBarState()
     const imgParent = 'relative w-full h-96 mt-2 md:h-[300px] flex flex-col justify-center items-center md:mb-0 bg-[#EFEFEF] rounded-md'
     const imgSubParent = 'relative w-3/4 h-3/4 aspect-w-1 aspect-h-1'
-    const { isSubImage_01, isSubImage_02, isSubImage_03, setSubImage_01, setSubImage_02, setSubImage_03, setSelected, isSelected } = UpdatedImages();
+    const { setSelected, isSelected } = UpdatedImages();
     const { isCategory, setCategory } = useCategory()
     const { isSize, setSize } = useSize()
     const { setisProductName, isProductName, setDescription, isDescription, setSku, isSku, setPrice, isPrice, setStock, isStock, setDiscount, isDiscount } = UpdateDetails()
     const { setQuality, isQuality } = productDetails()
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const { user } = useUser()
 
     useEffect(()=> {
         const filtered = isResult.filter((product)=> product._id === product_id)
@@ -35,46 +39,28 @@ export default function EditProduct() {
         setCategory(filtered[0].productCategory)
     }, [isResult])
 
-
     //Update the published products
-    const handle_rePublish = (productName: string, productDescription: string, productSize: string, Sku: string, productPrice: number, productStock: number, productDiscount: number, productQuality: string, productCategory: string) => {
+    const handle_rePublish = async (productName: string, productDescription: string, productSize: string, Sku: string, productPrice: number, productStock: number, productDiscount: number, productQuality: string, productCategory: string, images: string[]) => {
         const details = {
+            userId: user?._id,
+            productId: product_id,
             productName: isProductName || productName,
             productDescription: isDescription || productDescription,
             productSize: isSize || productSize,
+            status: "Published",
             Sku: isSku || Sku,
             productPrice: isPrice || productPrice,
             productStock: isStock || productStock,
             productDiscount: isDiscount || productDiscount,
             productQuality: isQuality || productQuality,
-            productCategory: isCategory || productCategory
+            productCategory: isCategory || productCategory,
+            images: images
         }
-        console.log("Name: ", details)
+        const response = await httpRequestGet(update_products, '', details)
+        if(response) {
+            console.log("response working")
+        }
     }
-
-    const handleDivClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const base64String = reader.result as string; 
-                if (!isSubImage_01) {
-                    setSubImage_01(base64String);
-                } else if (!isSubImage_02) {
-                    setSubImage_02(base64String);
-                } else if (!isSubImage_03) {
-                    setSubImage_03(base64String)
-                } else {
-                    console.log("All image slots are occupied.");
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    };
 
     return (
         <>
@@ -88,7 +74,7 @@ export default function EditProduct() {
                     </div>
                     {product.status !== "draft" ? 
                         <div className='flex gap-2'>
-                            <button className='shadow-md py-2 px-3 flex items-center gap-1 bg-[#A0EDA8] rounded-xl text-xs text-black font-semibold' onClick={()=> handle_rePublish(product.productName, product.productDescription, product.productSize, product.Sku, product.productPrice, product.productStock, product.productDiscount, product.productQuality, product.productCategory)}>
+                            <button className='shadow-md py-2 px-3 flex items-center gap-1 bg-[#A0EDA8] rounded-xl text-xs text-black font-semibold' onClick={()=> handle_rePublish(product.productName, product.productDescription, product.productSize, product.Sku, product.productPrice, product.productStock, product.productDiscount, product.productQuality, product.productCategory, product.images)}>
                                 <Save size={17}/>
                                 Save Changes
                             </button>
