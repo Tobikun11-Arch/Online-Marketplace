@@ -12,7 +12,7 @@ export default function QualityComponents() {
             <div className="relative bg-[#EFEFEF] mt-1 rounded-md">
             <Select
                 value={isQuality} // Bind the value to isQuality
-                onChange={(e) => setQuality(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => setQuality(e.target.value)}
                 className={clsx(
                     'block w-full appearance-none rounded-md border-none bg-[#EFEFEF] py-1.5 px-3 text-sm/6 text-black',
                     'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
