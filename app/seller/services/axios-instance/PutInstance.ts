@@ -8,7 +8,7 @@ interface ResponseData {
     [key: string]: any
 }
 
-export const httpRequestGet = async(PutType: AxiosInstance, url: string, data: PostData): Promise<ResponseData | void> => {
+export const httpRequestPut = async(PutType: AxiosInstance, url: string, data: PostData): Promise<ResponseData | void> => {
     try {
         const response: AxiosResponse<ResponseData> = await PutType.put(url, data);
         return response.data.message

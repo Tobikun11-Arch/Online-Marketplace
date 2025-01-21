@@ -139,6 +139,14 @@ export default function AddProduct() {
             setCategory(''); 
         }
 
+        if(!isSubImage_01 || !isSubImage_02 || !isSubImage_03) {
+            toast({
+                description: "The product image cannot be empty. Please upload an image before saving to draft.",
+                className: 'text-black shadow-md bg-white'
+            })
+            return
+        }
+
         setLoading(true)
         try {
             const uploadPromises = productImages.map(async (image: string, index) => {
@@ -181,7 +189,7 @@ export default function AddProduct() {
                     resetFormState()
                     toast({
                         description: "Product added to draft!",
-                        className: 'text-white'
+                        className: 'text-black shadow-md bg-white'
                     })
                     setLoading(false)
                 }
@@ -190,7 +198,7 @@ export default function AddProduct() {
                 setLoading(false)
                 toast({
                     description: "Failed to add product. Please try again.",
-                    className: 'text-white'
+                    className: 'text-black shadow-md bg-white'
                 })
             }
         } catch (error) {
@@ -198,7 +206,7 @@ export default function AddProduct() {
             setLoading(false)
             toast({
                 description: "Failed to add product. Please try again.",
-                className: 'text-white'
+                className: 'text-black shadow-md bg-white'
             })
         }
     }
@@ -373,10 +381,6 @@ export default function AddProduct() {
                                     className="hidden"
                                 />
                             </div>
-                        </div>
-                        <div className='flex gap-1 items-center'>
-                            <FileWarning size={16} color='gray'/>
-                            <h6 className='text-[10px] text-gray-500'>The product image cannot be empty. Please upload an image before saving to draft.</h6>
                         </div>
                     </div>
                     <div className='bg-[#f7f6f6] rounded-lg p-4 shadow-md mt-5'>

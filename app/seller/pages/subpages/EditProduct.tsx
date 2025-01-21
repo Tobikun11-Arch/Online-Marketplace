@@ -13,9 +13,10 @@ import SizeUi from '../../components/add-product-components/SizeUi'
 import QualityComponents from '../../components/add-product-components/Quality'
 import ProductCategory from '../../components/add-product-components/ProductCategory'
 import { useUser } from '../../state/User'
-import { update_products } from '../../services/axios/ProductRequests'
-import { httpRequestGet } from '../../services/axios-instance/PutInstance'
-import { isAsyncFunction } from 'node:util/types'
+import { update_products, update_draftProducts, Draft_Publish } from '../../services/axios/ProductRequests'
+import { httpRequestPut } from '../../services/axios-instance/PutInstance'
+import { PostFetch } from '../../services/axios-instance/PostInstance'
+import { useToast } from "../../../../@/hooks/use-toast"
 
 export default function EditProduct() {
     const { isResult } = useProducts()
@@ -30,6 +31,7 @@ export default function EditProduct() {
     const { setisProductName, isProductName, setDescription, isDescription, setSku, isSku, setPrice, isPrice, setStock, isStock, setDiscount, isDiscount } = UpdateDetails()
     const { setQuality, isQuality } = productDetails()
     const { user } = useUser()
+    const { toast } = useToast()
 
     useEffect(()=> {
         const filtered = isResult.filter((product)=> product._id === product_id)
@@ -56,9 +58,95 @@ export default function EditProduct() {
             productCategory: isCategory || productCategory,
             images: images
         }
-        const response = await httpRequestGet(update_products, '', details)
+        const response = await httpRequestPut(update_products, '', details)
         if(response) {
-            console.log("response working")
+            toast({
+                description: "Product updated successfully!",
+                className: 'text-black bg-white shadow-md'
+            })
+            return
+        }
+        toast({
+            description: "Unable to update the product!",
+            className: 'text-black bg-white shadow-md'
+        })
+    }
+
+    const handle_draftchanges = async (productName: string, productDescription: string, productSize: string, Sku: string, productPrice: number, productStock: number, productDiscount: number, productQuality: string, productCategory: string, images: string[]) => {
+        const details = {
+            userId: user?._id,
+            productId: product_id,
+            productName: isProductName || productName,
+            productDescription: isDescription || productDescription,
+            productSize: isSize || productSize,
+            status: "draft",
+            Sku: isSku || Sku,
+            productPrice: isPrice || productPrice,
+            productStock: isStock || productStock,
+            productDiscount: isDiscount || productDiscount,
+            productQuality: isQuality || productQuality,
+            productCategory: isCategory || productCategory,
+            images: images
+        }
+        try {
+            const response = await httpRequestPut(update_draftProducts, '', details)
+            if(response) {
+                toast({
+                    description: "Product updated successfully!",
+                    className: 'text-black bg-white shadow-md'
+                })
+                return
+            }
+            toast({
+                description: "Unable to update the product!",
+                className: 'text-black bg-white shadow-md'
+            })
+        } catch (error) {
+            console.error("Error: ", error)
+        }
+    }
+
+    const handle_newPublish = async(productName: string, productDescription: string, productSize: string, Sku: string, productPrice: number, productStock: number, productDiscount: number, productQuality: string, productCategory: string, images: string[]) => {
+        const details = {
+            userId: user?._id,
+            productId: product_id,
+            productName: isProductName || productName,
+            productDescription: isDescription || productDescription,
+            productSize: isSize || productSize,
+            status: "Published",
+            Sku: isSku || Sku,
+            productPrice: isPrice || productPrice,
+            productStock: isStock || productStock,
+            productDiscount: isDiscount || productDiscount,
+            productQuality: isQuality || productQuality,
+            productCategory: isCategory || productCategory,
+            images: images
+        }
+
+        try {
+            if (
+                (!isProductName && !productName) ||
+                (!isDescription && !productDescription) ||
+                (isPrice === 0 && productPrice === 0) || 
+                (isStock === 0 && productStock === 0) ||
+                (!isSize && !productSize)
+            ) {
+                toast({
+                    description: "Please fill all fields",
+                    className: 'text-black bg-white shadow-md'
+                })
+                return
+            }
+            const response = await PostFetch('', Draft_Publish, details)
+            if(response) {
+                toast({
+                    description: "Product successfully published!",
+                    className: 'text-black bg-white shadow-md'
+                })
+                setActiveTab('Manage Products')
+            }
+        } catch (error) {
+            console.error("Error: ", error)
         }
     }
 
@@ -81,11 +169,11 @@ export default function EditProduct() {
                         </div>  
                             :
                         <div className='flex gap-2'>
-                            <button className='shadow-md py-2 px-3 flex items-center gap-1 rounded-xl text-xs font-semibold' onClick={()=> console.log('Save Changes')}>
+                            <button className='shadow-md py-2 px-3 flex items-center gap-1 rounded-xl text-xs font-semibold' onClick={()=>  handle_draftchanges(product.productName, product.productDescription, product.productSize, product.Sku, product.productPrice, product.productStock, product.productDiscount, product.productQuality, product.productCategory, product.images)}>
                                 <Save size={17}/>
                                 Save Changes
                             </button>
-                            <button className='flex items-center gap-1 bg-[#A0EDA8] shadow-md py-2 text-xs px-3 rounded-xl font-semibold' onClick={()=> console.log('Publish')}>
+                            <button className='flex items-center gap-1 bg-[#A0EDA8] shadow-md py-2 text-xs px-3 rounded-xl font-semibold' onClick={()=> handle_newPublish(product.productName, product.productDescription, product.productSize, product.Sku, product.productPrice, product.productStock, product.productDiscount, product.productQuality, product.productCategory, product.images)}>
                                 <Check size={17}/>
                                 Publish
                             </button>

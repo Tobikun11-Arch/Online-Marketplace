@@ -28,7 +28,6 @@ export const seller_products: AxiosInstance = axios.create({
 })
 
 
-
 export const update_products: AxiosInstance = axios.create({
     baseURL: 'http://localhost:5000/api/users/put/product',
     headers: {
@@ -38,6 +37,23 @@ export const update_products: AxiosInstance = axios.create({
 })
 
 
+export const update_draftProducts: AxiosInstance = axios.create({
+    baseURL: 'http://localhost:5000/api/users/put/draftproduct',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+})
+
+
+export const Draft_Publish: AxiosInstance = axios.create({
+    baseURL: 'http://localhost:5000/api/users/post/newpublish',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+})
+
 
 
 //Add the axios instance here
@@ -45,3 +61,5 @@ addInterceptors(add_product)
 addInterceptors(draft_product)
 addInterceptors(seller_products)
 addInterceptors(update_products)
+addInterceptors(update_draftProducts)
+addInterceptors(Draft_Publish)
