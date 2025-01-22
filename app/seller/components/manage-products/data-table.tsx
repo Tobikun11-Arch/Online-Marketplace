@@ -47,9 +47,13 @@ import Image from "next/image"
 import { generatePageItem } from "./PageItems" 
 import { useSideBarState } from "../../state/Sidebar"
 import { useProductId } from "../../state/manage-products/ViewProduct"
+import { httpDeleteReq } from "../../services/axios-instance/DeleteInstance"
+import { delete_product } from "../../services/axios/ProductRequests"
+import { useUser } from "../../state/User"
+import { useToast } from "../../../../@/hooks/use-toast"
 
 export default function DataTableComp() {
-    const { tableData } = useProductDetails()
+    const { tableData, setTableData } = useProductDetails()
     const { setStatus } = usefilter()
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -57,6 +61,12 @@ export default function DataTableComp() {
     const [rowSelection, setRowSelection] = React.useState({})
     const { setActiveTab } = useSideBarState()
     const { setProductId } = useProductId()
+    const { user }= useUser()
+    const { toast } = useToast()
+
+    React.useEffect(() => {
+        setRowSelection({})
+    }, [tableData])
 
     const columns: ColumnDef<tableData>[] = [
         {
@@ -197,6 +207,26 @@ export default function DataTableComp() {
     const currentPage = table.getState().pagination.pageIndex + 1; // Pages are 1-based
     const pageItems = generatePageItem(totalPageCount, currentPage);
 
+    const handleDelete = async(productId: string[]) => {
+        const details = {
+            productId,
+            userId: user?._id
+        }
+        try {
+            const response = await httpDeleteReq('', delete_product, details)
+            if(response) {
+                const filtered_product = tableData.filter(product => !productId.includes(product._id))
+                setTableData(filtered_product)
+                toast({
+                    description: `${response}`,
+                    className: "text-black bg-white shadow-md"
+                })
+            }
+        } catch (error) {
+            console.error("Internal error")
+        }
+    }
+
     return (
         <div className="w-full">
         <div className="flex justify-between items-center py-4 gap-1">
@@ -286,9 +316,6 @@ export default function DataTableComp() {
             </Table>
         </div>
         <div className="flex flex-col sm:flex sm:flex-row items-center justify-end space-x-2 py-4">
-            {/* <div className="text-sm hidden sm:block text-muted-foreground">
-                {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} product(s).
-            </div> */}
             <Pagination className="flex w-3/4 justify-center sm:justify-end">
             <PaginationContent>
                 <PaginationItem>
@@ -363,7 +390,7 @@ export default function DataTableComp() {
                                         </div>
                                         <h1 className="font-medium hidden sm:block">Duplicate</h1>
                                     </div>
-                                    <div className="flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md" onClick={()=> console.log("id: ", table.getSelectedRowModel().rows.map((row)=> row.original._id))}>
+                                    <div className="flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md" onClick={()=> handleDelete(table.getSelectedRowModel().rows.map((row)=> row.original._id))}>
                                     <div className="tooltip tooltip-top sm:tooltip-none" data-tip="Delete">
                                         <Trash size={15}/>
                                     </div>
