@@ -13,10 +13,9 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ChevronsUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+import { ChevronsUpDown, ChevronDown, MoreHorizontal, Forward, Files, Trash } from "lucide-react"
 import { useProductDetails, usefilter } from '../../state/manage-products/table'
 import { tableData } from '../../types/product'
-
 import { Button } from "../../../../@/components/ui/button"
 import { Checkbox } from "../../../../@/components/ui/checkbox"
 import {
@@ -286,10 +285,10 @@ export default function DataTableComp() {
             </TableBody>
             </Table>
         </div>
-        <div className="flex flex-col sm:flex sm:flex-row items-center justify-between space-x-2 py-4">
-            <div className="text-sm hidden sm:block text-muted-foreground">
+        <div className="flex flex-col sm:flex sm:flex-row items-center justify-end space-x-2 py-4">
+            {/* <div className="text-sm hidden sm:block text-muted-foreground">
                 {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} product(s).
-            </div>
+            </div> */}
             <Pagination className="flex w-3/4 justify-center sm:justify-end">
             <PaginationContent>
                 <PaginationItem>
@@ -337,11 +336,45 @@ export default function DataTableComp() {
                     className="border-none pl-2"
                 >
                     Next
-                </Button>
+                </Button>   
                 </PaginationItem>
             </PaginationContent>
             </Pagination>
         </div>
+            <div className="bg-transparent fixed bottom-14 sm:bottom-1 left-0 right-0 text-white text-xs">
+                {table.getFilteredSelectedRowModel().rows.length >= 1 && (
+                    <>
+                        <div className="bg-transparent w-full flex justify-center items-center">
+                            <div className="flex gap-32 sm:48 lg:ml-80 bg-[#222531] p-2 rounded-lg">
+                                <div className="flex gap-1 items-center">
+                                    <h1 className="py-1 px-2 bg-[#B1E6FB] text-black rounded-sm">{table.getFilteredSelectedRowModel().rows.length}</h1>
+                                    <h1 className="font-medium">Selected</h1>
+                                </div>
+                                <div className="sub-end flex gap-2">
+                                    <div className="flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md ">
+                                        <div className="tooltip tooltip-top sm:tooltip-none" data-tip="Share">
+                                            <Forward size={15}/>
+                                        </div>
+                                        <h1 className="font-medium hidden sm:block">Share</h1>
+                                    </div>
+                                    <div className="flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md">
+                                        <div className="tooltip tooltip-top sm:tooltip-none" data-tip="Duplicate">
+                                            <Files size={15}/>
+                                        </div>
+                                        <h1 className="font-medium hidden sm:block">Duplicate</h1>
+                                    </div>
+                                    <div className="flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md" onClick={()=> console.log("id: ", table.getSelectedRowModel().rows.map((row)=> row.original._id))}>
+                                    <div className="tooltip tooltip-top sm:tooltip-none" data-tip="Delete">
+                                        <Trash size={15}/>
+                                    </div>
+                                        <h1 className="font-medium hidden sm:block">Delete</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     )
 }
