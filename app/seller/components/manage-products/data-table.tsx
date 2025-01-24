@@ -13,7 +13,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ChevronsUpDown, ChevronDown, MoreHorizontal, Forward, Files, Trash } from "lucide-react"
+import { ChevronsUpDown, ChevronDown, MoreHorizontal, Forward, Download, Trash } from "lucide-react"
 import { useProductDetails, usefilter } from '../../state/manage-products/table'
 import { tableData } from '../../types/product'
 import { Button } from "../../../../@/components/ui/button"
@@ -42,7 +42,7 @@ import {
     PaginationItem,
     PaginationLink,
     PaginationEllipsis  ,
-  } from "../../../../@/components/ui/pagination";
+} from "../../../../@/components/ui/pagination";
 import Image from "next/image"
 import { generatePageItem } from "./PageItems" 
 import { useSideBarState } from "../../state/Sidebar"
@@ -51,6 +51,7 @@ import { httpDeleteReq } from "../../services/axios-instance/DeleteInstance"
 import { delete_product } from "../../services/axios/ProductRequests"
 import { useUser } from "../../state/User"
 import { useToast } from "../../../../@/hooks/use-toast"
+import Link from "next/link"
 
 export default function DataTableComp() {
     const { tableData, setTableData } = useProductDetails()
@@ -378,18 +379,14 @@ export default function DataTableComp() {
                                     <h1 className="font-medium">Selected</h1>
                                 </div>
                                 <div className="sub-end flex gap-2">
-                                    <div className="flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md ">
-                                        <div className="tooltip tooltip-top sm:tooltip-none" data-tip="Share">
-                                            <Forward size={15}/>
+                                    <Link href={`/seller/product/${table.getSelectedRowModel().rows.map((row)=> row.original._id)}`}>
+                                        <div className={`flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md ${table.getFilteredSelectedRowModel().rows.length > 1 && 'hidden'}`}>
+                                            <div className="tooltip tooltip-top sm:tooltip-none" data-tip="Export">
+                                                <Download size={15}/>
+                                            </div>
+                                            <h1 className="font-medium hidden sm:block">Export</h1>
                                         </div>
-                                        <h1 className="font-medium hidden sm:block">Share</h1>
-                                    </div>
-                                    <div className="flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md">
-                                        <div className="tooltip tooltip-top sm:tooltip-none" data-tip="Duplicate">
-                                            <Files size={15}/>
-                                        </div>
-                                        <h1 className="font-medium hidden sm:block">Duplicate</h1>
-                                    </div>
+                                    </Link>
                                     <div className="flex gap-1 items-center bg-[#363D4B] py-1 px-2 rounded-md" onClick={()=> handleDelete(table.getSelectedRowModel().rows.map((row)=> row.original._id))}>
                                     <div className="tooltip tooltip-top sm:tooltip-none" data-tip="Delete">
                                         <Trash size={15}/>

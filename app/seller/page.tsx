@@ -8,23 +8,21 @@ import SellerDashboardLayout from './SellerDashboard';
 
 export default function DashboardPage() {
     const router = useRouter();
-    const [ isLoading, setIsLoading ] = useState<boolean>(false)
+    const [ isLoading, setIsLoading ] = useState<boolean>(true)
     const [ isValid, setIsValid ] = useState<boolean>(false)
 
     useEffect(() => {
         const validateToken = async () => {
-            setIsLoading(true)
             try {
+                setIsLoading(true)
                 const response = await auth_token.get('', { withCredentials: true });
                 console.log("response: ", response.data.verToken)
                 if (response.data.verToken === false) {
                     localStorage.clear();
                     router.push('/Auth');
                     return;
-                } else {
-                    setIsValid(true)
                 }
-
+                setIsValid(true)
                 // Token is valid, proceed to dashboard
             } catch (error: any) {
                 if (error.response && error.response.status === 401) {
@@ -37,10 +35,9 @@ export default function DashboardPage() {
                             // Refresh token failed, clear localStorage and redirect
                             localStorage.clear();
                             router.push('/Auth');
-                        } else {
-                            setIsLoading(false);
+                            return
+                        } 
                             setIsValid(true)
-                        }
                     } catch (refreshError: any) {
                         if (
                             refreshError.response &&
@@ -57,7 +54,13 @@ export default function DashboardPage() {
             }
         };
         validateToken();
-    }, [router]);
+        if (!isValid) {
+            validateToken();
+            return
+        } else {
+            setIsLoading(false);
+        }
+    }, [router, isValid]);
 
     if(isLoading) {
         return <LogoLoading/>

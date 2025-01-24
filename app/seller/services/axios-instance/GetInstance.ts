@@ -5,11 +5,12 @@ interface ResponseData {
     user_data: Product[]
 }
 
-export const httpRequestGet = async(url: string,getType: AxiosInstance, userId: string): Promise<ResponseData | void> => {
+export const httpRequestGet = async(url: string,getType: AxiosInstance, userId?: string, productId?: string[]): Promise<ResponseData | void> => {
     try {
         const response: AxiosResponse<ResponseData> = await getType.get(url, {
             params: {
-                userId: userId
+                userId: userId,
+                productId: productId
             }
         });
         return response.data

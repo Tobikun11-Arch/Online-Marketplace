@@ -21,7 +21,7 @@
       }
     ],
     "typeRoots": [
-      "./types",
+      "./app/seller/types", 
       "./node_modules/@types"
     ]
   },
