@@ -48,7 +48,6 @@ export default function ManageProducts() {
 
     useEffect(() => {
         if (isResult.length > 0) {
-            console.log("true");
             if (isStatus === "draft") {
                 StatusFunction(isResult, "draft");
                 return;

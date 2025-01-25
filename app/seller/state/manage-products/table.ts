@@ -1,14 +1,20 @@
 import { create } from 'zustand'
-import { tableData } from '../../types/product'
+import { tableData, InventoryData } from '../../types/product'
 
 interface ProductProps {
     tableData: tableData[]
     setTableData: (tableData: tableData[]) => void
+
+    inventoryTable: InventoryData[]
+    setInventory: (inventoryTable: InventoryData[]) => void
 }
 
 export const useProductDetails = create<ProductProps>((set)=> ({
     tableData: [],
-    setTableData: (tableData: tableData[]) => set({tableData})
+    inventoryTable: [],
+
+    setTableData: (tableData: tableData[]) => set({tableData}),
+    setInventory: (inventoryTable: InventoryData[]) => set({ inventoryTable })
 }))
 
 

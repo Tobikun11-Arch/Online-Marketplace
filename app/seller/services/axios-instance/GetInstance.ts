@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse, AxiosInstance } from 'axios';
 import { Product } from '../../types/product';
 
-interface ResponseData {
+export interface ResponseData {
     user_data: Product[]
 }
 
