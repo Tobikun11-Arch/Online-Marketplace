@@ -76,7 +76,6 @@ export default function InventoryTable() {
                             className="rounded-full object-cover"
                         />
                     ) : (
-                        // Render a placeholder or nothing if there's no image
                         <div className="w-full h-full bg-gray-200 rounded-full"></div>
                     )}
                     </div>
@@ -85,13 +84,11 @@ export default function InventoryTable() {
             ),
         },
         {
-            accessorKey: "status",
-            header: () => {
-            return (
-                <div>Status</div>
-            )
-            },
-            cell: ({ row }) => <div className="lowercase">{row.original.status !== "draft" ? <span className="bg-[#B7F0B6] font-medium px-2 py-1 rounded-md">{row.getValue("status")}</span> : <span className="px-2 py-1 rounded-md bg-[#EFEFEE] font-medium">{row.getValue("status")}</span>}</div>,
+            accessorKey: "productCategory",
+            header: "Product Category",
+            cell: ({ row }) => (
+                <div className="capitalize text-black">{row.getValue("productCategory")}</div>
+            ),
         },
         {
             accessorKey: "productPrice",
@@ -102,7 +99,7 @@ export default function InventoryTable() {
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="text-right flex items-center text-xs"
                     >
-                    Price
+                    Original price
                     <ChevronsUpDown size={15}/>
                     </Button>
                 )   
@@ -118,6 +115,56 @@ export default function InventoryTable() {
     
                 return <div className="font-medium pl-3">{formatted}</div>
             },
+        },
+        {
+            accessorKey: "productDiscount",
+            header: "Discount",
+            cell: ({ row }) => (
+                <div className="capitaliz">{row.getValue("productDiscount")}%</div>
+            ),
+        },  
+        {
+            accessorKey: "TotalPrice",
+            header: ({ column }) => {
+                return (
+                    <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="text-right flex items-center text-xs"
+                    >
+                    Price
+                    <ChevronsUpDown size={15}/>
+                    </Button>
+                )   
+                },
+            cell: ({ row }) => {
+                const amount = parseFloat(row.getValue("productPrice"))
+                const discount = parseFloat(row.getValue("productDiscount"))
+                const totalprice = amount -(amount * (discount/100)) 
+                // Format the amount as a dollar total price 
+                const formatted = new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                }).format(totalprice)
+    
+                return <div className="font-medium pl-3">{formatted}</div>
+            },
+        },
+        {
+            accessorKey: "productStock",
+            header: "Stock",
+            cell: ({ row }) => (
+                <div className={`capitaliz text-red-500 ${row.getValue("productStock") != 0 && 'text-black'}`}>{row.getValue("productStock")}</div>
+            ),
+        },  
+        {
+            accessorKey: "status",
+            header: () => {
+            return (
+                <div>Status</div>
+            )
+            },
+            cell: ({ row }) => <div className="lowercase">{row.original.status !== "draft" ? <span className="bg-[#B7F0B6] font-medium px-2 py-1 rounded-md">{row.getValue("status")}</span> : <span className="px-2 py-1 rounded-md bg-[#EFEFEE] font-medium">{row.getValue("status")}</span>}</div>,
         },
         {
             id: "actions",
@@ -165,7 +212,6 @@ export default function InventoryTable() {
 
     const customFilter: CustomFilter = (row, columnId, filterValue) => {
         const filterValueLower = filterValue.toLowerCase();
-        // Search across all columns of the row
         return Object.values(row.original).some((value) => {
             return value?.toString().toLowerCase().includes(filterValueLower);
         });
@@ -184,10 +230,10 @@ export default function InventoryTable() {
         onRowSelectionChange: setRowSelection,
         globalFilterFn: customFilter,
         state: {
-        sorting,
-        columnFilters,
-        columnVisibility,
-        rowSelection,
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection
         },
     })
 
