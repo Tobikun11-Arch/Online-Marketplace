@@ -36,7 +36,7 @@ const Header = () => {
     }
 
     return (
-        <div className='h-20 w-full sticky top-0 z-999 shadow-md flex justify-between lg:justify-end items-center px-4 sm:px-8'>
+        <div className='h-20 w-full sticky top-0 z-50 shadow-md flex justify-between lg:justify-end items-center px-4 sm:px-8'>
                 <div className='flex items-center gap-1 lg:hidden'>
                     <Image
                     width={50}
@@ -74,7 +74,7 @@ const Header = () => {
                             />
                         </div>
                         {userOpen && (
-                            <div ref={dropdownRef} className='fixed z-[9999] bg-white shadow-md pl-4 pr-14 py-4 flex flex-col gap-4 top-16 right-5 text-gray-700'>
+                            <div ref={dropdownRef} className='fixed z-40 bg-white shadow-md pl-4 pr-14 py-4 flex flex-col gap-4 top-16 right-5 text-gray-700'>
                                 <NavList
                                     icon={UserPen}
                                     label='My Account'
