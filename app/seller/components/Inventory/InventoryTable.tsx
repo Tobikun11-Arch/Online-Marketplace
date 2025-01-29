@@ -140,7 +140,7 @@ export default function InventoryTable() {
             cell: ({ row }) => {
                 const amount = parseFloat(row.getValue("productPrice"))
                 const discount = parseFloat(row.getValue("productDiscount"))
-                const totalprice = amount -(amount * (discount/100)) 
+                const totalprice = amount - (amount * (discount/100)) 
                 // Format the amount as a dollar total price 
                 const formatted = new Intl.NumberFormat("en-US", {
                     style: "currency",
