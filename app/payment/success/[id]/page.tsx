@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { Check } from 'lucide-react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
@@ -10,8 +10,10 @@ const Page = () => {
     const params = useParams()
     const userId = params.id
     const search_params = useSearchParams()
+    const [ isProcessing, setProcessiong ] = useState(false)
 
     const handleOrders = async() => {
+        setProcessiong(true)
         const allProducts = JSON.parse(decodeURIComponent(search_params.get('ids') || '[]'))
         if(allProducts) {
             const product = {
@@ -49,7 +51,7 @@ const Page = () => {
                 </div>
                 <h3 className='text-black'>Payment Done Successfully</h3>
             </div>
-            <button className='bg-[#38E08B] text-white mt-10 py-2 px-4 text-xs font-semibold' onClick={handleOrders}>Take me to my Profile</button>
+            <button className='bg-[#38E08B] text-white mt-10 py-2 px-4 text-xs font-semibold' disabled={isProcessing} onClick={handleOrders}>Confirm payment</button>
         </div>
     )
 }
