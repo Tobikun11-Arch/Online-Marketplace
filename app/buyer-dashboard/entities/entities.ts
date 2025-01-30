@@ -28,3 +28,21 @@ export interface Products {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface Product {
+  _id: string;
+  Sku: string;
+  price?: number;
+  createdAt: string;
+  updatedAt: string;
+  images: string[]; // Array of image URLs
+  productCategory: string;
+  productDescription: string;
+  productDiscount: number;
+  productName: string;
+  productPrice: number;
+  productQuality: string;
+  productSize: string;
+  productStock: number;
+  status: string;
+}

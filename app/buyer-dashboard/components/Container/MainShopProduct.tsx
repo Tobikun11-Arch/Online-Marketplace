@@ -34,7 +34,7 @@ const MainShopProduct = ({ isOpen } : productProps) => {
                                 )}
                             </Link>
                         </div>
-                        <ProductInfoCard dataProduct={{ productName: mainShopProducts[2]?.productName, OriginalPrice: parseInt(mainShopProducts[2]?.productPrice) }}/>
+                        <ProductInfoCard dataProduct={{ productName: mainShopProducts[2]?.productName, OriginalPrice: mainShopProducts[2]?.productPrice - (mainShopProducts[2]?.productPrice * (mainShopProducts[2]?.productDiscount / 100)) }}/>
                     </div>
 
                 <div className='w-full h-full md:h-[500px] md:flex md:flex-col md:gap-3 lg:w-2/5'>
@@ -53,7 +53,7 @@ const MainShopProduct = ({ isOpen } : productProps) => {
                                 )} 
                             </Link>
                         </div>
-                        <ProductInfoCard dataProduct={{ productName: mainShopProducts[1]?.productName, OriginalPrice: parseInt(mainShopProducts[1]?.productPrice) }}/>
+                        <ProductInfoCard dataProduct={{ productName: mainShopProducts[1]?.productName, OriginalPrice: mainShopProducts[1]?.productPrice - (mainShopProducts[1]?.productPrice * (mainShopProducts[1]?.productDiscount / 100)) }}/>
                     </div>
 
                     <div className={`${imgParent}`}>
@@ -71,7 +71,7 @@ const MainShopProduct = ({ isOpen } : productProps) => {
                                 )}
                             </Link>
                         </div>
-                        <ProductInfoCard dataProduct={{ productName: mainShopProducts[0]?.productName, OriginalPrice: parseInt(mainShopProducts[0]?.productPrice) }}/>
+                        <ProductInfoCard dataProduct={{ productName: mainShopProducts[0]?.productName, OriginalPrice: mainShopProducts[0]?.productPrice - (mainShopProducts[0]?.productPrice * (mainShopProducts[0]?.productDiscount / 100)) }}/>
                     </div>
                 </div>
             </div>

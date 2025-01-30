@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react'
-import { Products } from '../../entities/entities'
+import { Product } from '../../entities/entities'
 import Image from 'next/image'
 interface productProps {
-    products: Products[]
+    products: Product[]
 }
 
 const IdImages: FC<productProps> = ({ products }) => {

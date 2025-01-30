@@ -4,7 +4,7 @@ export interface Product {
     _id: string;
     images: string[];
     productName: string;
-    productPrice: string;
+    productPrice: number;
 }
 
 export interface ICartItem {
@@ -25,6 +25,6 @@ export interface AddToCartPayload {
     productName: string
     images: string[];
     productId: string;
-    productPrice: string
+    productPrice: number
     quantity: number;
 }

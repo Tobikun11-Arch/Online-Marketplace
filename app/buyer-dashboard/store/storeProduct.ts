@@ -1,12 +1,12 @@
 import { create } from 'zustand'
-import { Products } from '../entities/entities'
+import { Product } from '../entities/entities'
 
 interface productProps {
-    product: Products[]
-    handler: Products[]
+    product: Product[]
+    handler: Product[]
 
-    setProduct: (product: Products[]) => void
-    setHandler: (handler: Products[]) => void
+    setProduct: (product: Product[]) => void
+    setHandler: (handler: Product[]) => void
 }
 
 interface productDetails {
@@ -18,8 +18,8 @@ export const useProductData = create<productProps>((set)=> ({
     product: [],
     handler: [],
 
-    setProduct: (product: Products[]) => set(()=> ({ product })),
-    setHandler: (handler: Products[]) => set(()=> ({ handler }))
+    setProduct: (product: Product[]) => set(()=> ({ product })),
+    setHandler: (handler: Product[]) => set(()=> ({ handler }))
 }))
 
 export const useProuctDetails = create<productDetails>((set)=> ({

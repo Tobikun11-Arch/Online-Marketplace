@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
 import { lineSpinner, ripples, ring2 } from 'ldrs'
-import { Products } from '../../entities/entities'
+import { Product } from '../../entities/entities'
 import { productId, useCart } from '../../axios/dataStore'
 import Header from '../../components/layout/Header'
 import IdImages from './IdImages'
@@ -18,8 +18,8 @@ import { StripePayment } from '../../axios/dataStore'
 
 const fetchDataId = async (id: string) => {
     const response = await productId.get(`${id}`);
-    const { product, mainproduct, similar, trendingproduct } = response.data
-    return { product, mainproduct, similar, trendingproduct };
+    const { product, mainproduct, similar } = response.data
+    return { product, mainproduct, similar };
 };
 
 const addtoCartRequest = async(payload: AddToCartPayload) => {
@@ -31,8 +31,8 @@ const Page = () => {
     const { setAuth } = useToggle()
     const [ isBuy, setBuy ] = useState<boolean>(false)  
     const { id } = useParams()
-    const [ products, setProducts ] = useState<Products[] | []>([])
-    const [ SimilarProduct, setSimilar ] = useState<Products[] | []>([])
+    const [ products, setProducts ] = useState<Product[] | []>([])
+    const [ SimilarProduct, setSimilar ] = useState<Product[] | []>([])
     const { setCart } = useProductCart()
     const [ addCart, setAdd ] = useState<boolean>(false)
     const { user } = useUser()
@@ -53,8 +53,7 @@ const Page = () => {
 
     useEffect(()=> {
         if (data) {
-            const productData = data.product || data.mainproduct || data.trendingproduct;
-            setProducts((prev) => [...prev, productData]);
+            setProducts([data.product])
             setSimilar(data.similar)
         }
     }, [data])
@@ -80,7 +79,7 @@ const Page = () => {
         )
     }
 
-    const handleCart = async(products: Products) => { 
+    const handleCart = async(products: Product) => { 
         setAdd(true)
         if(!user) { setAdd(false), setAuth(true) }
         else {
@@ -107,7 +106,7 @@ const Page = () => {
         }
     }
 
-    const handle_DirectBuy = async(products: Products[]) => {
+    const handle_DirectBuy = async(products: Product[]) => {
         if(!user) { 
             setAdd(false)
             setAuth(true) 
@@ -126,10 +125,6 @@ const Page = () => {
         }
     }
 
-    const OrigPrice = products.map((product)=> {
-        return parseInt(product.productPrice) + parseInt(product.productDiscount)
-    })
-
     return (
         <div className='min-h-screen bg-[#FAFAFA] dark:bg-[#171717] pb-3 cursor-default'>
             <Header/>
@@ -142,18 +137,16 @@ const Page = () => {
                         <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-[#171717] lg:py-10 py-5'>
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
                             <div className='flex gap-2'>
-                                <h2 className='inline-block text-black font-semibold dark:text-white'>${product.productPrice}</h2>
-                                <h2 className='inline-block text-black font-semibold dark:text-white'>Stock: {parseInt(product.productQuantity) > 0 ? product.productQuantity : 'Out of stock'}</h2>
+                                <h2 className='inline-block text-black font-semibold dark:text-white'>${product.productPrice - (product.productPrice * (product.productDiscount / 100))}</h2>
+                                <h2 className='inline-block text-black font-semibold dark:text-white'>Stock: {product.productStock > 0 ? product.productStock : 'Out of stock'}</h2>
                             </div>
-                            <h1 className='mt-3 font-bold'>Product size</h1>
-                            <div className="flex flex-col text-sm text-gray-700 dark:text-gray-400">
-                                <h2>- Breadth (B): {product?.productSize.breadth} cm</h2>
-                                <h2>- Length (L): {product?.productSize.length} cm</h2>
-                                <h2>- Width (W): {product?.productSize.width} cm</h2>
+                            <div>
+                                <h1 className='mt-3 font-bold'>Product size</h1>
+                                <h5>{product.productSize}</h5>
                             </div>
                             <h1 className='mt-3 font-semibold'>Product description:</h1>
                             <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
-                            <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ${OrigPrice}</p>
+                            <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ${product.productPrice}</p>
                             <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2 mt-3">
                                 <button className='w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-[#171717]' onClick={()=> handle_DirectBuy(products)}>
                                 {isBuy ? (

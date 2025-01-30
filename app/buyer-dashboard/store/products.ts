@@ -1,18 +1,18 @@
 import { create } from 'zustand'
-import { Products } from '../entities/entities'
+import { Product } from '../entities/entities'
 
 interface ProductsProps {
-    productList: Products[]
-    setProductList: (productList: Products[]) => void
+    productList: Product[]
+    setProductList: (productList: Product[]) => void
 
-    mainShopProducts: Products[]
-    setmainShopProducts: (mainShopProducts: Products[]) => void
+    mainShopProducts: Product[]
+    setmainShopProducts: (mainShopProducts: Product[]) => void
 }
 
 export const useProductList = create<ProductsProps>((set)=> ({
     productList: [],
-    setProductList: (productList: Products[]) => set(()=> ({ productList })),
+    setProductList: (productList: Product[]) => set(()=> ({ productList })),
 
     mainShopProducts: [],
-    setmainShopProducts: (mainShopProducts: Products[]) => set(()=> ({ mainShopProducts }))
+    setmainShopProducts: (mainShopProducts: Product[]) => set(()=> ({ mainShopProducts }))
 }))

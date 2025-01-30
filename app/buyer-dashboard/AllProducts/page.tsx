@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { Products } from '../entities/entities'
+import { Product } from '../entities/entities'
 import { useProductData } from '../store/storeProduct'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { AllProducts } from '../../buyer-dashboard/axios/dataStore'
@@ -21,7 +21,7 @@ export default function Page() {
     }
 
     interface ProductResponse {
-        SellerProducts: Products[]
+        seller_products: Product[]
     }
 
     const categories = [
@@ -51,9 +51,9 @@ export default function Page() {
         const { isLoading, error, data: ProductResponse } = useQuery<ProductResponse>({
             queryKey: ['product'],
             queryFn: async () => {
-                const response = await AllProducts.get(''); //Main shop
-                const { SellerProducts } = response.data
-                return { SellerProducts }
+                const response = await AllProducts.get('');
+                const { seller_products } = response.data
+                return { seller_products }
             },
         })
 
@@ -65,8 +65,8 @@ export default function Page() {
 
         useEffect(() => {
             if (ProductResponse) {
-                const updatedProducts = ProductResponse.SellerProducts.filter(
-                    product => parseInt(product.productQuantity) > 0
+                const updatedProducts = ProductResponse.seller_products.filter(
+                    product => product.productStock > 0
                 ).sort((a, b) => a.productName.localeCompare(b.productName));
                 setProduct(updatedProducts); // Update the product state
             }

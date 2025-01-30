@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
-import { Products } from '../../entities/entities'
+import { Product } from '../../entities/entities'
 import Image from 'next/image'
 import ProductInfoCard from '../../components/ui/ProductInfoCard'
 import Link from 'next/link'
 
 interface similarProps {
-    products: Products[]
+    products: Product[]
 }
 
 const SimilarProducts: FC<similarProps> = ({ products }) => {
@@ -26,7 +26,7 @@ const SimilarProducts: FC<similarProps> = ({ products }) => {
                                     blurDataURL="add new url later"
                                 />
                             </div>
-                            <ProductInfoCard dataProduct={{ productName: product.productName, OriginalPrice: parseInt(product.productPrice) }}/>
+                            <ProductInfoCard dataProduct={{ productName: product.productName, OriginalPrice: product.productPrice - (product.productPrice * (product.productDiscount * 100)) }}/>
                         </div>
                     </Link>
                 ))}

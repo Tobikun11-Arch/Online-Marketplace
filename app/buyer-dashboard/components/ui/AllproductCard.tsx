@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { AllProducts } from '../../axios/dataStore'
-import { Products } from '../../entities/entities'
+import { Product } from '../../entities/entities'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -12,7 +12,7 @@ const fetchData = async() => {
 }
 
 const AllproductCard = () => {
-    const { data } = useQuery<Products[] | []>({
+    const { data } = useQuery<Product[] | []>({
         queryKey: ['Trending'],
         queryFn: fetchData
     })
@@ -33,7 +33,7 @@ const AllproductCard = () => {
                             </div>
                         <div className='absolute bottom-0 rounded-b-lg font-semibold text-white bg-[#4CAF50] dark:bg-[#2E2E2E] w-full flex flex-col pr-3 pl-3 py-3 mt-4'>
                             <h1>{datas.productName}</h1>
-                            <h1 className='text-white'>${datas.productPrice}</h1>
+                            <h1 className='text-white'>${datas.price}</h1>
                             <Link href={`/buyer-dashboard/product/${datas._id}`} passHref>
                                 <button className='bg-white mt-3 py-2 rounded-lg w-full text-black'>Buy</button>
                             </Link>

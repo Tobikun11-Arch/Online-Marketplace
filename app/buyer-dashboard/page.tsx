@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import Header from './components/layout/Header'
 import MainShopProduct from './components/Container/MainShopProduct'
-import { Products } from './entities/entities'
+import { Product } from './entities/entities'
 import { useToggle } from './store/useToggle'
 import { useProuctDetails, useProductData } from './store/storeProduct'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
@@ -20,7 +20,7 @@ export default function Page() {
 }
 
 interface ProductResponse {
-    MainShopProducts: Products[]
+    MainShopProducts: Product[]
 }
 
 const BuyerDashboard = () => {

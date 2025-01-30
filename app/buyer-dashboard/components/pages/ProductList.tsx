@@ -1,9 +1,9 @@
 import React from 'react'
 import ProductCard from '../Container/ProductCard'
-import { Products } from '../../entities/entities'
+import { Product } from '../../entities/entities'
 
 interface products {
-    product: Products[]
+    product: Product[]
 }
 
 const ProductList = ({ product }: products) => {

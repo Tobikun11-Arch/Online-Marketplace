@@ -97,7 +97,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
         const Mapping = localId.map((product)=> product)
         const LocalPrice = Mapping.reduce((acc, product)=> {
             const quantity = newQuantity[product.productId as any] || product.quantity
-            return acc + parseInt(product.productPrice) * quantity
+            return acc + product.productPrice * quantity
         }, 0)
         return ServerPrice! + LocalPrice
     }, [Cart, localCart, newQuantity])
