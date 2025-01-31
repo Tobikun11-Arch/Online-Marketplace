@@ -1,27 +1,19 @@
-import React, { useEffect, } from 'react'
+import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import ProductLists from '../components/pages/ProductList';
 import { Product } from '../entities/entities';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { AllProducts } from '../axios/dataStore';
 
-interface Response {
-    popular_products: Product[]
-}
 
 const Page = async () => {
-    const { data: Response } = useSuspenseQuery<Response>({
-        queryKey: ['popular_products'],
-        queryFn: async () => {
-            const response = await AllProducts.get('')
-            const { popular_products } = response.data
-            return { popular_products }
-        }
-    })
+    let popular_products: Product[] = [];
 
-    useEffect(()=> {
-        console.log("products: ", Response)
-    }, [Response])
+    try {
+        const response = await AllProducts.get('');
+        popular_products = response.data.popular_products;
+    } catch (error) {
+        console.error("Failed to fetch popular products:", error);
+    }
 
     return (
         <div className='min-h-screen bg-white dark:bg-[#171717] cursor-default'>
@@ -32,10 +24,10 @@ const Page = async () => {
                 </div>
                 <h1 className='text-2xl font-semibold mt-2'>Popular Products Today</h1>
                 <p className='mb-3 text-xs text-gray-400'>Discover the most loved products this week.</p>
-                <ProductLists product={Response.popular_products}/>
+                <ProductLists product={popular_products}/>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Page
+export default Page;
