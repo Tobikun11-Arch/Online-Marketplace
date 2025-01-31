@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect } from 'react'
 import { Product } from '../../entities/entities'
 import Image from 'next/image'
