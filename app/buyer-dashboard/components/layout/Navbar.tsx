@@ -10,7 +10,7 @@ import { Popover } from '@headlessui/react'
 import { useSearch } from '../../store/userSearch'
 import { useProductData } from '../../store/storeProduct'
 import { X } from 'lucide-react';
-import { Products } from '../../entities/entities'
+import { Product } from '../../entities/entities'
 import { AllProducts } from '../../axios/dataStore'
 import { useQuery } from '@tanstack/react-query'
 import { lineSpinner } from 'ldrs'
@@ -22,7 +22,7 @@ interface NavbarProps {
 }
 
 interface ProductResponse {
-    SellerProducts: Products[]
+    seller_products: Product[]
 }
 
 const Navbar = ({ className, isOpen }: NavbarProps) => {
@@ -44,13 +44,13 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
     })
 
     useEffect(() => {
-        if (ProductResponse?.SellerProducts) {
-            const updatedProducts = ProductResponse.SellerProducts.filter(
-                product => parseInt(product.productQuantity) > 0
+        if (ProductResponse?.seller_products) {
+            const updatedProducts = ProductResponse.seller_products.filter(
+                product => product.productStock > 0
             ).sort((a, b) => a.productName.localeCompare(b.productName));
             setProduct(updatedProducts); // Update the product state
         }
-    }, [ProductResponse?.SellerProducts, setProduct]);
+    }, [ProductResponse?.seller_products, setProduct]);
 
     useEffect(()=> {
         if (user?.SearchData) {

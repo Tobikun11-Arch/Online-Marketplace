@@ -67,6 +67,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
             productId,
             userId: user?._id,
         }
+        console.log("Delete: ", userDetails)
         try {
             await deleteProduct.delete('', {data: userDetails, withCredentials: true})
 

@@ -1,14 +1,28 @@
 "use client"
-import React from 'react'
+import React, { useEffect, } from 'react'
 import { ArrowLeft } from 'lucide-react';
-import { useProductData } from '../store/storeProduct'
 import ProductLists from '../components/pages/ProductList';
+import { Product } from '../entities/entities';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { AllProducts } from '../axios/dataStore';
+
+interface Response {
+    popular_products: Product[]
+}
 
 const Page = () => {
-    const { product } = useProductData()
+    const { data: Response } = useSuspenseQuery<Response>({
+        queryKey: ['popular_products'],
+        queryFn: async () => {
+            const response = await AllProducts.get('')
+            const { popular_products } = response.data
+            return { popular_products }
+        }
+    })
 
-    //:Products in database must have sold and connected to buyer if there a buy method na
-    // Set the product data in popular page to filter the value products sold in Products kung sino mas marami nasold naproducts
+    useEffect(()=> {
+        console.log("products: ", Response)
+    }, [Response])
 
     return (
         <div className='min-h-screen bg-white dark:bg-[#171717] cursor-default'>
@@ -19,7 +33,7 @@ const Page = () => {
                 </div>
                 <h1 className='text-2xl font-semibold mt-2'>Popular Products Today</h1>
                 <p className='mb-3 text-xs text-gray-400'>Discover the most loved products this week.</p>
-                <ProductLists product={product}/>
+                <ProductLists product={Response.popular_products}/>
             </div>
         </div>
     )

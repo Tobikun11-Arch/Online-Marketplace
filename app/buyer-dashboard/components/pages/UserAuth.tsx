@@ -79,7 +79,7 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
                         </div>
                         <div className='flex-grow flex flex-col justify-center items-center'>
                             <h1 className='text-2xl font-bold'>Foundation for Your Marketplace Platform</h1>
-                            <h5 className='mt-1 text-gray-400'><span className='text-blue-600'>Sajuubazaar</span> is an open-source platform for building and customizing online marketplaces, offering powerful tools to connect buyers and sellers and manage product listings with ease.</h5>
+                            <h5 className='mt-1 text-black dark:text-gray-400'><span className='text-blue-600'>Sajuubazaar</span> is an open-source platform for building and customizing online marketplaces, offering powerful tools to connect buyers and sellers and manage product listings with ease.</h5>
 
                             <div className='flex gap-2 mt-14'>
                                 <button className='py-2 w-20 text-sm font-medium bg-black rounded-md text-white dark:text-black dark:bg-white' onClick={()=> handleOption('Signin')}>Sign In</button>

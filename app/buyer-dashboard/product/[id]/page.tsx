@@ -87,17 +87,18 @@ const Page = () => {
                 userId: user._id,
                 productName: products.productName,
                 images: products.images,
-                productId: products._id,
+                productId: products.productId || products._id,
                 productPrice: products.productPrice,
                 quantity: 1,
             }
+            console.log("data: ", dataProduct)
             setCart((prevCart: AddToCartPayload[]) => [...prevCart, dataProduct]);
             try{
                 await addtoCartRequest(dataProduct);
                 toast({
                     description: "Successfully added to cart.",
                     className: "text-white"
-                })
+                })  
                 setAdd(false)
             } catch (error: any) {
                 console.error("Error adding product to cart:", error.message);
@@ -140,14 +141,14 @@ const Page = () => {
                                 <h2 className='inline-block text-black font-semibold dark:text-white'>${product.productPrice - (product.productPrice * (product.productDiscount / 100))}</h2>
                                 <h2 className='inline-block text-black font-semibold dark:text-white'>Stock: {product.productStock > 0 ? product.productStock : 'Out of stock'}</h2>
                             </div>
-                            <div>
-                                <h1 className='mt-3 font-bold'>Product size</h1>
+                            {product.productDiscount > 0 && <p className='text-sm text-gray-500'>This item originally retailed for ${product.productPrice}</p>}
+                            <div className='flex gap-1 items-center mt-3'>
+                                <h1 className='font-bold'>Product size: </h1>
                                 <h5>{product.productSize}</h5>
                             </div>
                             <h1 className='mt-3 font-semibold'>Product description:</h1>
                             <h2 className='text-gray-600 dark:text-gray-300 text-sm'>{product.productDescription}</h2>
-                            <p className='mt-10 text-sm text-gray-500'>This item originally retailed for ${product.productPrice}</p>
-                            <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2 mt-3">
+                            <div className="flex w-full xl:w-3/4  font-semibold font-abc gap-2 mt-10">
                                 <button className='w-full rounded-lg py-3 text-white dark:text-black dark:etext dark:bg-white bg-[#171717]' onClick={()=> handle_DirectBuy(products)}>
                                 {isBuy ? (
                                     <div className='flex gap-1 items-center justify-center'>

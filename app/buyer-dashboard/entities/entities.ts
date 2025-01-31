@@ -29,8 +29,9 @@ export interface Products {
   updatedAt: Date
 }
 
-export interface Product {
+export interface Product {  
   _id: string;
+  productId?: string;
   Sku: string;
   price?: number;
   createdAt: string;
@@ -44,5 +45,10 @@ export interface Product {
   productQuality: string;
   productSize: string;
   productStock: number;
+  quantity: number;
   status: string;
+}
+
+export interface PopularProducts {
+  
 }

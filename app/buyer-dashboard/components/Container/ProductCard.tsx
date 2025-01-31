@@ -9,11 +9,15 @@ interface products {
 
 const ProductCard = ({ product }: products) => {
 
+    useEffect(()=> {
+         console.log("productsss: ", product)
+    }, [])
+
     return (
         <>
             {product.map((prodTest, index) => (
-                <Link href={`/buyer-dashboard/product/${prodTest._id}`} passHref key={index}>
-                    {prodTest.productStock > 0  && (
+                <Link href={`/buyer-dashboard/product/${prodTest.productId || prodTest._id}`} passHref key={index}>
+                    {(prodTest.quantity > 0 || prodTest._id) && (
                         <div className='relative w-full h-80 flex flex-col cursor-default justify-center items-center md:mb-0 bg-white dark:bg-transparent dark:border-[#333333] hover:border-blue-500 rounded-lg border'>
                             <div className='relative w-3/4 h-3/4 aspect-w-1 aspect-h-1 hover:scale-105'>
                                 <Image
@@ -25,7 +29,7 @@ const ProductCard = ({ product }: products) => {
                                     blurDataURL='add new url later'
                                 />
                             </div>
-                            <ProductInfoCard dataProduct={{ productName: prodTest.productName, OriginalPrice: prodTest.productPrice }}/>
+                            <ProductInfoCard dataProduct={{ productName: prodTest.productName, OriginalPrice: prodTest.price || prodTest.productPrice }}/>
                         </div>
                     )}
                 </Link>
