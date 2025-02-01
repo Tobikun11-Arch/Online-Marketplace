@@ -162,6 +162,36 @@ export default function InventoryTable() {
             },
         },  
         {
+            accessorKey: "Revenue",
+            header: ({ column }) => {
+                return (
+                    <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="text-right flex items-center text-xs"
+                    >
+                    Revenue
+                    </Button>
+                )   
+                },
+            cell: ({ row }) => {
+                const amount = parseFloat(row.getValue("productPrice"))
+                const discount = parseFloat(row.getValue("productDiscount"))
+                const totalprice = amount - (amount * (discount/100)) 
+
+                const product = unitsold.find(p => p.productId === row.original._id);
+                const Revenue = totalprice * (product ? product.totalQuantity : 0);
+                
+                // Format the amount as a dollar total price 
+                const formatted = new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                }).format(Revenue)
+    
+                return <div className="font-medium pl-3">{formatted}</div>
+            },
+        },
+        {
             accessorKey: "status",
             header: () => {
             return (
