@@ -1,8 +1,9 @@
 import { AxiosError, AxiosResponse, AxiosInstance } from 'axios';
-import { Product } from '../../types/product';
+import { Product, ProductQuantity } from '../../types/product';
 
 export interface ResponseData {
     user_data: Product[]
+    productQuantities: ProductQuantity[]
 }
 
 export const httpRequestGet = async(url: string,getType: AxiosInstance, userId?: string, productId?: string[]): Promise<ResponseData | void> => {

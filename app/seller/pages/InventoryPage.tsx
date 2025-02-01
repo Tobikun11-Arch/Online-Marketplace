@@ -9,23 +9,23 @@ import { useProductDetails } from '../state/manage-products/table'
 
 export default function InventoryPage() {
     const { user } = useUser()
-    const { setInventory, inventoryTable } = useProductDetails()
+    const { setInventory, setUnitSold } = useProductDetails()
 
     async function get_products(): Promise<ResponseData> {
         try {
             const response = await httpRequestGet('', seller_products, user?._id!)
             if(!response) {
-                return { user_data: [] }
+                return { user_data: [], productQuantities: [] }
             }
             return response
         } catch (error) {
             console.error("Fetching error: ", error)
-            return { user_data: [] };
+            return { user_data: [], productQuantities: [] };
         }
     }
 
     const { data } = useSuspenseQuery<ResponseData>({
-        queryKey: ['user_products'],    
+        queryKey: ['user_products'],
         queryFn: get_products
     })
 
@@ -40,13 +40,19 @@ export default function InventoryPage() {
             productDescription: product.productDescription,
             productDiscount: product.productDiscount,
             productName: product.productName,
-            productPrice: product.productPrice,
+            productPrice: product.productPrice, 
             productQuality: product.productQuality,
             productSize: product.productSize,
             productStock: product.productStock,
             status: product.status,
         }));
         setInventory(simplifiedData)
+
+        const productQuantities = data.productQuantities.map((product_unit)=> ({
+            productId: product_unit.productId,
+            totalQuantity: product_unit.totalQuantity
+        }))
+        setUnitSold(productQuantities)
     }, [data])
 
     return (

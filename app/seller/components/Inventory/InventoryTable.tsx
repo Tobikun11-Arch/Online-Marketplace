@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React from 'react'
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -46,11 +46,9 @@ import Image from "next/image"
 import { generatePageItem } from "./PageItems" 
 import { useSideBarState } from "../../state/Sidebar"
 import { useProductId } from "../../state/manage-products/ViewProduct"
-import { useUser } from "../../state/User"
-import { useToast } from "../../../../@/hooks/use-toast"
 
 export default function InventoryTable() {
-    const { inventoryTable } = useProductDetails()
+    const { inventoryTable, unitsold } = useProductDetails()
     const { setStatus } = usefilter()
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -58,8 +56,6 @@ export default function InventoryTable() {
     const [rowSelection, setRowSelection] = React.useState({})
     const { setActiveTab } = useSideBarState()
     const { setProductId } = useProductId()
-    const { user }= useUser()
-    const { toast } = useToast()
 
     const columns: ColumnDef<InventoryData>[] = [
         {
@@ -156,6 +152,14 @@ export default function InventoryTable() {
             cell: ({ row }) => (
                 <div className={`capitaliz text-red-500 ${row.getValue("productStock") != 0 && 'text-black'}`}>{row.getValue("productStock")}</div>
             ),
+        },  
+        {
+            accessorKey: "Unit sold",
+            header: "Unit Sold",
+            cell: ({ row }) => {
+                const product = unitsold.find(p => p.productId === row.original._id);
+                return <div className="capitalize text-black">{product ? product.totalQuantity : "0"}</div>;
+            },
         },  
         {
             accessorKey: "status",

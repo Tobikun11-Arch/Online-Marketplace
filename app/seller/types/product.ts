@@ -15,6 +15,11 @@ export interface Product {
     status: string;
 }
 
+export interface ProductQuantity {
+    productId: string;
+    totalQuantity: number;
+}
+
 export interface tableData {
     _id: string;
     productName: string;
