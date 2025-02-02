@@ -132,7 +132,7 @@ export default function DataTableComp() {
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="text-right flex items-center text-xs"
                     >
-                    Price
+                    Original price
                     <ChevronsUpDown size={15}/>
                     </Button>
                 )   

@@ -27,6 +27,13 @@ export const seller_products: AxiosInstance = axios.create({
     withCredentials: true,
 })
 
+export const orders_products: AxiosInstance = axios.create({
+    baseURL: 'http://localhost:5000/api/users/get/orders',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+})
 
 export const update_products: AxiosInstance = axios.create({
     baseURL: 'http://localhost:5000/api/users/put/product',
@@ -73,3 +80,4 @@ addInterceptors(update_products)
 addInterceptors(update_draftProducts)
 addInterceptors(Draft_Publish) //snake case
 addInterceptors(delete_product)
+addInterceptors(orders_products)

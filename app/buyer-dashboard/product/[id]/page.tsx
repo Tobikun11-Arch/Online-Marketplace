@@ -88,7 +88,7 @@ const Page = () => {
                 productName: products.productName,
                 images: products.images,
                 productId: products.productId || products._id,
-                productPrice: products.productPrice,
+                productPrice: products.productPrice - (products.productPrice * (products.productDiscount / 100)),
                 quantity: 1,
             }
             console.log("data: ", dataProduct)

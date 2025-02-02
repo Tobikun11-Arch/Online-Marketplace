@@ -44,3 +44,22 @@ export interface InventoryData {
     productStock: number;
     status: string;
 }
+
+export interface Product_Orders {
+    productId: string;
+    productName: string;
+    images: string;
+    quantity: number;
+    price: number;
+    _id: string;
+    addedAt: string; // Using string to represent the ISO date format
+};
+  
+export interface BuyerInformation {
+    buyer_firstName: string;
+    buyer_lastName: string;
+    buyer_email: string;
+    buyer_username: string;
+    _id: string;
+};
+  

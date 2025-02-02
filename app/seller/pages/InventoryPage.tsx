@@ -15,12 +15,12 @@ export default function InventoryPage() {
         try {
             const response = await httpRequestGet('', seller_products, user?._id!)
             if(!response) {
-                return { user_data: [], productQuantities: [] }
+                return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [] }
             }
             return response
         } catch (error) {
             console.error("Fetching error: ", error)
-            return { user_data: [], productQuantities: [] };
+            return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [] };
         }
     }
 

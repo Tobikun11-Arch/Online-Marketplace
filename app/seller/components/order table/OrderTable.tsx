@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import * as React from "react"
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -13,10 +13,11 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ChevronsUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+import { ChevronsUpDown, ChevronDown, MoreHorizontal, Forward, Download, Trash } from "lucide-react"
 import { useProductDetails, usefilter } from '../../state/manage-products/table'
-import { InventoryData } from '../../types/product'
+import { Product_Orders } from '../../types/product'
 import { Button } from "../../../../@/components/ui/button"
+import { Checkbox } from "../../../../@/components/ui/checkbox"
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -43,21 +44,25 @@ import {
     PaginationEllipsis  ,
 } from "../../../../@/components/ui/pagination";
 import Image from "next/image"
-import { generatePageItem } from "./PageItems" 
+import { generatePageItem } from "../manage-products/PageItems" 
 import { useSideBarState } from "../../state/Sidebar"
 import { useProductId } from "../../state/manage-products/ViewProduct"
+import { useUser } from "../../state/User"
+import { useToast } from "../../../../@/hooks/use-toast"
+import Link from "next/link"
 
-export default function InventoryTable() {
-    const { inventoryTable, unitsold } = useProductDetails()
-    const { setStatus } = usefilter()
+export default function DataTableComp() {
+    const { order_table, setorderTable } = useProductDetails()
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
     const { setActiveTab } = useSideBarState()
     const { setProductId } = useProductId()
-
-    const columns: ColumnDef<InventoryData>[] = [
+    const { user }= useUser()
+    const { toast } = useToast()
+    
+    const columns: ColumnDef<Product_Orders>[] = [
         {
             accessorKey: "productName",
             header: "Product Name",
@@ -72,6 +77,7 @@ export default function InventoryTable() {
                             className="rounded-full object-cover"
                         />
                     ) : (
+                        // Render a placeholder or nothing if there's no image
                         <div className="w-full h-full bg-gray-200 rounded-full"></div>
                     )}
                     </div>
@@ -80,14 +86,14 @@ export default function InventoryTable() {
             ),
         },
         {
-            accessorKey: "productCategory",
-            header: "Product Category",
+            accessorKey: "quantity",
+            header: "Quantity",
             cell: ({ row }) => (
-                <div className="capitalize text-black">{row.getValue("productCategory")}</div>
+                <div className="capitaliz">{row.getValue("quantity")}</div>
             ),
-        },
+        },  
         {
-            accessorKey: "productPrice",
+            accessorKey: "price",
             header: ({ column }) => {
                 return (
                     <Button
@@ -95,164 +101,45 @@ export default function InventoryTable() {
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="text-right flex items-center text-xs"
                     >
-                    Original price
-                    <ChevronsUpDown size={15}/>
+                    Amount
                     </Button>
                 )   
                 },
             cell: ({ row }) => {
-                const amount = parseFloat(row.getValue("productPrice"))
+                const amount = parseFloat(row.getValue("price"))
+                const quantity = parseFloat(row.getValue("quantity"))
+                const Amount = amount * quantity
     
                 // Format the amount as a dollar amount
                 const formatted = new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: "USD",
-                }).format(amount)
+                }).format(Amount)
     
                 return <div className="font-medium pl-3">{formatted}</div>
             },
         },
         {
-            accessorKey: "productDiscount",
-            header: "Discount",
-            cell: ({ row }) => (
-                <div className="capitaliz">{row.getValue("productDiscount")}%</div>
-            ),
-        },  
-        {
-            accessorKey: "TotalPrice",
-            header: ({ column }) => {
-                return (
-                    <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="text-right flex items-center text-xs">
-                        Price
-                    <ChevronsUpDown size={15}/>
-                    </Button>
-                )   
-                },
+            accessorKey: "addedAt",
+            header: "Order date and time",
             cell: ({ row }) => {
-                const amount = parseFloat(row.getValue("productPrice"))
-                const discount = parseFloat(row.getValue("productDiscount"))
-                const totalprice = amount - (amount * (discount/100))
-
-                // Format the amount as a dollar total price 
-                const formatted = new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                }).format(totalprice)
-    
-                return <div className="font-medium pl-3">{formatted}</div>
+                const date = new Date(row.getValue("addedAt")); 
+                const formattedDate = date.toLocaleString("en-US", {
+                    month: "long", 
+                    day: "2-digit",
+                    year: "numeric", 
+                    hour: "numeric", 
+                    minute: "2-digit", 
+                    hour12: true,
+                });
+        
+                return <div className="capitalize">{formattedDate}</div>;
             },
-        },
-        {
-            accessorKey: "productStock",
-            header: "Stock",
-            cell: ({ row }) => (
-                <div className={`capitaliz text-red-600 font-semibold ${row.getValue("productStock") != 0 && 'text-black'}`}>{row.getValue("productStock")}</div>
-            ),
-        },  
-        {
-            accessorKey: "Unit sold",
-            header: "Unit Sold",
-            cell: ({ row }) => {
-                const product = unitsold.find(p => p.productId === row.original._id);
-                return <div className="capitalize text-black">{product ? product.totalQuantity : "0"}</div>;
-            },
-        },  
-        {
-            accessorKey: "Revenue",
-            header: ({ column }) => {
-                return (
-                    <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="text-right flex items-center text-xs"
-                    >
-                    Revenue
-                    </Button>
-                )   
-                },
-            cell: ({ row }) => {
-                const amount = parseFloat(row.getValue("productPrice"))
-                const discount = parseFloat(row.getValue("productDiscount"))
-                const totalprice = amount - (amount * (discount/100)) 
-
-                const product = unitsold.find(p => p.productId === row.original._id);
-                const Revenue = totalprice * (product ? product.totalQuantity : 0);
-                
-                // Format the amount as a dollar total price 
-                const formatted = new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                }).format(Revenue)
-    
-                return <div className="font-medium pl-3">{formatted}</div>
-            },
-        },
-        {
-            accessorKey: "status",
-            header: () => {
-            return (
-                <div>Status</div>
-            )
-            },
-            cell: ({ row }) => <div className="lowercase">{row.original.status !== "draft" ? <span className="bg-[#B7F0B6] font-medium px-2 py-1 rounded-md">{row.getValue("status")}</span> : <span className="px-2 py-1 rounded-md bg-[#EFEFEE] font-medium">{row.getValue("status")}</span>}</div>,
-        },
-        {
-            id: "actions",
-            enableHiding: false,
-            cell: ({ row }) => {
-            const payment = row.original
-            return (
-                <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0 text-black">
-                    <span className="sr-only">Open menu</span>
-                    <MoreHorizontal />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-white outline-none dark:border-gray-200 dark:text-black">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(payment._id)}
-                    >
-                    Copy Product ID
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={()=> {
-                        setActiveTab('ViewProduct')
-                        setProductId(row.original._id)
-                    }}>View product</DropdownMenuItem>
-                    <DropdownMenuItem onClick={()=> {
-                        setActiveTab('EditProduct')
-                        setProductId(row.original._id)
-                    }}>Edit product</DropdownMenuItem>
-                </DropdownMenuContent>
-                </DropdownMenu>
-            )
-            },
-        },
+        }
     ]
 
-    interface CustomFilterRow {
-        getValue: (columnId: string) => any;
-        original: {
-            _id?: string;
-        };
-    }
-    type CustomFilter = (row: CustomFilterRow, columnId: string, filterValue: string) => boolean;
-
-    const customFilter: CustomFilter = (row, columnId, filterValue) => {
-        const filterValueLower = filterValue.toLowerCase();
-        return Object.values(row.original).some((value) => {
-            return value?.toString().toLowerCase().includes(filterValueLower);
-        });
-    };
-
     const table = useReactTable({
-        data: inventoryTable,
+        data: order_table,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -262,12 +149,11 @@ export default function InventoryTable() {
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
-        globalFilterFn: customFilter,
         state: {
-            sorting,
-            columnFilters,
-            columnVisibility,
-            rowSelection
+        sorting,
+        columnFilters,
+        columnVisibility,
+        rowSelection,
         },
     })
 
@@ -279,39 +165,13 @@ export default function InventoryTable() {
         <div className="w-full">
         <div className="flex justify-between items-center py-4 gap-1">
             <Input
-            placeholder="Search Product Name or ID..."
-            value={(table.getState().globalFilter as string) ?? ""}
-            onChange={(event) => {
-                const value = event.target.value || ""; 
-                table.setGlobalFilter(value); 
-            }}
+            placeholder="Filter Product Name..."
+            value={(table.getColumn("productName")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+                table.getColumn("productName")?.setFilterValue(event.target.value)
+            }
             className="w-56 sm:w-80 text-sm outline-none shadow-md border border-none"
             />
-            <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-1 outline-none dark:border-gray-200">
-                Filter 
-                <ChevronDown size={15}/>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className=" bg-white dark:border-gray-200 dark:text-black">
-            <DropdownMenuCheckboxItem
-            onClick={()=> setStatus("All")}
-        >
-            All
-        </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-            onClick={()=> setStatus("Published")}
-        >
-            Published
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-            onClick={()=> setStatus("draft")}
-        >
-            Draft
-        </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-            </DropdownMenu>
         </div>
         <div className="rounded-md border dark:border-gray-200">
             <Table className="border border-none">
