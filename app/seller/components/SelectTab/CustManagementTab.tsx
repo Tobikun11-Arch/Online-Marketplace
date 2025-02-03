@@ -22,10 +22,10 @@ const CustManagementTab = () => {
         <>
             <div className={`flex items-center rounded-md hover:bg-blue-600 lg:justify-between justify-center lg:pl-3 lg:pr-2 py-2 hover:text-white px-2`} onClick={handeOpen}>
                 <div className="flex items-center gap-2">
-                    <div className="tooltip sm:tooltip-right" data-tip="Customer">
+                    <div className="tooltip sm:tooltip-right" data-tip="Users">
                         <Users size={20}/>
                     </div>
-                    <h2 className='hidden lg:block'>Customer</h2>
+                    <h2 className='hidden lg:block'>Users</h2>
                 </div>
                 {isOpen ? (
                     <ChevronUp size={20} className='hidden lg:block'/>
@@ -46,10 +46,10 @@ const CustManagementTab = () => {
 
                         <TabItem
                         icon={Mails}
-                        label='Messages/Support'
+                        label='Announcement'
                         isActive={activeTab === 'Messages/Support'}
                         onClick={() => setActiveTab('Messages/Support')}
-                        tooltip='Messages/Support'
+                        tooltip='Announcement'
                         />
                     </>
                 )}
