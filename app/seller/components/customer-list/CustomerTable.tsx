@@ -13,8 +13,8 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { useProductDetails, usefilter } from '../../state/manage-products/table'
-import { Product_Orders } from '../../types/product'
+import { useProductDetails } from '../../state/manage-products/table'
+import { BuyerInformation } from '../../types/product'
 import { Button } from "../../../../@/components/ui/button"
 import { Input } from "../../../../@/components/ui/input"
 import {
@@ -34,96 +34,40 @@ import {
 } from "../../../../@/components/ui/pagination";
 import Image from "next/image"
 import { generatePageItem } from "../manage-products/PageItems" 
-import { useSideBarState } from "../../state/Sidebar"
-import { useProductId } from "../../state/manage-products/ViewProduct"
-import { useUser } from "../../state/User"
-import { useToast } from "../../../../@/hooks/use-toast"
 
 export default function DataTableComp() {
-    const { order_table } = useProductDetails()
+    const { customer_table } = useProductDetails()
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
     
-    const columns: ColumnDef<Product_Orders>[] = [
+    const columns: ColumnDef<BuyerInformation>[] = [
         {
-            accessorKey: "productName",
-            header: "Product Name",
-            cell: ({ row }) => (
-                <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 relative">
-                    {row.original.images ? (
-                        <Image
-                            fill
-                            src={row.original.images}
-                            alt="product image"
-                            className="rounded-full object-cover"
-                        />
-                    ) : (
-                        // Render a placeholder or nothing if there's no image
-                        <div className="w-full h-full bg-gray-200 rounded-full"></div>
-                    )}
-                    </div>
-                    <div className="capitalize">{row.getValue("productName")}</div>
-                </div>
-            ),
-        },
-        {
-            accessorKey: "quantity",
-            header: "Quantity",
-            cell: ({ row }) => (
-                <div className="capitaliz">{row.getValue("quantity")}</div>
-            ),
-        },  
-        {
-            accessorKey: "price",
-            header: ({ column }) => {
-                return (
-                    <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="text-right flex items-center text-xs"
-                    >
-                    Amount
-                    </Button>
-                )   
-                },
+            accessorKey: "buyer_username",
+            header: "Username",
             cell: ({ row }) => {
-                const amount = parseFloat(row.getValue("price"))
-                const quantity = parseFloat(row.getValue("quantity"))
-                const Amount = amount * quantity
-    
-                // Format the amount as a dollar amount
-                const formatted = new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "USD",
-                }).format(Amount)
-    
-                return <div className="font-medium pl-3">{formatted}</div>
+                return <div className="">{row.getValue('buyer_username')}</div>;
+            },
+        }, 
+        {
+            accessorKey: "buyer_email",
+            header: "Email",
+            cell: ({ row }) => {
+                return <div className="">{row.getValue('buyer_email')}</div>;
             },
         },
         {
-            accessorKey: "addedAt",
-            header: "Order date and time",
+            accessorKey: "total_purchases",
+            header: "Total Purchases",
             cell: ({ row }) => {
-                const date = new Date(row.getValue("addedAt")); 
-                const formattedDate = date.toLocaleString("en-US", {
-                    month: "long", 
-                    day: "2-digit",
-                    year: "numeric", 
-                    hour: "numeric", 
-                    minute: "2-digit", 
-                    hour12: true,
-                });
-        
-                return <div className="capitalize">{formattedDate}</div>;
+                return <div className="">{row.getValue('total_purchases')}</div>;
             },
         }
     ]
 
     const table = useReactTable({
-        data: order_table,
+        data: customer_table,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -149,10 +93,10 @@ export default function DataTableComp() {
         <div className="w-full">
         <div className="flex justify-between items-center py-4 gap-1">
             <Input
-            placeholder="Filter Product Name..."
-            value={(table.getColumn("productName")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter buyer email..."
+            value={(table.getColumn("buyer_email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-                table.getColumn("productName")?.setFilterValue(event.target.value)
+                table.getColumn("buyer_email")?.setFilterValue(event.target.value)
             }
             className="w-56 sm:w-80 text-sm outline-none shadow-md border border-none"
             />

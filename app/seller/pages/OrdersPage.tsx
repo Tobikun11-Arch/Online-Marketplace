@@ -6,7 +6,6 @@ import { orders_products } from '../services/axios/ProductRequests'
 import { useUser } from '../state/User'
 import { ResponseData } from '../services/axios-instance/GetInstance'
 import { useProductDetails } from '../state/manage-products/table'
-import { Product_Orders } from '../types/product'
 
 export default function OrdersPage() {
     const { user } = useUser()

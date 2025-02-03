@@ -60,6 +60,6 @@ export interface BuyerInformation {
     buyer_lastName: string;
     buyer_email: string;
     buyer_username: string;
-    _id: string;
+    total_purchases: number;
 };
   

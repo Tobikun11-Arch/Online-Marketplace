@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { tableData, InventoryData, ProductQuantity, Product_Orders } from '../../types/product'
+import { tableData, InventoryData, ProductQuantity, Product_Orders, BuyerInformation } from '../../types/product'
 
 interface ProductProps {
     tableData: tableData[]
@@ -13,6 +13,9 @@ interface ProductProps {
 
     order_table: Product_Orders[]
     setorderTable: (order_table: Product_Orders[]) => void
+
+    customer_table: BuyerInformation[]
+    setCustomerTable: (customer_table: BuyerInformation[]) => void
 }
 
 export const useProductDetails = create<ProductProps>((set)=> ({
@@ -20,11 +23,13 @@ export const useProductDetails = create<ProductProps>((set)=> ({
     inventoryTable: [],
     unitsold: [],
     order_table: [],
+    customer_table: [],
 
     setTableData: (tableData: tableData[]) => set({tableData}),
     setInventory: (inventoryTable: InventoryData[]) => set({ inventoryTable }),
     setUnitSold: (unitsold: ProductQuantity[]) => set({unitsold}),
-    setorderTable: (order_table: Product_Orders[]) => set({ order_table })
+    setorderTable: (order_table: Product_Orders[]) => set({ order_table }),
+    setCustomerTable: (customer_table: BuyerInformation[]) => set({ customer_table })
 }))
 
 
