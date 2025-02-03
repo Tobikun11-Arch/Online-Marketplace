@@ -44,13 +44,6 @@ const Sidebar = () => {
                     />
                 <SettingsTab/>
                 <CustManagementTab/>
-                <TabItem
-                    icon={Headset}
-                    label="Help & Support"
-                    isActive={activeTab === 'Help & Support'}
-                    onClick={() => setActiveTab('Help & Support')}
-                    tooltip='Help & Support'
-                />
             </div>
         </div>
     )
