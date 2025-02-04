@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import React, { useState, useEffect, useRef } from 'react'
-import { Send, Bell, UserPen, CalendarDays, LogOut } from 'lucide-react'
+import { Send, Bell, User, CalendarDays, LogOut } from 'lucide-react'
 import { useSideBarState } from '../state/Sidebar'
 import NavList from '../components/NavList'
 import Notifications from '../components/Notifications'
@@ -76,8 +76,8 @@ const Header = () => {
                         {userOpen && (
                             <div ref={dropdownRef} className='fixed z-40 bg-white shadow-md pl-4 pr-14 py-4 flex flex-col gap-4 top-16 right-5 text-gray-700'>
                                 <NavList
-                                    icon={UserPen}
-                                    label='My Account'
+                                    icon={User}
+                                    label='My Profile'
                                     onClick={()=> setActiveTab("My Account")}
                                 />
                                 <NavList

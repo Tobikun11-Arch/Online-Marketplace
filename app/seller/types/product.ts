@@ -28,6 +28,12 @@ export interface tableData {
     images: string
 }
 
+export interface SellerData {
+    productcount: number;
+    ordercount: number;
+    buyercount: number;
+}
+
 export interface InventoryData {
     _id: string;
     Sku: string;

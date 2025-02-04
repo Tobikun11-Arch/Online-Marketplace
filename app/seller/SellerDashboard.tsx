@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { Header, Sidebar, Footer } from './layout/index'
 import { useSideBarState } from './state/Sidebar';
-import { HelpSupportPage, OrdersPage, AddProduct, ManageProducts, InventoryPage, ProfilePage, PaymentPage, CustomerPage, SupportPage, MyAccount, Calendar, Overview, ViewProduct, EditProduct } from './pages/index'
+import { HelpSupportPage, OrdersPage, AddProduct, ManageProducts, InventoryPage, ProfilePage, PaymentPage, CustomerPage, SupportPage, MyProfile, Calendar, Overview, ViewProduct, EditProduct } from './pages/index'
 import { useUser } from './state/User'
 import { productDetails } from './state/add-product-state/ProductDetails';
 import { UpdateDetails, UpdatedImages } from './state/add-product-state/UpdateProduct';
@@ -12,7 +12,7 @@ export default function SellerDashboardLayout() {
     const { activeTab } = useSideBarState()
     const { setUser } = useUser()
     const { setisProductName, setDescription, setSku, setPrice, setStock, setDiscount } = UpdateDetails()
-    const { setSubImage_01, setSubImage_02, setSubImage_03, setSelected, isSelected } = UpdatedImages();
+    const { setSubImage_01, setSubImage_02, setSubImage_03, setSelected } = UpdatedImages();
     const { setSize } = useSize()
     const { setQuality } = productDetails()
 
@@ -56,7 +56,7 @@ export default function SellerDashboardLayout() {
         'Payment Methods': <PaymentPage />,
         'Customer List': <CustomerPage />,
         'Messages/Support': <SupportPage />,
-        'My Account': <MyAccount />,
+        'My Account': <MyProfile />,
         'Calendar': <Calendar />,
         'ViewProduct': <ViewProduct/>,
         'EditProduct': <EditProduct/>

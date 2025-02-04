@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Settings, ChevronDown, ChevronUp, User, CreditCard } from 'lucide-react'
+import { Settings, ChevronDown, ChevronUp, UserPen, CreditCard } from 'lucide-react'
 import { useSideBarState } from '../../state/Sidebar'
 import TabItem from '../TabItem'
 
@@ -37,11 +37,11 @@ const SettingsTab = () => {
                 {isOpen && mainTab === 'Settings' && (
                     <>
                         <TabItem
-                        icon={User}
-                        label='Profile'
+                        icon={UserPen}
+                        label='My Account'
                         isActive={activeTab === 'Profile'}
                         onClick={() => setActiveTab('Profile')}
-                        tooltip='Profile'
+                        tooltip='My Account'
                         />
 
                         <TabItem
