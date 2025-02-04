@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Header, Sidebar, Footer } from './layout/index'
 import { useSideBarState } from './state/Sidebar';
 import { HelpSupportPage, OrdersPage, AddProduct, ManageProducts, InventoryPage, ProfilePage, PaymentPage, CustomerPage, SupportPage, MyProfile, Calendar, Overview, ViewProduct, EditProduct } from './pages/index'
@@ -15,6 +15,7 @@ export default function SellerDashboardLayout() {
     const { setSubImage_01, setSubImage_02, setSubImage_03, setSelected } = UpdatedImages();
     const { setSize } = useSize()
     const { setQuality } = productDetails()
+    const hasRun = useRef(false);
 
     const resetFormState = () => {
         setisProductName('');
@@ -33,12 +34,15 @@ export default function SellerDashboardLayout() {
     };
 
     useEffect(()=> {
-        const storedUser = localStorage.getItem('user');
-        if(storedUser) {
-            const user = JSON.parse(storedUser!)
-            setUser(user)
-        } else {
-            console.log("No stored user found")
+        if (!hasRun.current) {
+            const storedUser = localStorage.getItem('user');
+            if(storedUser) {
+                const user = JSON.parse(storedUser)
+                setUser(user)
+            } else {
+                console.log("No stored user found")
+            }
+            hasRun.current = true; // Set the flag to true after the first run
         }
         if(activeTab === 'Manage Products') {
             resetFormState()

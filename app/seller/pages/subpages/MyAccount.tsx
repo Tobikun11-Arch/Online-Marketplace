@@ -72,7 +72,7 @@ export default function MyAccount() {
                         className="object-cover object-center"
                     />
                 </div>
-                <div className='bg-white shadow-md h-[30rem] flex flex-col items-center rounded-b-md'>
+                <div className='bg-white shadow-md h-96 flex flex-col items-center rounded-b-md'>
                     <div className="relative w-16 h-16 -mt-7 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-md right-0 sm:-mt-12 bg-white border-2 border-blue-600">
                         <Image
                             src={'/assets/sajubazaarlogo.png'}
@@ -82,7 +82,7 @@ export default function MyAccount() {
                             className="object-cover object-center p-3"
                         />
                     </div>
-                    <div className='flex text-base gap-2 items-center mt-3 font-semibold'>
+                    <div className='flex text-base gap-1 items-center mt-3 font-semibold'>
                         <h4>{user?.FirstName}</h4>
                         <div className='flex items-center gap-1'>
                             <h5>{user?.LastName}</h5>
