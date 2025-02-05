@@ -25,11 +25,12 @@ export const productId = axios.create({
   })
 
   export const productCategory = axios.create({
-    baseURL: 'http://localhost:5000/api/users/product/length',
+    baseURL: 'http://localhost:5000/api/users/categories/length',
     headers: {
         'Content-Type': 'application/json'
     }
   })
+  productCategory.defaults.withCredentials = true
 
 export const userAuth = axios.create({
     baseURL: 'http://localhost:5000/api/users/product/',  //deployment: process.env.NEXT_PUBLIC_PRODUCTID

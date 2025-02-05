@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { productCategory } from '../../axios/dataStore'
 import { useQuery } from '@tanstack/react-query'
 import ProductCategory from '../../../Auth/Components/ui/ProductCategory'
@@ -17,6 +17,10 @@ const BestCategory = () => {
         queryKey: ['category'],
         queryFn: fetchCategory
     })
+
+    useEffect(()=> {
+        console.log("category: ", data)
+    }, [])
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
