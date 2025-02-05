@@ -20,8 +20,8 @@ export default function DataChart({ Chart }: DataChartProps) {
                     <h2 className='font-semibold text-sm'>Recent Activities</h2>
                     {Chart?.map((data, dataIndex)=> (
                         <div key={`data-${dataIndex}`}>
-                            {data.RecentAct.map((recent, reviewIndex) => (
-                                <div key={`review-${dataIndex}-${reviewIndex}`} className='flex flex-col'>
+                            {data.RecentAct.map((recent, recentIndex) => (
+                                <div key={`recent-act-${dataIndex}-${recentIndex}`} className='flex flex-col'>
                                     <div className='mt-2 rounded-md pr-2 py-2 text-sm'>
                                         <div className='flex justify-between items-center'>
                                             <div className='flex gap-2'>
@@ -97,6 +97,32 @@ export default function DataChart({ Chart }: DataChartProps) {
                 </div>
                 <div className={`${DataBody_02}`}>
                     <h2 className='font-semibold text-sm'>Top Buyer</h2>
+                    {Chart?.map((data, dataIndex)=> (
+                        <div key={`data-${dataIndex}`}>
+                            {data.TopBuyer.map((buyer, buyerIndex)=> (
+                                <div key={`buyer-${buyerIndex}`} className='mt-3 flex items-center justify-between shadow-md p-2'>
+                                    <div className='flex gap-1 items-center'>
+                                        <div className='relative h-8 w-8 rounded-full overflow-hidden'>
+                                            <Image
+                                                fill
+                                                loading='lazy'
+                                                alt='top'
+                                                src={
+                                                    buyerIndex === 0
+                                                    ? '/assets/goldmedal.png'
+                                                    : buyerIndex === 1
+                                                    ? '/assets/silvermedal.png'
+                                                    : '/assets/bronzemedal.png'
+                                                }
+                                            />
+                                        </div>
+                                        <p>{buyer.buyer_username}</p>
+                                    </div>
+                                    <h1 className='text-sm'>Total purchases: <span className='text-orange-600'>{buyer.total_purchases}</span></h1>
+                                </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
