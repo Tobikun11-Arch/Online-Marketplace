@@ -1,5 +1,5 @@
 import { AxiosError, AxiosResponse, AxiosInstance } from 'axios';
-import { Product, ProductQuantity, BuyerInformation, Product_Orders, SellerData } from '../../types/product';
+import { Product, ProductQuantity, BuyerInformation, Product_Orders, SellerData, ChartData, TotalData } from '../../types/product';
 
 export interface ResponseData {
     user_data: Product[]
@@ -7,6 +7,8 @@ export interface ResponseData {
     product_orders: Product_Orders[]
     buyer_info: BuyerInformation[]
     seller_data: SellerData[]
+    Chart: ChartData[]
+    TotalData: TotalData[]
 }
 
 export const httpRequestGet = async(url: string,getType: AxiosInstance, userId?: string, productId?: string[]): Promise<ResponseData | void> => {

@@ -15,6 +15,36 @@ export interface Product {
     status: string;
 }
 
+interface ReviewOrder {
+    productName: string;
+    AddedAt: string;
+    productPrice: number;
+    productQuantity: number;
+    productImage: string;
+}
+  
+interface TopBuyer {
+    buyer_firstName: string;
+    buyer_lastName: string;
+    buyer_email: string;
+    buyer_username: string;
+    total_purchases: number;
+}
+  
+export interface ChartData {
+    Sales: number;
+    ReviewOrder: ReviewOrder[];
+    RecentAct: Product[];
+    TopBuyer: TopBuyer[];
+}
+  
+export interface TotalData {
+    Total_income: number;
+    Total_buyer: number;
+    Total_orders: number;
+    Total_discount: number;
+}
+
 export interface ProductQuantity {
     productId: string;
     totalQuantity: number;

@@ -13,12 +13,12 @@ async function seller_data(userId?: string): Promise<ResponseData> {
     try {
         const response = await httpRequestGet('', data_seller, userId)
         if(!response) {
-            return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [] }
+            return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [], Chart: [], TotalData: [] }
         }
         return response
     } catch (error) {
         console.error("Fetching error: ", error)
-        return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [] };
+        return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [], Chart: [], TotalData: [] };
     }
 }
 

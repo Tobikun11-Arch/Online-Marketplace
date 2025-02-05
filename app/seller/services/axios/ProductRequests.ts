@@ -71,6 +71,14 @@ export const Draft_Publish: AxiosInstance = axios.create({
 })
 
 
+export const user_sales: AxiosInstance = axios.create({
+    baseURL: 'http://localhost:5000/api/users/products/sales',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+})
+
 
 //Add the axios instance here
 addInterceptors(add_product)
@@ -81,3 +89,4 @@ addInterceptors(update_draftProducts)
 addInterceptors(Draft_Publish) //snake case
 addInterceptors(delete_product)
 addInterceptors(orders_products)
+addInterceptors(user_sales)

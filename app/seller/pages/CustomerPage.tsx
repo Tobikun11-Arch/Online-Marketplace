@@ -15,12 +15,12 @@ export default function CustomerPage() {
         try {
             const response = await httpRequestGet('', orders_products, user?._id!)
             if(!response) {
-                return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [] }
+                return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [], Chart: [], TotalData: [] }
             }
             return response
         } catch (error) {
             console.error("Fetching error: ", error)
-            return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [] };
+            return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [], Chart: [], TotalData: [] };
         }
     }
 

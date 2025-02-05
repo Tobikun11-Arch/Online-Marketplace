@@ -2,8 +2,27 @@ import React from 'react'
 import { Share2 } from 'lucide-react'
 import ProfileIncome from '../components/dashboard-components/ProfileIncome'
 import DataChart from '../components/dashboard-components/DataChart'
+import { httpRequestGet } from '../services/axios-instance/GetInstance'
+import { useUser } from '../state/User'
+import { user_sales } from '../services/axios/ProductRequests'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { ResponseData } from '../services/axios-instance/GetInstance'
+
+async function UserSalesData(userId?: string): Promise<ResponseData> {
+    const response = await httpRequestGet('', user_sales, userId)
+    if(!response) {
+        return { user_data: [], productQuantities: [], product_orders: [], buyer_info: [], seller_data: [], Chart: [], TotalData: [] }
+    }
+    return response
+}
 
 export default function MainDashboard() {
+    const { user } = useUser()
+
+    const { data } = useSuspenseQuery<ResponseData>({
+        queryKey: ['user_sales'],
+        queryFn: ()=> UserSalesData(user?._id)
+    })
 
     return (
         <div className='flex flex-col h-full'>
@@ -15,29 +34,31 @@ export default function MainDashboard() {
                 </div>
             </div>
             <div className="overflow-y-auto pb-16 sm:pb-2">
-                <div className='w-full pt-2 sm:py-2 px-6 grid sm:grid-cols-2 xl:grid-cols-4 sm:pl-16 sm:pr-4 gap-2 lg:px-4 mt-4'>
-                    <ProfileIncome 
-                        label='Total Income'
-                        data={25000}
-                        percentage={12.95}
-                    />
-                    <ProfileIncome 
-                        label='Customers'
-                        data={12240}
-                        percentage={-1.05}
-                    />
-                    <ProfileIncome 
-                        label='Total Orders'
-                        data={15000}
-                        percentage={5.23}
-                    />
-                    <ProfileIncome 
-                        label='Total Discount'
-                        data={35600}
-                        percentage={0.46}
-                    />
-                </div>  
-                <DataChart/>
+                {data?.TotalData.map((product, index)=> (
+                    <div key={index} className='w-full pt-2 sm:py-2 px-6 grid sm:grid-cols-2 xl:grid-cols-4 sm:pl-16 sm:pr-4 gap-2 lg:px-4 mt-4'>
+                        <ProfileIncome 
+                            label='Total Income'
+                            data={product.Total_income}
+                            percentage={0}
+                        />
+                        <ProfileIncome 
+                            label='Customers'
+                            data={product.Total_buyer}
+                            percentage={0}
+                        />
+                        <ProfileIncome 
+                            label='Total Orders'
+                            data={product.Total_orders}
+                            percentage={0}
+                        />
+                        <ProfileIncome 
+                            label='Total Discount'
+                            data={product.Total_discount}
+                            percentage={0}
+                        />
+                    </div>
+                ))}  
+                <DataChart Chart={data.Chart}/>
             </div>
         </div>
     )
