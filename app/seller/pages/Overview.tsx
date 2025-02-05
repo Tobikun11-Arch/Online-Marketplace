@@ -5,7 +5,7 @@ import DataChart from '../components/dashboard-components/DataChart'
 import { httpRequestGet } from '../services/axios-instance/GetInstance'
 import { useUser } from '../state/User'
 import { user_sales } from '../services/axios/ProductRequests'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { ResponseData } from '../services/axios-instance/GetInstance'
 
 async function UserSalesData(userId?: string): Promise<ResponseData> {
@@ -19,9 +19,12 @@ async function UserSalesData(userId?: string): Promise<ResponseData> {
 export default function MainDashboard() {
     const { user } = useUser()
 
-    const { data } = useSuspenseQuery<ResponseData>({
+    console.log("user id", user?._id)
+
+    const { data } = useQuery<ResponseData>({
         queryKey: ['user_sales'],
-        queryFn: ()=> UserSalesData(user?._id)
+        queryFn: ()=> UserSalesData(user?._id),
+        enabled: !!user?._id,
     })
 
     return (
@@ -58,7 +61,7 @@ export default function MainDashboard() {
                         />
                     </div>
                 ))}  
-                <DataChart Chart={data.Chart}/>
+                <DataChart Chart={data?.Chart}/>
             </div>
         </div>
     )
