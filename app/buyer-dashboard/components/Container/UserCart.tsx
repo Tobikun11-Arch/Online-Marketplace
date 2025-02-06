@@ -18,7 +18,7 @@ interface cartProps {
 }
 
 const UserCart:FC<cartProps> = ({ Cart }) => {
-    const { setAuth } = useToggle()
+    const { setAuth, setCart } = useToggle()
     const { cart: localCart } = useProductCart()
     const { user } = useUser()
     const { setCartLength } = useUserCart()
@@ -119,6 +119,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
 
     const handleCheckout = async () => {
         if(!user) {
+            setCart(false)
             setAuth(true)
             return
         }
