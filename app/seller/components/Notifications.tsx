@@ -37,28 +37,33 @@ export default function Notifications({ isNotify, setNotify }: NotifyProps) {
     return (
         <div ref={dropdownRef} className='fixed bg-[#FAFAFA] shadow-md pl-2 pr-5 py-4 flex flex-col gap-1 top-16 right-32 sm:right-44 text-gray-700'>
             <h1 className='text-sm font-semibold'>Notifications</h1>
-            {Chart.map((notification, chartIndex) => (
-                <div key={`chart-${chartIndex}`} className='flex flex-col gap-1'>
+            {Chart ? (
+                Chart.map((notification, chartIndex) => (
+                    <div key={`chart-${chartIndex}`} className='flex flex-col gap-1'>
                         <div className="flex flex-col">
-                    <div className="flex items-center">
-                        <Dot color="red" />
-                        <h2 className="text-xs text-gray-600">
-                            {`${notification.productQuantity}x '${notification.productName}'📦`}
-                        </h2>
+                            <div className="flex items-center">
+                                <Dot color="red" />
+                                <h2 className="text-xs text-gray-600">
+                                    {`${notification.productQuantity}x '${notification.productName}'📦`}
+                                </h2>
+                            </div>
+                            <h2 className="text-[10px] text-gray-600 pl-6">
+                                {new Date(notification.AddedAt).toLocaleString("en-US", {
+                                    month: "long",
+                                    day: "2-digit",
+                                    year: "numeric",
+                                    hour: "numeric",
+                                    minute: "2-digit",
+                                    hour12: true,
+                                })}
+                            </h2>
+                        </div>
                     </div>
-                    <h2 className="text-[10px] text-gray-600 pl-6">
-                        {new Date(notification.AddedAt).toLocaleString("en-US", {
-                            month: "long",
-                            day: "2-digit",
-                            year: "numeric",
-                            hour: "numeric",
-                            minute: "2-digit",
-                            hour12: true,
-                        })}
-                    </h2>
-                </div>
-                </div>
-            ))}
+                ))
+            ) : (
+                <p>No Notifications</p>
+            )}
+
         </div>
     )
 }   

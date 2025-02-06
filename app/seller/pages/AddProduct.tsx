@@ -316,7 +316,7 @@ export default function AddProduct() {
                         </div>
                         <div className='flex gap-2 mt-5 w-full'>
                             <div className='w-full'>
-                                <h4 className='text-sm font-normal'>Discount</h4>
+                                <h4 className='text-sm font-normal'>Discount (%)</h4>
                                 <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' value={isDiscount} onChange={(e)=> {
                                 const value = e.target.value; 
                                     if (value === "") {
