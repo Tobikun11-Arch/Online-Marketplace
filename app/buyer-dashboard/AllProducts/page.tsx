@@ -91,7 +91,7 @@ export default function Page() {
 
         if (isLoading) {
             return (
-                <div className="flex items-center justify-center min-h-screen bg-[#171717] dark:bg-[#171717]">
+                <div className="flex items-center justify-center min-h-screen bg-white dark:bg-[#171717]">
                     <l-line-spinner
                     size="30"
                     bg-opacity="0.1"
