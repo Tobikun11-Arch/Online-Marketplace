@@ -48,7 +48,6 @@ const Form = () => {
                     setUsername(generatedUsername);   
                     {joinSeller ? setRole('seller') : setRole('buyer')}
                     try {
-                        setLoading(true)
                         const userDetails = {
                             FirstName: fullName[0], LastName: fullName[1], PhoneNumber, PetName, Email: session_register.email, Password: usernameParts[0], Role: userRole, Username: generatedUsername
                         }
@@ -57,16 +56,12 @@ const Form = () => {
                             setStart(true)
                         }
                     } catch (error: any) {
-                        setLoading(false);
                         // Check if the error is an AxiosError
                         if (axios.isAxiosError(error)) {
                             const axiosError = error as AxiosError;
                             // Log the 400 status error explicitly
                             if (axiosError.response?.status === 400) {
                                 setStart(true)
-                            } else {
-                                seterror(true)
-                                setmessageLogin(true)
                             }
                         } else {
                             // Handle non-Axios errors
@@ -79,7 +74,6 @@ const Form = () => {
             const SignInAction = async() => {
                 const session_login = await LoginAuth()
                 if(session_login) {
-                    setLoading(true)
                     const usernameParts = session_login.email?.split('@') || []
                     const userDetails = {
                         Email: session_login.email, 
@@ -97,7 +91,6 @@ const Form = () => {
                             router.push('/seller');
                             setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                         }
-                        setLoading(false)
                     } else {
                         console.error('Error:', response.data.error); // Handle error if message is not 'Login successful'
                     }
