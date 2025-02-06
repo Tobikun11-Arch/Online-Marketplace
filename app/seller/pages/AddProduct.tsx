@@ -45,6 +45,7 @@ export default function AddProduct() {
             setSubImage_02('');
             setSubImage_03('');
             setCategory('Electronics'); 
+            setSelected('')
         };
 
         if(!isProductName || !isDescription || isPrice === 0 || isStock === 0 || !isSize || !isSubImage_01 || !isSubImage_02 || !isSubImage_03) {
