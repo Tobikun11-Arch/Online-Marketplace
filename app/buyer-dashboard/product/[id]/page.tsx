@@ -137,7 +137,9 @@ const Page = () => {
                         <div className='w-full lg:w-2/5 text-black px-7 dark:text-white bg-white dark:bg-[#171717] lg:py-10 py-5'>
                             <h1 className='text-3xl font-bold lg:px-?'>{product.productName}</h1>
                             <div className='flex gap-2'>
-                                <h2 className='inline-block text-black font-semibold dark:text-white'>${product.productPrice - (product.productPrice * (product.productDiscount / 100))}</h2>
+                            <h2 className='inline-block text-black font-semibold dark:text-white'>
+                                {(product.productPrice - (product.productPrice * (product.productDiscount / 100))).toFixed(2)}
+                            </h2>
                                 <h2 className='inline-block text-black font-semibold dark:text-white'>Stock: {product.productStock > 0 ? product.productStock : 'Out of stock'}</h2>
                             </div>
                             {product.productDiscount > 0 && <p className='text-sm text-gray-500'>This item originally retailed for ${product.productPrice}</p>}
