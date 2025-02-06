@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import { Share2 } from 'lucide-react'
 import ProfileIncome from '../components/dashboard-components/ProfileIncome'
 import DataChart from '../components/dashboard-components/DataChart'
@@ -7,6 +8,7 @@ import { useUser } from '../state/User'
 import { user_sales } from '../services/axios/ProductRequests'
 import { useQuery } from '@tanstack/react-query'
 import { ResponseData } from '../services/axios-instance/GetInstance'
+import { NotifBuyer } from '../state/Chart'
 
 async function UserSalesData(userId?: string): Promise<ResponseData> {
     const response = await httpRequestGet('', user_sales, userId)
@@ -18,14 +20,19 @@ async function UserSalesData(userId?: string): Promise<ResponseData> {
 
 export default function MainDashboard() {
     const { user } = useUser()
-
-    console.log("user id", user?._id)
+    const { setChart } = NotifBuyer()
 
     const { data } = useQuery<ResponseData>({
         queryKey: ['user_sales'],
         queryFn: ()=> UserSalesData(user?._id),
         enabled: !!user?._id,
     })
+
+    useEffect(() => {
+        if (data) {
+            setChart(data.Chart.map(review => review.ReviewOrder).flat());
+        }
+    }, [data, setChart]);
 
     return (
         <div className='flex flex-col h-full'>

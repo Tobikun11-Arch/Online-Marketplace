@@ -15,7 +15,7 @@ export interface Product {
     status: string;
 }
 
-interface ReviewOrder {
+export interface ReviewOrder {
     productName: string;
     AddedAt: string;
     productPrice: number;
@@ -23,7 +23,7 @@ interface ReviewOrder {
     productImage: string;
 }
   
-interface TopBuyer {
+export interface TopBuyer {
     buyer_firstName: string;
     buyer_lastName: string;
     buyer_email: string;

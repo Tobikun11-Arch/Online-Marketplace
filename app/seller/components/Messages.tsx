@@ -9,8 +9,8 @@ interface MessageProps {
 export default function Messages({ isMessage, setMessage }: MessageProps) {
     const Messages = [
         {
-            names: ['Kana Macha', "Roger Silono"],
-            messages: ['I like you', 'Are you free?'],
+            names: ['Messages soon!', "Reminder"],
+            messages: ['Wait for new update.', 'Please upload png file only'],
             time: ['2mns ago', '1hr ago']
         }
     ]
@@ -30,7 +30,7 @@ export default function Messages({ isMessage, setMessage }: MessageProps) {
     }, [isMessage]) 
 
     return (
-        <div ref={dropdownRef} className='fixed bg-[#FAFAFA] shadow-md pl-4 pr-12 py-4 flex flex-col gap-1 top-16 right-24 sm:right-40 text-gray-700'>
+        <div ref={dropdownRef} className='fixed bg-[#FAFAFA] shadow-md pl-4 pr-8 py-4 flex flex-col gap-1 top-16 right-20 sm:right-36 text-gray-700'>
             <h1 className='text-sm font-semibold'>Messages</h1>
             {Messages.map((message, index)=> (
                 <div key={index}>

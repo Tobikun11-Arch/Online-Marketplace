@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { ArrowUpDown } from "lucide-react";
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -82,7 +83,6 @@ export default function DataTableComp() {
                 return (
                     <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="text-right flex items-center text-xs"
                     >
                     Amount
@@ -105,21 +105,33 @@ export default function DataTableComp() {
         },
         {
             accessorKey: "addedAt",
-            header: "Order date and time",
+            header: ({ column }) => {
+                return (
+                    <Button
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        variant="ghost"
+                        className="text-left flex items-center text-xs"
+                    >
+                        Order date and time
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                );
+            },
             cell: ({ row }) => {
-                const date = new Date(row.getValue("addedAt")); 
+                const date = new Date(row.getValue("addedAt"));
                 const formattedDate = date.toLocaleString("en-US", {
-                    month: "long", 
+                    month: "long",
                     day: "2-digit",
-                    year: "numeric", 
-                    hour: "numeric", 
-                    minute: "2-digit", 
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
                     hour12: true,
                 });
         
                 return <div className="capitalize">{formattedDate}</div>;
             },
-        }
+            sortingFn: "datetime", // Ensures proper sorting for date values
+        },
     ]
 
     const table = useReactTable({
