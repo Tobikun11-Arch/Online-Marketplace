@@ -36,10 +36,8 @@ const Form = () => {
         useEffect(()=> {
             const SignUpAction = async()=> {
                 const session_register = await RegisterAuth()  
-                if(!session_register) { console.log("No Registration working") }
                 if(session_register) {
                     const userRole = localStorage.getItem('Role')
-                    console.log('userRole: ', userRole)
                     const usernameParts = session_register.email?.split('@') || []
                     const developer = "TobiNejiKai" 
                     const fullName = session_register.name?.split(" ") || []
@@ -80,7 +78,6 @@ const Form = () => {
 
             const SignInAction = async() => {
                 const session_login = await LoginAuth()
-                if(!session_login) { console.log("No Login working") }
                 if(session_login) {
                     setLoading(true)
                     const usernameParts = session_login.email?.split('@') || []
@@ -134,7 +131,6 @@ const Form = () => {
                         setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                     } else {
                         localStorage.removeItem('activeItem')
-                        console.log("user: ", user)
                         router.push('/seller');
                         setmessageLogin(false), setLoading(false), sentMail(false), setEmail(''), setPassword('')
                     }
@@ -147,7 +143,7 @@ const Form = () => {
                 seterror(true)
                 setmessageLogin(true)
                 setLoading(false);
-                console.log('Error: ', error)
+                console.error(error)
             }
         }
 

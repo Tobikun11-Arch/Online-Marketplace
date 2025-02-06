@@ -16,7 +16,6 @@ export default function DashboardPage() {
             try {
                 setIsLoading(true)
                 const response = await auth_token.get('', { withCredentials: true });
-                console.log("response: ", response.data.verToken)
                 if (response.data.verToken === false) {
                     localStorage.clear();
                     router.push('/Auth');

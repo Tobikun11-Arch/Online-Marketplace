@@ -37,7 +37,7 @@ export default function ManageProducts() {
                 if(response) {
                     setResult(response.user_data)
                 } else {
-                    console.log("No response from server")
+                    console.error("No response from server")
                 }
             } catch (error) {   
                 console.error("Error fetching: ", error)

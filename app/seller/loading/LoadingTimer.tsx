@@ -17,7 +17,6 @@ export default function LoadingTimerPage() {
             try {
                 SignOut()
                 const response = await Signout.post('', {}, { withCredentials: true })
-                console.log("Signout working")
                 if(response.data.message === 'Signed out successfully!') {
                     router.push('/')
                     localStorage.clear();

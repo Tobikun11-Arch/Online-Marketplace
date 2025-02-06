@@ -69,7 +69,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
         }
         if (e.key === 'Enter') {
             if(search === "") {
-                console.log("No data search")
+                //no searcg
             }
             else {
                 if(user) {

@@ -8,7 +8,6 @@ import axios, {
 export const addInterceptors = (instance: AxiosInstance): void => {
     instance.interceptors.request.use(
         (config: InternalAxiosRequestConfig) => {
-            console.log('Request Interceptor:', config);
             return config;
         },
         (error: AxiosError) => {
@@ -21,7 +20,6 @@ export const addInterceptors = (instance: AxiosInstance): void => {
     instance.interceptors.response.use(
         (response: AxiosResponse) => {
             // Handle successful responses
-            console.log('Response Interceptor:', response);
             return response;
         },
         (error: AxiosError) => {

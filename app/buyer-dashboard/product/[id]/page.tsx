@@ -91,7 +91,6 @@ const Page = () => {
                 productPrice: products.productPrice - (products.productPrice * (products.productDiscount / 100)),
                 quantity: 1,
             }
-            console.log("data: ", dataProduct)
             setCart((prevCart: AddToCartPayload[]) => [...prevCart, dataProduct]);
             try{
                 await addtoCartRequest(dataProduct);

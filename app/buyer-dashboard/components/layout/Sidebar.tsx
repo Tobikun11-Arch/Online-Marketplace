@@ -35,7 +35,7 @@ const Sidebar = ({ isOpen, onClose } : SidebarProps) => {
 
     const searchMobile = async() => {
             if(search === "") {
-                console.log("No data search")
+                //No search
             }
             else {
                 if(user) {

@@ -40,7 +40,7 @@ export default function SellerDashboardLayout() {
                 const user = JSON.parse(storedUser)
                 setUser(user)
             } else {
-                console.log("No stored user found")
+                //No store found
             }
             hasRun.current = true; // Set the flag to true after the first run
         }

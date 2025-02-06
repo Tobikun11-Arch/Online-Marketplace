@@ -28,7 +28,6 @@ const CountrySelector: React.FC = () => {
 
     const handleChange = (newValue: SingleValue<CountryOption>) => {
         setSelectedCountry(newValue);
-        console.log("Selected Country:", newValue?.value);
     };
 
     return (

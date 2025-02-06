@@ -229,7 +229,7 @@ export default function AddProduct() {
                 } else if (!isSubImage_03) {
                     setSubImage_03(base64String)
                 } else {
-                    console.log("All image slots are occupied.");
+                    //All image slot occs
                 }
             };
             reader.readAsDataURL(file);

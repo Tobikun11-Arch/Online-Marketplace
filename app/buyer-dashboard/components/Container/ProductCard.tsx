@@ -10,10 +10,6 @@ interface products {
 
 const ProductCard = ({ product }: products) => {
 
-    useEffect(()=> {
-         console.log("productsss: ", product)
-    }, [])
-
     return (
         <>
             {product.map((prodTest, index) => (

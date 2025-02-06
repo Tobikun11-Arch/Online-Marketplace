@@ -9,10 +9,6 @@ import { ProductsTab, SettingsTab, CustManagementTab } from '../components/Selec
 const Sidebar = () => {
     const { activeTab, setActiveTab } = useSideBarState()
 
-    useEffect(()=> {
-        console.log(activeTab)
-    }, [activeTab])
-
     return (
         <div className='lg:px-5 py-5 bg-[#1B2130] lg:bg-inherit rounded-2xl px-2 ml-1 z-999'>
             <div className='items-center gap-1 hidden lg:flex'>
