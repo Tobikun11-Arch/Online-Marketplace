@@ -2,7 +2,7 @@ import { addInterceptors } from "../axios-instance/AxiosInstance";
 import axios, { AxiosInstance  } from 'axios'
 
 export const data_seller: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/sellerdata',
+    baseURL: process.env.NEXT_PUBLIC_DATA_SELLER,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -10,7 +10,7 @@ export const data_seller: AxiosInstance = axios.create({
 })
 
 export const update_seller: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/seller_profile',
+    baseURL: process.env.NEXT_PUBLIC_UPDATE_SELLER,
     headers: {
         'Content-Type': 'application/json',
     },

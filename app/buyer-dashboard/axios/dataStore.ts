@@ -1,39 +1,37 @@
 import axios from 'axios'
 
 const productUrl = process.env.NEXT_PUBLIC_PRODUCT  //deployment url
-const localproductUrl = 'http://localhost:5000/api/users/SellerProductlist' //localhost url
-
 export const MainShop = axios.create({
-    baseURL: localproductUrl,
+    baseURL: productUrl,
     headers: {
         "Content-Type": "application/type",
     },
 })
 
 export const AllProducts = axios.create({
-    baseURL: localproductUrl,
+    baseURL: productUrl,
     headers: {
         "Content-Type": "application/type",
     },
 })
 
 export const productId = axios.create({
-    baseURL: 'http://localhost:5000/api/users/product/',  //deployment: process.env.NEXT_PUBLIC_PRODUCTID
+    baseURL: process.env.NEXT_PUBLIC_PRODUCTID,
     headers: {
         'Content-Type': 'application/json',
     }
-  })
+})
 
-  export const productCategory = axios.create({
-    baseURL: 'http://localhost:5000/api/users/categories/length',
+export const productCategory = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_PRODUCT_CATEGORY,
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     }
-  })
-  productCategory.defaults.withCredentials = true
+})
+productCategory.defaults.withCredentials = true;
 
 export const userAuth = axios.create({
-    baseURL: 'http://localhost:5000/api/users/product/',  //deployment: process.env.NEXT_PUBLIC_PRODUCTID
+    baseURL: process.env.NEXT_PUBLIC_USER_AUTH,
     headers: {
         'Content-Type': 'application/json',
     }
@@ -41,7 +39,7 @@ export const userAuth = axios.create({
 userAuth.defaults.withCredentials = true;
 
 export const useCart = axios.create({
-    baseURL: 'http://localhost:5000/api/users/product/cart',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+    baseURL: process.env.NEXT_PUBLIC_PRODUCT_CART,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -49,34 +47,31 @@ export const useCart = axios.create({
 useCart.defaults.withCredentials = true;
 
 export const myCart = axios.create({
-    baseURL: 'http://localhost:5000/api/users/product/cartProducts',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+    baseURL: process.env.NEXT_PUBLIC_MY_CART,
     headers: {
         'Content-Type': 'application/json',
     },
 })
 myCart.defaults.withCredentials = true;
 
-
 export const updateQuantity = axios.create({
-    baseURL: 'http://localhost:5000/api/users/product/updateQuantity',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+    baseURL: process.env.NEXT_PUBLIC_UPDATE_QUANTITY,
     headers: {
         'Content-Type': 'application/json',
     },
 })
 updateQuantity.defaults.withCredentials = true;
 
-
 export const deleteProduct = axios.create({
-    baseURL: 'http://localhost:5000/api/users/product/deleteProduct',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+    baseURL: process.env.NEXT_PUBLIC_DELETE_PRODUCT,
     headers: {
         'Content-Type': 'application/json',
     },
 })
 deleteProduct.defaults.withCredentials = true;
 
-
 export const UpdateProfiles = axios.create({
-    baseURL: 'http://localhost:5000/api/users/UpdateProfile',  //deployment: process.env.NEXT_PUBLIC_PRODUCT_CART
+    baseURL: process.env.NEXT_PUBLIC_UPDATE_PROFILES,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -84,7 +79,7 @@ export const UpdateProfiles = axios.create({
 UpdateProfiles.defaults.withCredentials = true;
 
 export const searchData = axios.create({
-    baseURL: 'http://localhost:5000/api/users/searchProduct',
+    baseURL: process.env.NEXT_PUBLIC_SEARCH_PRODUCT,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -92,7 +87,7 @@ export const searchData = axios.create({
 searchData.defaults.withCredentials = true;
 
 export const StripePayment = axios.create({
-    baseURL: 'http://localhost:5000/api/users/StripePayment',
+    baseURL: process.env.NEXT_PUBLIC_STRIPE_PAYMENT,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -100,7 +95,7 @@ export const StripePayment = axios.create({
 StripePayment.defaults.withCredentials = true;
 
 export const Orders = axios.create({
-    baseURL: 'http://localhost:5000/api/users/Orders',
+    baseURL: process.env.NEXT_PUBLIC_ORDERS,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -108,7 +103,7 @@ export const Orders = axios.create({
 Orders.defaults.withCredentials = true;
 
 export const getOrderHistory = axios.create({
-    baseURL: 'http://localhost:5000/api/users/',
+    baseURL: process.env.NEXT_PUBLIC_ORDER_HISTORY,
     headers: {
         'Content-Type': 'application/json',
     },

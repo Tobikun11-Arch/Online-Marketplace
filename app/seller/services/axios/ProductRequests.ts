@@ -20,7 +20,7 @@ export const draft_product: AxiosInstance = axios.create({
 
 
 export const seller_products: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/get/product',
+    baseURL: process.env.NEXT_PUBLIC_SELLER_PRODUCTS,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -28,7 +28,7 @@ export const seller_products: AxiosInstance = axios.create({
 })
 
 export const orders_products: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/get/orders',
+    baseURL: process.env.NEXT_PUBLIC_ORDER_PRODUCTS,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -36,7 +36,7 @@ export const orders_products: AxiosInstance = axios.create({
 })
 
 export const update_products: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/put/product',
+    baseURL: process.env.NEXT_PUBLIC_UPDATE_PRODUCTS,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -45,39 +45,37 @@ export const update_products: AxiosInstance = axios.create({
 
 
 export const update_draftProducts: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/put/draftproduct',
+    baseURL: process.env.NEXT_PUBLIC_UPDATE_DRAFT_PRODUCTS,
     headers: {
         'Content-Type': 'application/json',
     },
     withCredentials: true,
 })
-
 
 export const delete_product: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/delete/product',
+    baseURL: process.env.NEXT_PUBLIC_DELETE_PRODUCT,
     headers: {
         'Content-Type': 'application/json',
     },
     withCredentials: true,
 })
-
 
 export const Draft_Publish: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/post/newpublish',
+    baseURL: process.env.NEXT_PUBLIC_DRAFT_PUBLISH,
     headers: {
         'Content-Type': 'application/json',
     },
     withCredentials: true,
 })
-
 
 export const user_sales: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api/users/products/sales',
+    baseURL: process.env.NEXT_PUBLIC_USER_SALES,
     headers: {
         'Content-Type': 'application/json',
     },
     withCredentials: true,
 })
+
 
 
 //Add the axios instance here

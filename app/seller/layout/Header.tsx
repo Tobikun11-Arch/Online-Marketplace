@@ -80,11 +80,6 @@ const Header = () => {
                                     label='My Profile'
                                     onClick={()=> setActiveTab("My Account")}
                                 />
-                                <NavList
-                                    icon={CalendarDays}
-                                    label='Calendar'
-                                    onClick={()=> setActiveTab("Calendar")}
-                                />
                                 <hr className='-mr-14 -ml-4 border-t border-gray-500'/>
                                 <div className='flex items-center gap-2 hover:text-blue-700 text-sm' onClick={()=> setLogout(true)}>
                                     <LogOut size={20}/>
