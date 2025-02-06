@@ -26,7 +26,7 @@ const SimilarProducts: FC<similarProps> = ({ products }) => {
                                     blurDataURL="add new url later"
                                 />
                             </div>
-                            <ProductInfoCard dataProduct={{ productName: product.productName, OriginalPrice: product.productPrice - (product.productPrice * product.productDiscount) }}/>
+                            <ProductInfoCard dataProduct={{ productName: product.productName, OriginalPrice: product.productPrice - (product.productPrice * (product.productDiscount / 100)) }}/>
                         </div>
                     </Link>
                 ))}
