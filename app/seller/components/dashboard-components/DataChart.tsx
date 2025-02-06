@@ -109,7 +109,7 @@ export default function DataChart({ Chart }: DataChartProps) {
                                                     </div>
                                                     <div className="flex flex-col items-end">
                                                         <p>x{review.productQuantity}</p>
-                                                        <p>${review.productQuantity * review.productPrice}</p>
+                                                        <p>${(review.productQuantity * review.productPrice).toFixed(2)}</p>
                                                     </div>
                                                 </div>
                                             </div>

@@ -43,7 +43,11 @@ const OrdersTab = () => {
                                 </div>
                             </div>
                             <div className='Minor details text-end'>
-                                {item.quantity > 1 ? <h1 className='font-semibold'>${item.price * item.quantity}</h1> : <h1 className='font-semibold'>${item.price}</h1>}
+                                {item.quantity > 1 ? (
+                                    <h1 className='font-semibold'>${(item.price * item.quantity).toFixed(2)}</h1>
+                                    ) : (
+                                    <h1 className='font-semibold'>${item.price.toFixed(2)}</h1>
+                                )}
                                 <h2 className='text-gray-400 text-sm'>Qty: {item.quantity}</h2>
                             </div>
                         </div>
