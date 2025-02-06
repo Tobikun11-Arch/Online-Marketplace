@@ -104,16 +104,14 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
     }
 
     const defaultHistory = [
-        "Air Jordan 4 Retro 'White Thunder'",
-        "Adidas Samba",
-        "New Balance 9060",
-        "Nike Zoom Vomero 5",
-        "Veja Campo",
-        "Levi's 501 Original Jeans",
-        "Hoka One One Bondi 8",
-        "Carhartt WIP Detroit Jacket",
-        "Patagonia Better Sweater Fleece Jacket",
-        "Zara Satin Slip Dresses",
+        "Wireless Bluetooth Headphones",
+        "Smartphone Stand with Wireless Charger",
+        "Smart Air Purifier",
+        "Slim Fit Men’s Blazer",
+        "Adjustable Kitchen Shelf",
+        "Floral Print Women’s Dress",
+        "Organic Face Serum",
+        "Car Vacuum Cleaner",
     ];
 
     const handleRecentHistory = (searchItem: string) => {
@@ -207,7 +205,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                                             ) : (
                                                 <>
                                                     {defaultHistory.map((dafault, index)=> (
-                                                        <h2 key={index} className={SearchHover}>{dafault}</h2>
+                                                        <h2 key={index} className={SearchHover} onClick={()=> handleRecentHistory(dafault)}>{dafault}</h2>
                                                     ))}
                                                 </>
                                             )}
@@ -215,7 +213,7 @@ const Navbar = ({ className, isOpen }: NavbarProps) => {
                                     ) : (
                                         <>
                                             {defaultHistory.map((dafault, index)=> (
-                                                <h2 key={index} className={SearchHover}>{dafault}</h2>
+                                                <h2 key={index} className={SearchHover} onClick={()=> handleRecentHistory(dafault)}>{dafault}</h2>
                                             ))}
                                         </>
                                     )}
