@@ -38,13 +38,13 @@ export default function AddProduct() {
             setPrice(0);
             setStock(0); 
             setDiscount(0);
-            setQuality(''); 
+            setQuality('New'); 
             setSize('XS')
             // Reset images
             setSubImage_01('');
             setSubImage_02('');
             setSubImage_03('');
-            setCategory(''); 
+            setCategory('Electronics'); 
         };
 
         if(!isProductName || !isDescription || isPrice === 0 || isStock === 0 || !isSize || !isSubImage_01 || !isSubImage_02 || !isSubImage_03) {
