@@ -9,7 +9,6 @@ interface Response {
 }
 
 const Page = ({ popular_products }: Response) => {
-
     return (
         <div className='min-h-screen bg-white dark:bg-[#171717] cursor-default'>
             <div className="px-5 pt-5">
