@@ -22,7 +22,7 @@ const ProductInfoCard = ({ dataProduct }: productProps) => {
         <div className="absolute bottom-5 left-5 flex items-center pr-3">
             <div className="flex justify-center items-center gap-3 text-xs font-semibold bg-transparent p-1 border rounded-full">
                 <h1 className='pl-2'>{trimmedProductName}</h1>
-                <h1 className='bg-blue-700 px-2 py-1 rounded-full text-white'>${dataProduct?.OriginalPrice} usd</h1>
+                <h1 className='bg-blue-700 px-2 py-1 rounded-full text-white'>${dataProduct?.OriginalPrice.toFixed(2)} usd</h1>
             </div>
         </div>
     )
