@@ -11,12 +11,14 @@ import { ring2 } from 'ldrs'
 import { AddToCartPayload } from '../../Interface/CartItem'
 import { myCart } from '../../axios/dataStore'
 import { useQuery } from '@tanstack/react-query'
+import { useToggle } from '../../store/useToggle'
 
 interface cartProps {
     Cart: ICartItem | undefined
 }
 
 const UserCart:FC<cartProps> = ({ Cart }) => {
+    const { setAuth } = useToggle()
     const { cart: localCart } = useProductCart()
     const { user } = useUser()
     const { setCartLength } = useUserCart()
@@ -116,6 +118,10 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
     }, [totalPrice, localCart])
 
     const handleCheckout = async () => {
+        if(!user) {
+            setAuth(true)
+            return
+        }
         const products_data = (Cart?.user.cart && Cart.user.cart.length >= 1) ? Cart.user.cart : localproduct;
         setCheckout(true)
         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPEAPI!)
