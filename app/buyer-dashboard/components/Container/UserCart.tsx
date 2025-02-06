@@ -159,7 +159,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
                                 <div className="w-full flex justify-between">
                                     <div className='flex flex-col'>
                                         <h1 className='font-semibold'>{cartItem.productName}</h1>
-                                        <h1>${cartItem.price}</h1>
+                                        <h1>${cartItem.price.toFixed(2)}</h1>
                                     </div>
                                     <div className='flex items-end'>
                                         <div className='flex gap-2 border border-[#333333] rounded-xl py-1 px-4 items-center'>
@@ -216,7 +216,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
             <div className='flex flex-col gap-1 mt-5'>
                 <div className="flex justify-between">
                     <h3>Total</h3>
-                    <h3>${user ? `${price}` : '0'}</h3>
+                    <h3>${user ? `${price?.toFixed(2)}` : '0'}</h3>
                 </div>
                 <hr color='gray' className='mb-3'/>
                 <button
