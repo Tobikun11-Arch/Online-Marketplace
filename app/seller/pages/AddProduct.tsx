@@ -342,13 +342,13 @@ export default function AddProduct() {
                         <div className={imgParent}>
                             <div className={imgSubParent}>
                                 <Image
-                                fill
-                                key={isSelected || isSubImage_01}
-                                src={isSelected ? isSelected : isSubImage_01 ? isSubImage_01 : '/assets/sub_img.png'}
-                                alt='First Index'
-                                className="object-contain object-center"
-                                placeholder = 'blur'
-                                blurDataURL='add new url later'
+                                    fill
+                                    key={isSelected || isSubImage_01 ? `image-${isSelected || isSubImage_01}` : 'default-image'}
+                                    src={isSelected ? isSelected : isSubImage_01 ? isSubImage_01 : '/assets/sub_img.png'}
+                                    alt='First Index'
+                                    className="object-contain object-center"
+                                    placeholder='blur'
+                                    blurDataURL='add new url later'
                                 />
                             </div>
                         </div>
