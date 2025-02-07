@@ -48,7 +48,7 @@ export default function MainDashboard() {
                     <div key={index} className='w-full pt-2 sm:py-2 px-6 grid sm:grid-cols-2 xl:grid-cols-4 sm:pl-16 sm:pr-4 gap-2 lg:px-4 mt-4'>
                         <ProfileIncome 
                             label='Total Income'
-                            data={product.Total_income}
+                            data={parseFloat(product.Total_income.toFixed(2))}
                             percentage={0}
                         />
                         <ProfileIncome 
