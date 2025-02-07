@@ -70,7 +70,7 @@ const UserAuth = ({ isOpen, onClose } : CartProps) => {
         <>
             {!isBuyer && (
                 <>
-                    <div className={`h-screen z-50 bg-gray-200 bg-opacity-65 dark:bg-opacity-90 dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black border-white border-opacity-18 fixed top-0 right-0 w-full md:w-[350px] transition-transform transform text-black p-4 flex flex-col gap-2 dark:bg-black dark:text-white ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                    <div className={`h-full z-50 bg-gray-200 bg-opacity-65 dark:bg-opacity-90 dark:backdrop-blur-sm backdrop-blur-md md:border dark:border-black border-white border-opacity-18 fixed top-0 right-0 w-full md:w-[350px] transition-transform transform text-black p-4 flex flex-col gap-2 dark:bg-black dark:text-white ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                         <div className="flex justify-between items-center">
                             {user && (
                                 <h2 className='text-lg font-bold'>{isBuyer ? `Welcome ${user.Username}` : 'Join now!'}</h2>

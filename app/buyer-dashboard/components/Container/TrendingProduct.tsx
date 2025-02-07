@@ -18,7 +18,7 @@ const TrendingProduct = () => {
             <h1 className='text-3xl font-bold'>Trending products</h1>
             <div className='flex justify-between items-center'>
                 <p className='text-gray-500'>Explore our trending products!</p>
-                <div className='flex border dark:bg-transparent rounded-lg items-center gap-3 dark:border-[#333333] py-2 px-3' onClick={handleProducts}>
+                <div className='hidden sm:flex border dark:bg-transparent rounded-lg items-center gap-3 dark:border-[#333333] py-2 px-3' onClick={handleProducts}>
                     <p className='text-sm font-semibold'>View all products</p>
                     <ArrowRight size={15}/>
                 </div>
