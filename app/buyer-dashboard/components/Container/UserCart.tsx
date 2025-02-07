@@ -139,7 +139,7 @@ const UserCart:FC<cartProps> = ({ Cart }) => {
     }, []);
 
     return (
-        <div className='cursor-default h-full flex flex-col justify-between'>
+        <div className='cursor-default h-full flex overflow-y-scroll flex-col justify-between'>
                 <div>
                 {user && Cart?.user.cart && Cart.user.cart.length > 0 ? (
                     Cart.user.cart.map((cartItem, index) => (
