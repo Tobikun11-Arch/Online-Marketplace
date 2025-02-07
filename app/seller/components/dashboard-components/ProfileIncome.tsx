@@ -7,7 +7,7 @@ interface ProfileProps {
 }
 
 export default function ProfileIncome({ label, data, percentage }: ProfileProps) {
-    const formattedData = data.toLocaleString();
+    const formattedData = data.toFixed(2).toLocaleString();
 
     return (
         <div className='bg-white shadow-md rounded-lg pl-5 py-5 xl:pr-2'>
