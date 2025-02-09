@@ -39,7 +39,7 @@ const OrdersTab = () => {
                                 </div>
                                 <div className='Porduct main details'>
                                 <h1 className="text-gray-800 dark:text-white font-semibold text-base max-w-[160px] truncate sm:max-w-full">
-                                {item.productName.length > 16 ? `${item.productName.slice(0, 16)}...` : item.productName}
+                                {item.productName}
                                 </h1>
                                     <h1 className='text-xs text-gray-400'>{item.productId?.toString()}</h1>
                                 </div>
