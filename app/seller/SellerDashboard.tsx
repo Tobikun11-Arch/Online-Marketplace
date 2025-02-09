@@ -39,8 +39,6 @@ export default function SellerDashboardLayout() {
             if(storedUser) {
                 const user = JSON.parse(storedUser)
                 setUser(user)
-            } else {
-                //No store found
             }
             hasRun.current = true; // Set the flag to true after the first run
         }
