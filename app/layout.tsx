@@ -10,13 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Online Marketplace",
   description: "Buy and sell products easily on our marketplace.",
-  icons: {
-    icon: [
-      { url: "/sajubazaarlogo.png", type: "image/png", sizes: "32x32" }, // Favicon
-      { url: "/sajubazaarlogo.png", type: "image/png", sizes: "192x192" }, // Android
-    ],
-    apple: "/sajubazaarlogo.png", // Apple Touch Icon
-  },
+  icons: "https://cdn-icons-png.flaticon.com/512/1137/1137143.png",
   openGraph: {
     title: "Online Marketplace",
     description: "The best place to buy and sell products online.",
