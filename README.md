@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 [Saju-Bazaar – Online Marketplace]
+> Saju-Bazaar is a full-stack online marketplace where users can buy, sell, and manage products seamlessly. Built with Next.js and TypeScript, the platform provides a smooth and efficient shopping experience, integrating secure authentication, product management, and order tracking.
 
-## Getting Started
+## 🔗 Live Demo  
+https://sajuu-bazaar.vercel.app/
 
-First, run the development server:
+## 📸 Preview  
+![image](https://github.com/user-attachments/assets/d4082d5c-4687-4ac3-950e-34f7012337ea)
+![image](https://github.com/user-attachments/assets/584555e9-cc51-4b3f-a1d6-f204f7a30bfb)
+![image](https://github.com/user-attachments/assets/3140bc47-0e2b-4424-a554-48f7d40c3133)
+![image](https://github.com/user-attachments/assets/e8bee50d-e6d8-4c31-9d85-71c7d007bab8)
+![image](https://github.com/user-attachments/assets/a4bcf76b-d6de-4918-8cf4-fd796ecd08b5)
+![image](https://github.com/user-attachments/assets/dd111c8f-2227-4223-85fe-a25a50fed98b)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack  
+- **Frontend:** Next.js, TypeScript, Tailwind CSS  
+- **Backend:** Node.js, Express.js, MongoDB  
+- **Authentication:** JWT  
+- **Hosting:** Vercel (Frontend and Backend)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚡ Features  
+✅ **User Authentication** – Secure login and registration using JWT  
+✅ **Product Listings** – Users can add, edit, and manage their products  
+✅ **Buyer Dashboard** – Explore products, add to cart, and make purchases  
+✅ **Seller Dashboard** – Track product sales, manage inventory, and update listings  
+✅ **Stripe Payment Integration** – Secure and seamless checkout using Stripe  
+✅ **Responsive & Optimized UI** – Built with Tailwind CSS & Framer Motion  
+✅ **API-Driven Backend** – Powered by Express.js and MongoDB for seamless data management   
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+📬 **Contact**  
+👤 Joenel Sevellejo  
+📧 Email: [joenelsevellejo831@gmail.com](mailto:joenelsevellejo831@gmail.com)  
+🔗 Portfolio: yourportfolio.com //soon  
+🐙 GitHub: [github.com/Tobikun11-Arch](https://github.com/Tobikun11-Arch)  
