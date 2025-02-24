@@ -1,4 +1,4 @@
-# 🚀 [Saju-Bazaar – Online Marketplace]
+# 🚀Saju-Bazaar – Online Marketplace
 > Saju-Bazaar is a full-stack online marketplace where users can buy, sell, and manage products seamlessly. Built with Next.js and TypeScript, the platform provides a smooth and efficient shopping experience, integrating secure authentication, product management, and order tracking.
 
 ## 🔗 Live Demo  
