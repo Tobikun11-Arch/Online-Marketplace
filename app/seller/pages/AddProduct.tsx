@@ -267,7 +267,7 @@ export default function AddProduct() {
                         <input type="text" className='w-full bg-[#EFEFEF] mt-1 rounded-md h-9 text-gray-500 outline-none px-2 text-sm' value={isProductName} onChange={(e)=> setisProductName(e.target.value)}/>
                         <h4 className='text-sm mt-3 font-normal'>Product Description</h4>
                         <textarea name="" id="" className='w-full mt-1 px-2 rounded-md py-1 text-gray-500 text-sm h-36 resize-none bg-[#EFEFEF] outline-none' value={isDescription} onChange={(e)=> setDescription(e.target.value)}></textarea>
-                        <div className='flex gap-2 mt-2'>
+                        <div className='flex flex-col sm:flex-row gap-2 mt-2'>
                             <div className='w-full'>
                                 <h1 className='text-sm font-normal'>Size</h1>
                                 <h3 className='text-xs text-gray-400 font-medium'>Pick Available Size</h3>

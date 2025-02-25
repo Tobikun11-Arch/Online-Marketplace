@@ -53,7 +53,7 @@ export const update_draftProducts: AxiosInstance = axios.create({
 })
 
 export const delete_product: AxiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_DELETE_PRODUCT,
+    baseURL: process.env.NEXT_PUBLIC_DELETE_PRODUCT_SELLER,
     headers: {
         'Content-Type': 'application/json',
     },
